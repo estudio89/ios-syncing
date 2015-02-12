@@ -36,6 +36,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7B5F22081A8D2FC80031E2F2 /* SyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncManager.h; sourceTree = "<group>"; };
+		7B5F22091A8D35880031E2F2 /* SyncEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncEvent.h; sourceTree = "<group>"; };
 		7BADD11D1A8BD82B0005FC5E /* libSyncing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSyncing.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BADD1201A8BD82B0005FC5E /* Syncing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Syncing.h; sourceTree = "<group>"; };
 		7BADD1281A8BD82B0005FC5E /* SyncingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SyncingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +89,8 @@
 				7BADD1201A8BD82B0005FC5E /* Syncing.h */,
 				7BADD13A1A8BDABF0005FC5E /* ThreadChecker.h */,
 				7BADD13B1A8BDABF0005FC5E /* ThreadChecker.m */,
+				7B5F22081A8D2FC80031E2F2 /* SyncManager.h */,
+				7B5F22091A8D35880031E2F2 /* SyncEvent.h */,
 			);
 			path = Syncing;
 			sourceTree = "<group>";
@@ -358,6 +362,7 @@
 				7BADD1331A8BD82B0005FC5E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7BADD1341A8BD82B0005FC5E /* Build configuration list for PBXNativeTarget "SyncingTests" */ = {
 			isa = XCConfigurationList;
@@ -366,6 +371,7 @@
 				7BADD1361A8BD82B0005FC5E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
