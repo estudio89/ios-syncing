@@ -11,6 +11,7 @@
 		7BADD1211A8BD82B0005FC5E /* Syncing.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7BADD1201A8BD82B0005FC5E /* Syncing.h */; };
 		7BADD1291A8BD82B0005FC5E /* libSyncing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BADD11D1A8BD82B0005FC5E /* libSyncing.a */; };
 		7BADD13C1A8BDABF0005FC5E /* ThreadChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BADD13B1A8BDABF0005FC5E /* ThreadChecker.m */; };
+		7BAEDBBC1A97B69E0078AEA9 /* DataSyncHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BAEDBBB1A97B69E0078AEA9 /* DataSyncHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,8 @@
 		7BADD12E1A8BD82B0005FC5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7BADD13A1A8BDABF0005FC5E /* ThreadChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadChecker.h; sourceTree = "<group>"; };
 		7BADD13B1A8BDABF0005FC5E /* ThreadChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadChecker.m; sourceTree = "<group>"; };
+		7BAEDBBA1A97B69E0078AEA9 /* DataSyncHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSyncHelper.h; sourceTree = "<group>"; };
+		7BAEDBBB1A97B69E0078AEA9 /* DataSyncHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSyncHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +99,8 @@
 				7B5F22091A8D35880031E2F2 /* SyncEvent.h */,
 				7B5F220A1A8D3AC50031E2F2 /* ServerComm.h */,
 				7B5F220B1A8D3AC50031E2F2 /* ServerComm.m */,
+				7BAEDBBA1A97B69E0078AEA9 /* DataSyncHelper.h */,
+				7BAEDBBB1A97B69E0078AEA9 /* DataSyncHelper.m */,
 			);
 			path = Syncing;
 			sourceTree = "<group>";
@@ -206,6 +211,7 @@
 			files = (
 				7B5F220C1A8D3AC50031E2F2 /* ServerComm.m in Sources */,
 				7BADD13C1A8BDABF0005FC5E /* ThreadChecker.m in Sources */,
+				7BAEDBBC1A97B69E0078AEA9 /* DataSyncHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
