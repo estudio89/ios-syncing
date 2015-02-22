@@ -7,12 +7,19 @@
 //
 
 #import "ServerComm.h"
+#import "ThreadChecker.h"
+#import "SyncConfig.h"
 #import <Foundation/Foundation.h>
 
 @interface DataSyncHelper : NSObject
 
 @property (nonatomic, readonly) ServerComm *serverComm;
+@property (nonatomic, readonly) ThreadChecker *threadChecker;
+@property (nonatomic, readonly) SyncConfig *syncConfig;
 
-- (instancetype)initWithServer:(ServerComm *)serverComm;
+- (instancetype)initWithServer:(ServerComm *)serverComm
+                withThreadChecker:(ThreadChecker *)threadChecker
+                withSyncConfig:(SyncConfig *)syncConfig;
+- (BOOL)getDataFromServer;
 
 @end
