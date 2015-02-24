@@ -25,4 +25,19 @@
     return @"";
 }
 
+- (NSString *)getGetDataUrlForModel:(NSString *)identifier
+{
+    return @"";
+}
+
+- (NSString *)getDeviceId
+{
+    return @"";
+}
+
+- (NSArray *)getSyncManagers
+{
+    return [[NSArray alloc] init];
+}
+
 @end

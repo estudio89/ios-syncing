@@ -13,5 +13,8 @@
 - (NSString *)getAuthToken;
 - (NSString *)getTimestamp;
 - (NSString *)getGetDataUrl;
+- (NSString *)getGetDataUrlForModel:(NSString *)identifier;
+- (NSString *)getDeviceId;
+- (NSArray *)getSyncManagers;
 
 @end
