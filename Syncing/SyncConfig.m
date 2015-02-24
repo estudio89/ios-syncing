@@ -40,4 +40,9 @@
     return [[NSArray alloc] init];
 }
 
+- (NSString *)getSendDataUrl
+{
+    return @"";
+}
+
 @end

@@ -16,5 +16,6 @@
 - (NSString *)getGetDataUrlForModel:(NSString *)identifier;
 - (NSString *)getDeviceId;
 - (NSArray *)getSyncManagers;
+- (NSString *)getSendDataUrl;
 
 @end

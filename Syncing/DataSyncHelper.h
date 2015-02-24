@@ -17,7 +17,6 @@
 @property (nonatomic, readonly) ServerComm *serverComm;
 @property (nonatomic, readonly) ThreadChecker *threadChecker;
 @property (nonatomic, readonly) SyncConfig *syncConfig;
-@property (nonatomic, readonly) id<SyncManager> syncManager;
 
 - (instancetype)initWithServer:(ServerComm *)serverComm
                 withThreadChecker:(ThreadChecker *)threadChecker

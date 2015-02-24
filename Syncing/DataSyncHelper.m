@@ -14,7 +14,6 @@
 @property (nonatomic, strong, readwrite) ServerComm *serverComm;
 @property (nonatomic, strong, readwrite) ThreadChecker * threadChecker;
 @property (nonatomic, strong, readwrite) SyncConfig *syncConfig;
-@property (nonatomic, strong, readwrite) id<SyncManager> syncManager;
 
 @end
 
@@ -124,30 +123,72 @@
         return NO;
     }
     
-    NSDictionary *data = @{@"token":token,
-                           @"timestamp":[self.syncConfig getTimestamp],
-                           @"device_id":[self.syncConfig getDeviceId]};
+    NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
+    [data setObject:token forKey:@"token"];
+    [data setObject:[self.syncConfig getTimestamp] forKey:@"timestamp"];
+    [data setObject:[self.syncConfig getDeviceId] forKey:@"device_id"];
+    NSUInteger nmbrMetadata = [data count];
     
+    NSArray *files = [[NSArray alloc] init];
     NSArray *modifiedData = [[NSArray alloc] init];
+    
     for (id<SyncManager> syncManager in [self.syncConfig getSyncManagers])
     {
-        if (![self.syncManager hasModifiedData])
+        if (![syncManager hasModifiedData])
         {
             continue;
         }
-        modifiedData = [self.syncManager getModifiedData];
         
-        if ([self.syncManager shouldSendSingleObject])
+        modifiedData = [syncManager getModifiedData];
+        
+        if ([syncManager shouldSendSingleObject])
         {
-            
+            for (NSDictionary *object in modifiedData)
+            {
+                NSMutableDictionary *partialData = data;
+                NSArray *singleItemArray = [NSArray arrayWithObject:object];
+                [partialData setObject:singleItemArray forKey:[syncManager getIdentifier]];
+                NSArray *partialFiles = [syncManager getModifiedFilesForObject:object];
+                NSLog(@"Syncing - Enviando item %@", object);
+                NSDictionary *jsonResponse = [self.serverComm post:[self.syncConfig getSendDataUrl] withData:partialData withFiles:partialFiles];
+                
+                if (![self processSendResponse:threadId withJsonResponse:jsonResponse])
+                {
+                    return NO;
+                }
+                
+                [data setObject:[self.syncConfig getTimestamp] forKey:@"timestamp"];
+            }
         }
         else
         {
-            
+            [data setObject:modifiedData forKey:[syncManager getIdentifier]];
+            files = [syncManager getModifiedFiles];
         }
     }
     
-    return YES;
+    if ([data count] > nmbrMetadata)
+    {
+        NSDictionary *jsonResponse = [self.serverComm post:[self.syncConfig getSendDataUrl] withData:data withFiles:files];
+        
+        if ([self processSendResponse:threadId withJsonResponse:jsonResponse])
+        {
+            [self.threadChecker removeThreadId:threadId];
+            [self postSendFinishedEvent];
+            return YES;
+        }
+        else
+        {
+            [self.threadChecker removeThreadId:threadId];
+            return NO;
+        }
+    }
+    else
+    {
+        [self.threadChecker removeThreadId:threadId];
+        [self postSendFinishedEvent];
+        return YES;
+    }
 }
 
 /***
@@ -156,6 +197,19 @@
 - (BOOL)processGetDataResponse:(NSString *)threadId withJsonResponse:(NSDictionary *)jsonResponse withTimestamp:(NSString *)timestamp
 {
     return YES;
+}
+
+/***
+ processSendResponse
+ */
+- (BOOL)processSendResponse:(NSString *)threadId withJsonResponse:(NSDictionary *)jsonResponse
+{
+    return YES;
+}
+
+- (void)postSendFinishedEvent
+{
+    
 }
 
 @end

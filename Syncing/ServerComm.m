@@ -22,7 +22,7 @@
 
 - (NSDictionary *)post:(NSString *)url withData:(NSDictionary *)data withFiles:(NSArray *)files
 {
-    
+    return [[NSDictionary alloc] init];
 }
 
 @end
