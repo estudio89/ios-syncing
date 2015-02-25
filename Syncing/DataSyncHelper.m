@@ -15,6 +15,7 @@
 @property (nonatomic, strong, readwrite) ThreadChecker * threadChecker;
 @property (nonatomic, strong, readwrite) SyncConfig *syncConfig;
 @property (nonatomic, strong, readwrite) CustomTransactionManager *transactionManager;
+@property BOOL isRunningSync;
 
 @end
 
@@ -35,6 +36,7 @@
         self.threadChecker = threadChecker;
         self.syncConfig = syncConfig;
         self.transactionManager = transactionManager;
+        self.isRunningSync = NO;
     }
     return self;
 }
@@ -200,22 +202,37 @@
  */
 - (BOOL)processGetDataResponse:(NSString *)threadId withJsonResponse:(NSDictionary *)jsonResponse withTimestamp:(NSString *)timestamp
 {
-    SEL manipulateSel = @selector(manipulateInTransaction:withTimestamp:);
-    [self.transactionManager doInTransaction:manipulateSel withSyncConfig:[self syncConfig]];
+    [self.transactionManager doInTransaction:^{
+        for (id<SyncManager> syncManager in [self.syncConfig getSyncManagers])
+        {
+  
+            NSString *identifier = [syncManager getIdentifier];
+            
+            NSArray *jsonArray = [jsonResponse objectForKey:identifier];
+            
+            if (jsonArray != nil)
+            {
+                NSArray *objects = [syncManager saveNewData:jsonArray withDeviceId:[self.syncConfig getDeviceId]];
+                [syncManager postEvent:objects];
+            }
+            
+            if ([self.threadChecker isValidThreadId:threadId])
+            {
+                if (timestamp != nil)
+                {
+                    [self.syncConfig setTimestamp:timestamp];
+                }
+                [self postSendFinishedEvent];
+            }
+            else
+            {
+                @throw([NSException exceptionWithName:@"SyncInterrupted" reason:@"Synchronization interrupted" userInfo:nil]);
+            }
+            
+        }
+    } withSyncConfig:[self syncConfig]];
     
     return [self.transactionManager wasSuccessful];
-}
-
-/***
- manipulateInTransaction
- */
-- (void)manipulateInTransaction:(NSDictionary *)jsonResponse withTimestamp:(NSString *)timestamp
-{
-    for (id<SyncManager> syncManager in [self.syncConfig getSyncManagers])
-    {
-        NSString *identifier = [syncManager getIdentifier];
-        
-    }
 }
 
 /***
@@ -223,12 +240,135 @@
  */
 - (BOOL)processSendResponse:(NSString *)threadId withJsonResponse:(NSDictionary *)jsonResponse
 {
+    NSString *timestamp = [jsonResponse valueForKey:@"timestamp"];
+    
+    [self.transactionManager doInTransaction:^{
+        NSArray *syncResponse;
+        NSArray *newDataResponse;
+        NSArray *iterator = [jsonResponse allKeys];
+        
+        for (NSString *responseId in iterator)
+        {
+            id<SyncManager> syncManager = [self.syncConfig getSyncManagerByResponseId:responseId];
+            if (syncManager != nil)
+            {
+                syncResponse = [jsonResponse objectForKey:responseId];
+                [syncManager processSendResponse:syncResponse];
+            }
+            else
+            {
+                syncManager = [self.syncConfig getSyncMaanger:responseId];
+                if (syncManager != nil)
+                {
+                    newDataResponse = [jsonResponse objectForKey:responseId];
+                    NSArray *objects = [syncManager saveNewData:newDataResponse withDeviceId:[self.syncConfig getDeviceId]];
+                    [syncManager postEvent:objects];
+                }
+            }
+        }
+        
+        if ([self.threadChecker isValidThreadId:threadId])
+        {
+            [self.syncConfig setTimestamp:timestamp];
+        }
+        else
+        {
+            @throw([NSException exceptionWithName:@"InvalidThreadId" reason:@"The thread id is invalid." userInfo:nil]);
+        }
+        
+    } withSyncConfig:[self syncConfig]];
+    
+    return [self.transactionManager wasSuccessful];
+}
+
+/**
+ fullSynchronousSync
+ */
+- (BOOL)fullSynchronousSync
+{
+    if ([self isRunningSync])
+    {
+        NSLog(@"Sync already running");
+        return NO;
+    }
+    
+    NSLog(@"STARTING NEW SYNC");
+    BOOL completed = NO;
+    self.isRunningSync = YES;
+    
+    @try
+    {
+        completed = [self getDataFromServer];
+        if (completed && [self hasModifiedData])
+        {
+            completed = [self sendDataToServer];
+        }
+    }
+    @finally
+    {
+        self.isRunningSync = NO;
+    }
+    
+    if (completed)
+    {
+        [self postSendFinishedEvent];
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+}
+
+/**
+ fullAsynchronousSync
+ */
+- (void)fullAsynchronousSync
+{
+    if (![self isRunningSync])
+    {
+        NSLog(@"Running new FullSyncAsyncTask");
+        [self fullSyncAsyncTask];
+    }
+}
+
+/**
+ hasModifiedData
+ */
+- (BOOL)hasModifiedData
+{
     return YES;
 }
 
+/**
+ postSendFinishedEvent
+ */
 - (void)postSendFinishedEvent
 {
     
+}
+
+/**
+ fullSyncAsyncTask
+ */
+-(void)fullSyncAsyncTask
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [self fullSynchronousSync];
+    });
+}
+
+/**
+ partialSyncTask
+ */
+-(void)partialSyncTask
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        
+        dispatch_async( dispatch_get_main_queue(), ^{
+
+        });
+    });
 }
 
 @end

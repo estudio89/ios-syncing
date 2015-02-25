@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SyncManager.h"
 
 @interface SyncConfig : NSObject
 
@@ -17,5 +18,8 @@
 - (NSString *)getDeviceId;
 - (NSArray *)getSyncManagers;
 - (NSString *)getSendDataUrl;
+- (void)setTimestamp:(NSString *)timestamp;
+- (id<SyncManager>)getSyncMaanger:(NSString *)identifier;
+- (id<SyncManager>)getSyncManagerByResponseId:(NSString *)responseId;
 
 @end

@@ -45,4 +45,18 @@
     return @"";
 }
 
+- (void)setTimestamp:(NSString *)timestamp
+{
+    
+}
+- (id<SyncManager>)getSyncManagerByResponseId:(NSString *)responseId
+{
+    return nil;
+}
+
+- (id<SyncManager>)getSyncMaanger:(NSString *)identifier
+{
+    return nil;
+}
+
 @end

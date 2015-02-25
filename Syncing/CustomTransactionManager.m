@@ -32,11 +32,11 @@
 /**
  doInTransaction
  */
-- (void)doInTransaction:(SEL)manipulateInTransaction withSyncConfig:(SyncConfig *)syncConfig
+- (void)doInTransaction:(void(^)(void))manipulateInTransaction withSyncConfig:(SyncConfig *)syncConfig
 {
     @try
     {
-        [self performSelector:manipulateInTransaction];
+        manipulateInTransaction();
         //database.setTransactionSuccessful();
         //[objDP.context save:&error]
         self.isSuccessful = YES;

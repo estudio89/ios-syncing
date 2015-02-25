@@ -11,7 +11,7 @@
 
 @interface CustomTransactionManager : NSObject
 
-- (void)doInTransaction:(SEL)manipulateInTransaction withSyncConfig:(SyncConfig *)syncConfig;
+- (void)doInTransaction:(void(^)(void))manipulateInTransaction withSyncConfig:(SyncConfig *)syncConfig;
 - (BOOL)wasSuccessful;
 
 @end
