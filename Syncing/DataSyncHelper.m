@@ -14,6 +14,7 @@
 @property (nonatomic, strong, readwrite) ServerComm *serverComm;
 @property (nonatomic, strong, readwrite) ThreadChecker * threadChecker;
 @property (nonatomic, strong, readwrite) SyncConfig *syncConfig;
+@property (nonatomic, strong, readwrite) CustomTransactionManager *transactionManager;
 
 @end
 
@@ -25,6 +26,7 @@
 - (instancetype)initWithServer:(ServerComm *)serverComm
                 withThreadChecker:(ThreadChecker *)threadChecker
                 withSyncConfig:(SyncConfig *)syncConfig
+                withTransactionManager:(CustomTransactionManager *)transactionManager
 {
     self = [super init];
     if (self)
@@ -32,6 +34,7 @@
         self.serverComm = serverComm;
         self.threadChecker = threadChecker;
         self.syncConfig = syncConfig;
+        self.transactionManager = transactionManager;
     }
     return self;
 }
@@ -43,7 +46,8 @@
 {
     return [self initWithServer:[[ServerComm alloc] init]
                  withThreadChecker:[[ThreadChecker alloc] init]
-                 withSyncConfig:[[SyncConfig alloc] init]];
+                 withSyncConfig:[[SyncConfig alloc] init]
+                 withTransactionManager:[[CustomTransactionManager alloc] init]];
 }
 
 /**
@@ -196,7 +200,22 @@
  */
 - (BOOL)processGetDataResponse:(NSString *)threadId withJsonResponse:(NSDictionary *)jsonResponse withTimestamp:(NSString *)timestamp
 {
-    return YES;
+    SEL manipulateSel = @selector(manipulateInTransaction:withTimestamp:);
+    [self.transactionManager doInTransaction:manipulateSel withSyncConfig:[self syncConfig]];
+    
+    return [self.transactionManager wasSuccessful];
+}
+
+/***
+ manipulateInTransaction
+ */
+- (void)manipulateInTransaction:(NSDictionary *)jsonResponse withTimestamp:(NSString *)timestamp
+{
+    for (id<SyncManager> syncManager in [self.syncConfig getSyncManagers])
+    {
+        NSString *identifier = [syncManager getIdentifier];
+        
+    }
 }
 
 /***

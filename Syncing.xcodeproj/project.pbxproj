@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7B27BFBC1A9A7F1000C7548E /* SyncConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B27BFBB1A9A7F1000C7548E /* SyncConfig.m */; };
+		7B3DDCA71A9DFB9900966A5B /* CustomTransactionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3DDCA61A9DFB9900966A5B /* CustomTransactionManager.m */; };
 		7B5F220C1A8D3AC50031E2F2 /* ServerComm.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5F220B1A8D3AC50031E2F2 /* ServerComm.m */; };
 		7BADD1211A8BD82B0005FC5E /* Syncing.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7BADD1201A8BD82B0005FC5E /* Syncing.h */; };
 		7BADD1291A8BD82B0005FC5E /* libSyncing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BADD11D1A8BD82B0005FC5E /* libSyncing.a */; };
@@ -41,6 +42,8 @@
 /* Begin PBXFileReference section */
 		7B27BFBA1A9A7F1000C7548E /* SyncConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncConfig.h; sourceTree = "<group>"; };
 		7B27BFBB1A9A7F1000C7548E /* SyncConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncConfig.m; sourceTree = "<group>"; };
+		7B3DDCA51A9DFB9900966A5B /* CustomTransactionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTransactionManager.h; sourceTree = "<group>"; };
+		7B3DDCA61A9DFB9900966A5B /* CustomTransactionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTransactionManager.m; sourceTree = "<group>"; };
 		7B5F22081A8D2FC80031E2F2 /* SyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncManager.h; sourceTree = "<group>"; };
 		7B5F22091A8D35880031E2F2 /* SyncEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncEvent.h; sourceTree = "<group>"; };
 		7B5F220A1A8D3AC50031E2F2 /* ServerComm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerComm.h; sourceTree = "<group>"; };
@@ -106,6 +109,8 @@
 				7BAEDBBB1A97B69E0078AEA9 /* DataSyncHelper.m */,
 				7B27BFBA1A9A7F1000C7548E /* SyncConfig.h */,
 				7B27BFBB1A9A7F1000C7548E /* SyncConfig.m */,
+				7B3DDCA51A9DFB9900966A5B /* CustomTransactionManager.h */,
+				7B3DDCA61A9DFB9900966A5B /* CustomTransactionManager.m */,
 			);
 			path = Syncing;
 			sourceTree = "<group>";
@@ -216,6 +221,7 @@
 			files = (
 				7B5F220C1A8D3AC50031E2F2 /* ServerComm.m in Sources */,
 				7BADD13C1A8BDABF0005FC5E /* ThreadChecker.m in Sources */,
+				7B3DDCA71A9DFB9900966A5B /* CustomTransactionManager.m in Sources */,
 				7B27BFBC1A9A7F1000C7548E /* SyncConfig.m in Sources */,
 				7BAEDBBC1A97B69E0078AEA9 /* DataSyncHelper.m in Sources */,
 			);
