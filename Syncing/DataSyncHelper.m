@@ -15,6 +15,8 @@
 @property (nonatomic, strong, readwrite) ThreadChecker * threadChecker;
 @property (nonatomic, strong, readwrite) SyncConfig *syncConfig;
 @property (nonatomic, strong, readwrite) CustomTransactionManager *transactionManager;
+@property (nonatomic, strong, readwrite) AsyncBus *bus;
+
 @property BOOL isRunningSync;
 @property (strong, readwrite) NSMutableDictionary *partialSyncFlag;
 
@@ -29,6 +31,7 @@
                 withThreadChecker:(ThreadChecker *)threadChecker
                 withSyncConfig:(SyncConfig *)syncConfig
                 withTransactionManager:(CustomTransactionManager *)transactionManager
+                withBus:(AsyncBus *)bus
 {
     self = [super init];
     if (self)
@@ -37,6 +40,7 @@
         self.threadChecker = threadChecker;
         self.syncConfig = syncConfig;
         self.transactionManager = transactionManager;
+        self.bus = bus;
         self.isRunningSync = NO;
         self.partialSyncFlag = [[NSMutableDictionary alloc]init];
     }
@@ -51,7 +55,8 @@
     return [self initWithServer:[[ServerComm alloc] init]
                  withThreadChecker:[[ThreadChecker alloc] init]
                  withSyncConfig:[[SyncConfig alloc] init]
-                 withTransactionManager:[[CustomTransactionManager alloc] init]];
+                 withTransactionManager:[[CustomTransactionManager alloc] init]
+                 withBus:[[AsyncBus alloc] init]];
 }
 
 /**
@@ -215,7 +220,7 @@
             if (jsonArray != nil)
             {
                 NSArray *objects = [syncManager saveNewData:jsonArray withDeviceId:[self.syncConfig getDeviceId]];
-                [syncManager postEvent:objects];
+                [syncManager postEvent:objects withBus:[self bus]];
             }
             
             if ([self.threadChecker isValidThreadId:threadId])
@@ -264,7 +269,7 @@
                 {
                     newDataResponse = [jsonResponse objectForKey:responseId];
                     NSArray *objects = [syncManager saveNewData:newDataResponse withDeviceId:[self.syncConfig getDeviceId]];
-                    [syncManager postEvent:objects];
+                    [syncManager postEvent:objects withBus:[self bus]];
                 }
             }
         }
@@ -374,7 +379,7 @@
  */
 - (void)postSendFinishedEvent
 {
-    
+    [self.bus post:@"SendFinishedEvent" withObject:self];
 }
 
 /**
@@ -382,7 +387,7 @@
  */
 - (void)postGetFinishedEvent
 {
-    
+    [self.bus post:@"GetFinishedEvent" withObject:self];
 }
 
 /**
@@ -390,7 +395,8 @@
  */
 - (void)postSyncFinishedEvent
 {
-    
+    [self.bus post:@"SyncFinishedEvent" withObject:self];
+    NSLog(@"SyncFinishedEvent");
 }
 
 /**
@@ -398,10 +404,8 @@
  */
 - (void)postBackgroundSyncError
 {
-    
+    [self.bus post:@"BackgroundSyncError" withObject:self];
 }
-
-
 
 /**
  fullSyncAsyncTask

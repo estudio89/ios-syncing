@@ -10,6 +10,7 @@
 #import "ThreadChecker.h"
 #import "SyncConfig.h"
 #import "CustomTransactionManager.h"
+#import "AsyncBus.h"
 #import <Foundation/Foundation.h>
 
 @interface DataSyncHelper : NSObject
@@ -18,11 +19,14 @@
 @property (nonatomic, readonly) ThreadChecker *threadChecker;
 @property (nonatomic, readonly) SyncConfig *syncConfig;
 @property (nonatomic, readonly) CustomTransactionManager *transactionManager;
+@property (nonatomic, readonly) AsyncBus *bus;
 
 - (instancetype)initWithServer:(ServerComm *)serverComm
                 withThreadChecker:(ThreadChecker *)threadChecker
                 withSyncConfig:(SyncConfig *)syncConfig
-                withTransactionManager:(CustomTransactionManager *)transactionManager;
+                withTransactionManager:(CustomTransactionManager *)transactionManager
+                withBus:(AsyncBus *)bus;
+
 - (BOOL)getDataFromServer;
 - (BOOL)getDataFromServer:(NSString *)identifier withParameters:(NSMutableDictionary *)parameters;
 - (BOOL)sendDataToServer;

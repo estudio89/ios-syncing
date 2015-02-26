@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AsyncBus.h"
 
 @protocol SyncManager <NSObject>
 
@@ -21,6 +22,6 @@
 - (void)processSendResponse:(NSArray *)jsonResponse;
 - (NSDictionary *)serializeObject:(NSObject *)object;
 - (NSObject *)saveObject:(NSDictionary *)object withDeviceId:(NSString *)deviceId;
-- (void)postEvent:(NSArray *)objects;		
+- (void)postEvent:(NSArray *)objects withBus:(AsyncBus *)bus;
 
 @end
