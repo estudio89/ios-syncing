@@ -16,6 +16,7 @@
 @property (nonatomic, strong, readwrite) SyncConfig *syncConfig;
 @property (nonatomic, strong, readwrite) CustomTransactionManager *transactionManager;
 @property BOOL isRunningSync;
+@property (strong, readwrite) NSMutableDictionary *partialSyncFlag;
 
 @end
 
@@ -37,6 +38,7 @@
         self.syncConfig = syncConfig;
         self.transactionManager = transactionManager;
         self.isRunningSync = NO;
+        self.partialSyncFlag = [[NSMutableDictionary alloc]init];
     }
     return self;
 }
@@ -333,11 +335,38 @@
 }
 
 /**
+ partialAsynchronousSync
+ */
+- (void)partialAsynchronousSync:(NSString *)identifier withParameters:(NSDictionary *)parameters
+{
+    NSNumber *flag = [self.partialSyncFlag objectForKey:identifier];
+    if (flag != nil && [flag boolValue])
+    {
+        [self partialSyncTask:identifier withParameters:parameters];
+    }
+}
+
+/**
  hasModifiedData
  */
 - (BOOL)hasModifiedData
 {
-    return YES;
+    for (id<SyncManager> syncManager in [self.syncConfig getSyncManagers])
+    {
+        if ([syncManager hasModifiedData])
+        {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+/**
+ stopSyncThreads
+ */
+- (void)stopSyncThreads
+{
+    [self.threadChecker clear];
 }
 
 /**
@@ -347,6 +376,32 @@
 {
     
 }
+
+/**
+ postGetFinishedEvent
+ */
+- (void)postGetFinishedEvent
+{
+    
+}
+
+/**
+ postSyncFinishedEvent
+ */
+- (void)postSyncFinishedEvent
+{
+    
+}
+
+/**
+ postBackgroundSyncError
+ */
+- (void)postBackgroundSyncError
+{
+    
+}
+
+
 
 /**
  fullSyncAsyncTask
@@ -361,7 +416,7 @@
 /**
  partialSyncTask
  */
--(void)partialSyncTask
+-(void)partialSyncTask:(NSString *)identifier withParameters:(NSDictionary *)parameters
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         
