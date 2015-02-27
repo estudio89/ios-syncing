@@ -379,7 +379,7 @@
  */
 - (void)postSendFinishedEvent
 {
-    [self.bus post:@"SendFinishedEvent" withObject:self];
+    [self.bus post:[[SendFinishedEvent alloc] init]];
 }
 
 /**
@@ -387,7 +387,7 @@
  */
 - (void)postGetFinishedEvent
 {
-    [self.bus post:@"GetFinishedEvent" withObject:self];
+    [self.bus post:[[GetFinishedEvent alloc] init]];
 }
 
 /**
@@ -395,16 +395,16 @@
  */
 - (void)postSyncFinishedEvent
 {
-    [self.bus post:@"SyncFinishedEvent" withObject:self];
+    [self.bus post:[[SyncFinishedEvent alloc] init]];
     NSLog(@"SyncFinishedEvent");
 }
 
 /**
  postBackgroundSyncError
  */
-- (void)postBackgroundSyncError
+- (void)postBackgroundSyncError:(NSException *)error
 {
-    [self.bus post:@"BackgroundSyncError" withObject:self];
+    [self.bus post:[[BackgroundSyncError alloc] initWithException:error]];
 }
 
 /**
@@ -423,11 +423,59 @@
 -(void)partialSyncTask:(NSString *)identifier withParameters:(NSDictionary *)parameters
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [self.partialSyncFlag setObject:[NSNumber numberWithBool:YES] forKey:identifier];
+        @try
+        {
+            [self getDataFromServer:identifier withParameters:[parameters mutableCopy]];
+        }
+        @catch (NSException *exception) {
+            [self postBackgroundSyncError:exception];
+        }
         
         dispatch_async( dispatch_get_main_queue(), ^{
-
+            [self.partialSyncFlag setObject:[NSNumber numberWithBool:NO] forKey:identifier];
         });
     });
+}
+
+@end
+
+@implementation SendFinishedEvent
+@end
+
+@implementation GetFinishedEvent
+@end
+
+@implementation SyncFinishedEvent
+@end
+
+@interface BackgroundSyncError()
+
+@property (strong, readwrite) NSException *exception;
+
+@end
+
+@implementation BackgroundSyncError
+
+/**
+ initWithException
+ */
+- (id)initWithException:(NSException *)exception
+{
+    if(self = [super init])
+    {
+        self.exception = exception;
+    }
+    
+    return self;
+}
+
+/**
+ getError
+ */
+- (NSException *)getError
+{
+    return self.exception;
 }
 
 @end

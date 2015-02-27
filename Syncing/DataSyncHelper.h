@@ -32,3 +32,19 @@
 - (BOOL)sendDataToServer;
 
 @end
+
+@interface SendFinishedEvent : NSObject
+@end
+
+@interface GetFinishedEvent : NSObject
+@end
+
+@interface SyncFinishedEvent : NSObject
+@end
+
+@interface BackgroundSyncError : NSObject
+
+- (id)initWithException:(NSException *)exception;
+- (NSException *)getError;
+
+@end
