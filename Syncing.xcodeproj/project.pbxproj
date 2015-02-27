@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7B27BFBC1A9A7F1000C7548E /* SyncConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B27BFBB1A9A7F1000C7548E /* SyncConfig.m */; };
+		7B3D13931AA0E68B0022525A /* CustomException.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3D13921AA0E68B0022525A /* CustomException.m */; };
 		7B3DDCA71A9DFB9900966A5B /* CustomTransactionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3DDCA61A9DFB9900966A5B /* CustomTransactionManager.m */; };
 		7B5F220C1A8D3AC50031E2F2 /* ServerComm.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5F220B1A8D3AC50031E2F2 /* ServerComm.m */; };
 		7BADD1211A8BD82B0005FC5E /* Syncing.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7BADD1201A8BD82B0005FC5E /* Syncing.h */; };
@@ -45,6 +46,8 @@
 /* Begin PBXFileReference section */
 		7B27BFBA1A9A7F1000C7548E /* SyncConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncConfig.h; sourceTree = "<group>"; };
 		7B27BFBB1A9A7F1000C7548E /* SyncConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncConfig.m; sourceTree = "<group>"; };
+		7B3D13911AA0E68B0022525A /* CustomException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomException.h; sourceTree = "<group>"; };
+		7B3D13921AA0E68B0022525A /* CustomException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomException.m; sourceTree = "<group>"; };
 		7B3DDCA51A9DFB9900966A5B /* CustomTransactionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTransactionManager.h; sourceTree = "<group>"; };
 		7B3DDCA61A9DFB9900966A5B /* CustomTransactionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTransactionManager.m; sourceTree = "<group>"; };
 		7B5F22081A8D2FC80031E2F2 /* SyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncManager.h; sourceTree = "<group>"; };
@@ -126,6 +129,8 @@
 				7BB59EC41AA0ACD700783657 /* DatabaseProvider.m */,
 				7BE19A251AA0B92600E169EF /* SharedModelContext.h */,
 				7BE19A261AA0B92600E169EF /* SharedModelContext.m */,
+				7B3D13911AA0E68B0022525A /* CustomException.h */,
+				7B3D13921AA0E68B0022525A /* CustomException.m */,
 			);
 			path = Syncing;
 			sourceTree = "<group>";
@@ -234,6 +239,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B3D13931AA0E68B0022525A /* CustomException.m in Sources */,
 				7B5F220C1A8D3AC50031E2F2 /* ServerComm.m in Sources */,
 				7BADD13C1A8BDABF0005FC5E /* ThreadChecker.m in Sources */,
 				7B3DDCA71A9DFB9900966A5B /* CustomTransactionManager.m in Sources */,

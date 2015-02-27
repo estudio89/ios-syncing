@@ -8,6 +8,7 @@
 
 #import "CustomTransactionManager.h"
 #import "DatabaseProvider.h"
+#import "CustomException.h"
 
 @interface CustomTransactionManager()
 
@@ -43,17 +44,14 @@
         [dbProvider saveTransaction];
         self.isSuccessful = YES;
     }
-    @catch
+    @catch (InvalidThreadIdException *exception)
     {
-        //nao e erro, proposital
-        //catch da minha classe de excessao (InvalidThreadId)
-        //rollback
+        [dbProvider rollbackTransaction];
     }
     @catch (NSException *exception)
     {
-        //erro!
         [dbProvider rollbackTransaction];
-        //@trow da exception
+        @throw exception;
     }
 }
 

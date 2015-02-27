@@ -54,7 +54,7 @@
     return nil;
 }
 
-- (id<SyncManager>)getSyncMaanger:(NSString *)identifier
+- (id<SyncManager>)getSyncManager:(NSString *)identifier
 {
     return nil;
 }

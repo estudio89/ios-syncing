@@ -9,6 +9,7 @@
 #import "DataSyncHelper.h"
 #import "SyncManager.h"
 #import "SharedModelContext.h"
+#import "CustomException.h"
 
 @interface DataSyncHelper()
 
@@ -69,7 +70,7 @@
     NSString *threadId = [self.threadChecker setNewThreadId];
     NSString *token = [self.syncConfig getAuthToken];
     
-    if (token == (id)[NSNull null] || token.length == 0)
+    if (token == nil || token.length == 0)
     {
         [self.threadChecker removeThreadId:threadId];
         return NO;
@@ -102,7 +103,7 @@
     NSString *threadId = [self.threadChecker setNewThreadId];
     NSString *token = [self.syncConfig getAuthToken];
     
-    if (token == (id)[NSNull null] || token.length == 0)
+    if (token == nil || token.length == 0)
     {
         [self.threadChecker removeThreadId:threadId];
         return NO;
@@ -132,7 +133,7 @@
     NSString *threadId = [self.threadChecker setNewThreadId];
     NSString *token = [self.syncConfig getAuthToken];
     
-    if (token == (id)[NSNull null] || token.length == 0)
+    if (token == nil || token.length == 0)
     {
         [self.threadChecker removeThreadId:threadId];
         return NO;
@@ -144,7 +145,7 @@
     [data setObject:[self.syncConfig getDeviceId] forKey:@"device_id"];
     NSUInteger nmbrMetadata = [data count];
     
-    NSArray *files = [[NSArray alloc] init];
+    NSMutableArray *files = [[NSMutableArray alloc] init];
     NSArray *modifiedData = [[NSArray alloc] init];
     
     for (id<SyncManager> syncManager in [self.syncConfig getSyncManagers])
@@ -160,7 +161,7 @@
         {
             for (NSDictionary *object in modifiedData)
             {
-                NSMutableDictionary *partialData = data;
+                NSMutableDictionary *partialData = [[data copy] mutableCopy];
                 NSArray *singleItemArray = [NSArray arrayWithObject:object];
                 [partialData setObject:singleItemArray forKey:[syncManager getIdentifier]];
                 NSArray *partialFiles = [syncManager getModifiedFilesForObject:object];
@@ -178,7 +179,7 @@
         else
         {
             [data setObject:modifiedData forKey:[syncManager getIdentifier]];
-            files = [syncManager getModifiedFiles];
+            [files addObjectsFromArray:[syncManager getModifiedFiles]];
         }
     }
     
@@ -231,11 +232,11 @@
                 {
                     [self.syncConfig setTimestamp:timestamp];
                 }
-                [self postSendFinishedEvent];
+                [self postGetFinishedEvent];
             }
             else
             {
-                @throw([NSException exceptionWithName:@"SyncInterrupted" reason:@"Synchronization interrupted" userInfo:nil]);
+                @throw([InvalidThreadIdException exceptionWithName:@"InvalidThreadId" reason:@"The thread id is invalid." userInfo:nil]);
             }
             
         }
@@ -266,7 +267,7 @@
             }
             else
             {
-                syncManager = [self.syncConfig getSyncMaanger:responseId];
+                syncManager = [self.syncConfig getSyncManager:responseId];
                 if (syncManager != nil)
                 {
                     newDataResponse = [jsonResponse objectForKey:responseId];
@@ -282,7 +283,7 @@
         }
         else
         {
-            @throw([NSException exceptionWithName:@"InvalidThreadId" reason:@"The thread id is invalid." userInfo:nil]);
+            @throw([InvalidThreadIdException exceptionWithName:@"InvalidThreadId" reason:@"The thread id is invalid." userInfo:nil]);
         }
         
     } withSyncConfig:[self syncConfig]];
@@ -415,7 +416,14 @@
 -(void)fullSyncAsyncTask
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self fullSynchronousSync];
+        @try
+        {
+            [self fullSynchronousSync];
+        }
+        @catch (HttpException *exception)
+        {
+            [self postBackgroundSyncError:exception];
+        }
     });
 }
 
@@ -430,7 +438,8 @@
         {
             [self getDataFromServer:identifier withParameters:[parameters mutableCopy]];
         }
-        @catch (NSException *exception) {
+        @catch (HttpException *exception)
+        {
             [self postBackgroundSyncError:exception];
         }
         

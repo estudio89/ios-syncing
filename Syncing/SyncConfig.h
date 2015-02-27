@@ -20,7 +20,7 @@
 - (NSArray *)getSyncManagers;
 - (NSString *)getSendDataUrl;
 - (void)setTimestamp:(NSString *)timestamp;
-- (id<SyncManager>)getSyncMaanger:(NSString *)identifier;
+- (id<SyncManager>)getSyncManager:(NSString *)identifier;
 - (id<SyncManager>)getSyncManagerByResponseId:(NSString *)responseId;
 - (DatabaseProvider *)getDatabase;
 

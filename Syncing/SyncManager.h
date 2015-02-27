@@ -14,11 +14,11 @@
 - (NSString *)getIdentifier;
 - (NSString *)getResponseIdentifier;
 - (BOOL)shouldSendSingleObject;
-- (NSArray *)getModifiedData;
+- (NSMutableArray *)getModifiedData;
 - (BOOL)hasModifiedData;
-- (NSArray *)getModifiedFiles;
-- (NSArray *)getModifiedFilesForObject:(NSDictionary *)object;
-- (NSArray *)saveNewData:(NSArray *)jsonObjects withDeviceId:(NSString *)deviceId;
+- (NSMutableArray *)getModifiedFiles;
+- (NSMutableArray *)getModifiedFilesForObject:(NSDictionary *)object;
+- (NSMutableArray *)saveNewData:(NSArray *)jsonObjects withDeviceId:(NSString *)deviceId;
 - (void)processSendResponse:(NSArray *)jsonResponse;
 - (NSDictionary *)serializeObject:(NSObject *)object;
 - (NSObject *)saveObject:(NSDictionary *)object withDeviceId:(NSString *)deviceId;
