@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SyncManager.h"
+#import "DatabaseProvider.h"
 
 @interface SyncConfig : NSObject
 
@@ -21,5 +22,6 @@
 - (void)setTimestamp:(NSString *)timestamp;
 - (id<SyncManager>)getSyncMaanger:(NSString *)identifier;
 - (id<SyncManager>)getSyncManagerByResponseId:(NSString *)responseId;
+- (DatabaseProvider *)getDatabase;
 
 @end

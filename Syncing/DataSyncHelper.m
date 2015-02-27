@@ -8,6 +8,7 @@
 
 #import "DataSyncHelper.h"
 #import "SyncManager.h"
+#import "SharedModelContext.h"
 
 @interface DataSyncHelper()
 
@@ -50,8 +51,9 @@
 /**
  Init
  */
-- (instancetype)init
+- (instancetype)initWithContext:(NSManagedObjectContext *)context
 {
+    [[SharedModelContext sharedModelContext] setSharedModelContext:context];
     return [self initWithServer:[[ServerComm alloc] init]
                  withThreadChecker:[[ThreadChecker alloc] init]
                  withSyncConfig:[[SyncConfig alloc] init]
@@ -379,7 +381,7 @@
  */
 - (void)postSendFinishedEvent
 {
-    [self.bus post:[[SendFinishedEvent alloc] init]];
+    [self.bus post:[[SendFinishedEvent alloc] init] withNotificationname:@"postSendFinishedEvent"];
 }
 
 /**
@@ -387,7 +389,7 @@
  */
 - (void)postGetFinishedEvent
 {
-    [self.bus post:[[GetFinishedEvent alloc] init]];
+    [self.bus post:[[GetFinishedEvent alloc] init] withNotificationname:@"postGetFinishedEvent"];
 }
 
 /**
@@ -395,7 +397,7 @@
  */
 - (void)postSyncFinishedEvent
 {
-    [self.bus post:[[SyncFinishedEvent alloc] init]];
+    [self.bus post:[[SyncFinishedEvent alloc] init] withNotificationname:@"postSyncFinishedEvent"];
     NSLog(@"SyncFinishedEvent");
 }
 
@@ -404,7 +406,7 @@
  */
 - (void)postBackgroundSyncError:(NSException *)error
 {
-    [self.bus post:[[BackgroundSyncError alloc] initWithException:error]];
+    [self.bus post:[[BackgroundSyncError alloc] initWithException:error] withNotificationname:@"postBackgroundSyncError"];
 }
 
 /**

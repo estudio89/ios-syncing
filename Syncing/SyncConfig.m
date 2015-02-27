@@ -59,4 +59,9 @@
     return nil;
 }
 
+- (DatabaseProvider *)getDatabase
+{
+    return [[DatabaseProvider alloc] init];
+}
+
 @end

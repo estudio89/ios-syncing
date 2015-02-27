@@ -7,45 +7,17 @@
 //
 
 #import "AsyncBus.h"
-#import "DataSyncHelper.h"
 
 @implementation AsyncBus
 
-- (void)post:(id)object
+- (void)post:(id)object withNotificationname:(NSString *)notification;
 {
-    BOOL postEvent = YES;
-    NSString *event = @"";
-    
-    if ([object isKindOfClass:[SendFinishedEvent class]])
-    {
-        event = @"SendFinishedEvent";
-    }
-    else if ([object isKindOfClass:[GetFinishedEvent class]])
-    {
-        event = @"GetFinishedEvent";
-    }
-    else if ([object isKindOfClass:[SyncFinishedEvent class]])
-    {
-        event = @"SyncFinishedEvent";
-    }
-    else if ([object isKindOfClass:[BackgroundSyncError class]])
-    {
-        event = @"BackgroundSyncError";
-    }
-    else
-    {
-        postEvent = NO;
-    }
-    
-    if (postEvent)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:event object:object];
-    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:notification object:object];
 }
 
-- (void)subscribe:(id)observer withSelector:(SEL)selector withEventname:(NSString *)event withObject:(id)object
+- (void)subscribe:(id)observer withSelector:(SEL)selector withNotificationname:(NSString *)notification withObject:(id)object
 {
-    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:event object:object];
+    [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:notification object:object];
 }
 
 @end

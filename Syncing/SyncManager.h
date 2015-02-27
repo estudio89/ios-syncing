@@ -23,5 +23,6 @@
 - (NSDictionary *)serializeObject:(NSObject *)object;
 - (NSObject *)saveObject:(NSDictionary *)object withDeviceId:(NSString *)deviceId;
 - (void)postEvent:(NSArray *)objects withBus:(AsyncBus *)bus;
+- (NSString *)getNotificationName;
 
 @end

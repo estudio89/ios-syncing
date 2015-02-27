@@ -12,6 +12,7 @@
 #import "CustomTransactionManager.h"
 #import "AsyncBus.h"
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
 @interface DataSyncHelper : NSObject
 
@@ -21,6 +22,7 @@
 @property (nonatomic, readonly) CustomTransactionManager *transactionManager;
 @property (nonatomic, readonly) AsyncBus *bus;
 
+- (instancetype)initWithContext:(NSManagedObjectContext *)context;
 - (instancetype)initWithServer:(ServerComm *)serverComm
                 withThreadChecker:(ThreadChecker *)threadChecker
                 withSyncConfig:(SyncConfig *)syncConfig
