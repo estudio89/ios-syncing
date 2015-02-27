@@ -10,7 +10,6 @@
 
 @interface ServerComm : NSObject
 
-+ (id)getInstance;
 - (NSDictionary *)post:(NSString *)url withData:(NSDictionary *)data;
 - (NSDictionary *)post:(NSString *)url withData:(NSDictionary *)data withFiles:(NSArray *)files;
 
