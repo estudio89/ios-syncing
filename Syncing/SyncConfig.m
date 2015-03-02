@@ -16,6 +16,8 @@
 @property (nonatomic, strong, readwrite) NSString *mGetDataUrl;
 @property (nonatomic, strong, readwrite) NSString *mSendDataUrl;
 @property (nonatomic, strong, readwrite) NSString *mAuthenticateUrl;
+@property (nonatomic, strong, readwrite) NSString *accountType;
+@property (nonatomic, strong, readwrite) NSString *loginActivity;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *mModelGetDataUrls;
 
 @end
@@ -52,22 +54,122 @@
  */
 - (void)loadSettings
 {
-    
+    @try
+    {
+        NSString *jsonStr = [[NSString alloc] initWithContentsOfFile:[self configFile] encoding:NSUTF8StringEncoding error:nil];
+        NSData *data = [jsonStr dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        
+        self.mGetDataUrl = [jsonData valueForKey:@"getDataUrl"];
+        self.mSendDataUrl = [jsonData valueForKey:@"sendDataUrl"];
+        self.mAuthenticateUrl = [jsonData valueForKey:@"authenticateUrl"];
+        self.loginActivity = [jsonData valueForKey:@"loginActivity"];
+        self.accountType = [jsonData valueForKey:@"accountType"];
+        
+        id<SyncManager> syncManager;
+        NSString *getDataUrl = @"";
+        NSString *identifier = @"";
+        NSString *responseIdentifier = @"";
+        
+        NSArray *syncManagersJson = [jsonData objectForKey:@"syncManagers"];
+        for (NSDictionary *syncManagerJson in syncManagersJson)
+        {
+            syncManager = [[NSClassFromString([syncManagerJson valueForKey:@"class"]) alloc] init];
+            getDataUrl = [syncManagerJson valueForKey:@"getDataUrl"];
+            identifier = [syncManager getIdentifier];
+            responseIdentifier = [syncManager getResponseIdentifier];
+            [self.syncManagersByIdentifier setObject:syncManager forKey:identifier];
+            [self.syncManagersByResponseIdentifier setObject:syncManager forKey:responseIdentifier];
+            [self.mModelGetDataUrls setObject:getDataUrl forKey:identifier];
+        }
+    }
+    @catch (NSException *e)
+    {
+        @throw e;
+    }
 }
 
 - (void)setupSyncing
 {
-    
 }
 
+/**
+ getAuthToken
+ */
 - (NSString *)getAuthToken
 {
-    return @"";
+    NSString *authtoken = @"";
+    NSString *storedAuthtoken = [[NSUserDefaults standardUserDefaults] stringForKey:@"E89.iOS.Syncing-AuthToken"];
+    
+    if ([storedAuthtoken length] > 0)
+        authtoken = storedAuthtoken;
+    
+    return authtoken;
 }
 
+/**
+ setAuthToken
+ */
+- (void)setAuthToken:(NSString *)authToken
+{
+    [[NSUserDefaults standardUserDefaults] setValue:authToken forKey:@"E89.iOS.Syncing-AuthToken"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self setupSyncing];
+}
+
+/**
+ getTimestamp
+ */
 - (NSString *)getTimestamp
 {
-    return @"";
+    NSString *timestamp = @"";
+    NSString *storedTimestamp = [[NSUserDefaults standardUserDefaults] stringForKey:@"E89.iOS.Syncing-Timestamp"];
+    
+    if ([storedTimestamp length] > 0)
+        timestamp = storedTimestamp;
+    
+    return timestamp;
+}
+
+/**
+ setTimestamp
+ */
+- (void)setTimestamp:(NSString *)timestamp
+{
+    [[NSUserDefaults standardUserDefaults] setValue:timestamp forKey:@"E89.iOS.Syncing-Timestamp"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+/**
+ getUsername
+ */
+- (NSString *)getUsername
+{
+    NSString *username = @"";
+    NSString *storedUsername = [[NSUserDefaults standardUserDefaults] stringForKey:@"E89.iOS.Syncing-Username"];
+    
+    if ([storedUsername length] > 0)
+        username = storedUsername;
+    
+    return username;
+}
+
+/**
+ setUsername
+ */
+- (void)setUsername:(NSString *)username
+{
+    [[NSUserDefaults standardUserDefaults] setValue:username forKey:@"E89.iOS.Syncing-Username"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+/**
+ eraseSyncPreferences
+ */
+- (void)eraseSyncPreferences
+{
+    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
 }
 
 /**
@@ -93,9 +195,34 @@
     return url;
 }
 
+/**
+ getDeviceId
+ */
 - (NSString *)getDeviceId
 {
-    return @"";
+    NSString *deviceId = @"";
+    NSString *storedDeviceId = [[NSUserDefaults standardUserDefaults] stringForKey:@"E89.iOS.Syncing-DeviceId"];
+    
+    if ([storedDeviceId length] > 0)
+    {
+        deviceId = storedDeviceId;
+    }
+    else
+    {
+        deviceId = [[NSUUID UUID] UUIDString];
+        [self setDeviceId:deviceId];
+    }
+    
+    return deviceId;
+}
+
+/**
+ setDeviceId
+ */
+- (void)setDeviceId:(NSString *)newId
+{
+    [[NSUserDefaults standardUserDefaults] setValue:newId forKey:@"E89.iOS.Syncing-DeviceId"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 /**
@@ -112,11 +239,6 @@
 - (NSString *)getSendDataUrl
 {
     return self.mSendDataUrl;
-}
-
-- (void)setTimestamp:(NSString *)timestamp
-{
-    
 }
 
 /**
