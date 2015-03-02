@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import <OCMock/OCMock.h>
+#import "SyncConfig.h"
 
 @interface Syncing_Tests : XCTestCase
 
@@ -37,4 +39,15 @@
     }];
 }
 
+- (void)testSyncConfig
+{
+    SyncConfig *syncC = [[SyncConfig alloc] init];
+    id mockSyncC = [OCMockObject partialMockForObject:syncC];
+    
+    [mockSyncC setTimestamp:@"03-02-2015 17:16:21"];
+    
+    XCTAssertEqualObjects([mockSyncC getTimestamp], @"03-02-2015 17:16:21");
+}
+
 @end
+	

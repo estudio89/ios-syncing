@@ -12,7 +12,6 @@
 		7B3DDCA71A9DFB9900966A5B /* CustomTransactionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3DDCA61A9DFB9900966A5B /* CustomTransactionManager.m */; };
 		7B5F220C1A8D3AC50031E2F2 /* ServerComm.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5F220B1A8D3AC50031E2F2 /* ServerComm.m */; };
 		7BADD1211A8BD82B0005FC5E /* Syncing.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7BADD1201A8BD82B0005FC5E /* Syncing.h */; };
-		7BADD1291A8BD82B0005FC5E /* libSyncing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BADD11D1A8BD82B0005FC5E /* libSyncing.a */; };
 		7BADD13C1A8BDABF0005FC5E /* ThreadChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BADD13B1A8BDABF0005FC5E /* ThreadChecker.m */; };
 		7BAEDBBC1A97B69E0078AEA9 /* DataSyncHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BAEDBBB1A97B69E0078AEA9 /* DataSyncHelper.m */; };
 		7BB59EC51AA0ACD700783657 /* DatabaseProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BB59EC41AA0ACD700783657 /* DatabaseProvider.m */; };
@@ -20,16 +19,10 @@
 		7BE19A271AA0B92600E169EF /* SharedModelContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE19A261AA0B92600E169EF /* SharedModelContext.m */; };
 		7BF770AC1AA4A4C2007BCAD6 /* Syncing_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF770AB1AA4A4C2007BCAD6 /* Syncing_Tests.m */; };
 		7BF770AD1AA4A4C2007BCAD6 /* libSyncing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BADD11D1A8BD82B0005FC5E /* libSyncing.a */; };
+		7BF770BF1AA50717007BCAD6 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BF770B41AA50717007BCAD6 /* libOCMock.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		7BADD12A1A8BD82B0005FC5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7BADD1151A8BD82B0005FC5E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7BADD11C1A8BD82B0005FC5E;
-			remoteInfo = Syncing;
-		};
 		7BF770AE1AA4A4C2007BCAD6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7BADD1151A8BD82B0005FC5E /* Project object */;
@@ -65,8 +58,6 @@
 		7B5F220B1A8D3AC50031E2F2 /* ServerComm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerComm.m; sourceTree = "<group>"; };
 		7BADD11D1A8BD82B0005FC5E /* libSyncing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSyncing.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BADD1201A8BD82B0005FC5E /* Syncing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Syncing.h; sourceTree = "<group>"; };
-		7BADD1281A8BD82B0005FC5E /* SyncingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SyncingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7BADD12E1A8BD82B0005FC5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7BADD13A1A8BDABF0005FC5E /* ThreadChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadChecker.h; sourceTree = "<group>"; };
 		7BADD13B1A8BDABF0005FC5E /* ThreadChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadChecker.m; sourceTree = "<group>"; };
 		7BAEDBBA1A97B69E0078AEA9 /* DataSyncHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSyncHelper.h; sourceTree = "<group>"; };
@@ -80,6 +71,16 @@
 		7BF770A71AA4A4C2007BCAD6 /* Syncing Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Syncing Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BF770AA1AA4A4C2007BCAD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7BF770AB1AA4A4C2007BCAD6 /* Syncing_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Syncing_Tests.m; sourceTree = "<group>"; };
+		7BF770B41AA50717007BCAD6 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOCMock.a; path = Libraries/OCMock/libOCMock.a; sourceTree = "<group>"; };
+		7BF770B61AA50717007BCAD6 /* NSNotificationCenter+OCMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+OCMAdditions.h"; sourceTree = "<group>"; };
+		7BF770B71AA50717007BCAD6 /* OCMArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMArg.h; sourceTree = "<group>"; };
+		7BF770B81AA50717007BCAD6 /* OCMConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMConstraint.h; sourceTree = "<group>"; };
+		7BF770B91AA50717007BCAD6 /* OCMLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMLocation.h; sourceTree = "<group>"; };
+		7BF770BA1AA50717007BCAD6 /* OCMMacroState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMMacroState.h; sourceTree = "<group>"; };
+		7BF770BB1AA50717007BCAD6 /* OCMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMock.h; sourceTree = "<group>"; };
+		7BF770BC1AA50717007BCAD6 /* OCMockObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMockObject.h; sourceTree = "<group>"; };
+		7BF770BD1AA50717007BCAD6 /* OCMRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMRecorder.h; sourceTree = "<group>"; };
+		7BF770BE1AA50717007BCAD6 /* OCMStubRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMStubRecorder.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,18 +91,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7BADD1251A8BD82B0005FC5E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7BADD1291A8BD82B0005FC5E /* libSyncing.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		7BF770A41AA4A4C2007BCAD6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BF770BF1AA50717007BCAD6 /* libOCMock.a in Frameworks */,
 				7BF770AD1AA4A4C2007BCAD6 /* libSyncing.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -109,13 +103,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F6D19F3020C365660A18031 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7BF770B31AA506E4007BCAD6 /* OCMock */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7BADD1141A8BD82B0005FC5E = {
 			isa = PBXGroup;
 			children = (
 				7BADD11F1A8BD82B0005FC5E /* Syncing */,
-				7BADD12C1A8BD82B0005FC5E /* SyncingTests */,
 				7BF770A81AA4A4C2007BCAD6 /* Syncing Tests */,
 				7BADD11E1A8BD82B0005FC5E /* Products */,
+				3F6D19F3020C365660A18031 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -123,7 +125,6 @@
 			isa = PBXGroup;
 			children = (
 				7BADD11D1A8BD82B0005FC5E /* libSyncing.a */,
-				7BADD1281A8BD82B0005FC5E /* SyncingTests.xctest */,
 				7BF770A71AA4A4C2007BCAD6 /* Syncing Tests.xctest */,
 			);
 			name = Products;
@@ -157,22 +158,6 @@
 			path = Syncing;
 			sourceTree = "<group>";
 		};
-		7BADD12C1A8BD82B0005FC5E /* SyncingTests */ = {
-			isa = PBXGroup;
-			children = (
-				7BADD12D1A8BD82B0005FC5E /* Supporting Files */,
-			);
-			path = SyncingTests;
-			sourceTree = "<group>";
-		};
-		7BADD12D1A8BD82B0005FC5E /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				7BADD12E1A8BD82B0005FC5E /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		7BF770A81AA4A4C2007BCAD6 /* Syncing Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +173,32 @@
 				7BF770AA1AA4A4C2007BCAD6 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7BF770B31AA506E4007BCAD6 /* OCMock */ = {
+			isa = PBXGroup;
+			children = (
+				7BF770B41AA50717007BCAD6 /* libOCMock.a */,
+				7BF770B51AA50717007BCAD6 /* OCMock */,
+			);
+			name = OCMock;
+			sourceTree = "<group>";
+		};
+		7BF770B51AA50717007BCAD6 /* OCMock */ = {
+			isa = PBXGroup;
+			children = (
+				7BF770B61AA50717007BCAD6 /* NSNotificationCenter+OCMAdditions.h */,
+				7BF770B71AA50717007BCAD6 /* OCMArg.h */,
+				7BF770B81AA50717007BCAD6 /* OCMConstraint.h */,
+				7BF770B91AA50717007BCAD6 /* OCMLocation.h */,
+				7BF770BA1AA50717007BCAD6 /* OCMMacroState.h */,
+				7BF770BB1AA50717007BCAD6 /* OCMock.h */,
+				7BF770BC1AA50717007BCAD6 /* OCMockObject.h */,
+				7BF770BD1AA50717007BCAD6 /* OCMRecorder.h */,
+				7BF770BE1AA50717007BCAD6 /* OCMStubRecorder.h */,
+			);
+			name = OCMock;
+			path = Libraries/OCMock/OCMock;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,31 +221,15 @@
 			productReference = 7BADD11D1A8BD82B0005FC5E /* libSyncing.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		7BADD1271A8BD82B0005FC5E /* SyncingTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7BADD1341A8BD82B0005FC5E /* Build configuration list for PBXNativeTarget "SyncingTests" */;
-			buildPhases = (
-				7BADD1241A8BD82B0005FC5E /* Sources */,
-				7BADD1251A8BD82B0005FC5E /* Frameworks */,
-				7BADD1261A8BD82B0005FC5E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				7BADD12B1A8BD82B0005FC5E /* PBXTargetDependency */,
-			);
-			name = SyncingTests;
-			productName = SyncingTests;
-			productReference = 7BADD1281A8BD82B0005FC5E /* SyncingTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		7BF770A61AA4A4C2007BCAD6 /* Syncing Tests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7BF770B21AA4A4C2007BCAD6 /* Build configuration list for PBXNativeTarget "Syncing Tests" */;
 			buildPhases = (
+				97B56F5AD8175E48562AE511 /* Check Pods Manifest.lock */,
 				7BF770A31AA4A4C2007BCAD6 /* Sources */,
 				7BF770A41AA4A4C2007BCAD6 /* Frameworks */,
 				7BF770A51AA4A4C2007BCAD6 /* Resources */,
+				37E3067EC98B957C13511C78 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -258,9 +253,6 @@
 					7BADD11C1A8BD82B0005FC5E = {
 						CreatedOnToolsVersion = 6.1;
 					};
-					7BADD1271A8BD82B0005FC5E = {
-						CreatedOnToolsVersion = 6.1;
-					};
 					7BF770A61AA4A4C2007BCAD6 = {
 						CreatedOnToolsVersion = 6.1;
 					};
@@ -279,20 +271,12 @@
 			projectRoot = "";
 			targets = (
 				7BADD11C1A8BD82B0005FC5E /* Syncing */,
-				7BADD1271A8BD82B0005FC5E /* SyncingTests */,
 				7BF770A61AA4A4C2007BCAD6 /* Syncing Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		7BADD1261A8BD82B0005FC5E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		7BF770A51AA4A4C2007BCAD6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -301,6 +285,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		37E3067EC98B957C13511C78 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+			showEnvVarsInLog = 0;
+		};
+		97B56F5AD8175E48562AE511 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7BADD1191A8BD82B0005FC5E /* Sources */ = {
@@ -319,13 +336,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7BADD1241A8BD82B0005FC5E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		7BF770A31AA4A4C2007BCAD6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -337,11 +347,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		7BADD12B1A8BD82B0005FC5E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7BADD11C1A8BD82B0005FC5E /* Syncing */;
-			targetProxy = 7BADD12A1A8BD82B0005FC5E /* PBXContainerItemProxy */;
-		};
 		7BF770AF1AA4A4C2007BCAD6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7BADD11C1A8BD82B0005FC5E /* Syncing */;
@@ -353,7 +358,7 @@
 		7BADD12F1A8BD82B0005FC5E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -393,7 +398,7 @@
 		7BADD1301A8BD82B0005FC5E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -442,36 +447,6 @@
 			};
 			name = Release;
 		};
-		7BADD1351A8BD82B0005FC5E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = SyncingTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		7BADD1361A8BD82B0005FC5E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = SyncingTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		7BF770B01AA4A4C2007BCAD6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -483,8 +458,23 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				"HEADER_SEARCH_PATHS[arch=*]" = "\"${PROJECT_DIR}/Libraries/OCMock/OCMock\"";
 				INFOPLIST_FILE = "Syncing Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Libraries/OCMock",
+				);
+				"LIBRARY_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Libraries/OCMock",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-l\"Pods-Syncing Tests-OCMock\"",
+					"-force_load",
+					"\"${PROJECT_DIR}/Libraries/OCMock/libOCMock.a\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -496,8 +486,19 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
+				"HEADER_SEARCH_PATHS[arch=*]" = "\"${PROJECT_DIR}/Libraries\"";
 				INFOPLIST_FILE = "Syncing Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Libraries/OCMock",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-l\"Pods-Syncing Tests-OCMock\"",
+					"-force_load",
+					"\"${PROJECT_DIR}/Libraries/OCMock/libOCMock.a\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -523,15 +524,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7BADD1341A8BD82B0005FC5E /* Build configuration list for PBXNativeTarget "SyncingTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7BADD1351A8BD82B0005FC5E /* Debug */,
-				7BADD1361A8BD82B0005FC5E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		7BF770B21AA4A4C2007BCAD6 /* Build configuration list for PBXNativeTarget "Syncing Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -539,6 +531,7 @@
 				7BF770B11AA4A4C2007BCAD6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
