@@ -47,6 +47,9 @@
     [mockSyncC setTimestamp:@"03-02-2015 17:16:21"];
     
     XCTAssertEqualObjects([mockSyncC getTimestamp], @"03-02-2015 17:16:21");
+    
+    [mockSyncC setConfigFile:@"/Syncing Tests/syncing-config.json"];
+    //[mockSyncC setConfigFile:[[NSBundle mainBundle] pathForResource:@"syncing-config" ofType:@"json"]];
 }
 
 @end

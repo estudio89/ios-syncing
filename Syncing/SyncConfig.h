@@ -23,5 +23,6 @@
 - (id<SyncManager>)getSyncManager:(NSString *)identifier;
 - (id<SyncManager>)getSyncManagerByResponseId:(NSString *)responseId;
 - (DatabaseProvider *)getDatabase;
+- (void)setConfigFile:(NSString *)filename;
 
 @end

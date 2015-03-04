@@ -45,15 +45,15 @@
 - (void)setConfigFile:(NSString *)filename
 {
     self.configFile = filename;
-    [self loadSettings];
-    [self setupSyncing];
+    //[self loadSettings];
+    //[self setupSyncing];
 }
 
 /**
  loadSettings
  */
 - (void)loadSettings
-{
+{/*
     @try
     {
         NSString *jsonStr = [[NSString alloc] initWithContentsOfFile:[self configFile] encoding:NSUTF8StringEncoding error:nil];
@@ -86,7 +86,7 @@
     @catch (NSException *e)
     {
         @throw e;
-    }
+    }*/
 }
 
 - (void)setupSyncing

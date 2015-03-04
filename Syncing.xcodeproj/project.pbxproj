@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7B1F59491AA74DC900EDCC38 /* syncing-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B1F59481AA74DC900EDCC38 /* syncing-config.json */; };
 		7B27BFBC1A9A7F1000C7548E /* SyncConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B27BFBB1A9A7F1000C7548E /* SyncConfig.m */; };
 		7B3D13931AA0E68B0022525A /* CustomException.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3D13921AA0E68B0022525A /* CustomException.m */; };
 		7B3DDCA71A9DFB9900966A5B /* CustomTransactionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3DDCA61A9DFB9900966A5B /* CustomTransactionManager.m */; };
@@ -46,6 +47,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7B1F59481AA74DC900EDCC38 /* syncing-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "syncing-config.json"; sourceTree = "<group>"; };
 		7B27BFBA1A9A7F1000C7548E /* SyncConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncConfig.h; sourceTree = "<group>"; };
 		7B27BFBB1A9A7F1000C7548E /* SyncConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncConfig.m; sourceTree = "<group>"; };
 		7B3D13911AA0E68B0022525A /* CustomException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomException.h; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 		7BF770A91AA4A4C2007BCAD6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7B1F59481AA74DC900EDCC38 /* syncing-config.json */,
 				7BF770AA1AA4A4C2007BCAD6 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -281,6 +284,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B1F59491AA74DC900EDCC38 /* syncing-config.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,15 +454,17 @@
 		7BF770B01AA4A4C2007BCAD6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
+				FRAMEWORK_SEARCH_PATHS = "";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"${PROJECT_DIR}/Libraries/OCMock",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				"HEADER_SEARCH_PATHS[arch=*]" = "\"${PROJECT_DIR}/Libraries/OCMock/OCMock\"";
+				"HEADER_SEARCH_PATHS[arch=*]" = "\"${PROJECT_DIR}/Libraries/OCMock\"";
 				INFOPLIST_FILE = "Syncing Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -471,7 +477,6 @@
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
-					"-l\"Pods-Syncing Tests-OCMock\"",
 					"-force_load",
 					"\"${PROJECT_DIR}/Libraries/OCMock/libOCMock.a\"",
 				);
@@ -482,11 +487,13 @@
 		7BF770B11AA4A4C2007BCAD6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
+				FRAMEWORK_SEARCH_PATHS = "";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"${PROJECT_DIR}/Libraries/OCMock",
 				);
-				"HEADER_SEARCH_PATHS[arch=*]" = "\"${PROJECT_DIR}/Libraries\"";
+				"HEADER_SEARCH_PATHS[arch=*]" = "\"${PROJECT_DIR}/Libraries/OCMock\"";
 				INFOPLIST_FILE = "Syncing Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -495,7 +502,6 @@
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
-					"-l\"Pods-Syncing Tests-OCMock\"",
 					"-force_load",
 					"\"${PROJECT_DIR}/Libraries/OCMock/libOCMock.a\"",
 				);
