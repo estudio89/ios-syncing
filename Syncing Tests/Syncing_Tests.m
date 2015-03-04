@@ -42,14 +42,13 @@
 - (void)testSyncConfig
 {
     SyncConfig *syncC = [[SyncConfig alloc] init];
-    id mockSyncC = [OCMockObject partialMockForObject:syncC];
     
-    [mockSyncC setTimestamp:@"03-02-2015 17:16:21"];
+    //[syncC setTimestamp:@"03-02-2015 17:16:21"];
+    //XCTAssertEqualObjects([syncC getTimestamp], @"03-02-2015 17:16:21");
+
+    [syncC setConfigFile:@"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/syncing-config.json"];
     
-    XCTAssertEqualObjects([mockSyncC getTimestamp], @"03-02-2015 17:16:21");
-    
-    [mockSyncC setConfigFile:@"/Syncing Tests/syncing-config.json"];
-    //[mockSyncC setConfigFile:[[NSBundle mainBundle] pathForResource:@"syncing-config" ofType:@"json"]];
+    XCTAssertEqualObjects([syncC getGetDataUrl], @"http://api.estudio89.com.br/send-data");
 }
 
 @end

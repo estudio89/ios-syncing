@@ -10,7 +10,7 @@
 
 @interface SyncConfig()
 
-@property (nonatomic, strong, readwrite) NSString *configFile;
+@property (nonatomic, strong, readwrite) NSString *mConfigFile;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *syncManagersByIdentifier;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *syncManagersByResponseIdentifier;
 @property (nonatomic, strong, readwrite) NSString *mGetDataUrl;
@@ -31,9 +31,9 @@
 {
     if (self = [super init])
     {
-        self.syncManagersByIdentifier = [[NSMutableDictionary alloc] init];
-        self.syncManagersByResponseIdentifier = [[NSMutableDictionary alloc] init];
-        self.mModelGetDataUrls = [[NSMutableDictionary alloc] init];
+        _syncManagersByIdentifier = [[NSMutableDictionary alloc] init];
+        _syncManagersByResponseIdentifier = [[NSMutableDictionary alloc] init];
+        _mModelGetDataUrls = [[NSMutableDictionary alloc] init];
     }
     
     return self;
@@ -44,34 +44,34 @@
  */
 - (void)setConfigFile:(NSString *)filename
 {
-    self.configFile = filename;
-    //[self loadSettings];
-    //[self setupSyncing];
+    _mConfigFile = filename;
+    [self loadSettings];
 }
 
 /**
  loadSettings
  */
 - (void)loadSettings
-{/*
+{
     @try
     {
-        NSString *jsonStr = [[NSString alloc] initWithContentsOfFile:[self configFile] encoding:NSUTF8StringEncoding error:nil];
+        NSString *jsonStr = [[NSString alloc] initWithContentsOfFile:_mConfigFile encoding:NSUTF8StringEncoding error:nil];
         NSData *data = [jsonStr dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
         NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSDictionary *jsonConfig = [jsonData objectForKey:@"syncing"];
         
-        self.mGetDataUrl = [jsonData valueForKey:@"getDataUrl"];
-        self.mSendDataUrl = [jsonData valueForKey:@"sendDataUrl"];
-        self.mAuthenticateUrl = [jsonData valueForKey:@"authenticateUrl"];
-        self.loginActivity = [jsonData valueForKey:@"loginActivity"];
-        self.accountType = [jsonData valueForKey:@"accountType"];
+        _mGetDataUrl = [jsonConfig valueForKey:@"getDataUrl"];
+        _mSendDataUrl = [jsonConfig valueForKey:@"sendDataUrl"];
+        _mAuthenticateUrl = [jsonConfig valueForKey:@"authenticateUrl"];
+        _loginActivity = [jsonConfig valueForKey:@"loginActivity"];
+        _accountType = [jsonConfig valueForKey:@"accountType"];
         
         id<SyncManager> syncManager;
         NSString *getDataUrl = @"";
         NSString *identifier = @"";
         NSString *responseIdentifier = @"";
         
-        NSArray *syncManagersJson = [jsonData objectForKey:@"syncManagers"];
+        NSArray *syncManagersJson = [jsonConfig objectForKey:@"syncManagers"];
         for (NSDictionary *syncManagerJson in syncManagersJson)
         {
             syncManager = [[NSClassFromString([syncManagerJson valueForKey:@"class"]) alloc] init];
@@ -86,11 +86,7 @@
     @catch (NSException *e)
     {
         @throw e;
-    }*/
-}
-
-- (void)setupSyncing
-{
+    }
 }
 
 /**
@@ -114,7 +110,6 @@
 {
     [[NSUserDefaults standardUserDefaults] setValue:authToken forKey:@"E89.iOS.Syncing-AuthToken"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    [self setupSyncing];
 }
 
 /**
