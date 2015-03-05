@@ -92,6 +92,22 @@
 }
 
 /**
+ getAuthenticateUrl
+ */
+- (NSString *)getAuthenticateUrl
+{
+    return _mAuthenticateUrl;
+}
+
+/**
+ getAccountType
+ */
+- (NSString *)getAccountType
+{
+    return _accountType;
+}
+
+/**
  getAuthToken
  */
 - (NSString *)getAuthToken

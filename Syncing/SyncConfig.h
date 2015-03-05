@@ -12,6 +12,8 @@
 
 @interface SyncConfig : NSObject
 
+- (NSString *)getAuthenticateUrl;
+- (NSString *)getAccountType;
 - (NSString *)getAuthToken;
 - (NSString *)getTimestamp;
 - (NSString *)getGetDataUrl;

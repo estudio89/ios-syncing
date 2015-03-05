@@ -10,6 +10,7 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import "SyncConfig.h"
+#import "TestSyncManager.h"
 
 @interface Syncing_Tests : XCTestCase
 
@@ -43,12 +44,26 @@
 {
     SyncConfig *syncC = [[SyncConfig alloc] init];
     
-    //[syncC setTimestamp:@"03-02-2015 17:16:21"];
-    //XCTAssertEqualObjects([syncC getTimestamp], @"03-02-2015 17:16:21");
-
     [syncC setConfigFile:@"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/syncing-config.json"];
     
-    XCTAssertEqualObjects([syncC getGetDataUrl], @"http://api.estudio89.com.br/send-data");
+    // GetDataUrl
+    XCTAssertEqualObjects([syncC getGetDataUrl], @"http://api.estudio89.com.br/get-data");
+    
+    // SendDataUrl
+    XCTAssertEqualObjects([syncC getSendDataUrl], @"http://api.estudio89.com.br/send-data");
+    
+    // AuthenticateUrl
+    XCTAssertEqualObjects([syncC getAuthenticateUrl], @"http://api.estudio89.com.br/auth");
+    
+    // AccountType
+    XCTAssertEqualObjects([syncC getAccountType], @"br.com.estudio89");
+    
+    // SyncManagers
+    XCTAssertEqual([syncC.getSyncManagers count], 1);
+    XCTAssertEqualObjects([TestSyncManager class], [[syncC.getSyncManagers objectAtIndex:0] class]);
+    XCTAssertEqualObjects([TestSyncManager class], [[syncC getSyncManager:@"test"] class]);
+    XCTAssertEqualObjects([TestSyncManager class], [[syncC getSyncManagerByResponseId:@"test_id"] class]);
+    XCTAssertEqualObjects([syncC getGetDataUrlForModel:@"test"], @"http://api.estudio89.com.br/test/");
 }
 
 @end

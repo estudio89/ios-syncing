@@ -1,8 +1,8 @@
 {
     "syncing":
     {
-        "getDataUrl":"http://api.estudio89.com.br/send-data",
-        "sendDataUrl":"http://api.estudio89.com.br/get-data",
+        "getDataUrl":"http://api.estudio89.com.br/get-data",
+        "sendDataUrl":"http://api.estudio89.com.br/send-data",
         "syncManagers":[
                         {"class":"TestSyncManager", "getDataUrl":"http://api.estudio89.com.br/test/"}
                         ],
