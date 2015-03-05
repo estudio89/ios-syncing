@@ -23,7 +23,7 @@
  */
 - (NSString *)getResponseIdentifier
 {
-    return @"test";
+    return @"test_id";
 }
 
 /**

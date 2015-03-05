@@ -13,6 +13,8 @@
 		7B3D13931AA0E68B0022525A /* CustomException.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3D13921AA0E68B0022525A /* CustomException.m */; };
 		7B3DDCA71A9DFB9900966A5B /* CustomTransactionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3DDCA61A9DFB9900966A5B /* CustomTransactionManager.m */; };
 		7B5F220C1A8D3AC50031E2F2 /* ServerComm.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5F220B1A8D3AC50031E2F2 /* ServerComm.m */; };
+		7B63D8C51AA8CF0C005D781A /* SyncConfigTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B63D8C41AA8CF0C005D781A /* SyncConfigTests.m */; };
+		7B63D8C71AA8CF78005D781A /* ServerCommTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B63D8C61AA8CF78005D781A /* ServerCommTests.m */; };
 		7BADD1211A8BD82B0005FC5E /* Syncing.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7BADD1201A8BD82B0005FC5E /* Syncing.h */; };
 		7BADD13C1A8BDABF0005FC5E /* ThreadChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BADD13B1A8BDABF0005FC5E /* ThreadChecker.m */; };
 		7BAEDBBC1A97B69E0078AEA9 /* DataSyncHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BAEDBBB1A97B69E0078AEA9 /* DataSyncHelper.m */; };
@@ -61,6 +63,8 @@
 		7B5F22091A8D35880031E2F2 /* SyncEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncEvent.h; sourceTree = "<group>"; };
 		7B5F220A1A8D3AC50031E2F2 /* ServerComm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerComm.h; sourceTree = "<group>"; };
 		7B5F220B1A8D3AC50031E2F2 /* ServerComm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerComm.m; sourceTree = "<group>"; };
+		7B63D8C41AA8CF0C005D781A /* SyncConfigTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncConfigTests.m; sourceTree = "<group>"; };
+		7B63D8C61AA8CF78005D781A /* ServerCommTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerCommTests.m; sourceTree = "<group>"; };
 		7BADD11D1A8BD82B0005FC5E /* libSyncing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSyncing.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BADD1201A8BD82B0005FC5E /* Syncing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Syncing.h; sourceTree = "<group>"; };
 		7BADD13A1A8BDABF0005FC5E /* ThreadChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadChecker.h; sourceTree = "<group>"; };
@@ -166,6 +170,8 @@
 		7BF770A81AA4A4C2007BCAD6 /* Syncing Tests */ = {
 			isa = PBXGroup;
 			children = (
+				7B63D8C61AA8CF78005D781A /* ServerCommTests.m */,
+				7B63D8C41AA8CF0C005D781A /* SyncConfigTests.m */,
 				7BF770AB1AA4A4C2007BCAD6 /* Syncing_Tests.m */,
 				7BF770A91AA4A4C2007BCAD6 /* Supporting Files */,
 				7B1F594A1AA7B1DD00EDCC38 /* TestSyncManager.h */,
@@ -349,7 +355,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B63D8C51AA8CF0C005D781A /* SyncConfigTests.m in Sources */,
 				7B1F594C1AA7B1DD00EDCC38 /* TestSyncManager.m in Sources */,
+				7B63D8C71AA8CF78005D781A /* ServerCommTests.m in Sources */,
 				7BF770AC1AA4A4C2007BCAD6 /* Syncing_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
