@@ -21,7 +21,7 @@
 - (NSMutableArray *)saveNewData:(NSArray *)jsonObjects withDeviceId:(NSString *)deviceId;
 - (void)processSendResponse:(NSArray *)jsonResponse;
 - (NSDictionary *)serializeObject:(NSObject *)object;
-- (NSObject *)saveObject:(NSDictionary *)object withDeviceId:(NSString *)deviceId;
+- (id)saveObject:(NSDictionary *)object withDeviceId:(NSString *)deviceId;
 - (void)postEvent:(NSArray *)objects withBus:(AsyncBus *)bus;
 - (NSString *)getNotificationName;
 

@@ -67,6 +67,7 @@
         _accountType = [jsonConfig valueForKey:@"accountType"];
         
         id<SyncManager> syncManager;
+        Class klass;
         NSString *getDataUrl = @"";
         NSString *identifier = @"";
         NSString *responseIdentifier = @"";
@@ -74,7 +75,8 @@
         NSArray *syncManagersJson = [jsonConfig objectForKey:@"syncManagers"];
         for (NSDictionary *syncManagerJson in syncManagersJson)
         {
-            syncManager = [[NSClassFromString([syncManagerJson valueForKey:@"class"]) alloc] init];
+            klass = NSClassFromString([syncManagerJson valueForKey:@"class"]);
+            syncManager = [[klass alloc] init];
             getDataUrl = [syncManagerJson valueForKey:@"getDataUrl"];
             identifier = [syncManager getIdentifier];
             responseIdentifier = [syncManager getResponseIdentifier];

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7B1F59491AA74DC900EDCC38 /* syncing-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B1F59481AA74DC900EDCC38 /* syncing-config.json */; };
+		7B1F594C1AA7B1DD00EDCC38 /* TestSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1F594B1AA7B1DD00EDCC38 /* TestSyncManager.m */; };
 		7B27BFBC1A9A7F1000C7548E /* SyncConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B27BFBB1A9A7F1000C7548E /* SyncConfig.m */; };
 		7B3D13931AA0E68B0022525A /* CustomException.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3D13921AA0E68B0022525A /* CustomException.m */; };
 		7B3DDCA71A9DFB9900966A5B /* CustomTransactionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3DDCA61A9DFB9900966A5B /* CustomTransactionManager.m */; };
@@ -48,6 +49,8 @@
 
 /* Begin PBXFileReference section */
 		7B1F59481AA74DC900EDCC38 /* syncing-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "syncing-config.json"; sourceTree = "<group>"; };
+		7B1F594A1AA7B1DD00EDCC38 /* TestSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSyncManager.h; sourceTree = "<group>"; };
+		7B1F594B1AA7B1DD00EDCC38 /* TestSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSyncManager.m; sourceTree = "<group>"; };
 		7B27BFBA1A9A7F1000C7548E /* SyncConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncConfig.h; sourceTree = "<group>"; };
 		7B27BFBB1A9A7F1000C7548E /* SyncConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncConfig.m; sourceTree = "<group>"; };
 		7B3D13911AA0E68B0022525A /* CustomException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomException.h; sourceTree = "<group>"; };
@@ -165,6 +168,8 @@
 			children = (
 				7BF770AB1AA4A4C2007BCAD6 /* Syncing_Tests.m */,
 				7BF770A91AA4A4C2007BCAD6 /* Supporting Files */,
+				7B1F594A1AA7B1DD00EDCC38 /* TestSyncManager.h */,
+				7B1F594B1AA7B1DD00EDCC38 /* TestSyncManager.m */,
 			);
 			path = "Syncing Tests";
 			sourceTree = "<group>";
@@ -344,6 +349,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B1F594C1AA7B1DD00EDCC38 /* TestSyncManager.m in Sources */,
 				7BF770AC1AA4A4C2007BCAD6 /* Syncing_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
