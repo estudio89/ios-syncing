@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
+#import <OHHTTPStubs/OHHTTPStubs.h>
 #import "ServerComm.h"
 
 @interface ServerCommTests : XCTestCase
@@ -44,12 +45,21 @@
  */
 - (void)test403Response
 {
+    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
+        return [request.URL.host isEqualToString:@"http://www.estudio89.com.br"];
+    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
+        // Stub it with our "wsresponse.json" stub file
+        NSString* fixture = OHPathForFileInBundle(@"wsresponse.json",nil);
+        return [OHHTTPStubsResponse responseWithFileAtPath:fixture
+                                                statusCode:200 headers:@{@"Content-Type":@"application/json"}];
+    }];
+    
     ServerComm *serverComm = [[ServerComm alloc] init];
     id test = OCMPartialMock(serverComm);
     
     NSDictionary *data = @{@"token":@"123"};
     
-    //[serverComm post:@"http://www.estudio89.com.br/" withData:data];
+    [serverComm post:@"http://www.estudio89.com.br" withData:data];
 }
 
 @end

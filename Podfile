@@ -7,5 +7,6 @@ end
 
 target 'Syncing Tests' do
 pod 'OCMOCK'
+pod 'OHHTTPStubs'
 end
 
