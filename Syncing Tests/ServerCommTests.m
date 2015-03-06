@@ -45,14 +45,11 @@
 - (void)test403Response
 {
     ServerComm *serverComm = [[ServerComm alloc] init];
-    id mockServerComm = [OCMockObject partialMockForObject:serverComm];
+    id test = OCMPartialMock(serverComm);
     
-    NSURLConnection *dummyUrlConn = [[NSURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.estudio89.com.br/"]] delegate:nil startImmediately:NO];
-    
-    NSString *url = [[[dummyUrlConn currentRequest] URL] absoluteString];
     NSDictionary *data = @{@"token":@"123"};
     
-    [mockServerComm post:@"http://www.estudio89.com.br/" withData:data];
+    //[serverComm post:@"http://www.estudio89.com.br/" withData:data];
 }
 
 @end
