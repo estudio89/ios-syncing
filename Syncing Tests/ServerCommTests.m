@@ -25,6 +25,7 @@
 
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
+    [OHHTTPStubs removeAllStubs];
     [super tearDown];
 }
 
@@ -46,17 +47,14 @@
 - (void)test403Response
 {
     [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
-        return [request.URL.host isEqualToString:@"http://www.estudio89.com.br"];
+        return YES;
     } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
-        // Stub it with our "wsresponse.json" stub file
-        NSString* fixture = OHPathForFileInBundle(@"wsresponse.json",nil);
-        return [OHHTTPStubsResponse responseWithFileAtPath:fixture
-                                                statusCode:200 headers:@{@"Content-Type":@"application/json"}];
+        NSData *stubData = [@"403response" dataUsingEncoding:NSUTF8StringEncoding];
+        return [OHHTTPStubsResponse responseWithData:stubData statusCode:403 headers:nil];
     }];
     
     ServerComm *serverComm = [[ServerComm alloc] init];
-    id test = OCMPartialMock(serverComm);
-    
+
     NSDictionary *data = @{@"token":@"123"};
     
     [serverComm post:@"http://www.estudio89.com.br" withData:data];
