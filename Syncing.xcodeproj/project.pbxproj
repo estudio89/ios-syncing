@@ -24,8 +24,12 @@
 		7BB59EC51AA0ACD700783657 /* DatabaseProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BB59EC41AA0ACD700783657 /* DatabaseProvider.m */; };
 		7BB63C781A9F977C00C0124C /* AsyncBus.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BB63C771A9F977C00C0124C /* AsyncBus.m */; };
 		7BB7A1401AADED3E00E0330F /* modified-data-empresas.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BB7A13F1AADED3E00E0330F /* modified-data-empresas.json */; };
+		7BB7A1421AAE12B700E0330F /* get-data-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BB7A1411AAE12B700E0330F /* get-data-response.json */; };
+		7BB7A1441AAE12C900E0330F /* send-data-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BB7A1431AAE12C900E0330F /* send-data-response.json */; };
+		7BB7A1461AAE12DE00E0330F /* get-data-for-model-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BB7A1451AAE12DE00E0330F /* get-data-for-model-response.json */; };
 		7BC4B2CF1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC4B2CE1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a */; };
 		7BC4B2D11AAA3643000F30AE /* libPods-Syncing Tests-OCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC4B2D01AAA3643000F30AE /* libPods-Syncing Tests-OCMock.a */; };
+		7BD4BADB1AAE19EE00194BFB /* get-data-request.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BD4BADA1AAE19EE00194BFB /* get-data-request.json */; };
 		7BE19A271AA0B92600E169EF /* SharedModelContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE19A261AA0B92600E169EF /* SharedModelContext.m */; };
 		7BF770AC1AA4A4C2007BCAD6 /* Syncing_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF770AB1AA4A4C2007BCAD6 /* Syncing_Tests.m */; };
 		7BF770AD1AA4A4C2007BCAD6 /* libSyncing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BADD11D1A8BD82B0005FC5E /* libSyncing.a */; };
@@ -85,9 +89,13 @@
 		7BB63C761A9F977C00C0124C /* AsyncBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncBus.h; sourceTree = "<group>"; };
 		7BB63C771A9F977C00C0124C /* AsyncBus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncBus.m; sourceTree = "<group>"; };
 		7BB7A13F1AADED3E00E0330F /* modified-data-empresas.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "modified-data-empresas.json"; sourceTree = "<group>"; };
+		7BB7A1411AAE12B700E0330F /* get-data-response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "get-data-response.json"; sourceTree = "<group>"; };
+		7BB7A1431AAE12C900E0330F /* send-data-response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "send-data-response.json"; sourceTree = "<group>"; };
+		7BB7A1451AAE12DE00E0330F /* get-data-for-model-response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "get-data-for-model-response.json"; sourceTree = "<group>"; };
 		7BC4B2CC1AAA3547000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OHHTTPStubs.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OHHTTPStubs.a"; sourceTree = "<group>"; };
 		7BC4B2CE1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OHHTTPStubs.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OHHTTPStubs.a"; sourceTree = "<group>"; };
 		7BC4B2D01AAA3643000F30AE /* libPods-Syncing Tests-OCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OCMock.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OCMock.a"; sourceTree = "<group>"; };
+		7BD4BADA1AAE19EE00194BFB /* get-data-request.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "get-data-request.json"; sourceTree = "<group>"; };
 		7BE19A251AA0B92600E169EF /* SharedModelContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedModelContext.h; sourceTree = "<group>"; };
 		7BE19A261AA0B92600E169EF /* SharedModelContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedModelContext.m; sourceTree = "<group>"; };
 		7BF770A71AA4A4C2007BCAD6 /* Syncing Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Syncing Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -207,6 +215,10 @@
 				7BF770AA1AA4A4C2007BCAD6 /* Info.plist */,
 				7B2E8A4C1AADDF320069DF31 /* modified-data-registros.json */,
 				7BB7A13F1AADED3E00E0330F /* modified-data-empresas.json */,
+				7BB7A1411AAE12B700E0330F /* get-data-response.json */,
+				7BB7A1431AAE12C900E0330F /* send-data-response.json */,
+				7BB7A1451AAE12DE00E0330F /* get-data-for-model-response.json */,
+				7BD4BADA1AAE19EE00194BFB /* get-data-request.json */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -291,7 +303,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BB7A1461AAE12DE00E0330F /* get-data-for-model-response.json in Resources */,
 				7B1F59491AA74DC900EDCC38 /* syncing-config.json in Resources */,
+				7BB7A1421AAE12B700E0330F /* get-data-response.json in Resources */,
+				7BB7A1441AAE12C900E0330F /* send-data-response.json in Resources */,
+				7BD4BADB1AAE19EE00194BFB /* get-data-request.json in Resources */,
 				7B2E8A4D1AADDF320069DF31 /* modified-data-registros.json in Resources */,
 				7BB7A1401AADED3E00E0330F /* modified-data-empresas.json in Resources */,
 			);
