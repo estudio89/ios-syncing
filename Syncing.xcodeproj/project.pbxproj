@@ -11,6 +11,8 @@
 		7B1F59491AA74DC900EDCC38 /* syncing-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B1F59481AA74DC900EDCC38 /* syncing-config.json */; };
 		7B1F594C1AA7B1DD00EDCC38 /* TestSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1F594B1AA7B1DD00EDCC38 /* TestSyncManager.m */; };
 		7B27BFBC1A9A7F1000C7548E /* SyncConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B27BFBB1A9A7F1000C7548E /* SyncConfig.m */; };
+		7B2E8A4B1AADD7180069DF31 /* DataSyncHelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B2E8A4A1AADD7180069DF31 /* DataSyncHelperTests.m */; };
+		7B2E8A4D1AADDF320069DF31 /* modified-data-registros.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B2E8A4C1AADDF320069DF31 /* modified-data-registros.json */; };
 		7B3D13931AA0E68B0022525A /* CustomException.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3D13921AA0E68B0022525A /* CustomException.m */; };
 		7B3DDCA71A9DFB9900966A5B /* CustomTransactionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3DDCA61A9DFB9900966A5B /* CustomTransactionManager.m */; };
 		7B5F220C1A8D3AC50031E2F2 /* ServerComm.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5F220B1A8D3AC50031E2F2 /* ServerComm.m */; };
@@ -21,6 +23,7 @@
 		7BAEDBBC1A97B69E0078AEA9 /* DataSyncHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BAEDBBB1A97B69E0078AEA9 /* DataSyncHelper.m */; };
 		7BB59EC51AA0ACD700783657 /* DatabaseProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BB59EC41AA0ACD700783657 /* DatabaseProvider.m */; };
 		7BB63C781A9F977C00C0124C /* AsyncBus.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BB63C771A9F977C00C0124C /* AsyncBus.m */; };
+		7BB7A1401AADED3E00E0330F /* modified-data-empresas.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BB7A13F1AADED3E00E0330F /* modified-data-empresas.json */; };
 		7BC4B2CF1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC4B2CE1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a */; };
 		7BC4B2D11AAA3643000F30AE /* libPods-Syncing Tests-OCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC4B2D01AAA3643000F30AE /* libPods-Syncing Tests-OCMock.a */; };
 		7BE19A271AA0B92600E169EF /* SharedModelContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE19A261AA0B92600E169EF /* SharedModelContext.m */; };
@@ -59,6 +62,8 @@
 		7B1F594B1AA7B1DD00EDCC38 /* TestSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSyncManager.m; sourceTree = "<group>"; };
 		7B27BFBA1A9A7F1000C7548E /* SyncConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncConfig.h; sourceTree = "<group>"; };
 		7B27BFBB1A9A7F1000C7548E /* SyncConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncConfig.m; sourceTree = "<group>"; };
+		7B2E8A4A1AADD7180069DF31 /* DataSyncHelperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSyncHelperTests.m; sourceTree = "<group>"; };
+		7B2E8A4C1AADDF320069DF31 /* modified-data-registros.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "modified-data-registros.json"; sourceTree = "<group>"; };
 		7B3D13911AA0E68B0022525A /* CustomException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomException.h; sourceTree = "<group>"; };
 		7B3D13921AA0E68B0022525A /* CustomException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomException.m; sourceTree = "<group>"; };
 		7B3DDCA51A9DFB9900966A5B /* CustomTransactionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTransactionManager.h; sourceTree = "<group>"; };
@@ -79,6 +84,7 @@
 		7BB59EC41AA0ACD700783657 /* DatabaseProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseProvider.m; sourceTree = "<group>"; };
 		7BB63C761A9F977C00C0124C /* AsyncBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncBus.h; sourceTree = "<group>"; };
 		7BB63C771A9F977C00C0124C /* AsyncBus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncBus.m; sourceTree = "<group>"; };
+		7BB7A13F1AADED3E00E0330F /* modified-data-empresas.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "modified-data-empresas.json"; sourceTree = "<group>"; };
 		7BC4B2CC1AAA3547000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OHHTTPStubs.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OHHTTPStubs.a"; sourceTree = "<group>"; };
 		7BC4B2CE1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OHHTTPStubs.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OHHTTPStubs.a"; sourceTree = "<group>"; };
 		7BC4B2D01AAA3643000F30AE /* libPods-Syncing Tests-OCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OCMock.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OCMock.a"; sourceTree = "<group>"; };
@@ -183,6 +189,7 @@
 		7BF770A81AA4A4C2007BCAD6 /* Syncing Tests */ = {
 			isa = PBXGroup;
 			children = (
+				7B2E8A4A1AADD7180069DF31 /* DataSyncHelperTests.m */,
 				7B63D8C61AA8CF78005D781A /* ServerCommTests.m */,
 				7B63D8C41AA8CF0C005D781A /* SyncConfigTests.m */,
 				7BF770AB1AA4A4C2007BCAD6 /* Syncing_Tests.m */,
@@ -198,6 +205,8 @@
 			children = (
 				7B1F59481AA74DC900EDCC38 /* syncing-config.json */,
 				7BF770AA1AA4A4C2007BCAD6 /* Info.plist */,
+				7B2E8A4C1AADDF320069DF31 /* modified-data-registros.json */,
+				7BB7A13F1AADED3E00E0330F /* modified-data-empresas.json */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -283,6 +292,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B1F59491AA74DC900EDCC38 /* syncing-config.json in Resources */,
+				7B2E8A4D1AADDF320069DF31 /* modified-data-registros.json in Resources */,
+				7BB7A1401AADED3E00E0330F /* modified-data-empresas.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,6 +353,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B2E8A4B1AADD7180069DF31 /* DataSyncHelperTests.m in Sources */,
 				7B63D8C51AA8CF0C005D781A /* SyncConfigTests.m in Sources */,
 				7B1F594C1AA7B1DD00EDCC38 /* TestSyncManager.m in Sources */,
 				7B63D8C71AA8CF78005D781A /* ServerCommTests.m in Sources */,

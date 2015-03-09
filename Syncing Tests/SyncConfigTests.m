@@ -39,6 +39,9 @@
     }];
 }
 
+/**
+ testSyncConfig
+ */
 - (void)testSyncConfig
 {
     SyncConfig *syncC = [[SyncConfig alloc] init];
@@ -58,7 +61,7 @@
     XCTAssertEqualObjects([syncC getAccountType], @"br.com.estudio89");
     
     // SyncManagers
-    XCTAssertEqual([syncC.getSyncManagers count], 1);
+    XCTAssertTrue([syncC.getSyncManagers count] == 1);
     XCTAssertEqualObjects([TestSyncManager class], [[syncC.getSyncManagers objectAtIndex:0] class]);
     XCTAssertEqualObjects([TestSyncManager class], [[syncC getSyncManager:@"test"] class]);
     XCTAssertEqualObjects([TestSyncManager class], [[syncC getSyncManagerByResponseId:@"test_id"] class]);
