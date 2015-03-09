@@ -11,6 +11,7 @@
 #import <OCMock/OCMock.h>
 #import <OHHTTPStubs/OHHTTPStubs.h>
 #import "ServerComm.h"
+#import "CustomException.h"
 
 @interface ServerCommTests : XCTestCase
 
@@ -42,6 +43,26 @@
 }
 
 /**
+ test200Response
+ */
+- (void)test200Response
+{
+    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
+        return YES;
+    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
+        NSDictionary *obj = @{@"response":@"200"};
+        return [OHHTTPStubsResponse responseWithJSONObject:obj statusCode:200 headers:nil];
+    }];
+    
+    ServerComm *serverComm = [[ServerComm alloc] init];
+    NSDictionary *data = @{@"token":@"123"};
+    
+    NSDictionary *postResponse = [serverComm post:@"http://www.estudio89.com.br" withData:data];
+    
+    XCTAssertEqualObjects([postResponse valueForKey:@"response"], @"200");
+}
+
+/**
  test403Response
  */
 - (void)test403Response
@@ -54,10 +75,63 @@
     }];
     
     ServerComm *serverComm = [[ServerComm alloc] init];
-
     NSDictionary *data = @{@"token":@"123"};
     
-    [serverComm post:@"http://www.estudio89.com.br" withData:data];
+    XCTAssertThrowsSpecific([serverComm post:@"http://www.estudio89.com.br" withData:data], Http403Exception);
+}
+
+/**
+ test408Response
+ */
+- (void)test408Response
+{
+    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
+        return YES;
+    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
+        NSData *stubData = [@"408response" dataUsingEncoding:NSUTF8StringEncoding];
+        return [OHHTTPStubsResponse responseWithData:stubData statusCode:408 headers:nil];
+    }];
+    
+    ServerComm *serverComm = [[ServerComm alloc] init];
+    NSDictionary *data = @{@"token":@"123"};
+    
+    XCTAssertThrowsSpecific([serverComm post:@"http://www.estudio89.com.br" withData:data], Http408Exception);
+}
+
+/**
+ test500Response
+ */
+- (void)test500Response
+{
+    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
+        return YES;
+    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
+        NSData *stubData = [@"500response" dataUsingEncoding:NSUTF8StringEncoding];
+        return [OHHTTPStubsResponse responseWithData:stubData statusCode:500 headers:nil];
+    }];
+    
+    ServerComm *serverComm = [[ServerComm alloc] init];
+    NSDictionary *data = @{@"token":@"123"};
+    
+    XCTAssertThrowsSpecific([serverComm post:@"http://www.estudio89.com.br" withData:data], Http500Exception);
+}
+
+/**
+ testContentType
+ */
+- (void)testContentType
+{
+    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
+        return YES;
+    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
+        NSData *stubData = [@"testContentType" dataUsingEncoding:NSUTF8StringEncoding];
+        return [OHHTTPStubsResponse responseWithData:stubData statusCode:200 headers:@{@"Content-Type":@"text/html; charset=utf-8"}];
+    }];
+    
+    ServerComm *serverComm = [[ServerComm alloc] init];
+    NSDictionary *data = @{@"token":@"123"};
+    
+    XCTAssertThrowsSpecific([serverComm post:@"http://www.estudio89.com.br" withData:data], Http403Exception);
 }
 
 @end

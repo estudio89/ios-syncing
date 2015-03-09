@@ -93,6 +93,12 @@
         @throw([Http500Exception exceptionWithName:@"Http internal server error" reason:@"An error occurred on the server." userInfo:nil]);
     }
     
+    NSString *ct = [requestResponse.allHeaderFields valueForKey:@"Content-Type"];
+    if ([ct rangeOfString:@"application/json"].location == NSNotFound)
+    {
+        @throw([Http403Exception exceptionWithName:@"Http request forbiden" reason:@"The server is refusing to respond." userInfo:nil]);
+    }
+    
     NSString *requestReply = [[NSString alloc] initWithBytes:[requestHandler bytes] length:[requestHandler length] encoding:NSUTF8StringEncoding];
     NSData *dataReply = [requestReply dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     NSDictionary *jsonReply = [NSJSONSerialization JSONObjectWithData:dataReply options:kNilOptions error:&error];
