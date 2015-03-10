@@ -326,7 +326,164 @@
     assertThat([[argument allValues] objectAtIndex:0], is(formulariosArray));
     
     // verificando o post
-    [verify(_syncManagerRegistros)]
+    [verify(_syncManagerRegistros) postEvent:anything() withBus:anything()];
+    
+    // verificando o timestamp
+    [verify(_syncConfig) setTimestamp:@"777"];
+    
+    // get data realizado
+    assertThatBool(completed, equalToBool(YES));
 }
+
+/**
+ testGetDataFromServerFail
+ */
+- (void)testGetDataFromServerFail
+{
+    // thread interrompido
+    ThreadChecker *threadChecker = mock([ThreadChecker class]);
+    [given([threadChecker isValidThreadId:anything()]) willReturn:@NO];
+    _dataSyncHelper.threadChecker = threadChecker;
+    BOOL completed = [_dataSyncHelper getDataFromServer];
+    
+    // assegurando que o banco de dados nao fez commit
+    //...
+    
+    // assegurando que o timestamp nao foi salvo
+    [verifyCount(_syncConfig, never()) setTimestamp:anything()];
+    
+    // get data naor ealizado
+    assertThatBool(completed, equalToBool(NO));
+}
+
+/**
+ testGetDataFromServerForModel
+ */
+- (void)testGetDataFromServerForModel
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [parameters setObject:[NSNumber numberWithInt:5] forKey:@"newest_id"];
+    BOOL completed = [_dataSyncHelper getDataFromServer:@"registros" withParameters:parameters];
+    
+    // verificando o post
+    NSString *jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/get-data-for-model-request.json";
+    NSString *json = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
+    NSData *data = [json dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    
+    MKTArgumentCaptor *argument = [[MKTArgumentCaptor alloc] init];
+    [verify(_serverComm) post:[argument capture] withData:[argument capture]];
+    assertThat([[argument allValues] objectAtIndex:0], is(@"http://127.0.0.1:8000/api/get-data/registros/"));
+    assertThat([[argument allValues] objectAtIndex:1], equalTo(jsonData));
+    
+    // verificando os dados
+    jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/get-data-for-model-response.json";
+    json = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
+    data = [json dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSArray *registrosArray = [jsonData objectForKey:@"registros"];
+    NSArray *empresasArray = [jsonData objectForKey:@"empresas"];
+    
+    assertThatBool([_customTransactionManager wasSuccessful], equalToBool(YES));
+    
+    // registros
+    argument = [[MKTArgumentCaptor alloc] init];
+    [verify(_syncManagerRegistros) saveNewData:[argument capture] withDeviceId:[argument capture]];
+    assertThat([[argument allValues] objectAtIndex:0], is(registrosArray));
+    
+    // empresas
+    argument = [[MKTArgumentCaptor alloc] init];
+    [verify(_syncManagerEmpresas) saveNewData:[argument capture] withDeviceId:[argument capture]];
+    assertThat([[argument allValues] objectAtIndex:0], is(empresasArray));
+    
+    // formularios
+    [verifyCount(_syncManagerFormularios, never()) saveNewData:anything() withDeviceId:anything()];
+    
+    // verificando o timestamp
+    [verifyCount(_syncConfig, never()) setTimestamp:anything()];
+    
+    // get data realizado
+    assertThatBool(completed, equalToBool(YES));
+}
+
+/**
+ testGetDataFromServerForModelFail
+ */
+- (void)testGetDataFromServerForModelFail
+{
+    // thread interrompido
+    ThreadChecker *threadChecker = mock([ThreadChecker class]);
+    [given([threadChecker isValidThreadId:anything()]) willReturn:@NO];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [parameters setObject:[NSNumber numberWithInt:5] forKey:@"newest_id"];
+    _dataSyncHelper.threadChecker = threadChecker;
+    
+    BOOL completed = [_dataSyncHelper getDataFromServer:@"registros" withParameters:parameters];
+    
+    // assegurando que o banco de dados nao fez commit
+    //...
+    
+    // assegurando que o timestamp nao foi salvo
+    [verifyCount(_syncConfig, never()) setTimestamp:anything()];
+    
+    // get data naor ealizado
+    assertThatBool(completed, equalToBool(NO));
+}
+
+/**
+ testSendDataToServerMultiple
+ */
+- (void)testSendDataToServerMultiple
+{
+    BOOL completed = [_dataSyncHelper sendDataToServer];
+    
+    // verificando o post
+    NSString *jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/send-data-request.json";
+    NSString *json = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
+    NSData *data = [json dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    
+    MKTArgumentCaptor *argument = [[MKTArgumentCaptor alloc] init];
+    [verify(_serverComm) post:[argument capture] withData:[argument capture] withFiles:[argument capture]];
+    assertThat([[argument allValues] objectAtIndex:0], is(@"http://127.0.0.1:8000/api/send-data/"));
+    assertThat([[argument allValues] objectAtIndex:1], is(jsonData));
+    assertThat([[argument allValues] objectAtIndex:2], is(_modifiedFiles));
+    
+    // verificando os dados
+    jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/send-data-response.json";
+    json = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
+    data = [json dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSArray *registrosArray = [jsonData objectForKey:@"registros_id"];
+    NSArray *empresasArray = [jsonData objectForKey:@"empresas_id"];
+    
+    assertThatBool([_customTransactionManager wasSuccessful], equalToBool(YES));
+    
+    // registros
+    argument = [[MKTArgumentCaptor alloc] init];
+    [verify(_syncManagerRegistros) processSendResponse:[argument capture]];
+    assertThat([[argument allValues] objectAtIndex:0], is(registrosArray));
+    
+    // empresas
+    argument = [[MKTArgumentCaptor alloc] init];
+    [verify(_syncManagerEmpresas) processSendResponse:[argument capture]];
+    assertThat([[argument allValues] objectAtIndex:0], is(empresasArray));
+    
+    NSArray *newEmpresasArray = [jsonData objectForKey:@"empresas"];
+    argument = [[MKTArgumentCaptor alloc] init];
+    [verify(_syncManagerEmpresas) saveNewData:[argument capture] withDeviceId:[argument capture]];
+    assertThat([[argument allValues] objectAtIndex:0], is(newEmpresasArray));
+    
+    // verificando o post
+    [verifyCount(_syncManagerRegistros, never()) postEvent:anything() withBus:anything()];
+    [verify(_syncManagerEmpresas) postEvent:anything() withBus:anything()];
+    
+    // verificando o timestamp
+    [verify(_syncConfig) setTimestamp:@"777"];
+    
+    // get data realizado
+    assertThatBool(completed, equalToBool(YES));
+}
+
 
 @end

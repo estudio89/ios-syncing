@@ -13,11 +13,11 @@
 
 @interface DataSyncHelper()
 
-@property (nonatomic, strong, readwrite) ServerComm *serverComm;
-@property (nonatomic, strong, readwrite) ThreadChecker * threadChecker;
-@property (nonatomic, strong, readwrite) SyncConfig *syncConfig;
-@property (nonatomic, strong, readwrite) CustomTransactionManager *transactionManager;
-@property (nonatomic, strong, readwrite) AsyncBus *bus;
+@property (nonatomic, readwrite) ServerComm *serverComm;
+@property (nonatomic, readwrite) ThreadChecker * threadChecker;
+@property (nonatomic, readwrite) SyncConfig *syncConfig;
+@property (nonatomic, readwrite) CustomTransactionManager *transactionManager;
+@property (nonatomic, readwrite) AsyncBus *bus;
 
 @property BOOL isRunningSync;
 @property (strong, readwrite) NSMutableDictionary *partialSyncFlag;
@@ -60,6 +60,14 @@
                  withSyncConfig:[[SyncConfig alloc] init]
                  withTransactionManager:[[CustomTransactionManager alloc] init]
                  withBus:[[AsyncBus alloc] init]];
+}
+
+/**
+ setThreadChecker
+ */
+- (void)setThreadChecker:(ThreadChecker *)threadChecker
+{
+    _threadChecker = threadChecker;
 }
 
 /**
@@ -109,7 +117,7 @@
         return NO;
     }
     
-    [parameters setValue:token forKey:@"token"];
+    [parameters setObject:token forKey:@"token"];
     
     NSDictionary *jsonResponse = [self.serverComm post:[self.syncConfig getGetDataUrlForModel:identifier] withData:parameters];
     
@@ -225,20 +233,18 @@
                 NSArray *objects = [syncManager saveNewData:jsonArray withDeviceId:[self.syncConfig getDeviceId]];
                 [syncManager postEvent:objects withBus:[self bus]];
             }
-            
-            if ([self.threadChecker isValidThreadId:threadId])
+        }
+        if ([self.threadChecker isValidThreadId:threadId])
+        {
+            if (timestamp != nil)
             {
-                if (timestamp != nil)
-                {
-                    [self.syncConfig setTimestamp:timestamp];
-                }
-                [self postGetFinishedEvent];
+                [self.syncConfig setTimestamp:timestamp];
             }
-            else
-            {
-                @throw([InvalidThreadIdException exceptionWithName:@"InvalidThreadId" reason:@"The thread id is invalid." userInfo:nil]);
-            }
-            
+            [self postGetFinishedEvent];
+        }
+        else
+        {
+            @throw([InvalidThreadIdException exceptionWithName:@"InvalidThreadId" reason:@"The thread id is invalid." userInfo:nil]);
         }
     } withSyncConfig:[self syncConfig]];
     

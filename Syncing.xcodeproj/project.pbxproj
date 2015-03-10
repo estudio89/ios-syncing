@@ -18,9 +18,11 @@
 		7B5F220C1A8D3AC50031E2F2 /* ServerComm.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5F220B1A8D3AC50031E2F2 /* ServerComm.m */; };
 		7B63D8C51AA8CF0C005D781A /* SyncConfigTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B63D8C41AA8CF0C005D781A /* SyncConfigTests.m */; };
 		7B63D8C71AA8CF78005D781A /* ServerCommTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B63D8C61AA8CF78005D781A /* ServerCommTests.m */; };
+		7B6CD0D91AAF6356009B7ACA /* get-data-for-model-request.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B6CD0D81AAF6356009B7ACA /* get-data-for-model-request.json */; };
 		7BADD1211A8BD82B0005FC5E /* Syncing.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7BADD1201A8BD82B0005FC5E /* Syncing.h */; };
 		7BADD13C1A8BDABF0005FC5E /* ThreadChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BADD13B1A8BDABF0005FC5E /* ThreadChecker.m */; };
 		7BAEDBBC1A97B69E0078AEA9 /* DataSyncHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BAEDBBB1A97B69E0078AEA9 /* DataSyncHelper.m */; };
+		7BB59D181AAF6D270088A7BA /* send-data-request.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BB59D171AAF6D270088A7BA /* send-data-request.json */; };
 		7BB59EC51AA0ACD700783657 /* DatabaseProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BB59EC41AA0ACD700783657 /* DatabaseProvider.m */; };
 		7BB63C781A9F977C00C0124C /* AsyncBus.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BB63C771A9F977C00C0124C /* AsyncBus.m */; };
 		7BB7A1401AADED3E00E0330F /* modified-data-empresas.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BB7A13F1AADED3E00E0330F /* modified-data-empresas.json */; };
@@ -80,12 +82,14 @@
 		7B5F220B1A8D3AC50031E2F2 /* ServerComm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerComm.m; sourceTree = "<group>"; };
 		7B63D8C41AA8CF0C005D781A /* SyncConfigTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncConfigTests.m; sourceTree = "<group>"; };
 		7B63D8C61AA8CF78005D781A /* ServerCommTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerCommTests.m; sourceTree = "<group>"; };
+		7B6CD0D81AAF6356009B7ACA /* get-data-for-model-request.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "get-data-for-model-request.json"; sourceTree = "<group>"; };
 		7BADD11D1A8BD82B0005FC5E /* libSyncing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSyncing.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BADD1201A8BD82B0005FC5E /* Syncing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Syncing.h; sourceTree = "<group>"; };
 		7BADD13A1A8BDABF0005FC5E /* ThreadChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadChecker.h; sourceTree = "<group>"; };
 		7BADD13B1A8BDABF0005FC5E /* ThreadChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadChecker.m; sourceTree = "<group>"; };
 		7BAEDBBA1A97B69E0078AEA9 /* DataSyncHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSyncHelper.h; sourceTree = "<group>"; };
 		7BAEDBBB1A97B69E0078AEA9 /* DataSyncHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSyncHelper.m; sourceTree = "<group>"; };
+		7BB59D171AAF6D270088A7BA /* send-data-request.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "send-data-request.json"; sourceTree = "<group>"; };
 		7BB59EC31AA0ACD700783657 /* DatabaseProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseProvider.h; sourceTree = "<group>"; };
 		7BB59EC41AA0ACD700783657 /* DatabaseProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseProvider.m; sourceTree = "<group>"; };
 		7BB63C761A9F977C00C0124C /* AsyncBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncBus.h; sourceTree = "<group>"; };
@@ -227,6 +231,8 @@
 				7BB7A1431AAE12C900E0330F /* send-data-response.json */,
 				7BB7A1451AAE12DE00E0330F /* get-data-for-model-response.json */,
 				7BD4BADA1AAE19EE00194BFB /* get-data-request.json */,
+				7B6CD0D81AAF6356009B7ACA /* get-data-for-model-request.json */,
+				7BB59D171AAF6D270088A7BA /* send-data-request.json */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -311,12 +317,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BB59D181AAF6D270088A7BA /* send-data-request.json in Resources */,
 				7BB7A1461AAE12DE00E0330F /* get-data-for-model-response.json in Resources */,
 				7B1F59491AA74DC900EDCC38 /* syncing-config.json in Resources */,
 				7BB7A1421AAE12B700E0330F /* get-data-response.json in Resources */,
 				7BB7A1441AAE12C900E0330F /* send-data-response.json in Resources */,
 				7BD4BADB1AAE19EE00194BFB /* get-data-request.json in Resources */,
 				7B2E8A4D1AADDF320069DF31 /* modified-data-registros.json in Resources */,
+				7B6CD0D91AAF6356009B7ACA /* get-data-for-model-request.json in Resources */,
 				7BB7A1401AADED3E00E0330F /* modified-data-empresas.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

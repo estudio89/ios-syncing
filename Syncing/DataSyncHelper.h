@@ -32,6 +32,7 @@
 - (BOOL)getDataFromServer;
 - (BOOL)getDataFromServer:(NSString *)identifier withParameters:(NSMutableDictionary *)parameters;
 - (BOOL)sendDataToServer;
+- (void)setThreadChecker:(ThreadChecker *)threadChecker;
 
 @end
 
