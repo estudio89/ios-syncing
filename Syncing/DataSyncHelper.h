@@ -32,7 +32,14 @@
 - (BOOL)getDataFromServer;
 - (BOOL)getDataFromServer:(NSString *)identifier withParameters:(NSMutableDictionary *)parameters;
 - (BOOL)sendDataToServer;
+- (BOOL)fullSynchronousSync;
+- (void)postSyncFinishedEvent;
+
 - (void)setThreadChecker:(ThreadChecker *)threadChecker;
+- (void)setServerComm:(ServerComm *)serverComm;
+- (void)setSyncConfig:(SyncConfig *)syncConfig;
+- (void)setTransactionManager:(CustomTransactionManager *)transactionManager;
+- (void)setBus:(AsyncBus *)bus;
 
 @end
 

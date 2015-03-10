@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		65BB033D7F3187A7F0B8E668 /* libPods-Syncing Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36A7816E688B3C797004B85B /* libPods-Syncing Tests.a */; };
+		7B1C08EA1AAFA13500111904 /* send-data-response-first.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B1C08E91AAFA13500111904 /* send-data-response-first.json */; };
+		7B1C08EC1AAFA17000111904 /* send-data-response-second.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B1C08EB1AAFA17000111904 /* send-data-response-second.json */; };
+		7B1C08EE1AAFA18400111904 /* send-data-response-third.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B1C08ED1AAFA18400111904 /* send-data-response-third.json */; };
+		7B1C08F01AAFADF900111904 /* send-data-request-first.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B1C08EF1AAFADF900111904 /* send-data-request-first.json */; };
+		7B1C08F21AAFAE0E00111904 /* send-data-request-second.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B1C08F11AAFAE0E00111904 /* send-data-request-second.json */; };
+		7B1C08F41AAFAE2200111904 /* send-data-request-third.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B1C08F31AAFAE2200111904 /* send-data-request-third.json */; };
 		7B1F59491AA74DC900EDCC38 /* syncing-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B1F59481AA74DC900EDCC38 /* syncing-config.json */; };
 		7B1F594C1AA7B1DD00EDCC38 /* TestSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1F594B1AA7B1DD00EDCC38 /* TestSyncManager.m */; };
 		7B27BFBC1A9A7F1000C7548E /* SyncConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B27BFBB1A9A7F1000C7548E /* SyncConfig.m */; };
@@ -65,6 +71,12 @@
 /* Begin PBXFileReference section */
 		161FA42493D632D90DCC02EC /* Pods-Syncing Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Syncing Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Syncing Tests/Pods-Syncing Tests.release.xcconfig"; sourceTree = "<group>"; };
 		36A7816E688B3C797004B85B /* libPods-Syncing Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Syncing Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B1C08E91AAFA13500111904 /* send-data-response-first.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "send-data-response-first.json"; sourceTree = "<group>"; };
+		7B1C08EB1AAFA17000111904 /* send-data-response-second.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "send-data-response-second.json"; sourceTree = "<group>"; };
+		7B1C08ED1AAFA18400111904 /* send-data-response-third.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "send-data-response-third.json"; sourceTree = "<group>"; };
+		7B1C08EF1AAFADF900111904 /* send-data-request-first.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "send-data-request-first.json"; sourceTree = "<group>"; };
+		7B1C08F11AAFAE0E00111904 /* send-data-request-second.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "send-data-request-second.json"; sourceTree = "<group>"; };
+		7B1C08F31AAFAE2200111904 /* send-data-request-third.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "send-data-request-third.json"; sourceTree = "<group>"; };
 		7B1F59481AA74DC900EDCC38 /* syncing-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "syncing-config.json"; sourceTree = "<group>"; };
 		7B1F594A1AA7B1DD00EDCC38 /* TestSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSyncManager.h; sourceTree = "<group>"; };
 		7B1F594B1AA7B1DD00EDCC38 /* TestSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSyncManager.m; sourceTree = "<group>"; };
@@ -233,6 +245,12 @@
 				7BD4BADA1AAE19EE00194BFB /* get-data-request.json */,
 				7B6CD0D81AAF6356009B7ACA /* get-data-for-model-request.json */,
 				7BB59D171AAF6D270088A7BA /* send-data-request.json */,
+				7B1C08E91AAFA13500111904 /* send-data-response-first.json */,
+				7B1C08EB1AAFA17000111904 /* send-data-response-second.json */,
+				7B1C08ED1AAFA18400111904 /* send-data-response-third.json */,
+				7B1C08EF1AAFADF900111904 /* send-data-request-first.json */,
+				7B1C08F11AAFAE0E00111904 /* send-data-request-second.json */,
+				7B1C08F31AAFAE2200111904 /* send-data-request-third.json */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -319,13 +337,19 @@
 			files = (
 				7BB59D181AAF6D270088A7BA /* send-data-request.json in Resources */,
 				7BB7A1461AAE12DE00E0330F /* get-data-for-model-response.json in Resources */,
+				7B1C08EE1AAFA18400111904 /* send-data-response-third.json in Resources */,
 				7B1F59491AA74DC900EDCC38 /* syncing-config.json in Resources */,
+				7B1C08F01AAFADF900111904 /* send-data-request-first.json in Resources */,
 				7BB7A1421AAE12B700E0330F /* get-data-response.json in Resources */,
 				7BB7A1441AAE12C900E0330F /* send-data-response.json in Resources */,
 				7BD4BADB1AAE19EE00194BFB /* get-data-request.json in Resources */,
 				7B2E8A4D1AADDF320069DF31 /* modified-data-registros.json in Resources */,
+				7B1C08F41AAFAE2200111904 /* send-data-request-third.json in Resources */,
+				7B1C08EC1AAFA17000111904 /* send-data-response-second.json in Resources */,
+				7B1C08EA1AAFA13500111904 /* send-data-response-first.json in Resources */,
 				7B6CD0D91AAF6356009B7ACA /* get-data-for-model-request.json in Resources */,
 				7BB7A1401AADED3E00E0330F /* modified-data-empresas.json in Resources */,
+				7B1C08F21AAFAE0E00111904 /* send-data-request-second.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -152,116 +152,6 @@
                                               withSyncConfig:_syncConfig
                                       withTransactionManager:_customTransactionManager
                                                      withBus:_bus];
-    /*
-    _syncManagerRegistros = OCMProtocolMock(@protocol(SyncManager));
-    _syncManagerEmpresas = OCMProtocolMock(@protocol(SyncManager));
-    _syncManagerFormularios = OCMProtocolMock(@protocol(SyncManager));
-    
-    // Registros
-    OCMStub([_syncManagerRegistros getIdentifier]).andReturn(@"registros");
-    OCMStub([_syncManagerRegistros saveNewData:[OCMArg any] withDeviceId:[OCMArg any]]).andReturn([[NSMutableArray alloc] init]);
-    
-    NSString *regFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/modified-data-registros.json";
-    NSString *jsonStrRegs = [[NSString alloc] initWithContentsOfFile:regFile encoding:NSUTF8StringEncoding error:nil];
-    NSData *dataRegs = [jsonStrRegs dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    NSMutableArray *registrosModified = [NSJSONSerialization JSONObjectWithData:dataRegs options:kNilOptions error:nil];
-    
-    OCMStub([_syncManagerRegistros getModifiedData]).andReturn(registrosModified);
-    OCMStub([_syncManagerRegistros shouldSendSingleObject]).andReturn(NO);
-    
-    _modifiedFiles = [[NSMutableArray alloc] init];
-    [_modifiedFiles addObject:@"imagem1.jpg"];
-    [_modifiedFiles addObject:@"imagem2.jpg"];
-    [_modifiedFiles addObject:@"imagem3.jpg"];
-    
-    OCMStub([_syncManagerRegistros getModifiedFiles]).andReturn(_modifiedFiles);
-    OCMStub([_syncManagerRegistros getResponseIdentifier]).andReturn(@"registros_id");
-    OCMStub([_syncManagerRegistros getModifiedFilesForObject:[OCMArg any]]).andReturn(_modifiedFiles);
-    OCMStub([_syncManagerRegistros hasModifiedData]).andReturn(YES);
-    
-    // Empresas
-    OCMStub([_syncManagerEmpresas getIdentifier]).andReturn(@"empresas");
-    OCMStub([_syncManagerEmpresas saveNewData:[OCMArg any] withDeviceId:[OCMArg any]]).andReturn([[NSMutableArray alloc] init]);
-    
-    NSString *empFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/modified-data-empresas.json";
-    NSString *jsonStrEmps = [[NSString alloc] initWithContentsOfFile:empFile encoding:NSUTF8StringEncoding error:nil];
-    NSData *dataEmps = [jsonStrEmps dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    NSMutableArray *empresasModified = [NSJSONSerialization JSONObjectWithData:dataEmps options:kNilOptions error:nil];
-    
-    OCMStub([_syncManagerEmpresas getModifiedData]).andReturn(empresasModified);
-    OCMStub([_syncManagerEmpresas shouldSendSingleObject]).andReturn(NO);
-    OCMStub([_syncManagerEmpresas getModifiedFiles]).andReturn([[NSMutableArray alloc] init]);
-    OCMStub([_syncManagerEmpresas getResponseIdentifier]).andReturn(@"empresas_id");
-    OCMStub([_syncManagerEmpresas hasModifiedData]).andReturn(YES);
-    
-    // Formularios
-    OCMStub([_syncManagerFormularios getIdentifier]).andReturn(@"formularios");
-    OCMStub([_syncManagerFormularios saveNewData:[OCMArg any] withDeviceId:[OCMArg any]]).andReturn([[NSMutableArray alloc] init]);
-    OCMStub([_syncManagerFormularios getModifiedData]).andReturn([[NSMutableArray alloc] init]);
-    OCMStub([_syncManagerFormularios shouldSendSingleObject]).andReturn(NO);
-    OCMStub([_syncManagerFormularios getModifiedFiles]).andReturn([[NSMutableArray alloc] init]);
-    OCMStub([_syncManagerFormularios getResponseIdentifier]).andReturn(@"formularios_id");
-    OCMStub([_syncManagerFormularios hasModifiedData]).andReturn(NO);
-    
-    // SyncConfig
-    _syncConfig = OCMClassMock([SyncConfig class]);
-    OCMStub([_syncConfig getAuthToken]).andReturn(@"123");
-    OCMStub([_syncConfig getTimestamp]).andReturn(@"666");
-    //OCMStub([_syncConfig getDatabase]).andReturn(@"");
-    OCMStub([_syncConfig getGetDataUrl]).andReturn(@"http://127.0.0.1:8000/api/get-data/");
-    OCMStub([_syncConfig getSendDataUrl]).andReturn(@"http://127.0.0.1:8000/api/send-data/");
-    OCMStub([_syncConfig getDeviceId]).andReturn(@"asdasda");
-    NSMutableArray *syncManagers = [[NSMutableArray alloc] init];
-    [syncManagers addObject:_syncManagerRegistros];
-    [syncManagers addObject:_syncManagerEmpresas];
-    [syncManagers addObject:_syncManagerFormularios];
-    OCMStub([_syncConfig getSyncManagers]).andReturn(syncManagers);
-    OCMStub([_syncConfig getSyncManager:@"registros"]).andReturn(_syncManagerRegistros);
-    OCMStub([_syncConfig getSyncManager:@"empresas"]).andReturn(_syncManagerEmpresas);
-    OCMStub([_syncConfig getSyncManager:@"formularios"]).andReturn(_syncManagerFormularios);
-    OCMStub([_syncConfig getSyncManagerByResponseId:@"registros_id"]).andReturn(_syncManagerRegistros);
-    OCMStub([_syncConfig getSyncManagerByResponseId:@"empresas_id"]).andReturn(_syncManagerEmpresas);
-    OCMStub([_syncConfig getSyncManagerByResponseId:@"formularios_id"]).andReturn(_syncManagerFormularios);
-    
-    OCMStub([_syncConfig getGetDataUrlForModel:@"registros"]).andReturn(@"http://127.0.0.1:8000/api/get-data/registros/");
-    
-    // CustomTransactionManager
-    _customTransactionManager = [[CustomTransactionManager alloc] init];
-    
-    // ServerComm
-    NSString *jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/get-data-response.json";
-    NSString *jsonResponse = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
-    NSData *dataJsonResponse = [jsonResponse dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    NSDictionary *jsonGetResponse = [NSJSONSerialization JSONObjectWithData:dataJsonResponse options:kNilOptions error:nil];
-    
-    jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/send-data-response.json";
-    jsonResponse = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
-    dataJsonResponse = [jsonResponse dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    NSDictionary *jsonSendResponse = [NSJSONSerialization JSONObjectWithData:dataJsonResponse options:kNilOptions error:nil];
-    
-    jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/get-data-for-model-response.json";
-    jsonResponse = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
-    dataJsonResponse = [jsonResponse dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    NSDictionary *jsonGetResponseForModel = [NSJSONSerialization JSONObjectWithData:dataJsonResponse options:kNilOptions error:nil];
-    
-    _serverComm = OCMClassMock([ServerComm class]);
-    OCMStub([_serverComm post:[_syncConfig getGetDataUrl] withData:[OCMArg any]]).andReturn(jsonGetResponse);
-    OCMStub([_serverComm post:[_syncConfig getSendDataUrl] withData:[OCMArg any] withFiles:[OCMArg any]]).andReturn(jsonSendResponse);
-    OCMStub([_serverComm post:[_syncConfig getGetDataUrlForModel:@"registros"] withData:[OCMArg any]]).andReturn(jsonGetResponseForModel);
-    
-    // ThreadChecker
-    _threadChecker = [[ThreadChecker alloc] init];
-    
-    // AsyncBus
-    _bus = OCMClassMock([AsyncBus class]);
-    
-    // DataSyncHelper
-    _dataSyncHelper = [[DataSyncHelper alloc] initWithServer:_serverComm
-                                           withThreadChecker:_threadChecker
-                                              withSyncConfig:_syncConfig
-                                      withTransactionManager:_customTransactionManager
-                                                     withBus:_bus];
-     */
 }
 
 - (void)tearDown {
@@ -485,5 +375,144 @@
     assertThatBool(completed, equalToBool(YES));
 }
 
+/**
+ testSendDataToServerSingle
+ */
+- (void)testSendDataToServerSingle
+{
+    [given([_syncManagerRegistros shouldSendSingleObject]) willReturn:@YES];
+    
+    NSString *jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/send-data-response-first.json";
+    NSString *json = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
+    NSData *data = [json dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSDictionary *jsonData1 = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    
+    jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/send-data-response-second.json";
+    json = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
+    data = [json dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSDictionary *jsonData2 = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    
+    jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/send-data-response-third.json";
+    json = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
+    data = [json dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSDictionary *jsonData3 = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    
+    // nos posts subsequents, diferentes respostas sao devolvidas pelo servidor
+    [[[given([_serverComm post:[_syncConfig getSendDataUrl] withData:anything() withFiles:anything()]) willReturn:jsonData1] willReturn:jsonData2] willReturn:jsonData3];
+    
+    // apos enviar todos os dados, o syncManagerRegistros avisa que nao possui mais dados
+    [[[[given([_syncManagerRegistros hasModifiedData]) willReturn:@YES] willReturn:@YES] willReturn:@YES] willReturn:@NO];
+    BOOL completed = [_dataSyncHelper sendDataToServer];
+    
+    jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/send-data-request.json";
+    json = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
+    data = [json dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSDictionary *sendRequestJSON = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    
+    MKTArgumentCaptor *argument = [[MKTArgumentCaptor alloc] init];
+    [verifyCount(_serverComm, times(3)) post:[argument capture] withData:[argument capture] withFiles:[argument capture]];
+    NSArray *args = [argument allValues];
+    NSArray *capturedUrls = [args subarrayWithRange:NSMakeRange(0,3)];
+    NSArray *capturedData = [args subarrayWithRange:NSMakeRange(3,3)];
+    NSArray *capturedFiles = [args subarrayWithRange:NSMakeRange(6,3)];
+    
+    // primeiro post - registro 1
+    jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/send-data-request-first.json";
+    json = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
+    data = [json dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSDictionary *firstRequestJSON = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    assertThat([capturedUrls objectAtIndex:0], is(@"http://127.0.0.1:8000/api/send-data/"));
+    assertThat([capturedData objectAtIndex:0], is(firstRequestJSON));
+    assertThat([capturedFiles objectAtIndex:0], is([_modifiedFiles objectAtIndex:0]));
+    
+    // segundo post - registro 2
+    jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/send-data-request-second.json";
+    json = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
+    data = [json dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSDictionary *secondRequestJSON = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    assertThat([capturedUrls objectAtIndex:1], is(@"http://127.0.0.1:8000/api/send-data/"));
+    assertThat([capturedData objectAtIndex:1], is(secondRequestJSON));
+    assertThat([capturedFiles objectAtIndex:1], is([_modifiedFiles subarrayWithRange:NSMakeRange(1, [_modifiedFiles count]-1)]));
+    
+    // terceiro post - registro 3
+    jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/send-data-request-third.json";
+    json = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
+    data = [json dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSDictionary *thirdRequestJSON = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    assertThat([capturedUrls objectAtIndex:2], is(@"http://127.0.0.1:8000/api/send-data/"));
+    assertThat([capturedData objectAtIndex:2], is(thirdRequestJSON));
+    assertThat([capturedFiles objectAtIndex:2], instanceOf([NSArray class]));
+    
+    // verificando se os dados foram atualizados
+    // registros
+    argument = [[MKTArgumentCaptor alloc] init];
+    [verifyCount(_syncManagerRegistros, times(2)) processSendResponse:[argument capture]];
+    assertThat([[argument allValues] objectAtIndex:0], is([jsonData1 objectForKey:@"registros_id"]));
+    assertThat([[argument allValues] objectAtIndex:1], is([jsonData2 objectForKey:@"registros_id"]));
+
+    // empresas
+    argument = [[MKTArgumentCaptor alloc] init];
+    [verify(_syncManagerEmpresas) processSendResponse:[argument capture]];
+    [verifyCount(_syncManagerEmpresas, times(1)) saveNewData:[jsonData2 objectForKey:@"empresas"] withDeviceId:anything()];
+    
+    assertThat([[argument allValues] objectAtIndex:0], is([jsonData3 objectForKey:@"empresas_id"]));
+
+    // envio realizado
+    assertThatBool(completed, equalToBool(YES));
+}
+
+/**
+ testSendDataToServerFail
+ */
+- (void)testSendDataToServerFail
+{
+    // thread interrompido
+    ThreadChecker *threadChecker = mock([ThreadChecker class]);
+    [given([threadChecker isValidThreadId:anything()]) willReturn:@NO];
+
+    _dataSyncHelper.threadChecker = threadChecker;
+    
+    BOOL completed = [_dataSyncHelper sendDataToServer];
+    
+    // assegurando que o banco de dados nao fez commit
+    //...
+    
+    // assegurando que o timestamp nao foi salvo
+    [verifyCount(_syncConfig, never()) setTimestamp:anything()];
+    
+    // get data naor ealizado
+    assertThatBool(completed, equalToBool(NO));
+}
+
+/**
+ testFullSynchronousSync
+ */
+- (void)testFullSynchronousSync
+{
+    DataSyncHelper *dataSyncHelper = mock([DataSyncHelper class]);
+    [dataSyncHelper setServerComm:_serverComm];
+    [dataSyncHelper setTransactionManager:_customTransactionManager];
+    [dataSyncHelper setSyncConfig:_syncConfig];
+    [dataSyncHelper setThreadChecker:_threadChecker];
+    [dataSyncHelper setBus:_bus];
+
+    // get data ok, send data fail
+    [given([dataSyncHelper getDataFromServer]) willReturnBool:YES];
+    [given([dataSyncHelper sendDataToServer]) willReturnBool:NO];
+    assertThatBool([dataSyncHelper fullSynchronousSync], equalToBool(NO));
+    [verifyCount(dataSyncHelper, never()) postSyncFinishedEvent];
+    
+    // get data fail, send data ok
+    [given([dataSyncHelper getDataFromServer]) willReturnBool:NO];
+    [given([dataSyncHelper sendDataToServer]) willReturnBool:YES];
+    assertThatBool([dataSyncHelper fullSynchronousSync], equalToBool(NO));
+    [verifyCount(dataSyncHelper, never()) postSyncFinishedEvent];
+    
+    // get data fail, send data ok
+    [given([dataSyncHelper getDataFromServer]) willReturnBool:YES];
+    [given([dataSyncHelper sendDataToServer]) willReturnBool:YES];
+    assertThatBool([dataSyncHelper fullSynchronousSync], equalToBool(YES));
+    [verifyCount(dataSyncHelper, times(1)) postSyncFinishedEvent];
+}
 
 @end

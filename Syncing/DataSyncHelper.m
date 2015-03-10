@@ -63,14 +63,6 @@
 }
 
 /**
- setThreadChecker
- */
-- (void)setThreadChecker:(ThreadChecker *)threadChecker
-{
-    _threadChecker = threadChecker;
-}
-
-/**
  getDataFromServer
  */
 - (BOOL)getDataFromServer
