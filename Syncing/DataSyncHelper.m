@@ -319,7 +319,7 @@
     
     if (completed)
     {
-        [self postSendFinishedEvent];
+        [self postSyncFinishedEvent];
         return YES;
     }
     else

@@ -22,6 +22,7 @@
 #import "ThreadChecker.h"
 #import "AsyncBus.h"
 #import "ServerComm.h"
+#import "DatabaseProvider.h"
 
 @interface DataSyncHelperTests : XCTestCase
 
@@ -34,6 +35,7 @@
 @property (nonatomic) DataSyncHelper *dataSyncHelper;
 @property (nonatomic) CustomTransactionManager *customTransactionManager;
 @property (nonatomic) ThreadChecker *threadChecker;
+@property (nonatomic) DatabaseProvider *database;
 @property (nonatomic) NSMutableArray *modifiedFiles;
 
 @end
@@ -57,7 +59,7 @@
     NSMutableArray *registrosModified = [NSJSONSerialization JSONObjectWithData:dataRegs options:kNilOptions error:nil];
     
     [given([_syncManagerRegistros getModifiedData]) willReturn:registrosModified];
-    [given([_syncManagerRegistros shouldSendSingleObject]) willReturn:@NO];
+    [given([_syncManagerRegistros shouldSendSingleObject]) willReturnBool:NO];
     
     _modifiedFiles = [[NSMutableArray alloc] init];
     [_modifiedFiles addObject:@"imagem1.jpg"];
@@ -67,7 +69,7 @@
     [given([_syncManagerRegistros getModifiedFiles]) willReturn:_modifiedFiles];
     [given([_syncManagerRegistros getResponseIdentifier]) willReturn:@"registros_id"];
     [[given([_syncManagerRegistros getModifiedFilesForObject:anything()]) willReturn:[_modifiedFiles objectAtIndex:0]] willReturn:[_modifiedFiles subarrayWithRange:NSMakeRange(1, [_modifiedFiles count]-1)]];
-    [given([_syncManagerRegistros hasModifiedData]) willReturn:@YES];
+    [given([_syncManagerRegistros hasModifiedData]) willReturnBool:YES];
     
     // Empresas
     [given([_syncManagerEmpresas getIdentifier]) willReturn:@"empresas"];
@@ -79,25 +81,26 @@
     NSMutableArray *empresasModified = [NSJSONSerialization JSONObjectWithData:dataEmps options:kNilOptions error:nil];
     
     [given([_syncManagerEmpresas getModifiedData]) willReturn:empresasModified];
-    [given([_syncManagerEmpresas shouldSendSingleObject]) willReturn:@NO];
+    [given([_syncManagerEmpresas shouldSendSingleObject]) willReturnBool:NO];
     [given([_syncManagerEmpresas getModifiedFiles]) willReturn:[[NSMutableArray alloc] init]];
     [given([_syncManagerEmpresas getResponseIdentifier]) willReturn:@"empresas_id"];
-    [given([_syncManagerEmpresas hasModifiedData]) willReturn:@YES];
+    [given([_syncManagerEmpresas hasModifiedData]) willReturnBool:YES];
     
     // Formularios
     [given([_syncManagerFormularios getIdentifier]) willReturn:@"formularios"];
     [given([_syncManagerFormularios saveNewData:anything() withDeviceId:anything()]) willReturn:[[NSMutableArray alloc] init]];
     [given([_syncManagerFormularios getModifiedData]) willReturn:[[NSMutableArray alloc] init]];
-    [given([_syncManagerFormularios shouldSendSingleObject]) willReturn:@NO];
+    [given([_syncManagerFormularios shouldSendSingleObject]) willReturnBool:NO];
     [given([_syncManagerFormularios getModifiedFiles]) willReturn:[[NSMutableArray alloc] init]];
     [given([_syncManagerFormularios getResponseIdentifier]) willReturn:@"formularios_id"];
-    [given([_syncManagerFormularios hasModifiedData]) willReturn:@NO];
+    [given([_syncManagerFormularios hasModifiedData]) willReturnBool:NO];
     
     // SyncConfig
     _syncConfig = mock([SyncConfig class]);
+    _database = mock([DatabaseProvider class]);
     [given([_syncConfig getAuthToken]) willReturn:@"123"];
     [given([_syncConfig getTimestamp]) willReturn:@"666"];
-    //OCMStub([_syncConfig getDatabase]).andReturn(@"");
+    [given([_syncConfig getDatabase]) willReturn:(_database)];
     [given([_syncConfig getGetDataUrl]) willReturn:@"http://127.0.0.1:8000/api/get-data/"];
     [given([_syncConfig getSendDataUrl]) willReturn:@"http://127.0.0.1:8000/api/send-data/"];
     [given([_syncConfig getDeviceId]) willReturn:@"asdasda"];
@@ -231,12 +234,12 @@
 {
     // thread interrompido
     ThreadChecker *threadChecker = mock([ThreadChecker class]);
-    [given([threadChecker isValidThreadId:anything()]) willReturn:@NO];
+    [given([threadChecker isValidThreadId:anything()]) willReturnBool:NO];
     _dataSyncHelper.threadChecker = threadChecker;
     BOOL completed = [_dataSyncHelper getDataFromServer];
     
     // assegurando que o banco de dados nao fez commit
-    //...
+    [verifyCount(_database, never()) saveTransaction];
     
     // assegurando que o timestamp nao foi salvo
     [verifyCount(_syncConfig, never()) setTimestamp:anything()];
@@ -302,7 +305,7 @@
 {
     // thread interrompido
     ThreadChecker *threadChecker = mock([ThreadChecker class]);
-    [given([threadChecker isValidThreadId:anything()]) willReturn:@NO];
+    [given([threadChecker isValidThreadId:anything()]) willReturnBool:NO];
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setObject:[NSNumber numberWithInt:5] forKey:@"newest_id"];
     _dataSyncHelper.threadChecker = threadChecker;
@@ -310,7 +313,7 @@
     BOOL completed = [_dataSyncHelper getDataFromServer:@"registros" withParameters:parameters];
     
     // assegurando que o banco de dados nao fez commit
-    //...
+    [verifyCount(_database, never()) saveTransaction];
     
     // assegurando que o timestamp nao foi salvo
     [verifyCount(_syncConfig, never()) setTimestamp:anything()];
@@ -379,7 +382,7 @@
  */
 - (void)testSendDataToServerSingle
 {
-    [given([_syncManagerRegistros shouldSendSingleObject]) willReturn:@YES];
+    [given([_syncManagerRegistros shouldSendSingleObject]) willReturnBool:YES];
     
     NSString *jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/send-data-response-first.json";
     NSString *json = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
@@ -400,7 +403,7 @@
     [[[given([_serverComm post:[_syncConfig getSendDataUrl] withData:anything() withFiles:anything()]) willReturn:jsonData1] willReturn:jsonData2] willReturn:jsonData3];
     
     // apos enviar todos os dados, o syncManagerRegistros avisa que nao possui mais dados
-    [[[[given([_syncManagerRegistros hasModifiedData]) willReturn:@YES] willReturn:@YES] willReturn:@YES] willReturn:@NO];
+    [[[[given([_syncManagerRegistros hasModifiedData]) willReturnBool:YES] willReturnBool:YES] willReturnBool:YES] willReturnBool:YES];
     BOOL completed = [_dataSyncHelper sendDataToServer];
     
     jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/send-data-request.json";
@@ -467,51 +470,20 @@
 {
     // thread interrompido
     ThreadChecker *threadChecker = mock([ThreadChecker class]);
-    [given([threadChecker isValidThreadId:anything()]) willReturn:@NO];
+    [given([threadChecker isValidThreadId:anything()]) willReturnBool:NO];
 
     _dataSyncHelper.threadChecker = threadChecker;
     
     BOOL completed = [_dataSyncHelper sendDataToServer];
     
     // assegurando que o banco de dados nao fez commit
-    //...
+    [verifyCount(_database, never()) saveTransaction];
     
     // assegurando que o timestamp nao foi salvo
     [verifyCount(_syncConfig, never()) setTimestamp:anything()];
     
     // get data naor ealizado
     assertThatBool(completed, equalToBool(NO));
-}
-
-/**
- testFullSynchronousSync
- */
-- (void)testFullSynchronousSync
-{
-    DataSyncHelper *dataSyncHelper = mock([DataSyncHelper class]);
-    [dataSyncHelper setServerComm:_serverComm];
-    [dataSyncHelper setTransactionManager:_customTransactionManager];
-    [dataSyncHelper setSyncConfig:_syncConfig];
-    [dataSyncHelper setThreadChecker:_threadChecker];
-    [dataSyncHelper setBus:_bus];
-
-    // get data ok, send data fail
-    [given([dataSyncHelper getDataFromServer]) willReturnBool:YES];
-    [given([dataSyncHelper sendDataToServer]) willReturnBool:NO];
-    assertThatBool([dataSyncHelper fullSynchronousSync], equalToBool(NO));
-    [verifyCount(dataSyncHelper, never()) postSyncFinishedEvent];
-    
-    // get data fail, send data ok
-    [given([dataSyncHelper getDataFromServer]) willReturnBool:NO];
-    [given([dataSyncHelper sendDataToServer]) willReturnBool:YES];
-    assertThatBool([dataSyncHelper fullSynchronousSync], equalToBool(NO));
-    [verifyCount(dataSyncHelper, never()) postSyncFinishedEvent];
-    
-    // get data fail, send data ok
-    [given([dataSyncHelper getDataFromServer]) willReturnBool:YES];
-    [given([dataSyncHelper sendDataToServer]) willReturnBool:YES];
-    assertThatBool([dataSyncHelper fullSynchronousSync], equalToBool(YES));
-    [verifyCount(dataSyncHelper, times(1)) postSyncFinishedEvent];
 }
 
 /**
@@ -529,13 +501,13 @@
     [_dataSyncHelper postSendFinishedEvent];
     argument = [[MKTArgumentCaptor alloc] init];
     [verifyCount(_bus, times(2)) post:[argument capture] withNotificationname:anything()];
-    assertThat([[argument allValues] objectAtIndex:0], instanceOf([SendFinishedEvent class]));
+    assertThat([[argument allValues] objectAtIndex:1], instanceOf([SendFinishedEvent class]));
     
     // sync finished
     [_dataSyncHelper postSyncFinishedEvent];
     argument = [[MKTArgumentCaptor alloc] init];
     [verifyCount(_bus, times(3)) post:[argument capture] withNotificationname:anything()];
-    assertThat([[argument allValues] objectAtIndex:0], instanceOf([SyncFinishedEvent class]));
+    assertThat([[argument allValues] objectAtIndex:2], instanceOf([SyncFinishedEvent class]));
 }
 
 @end

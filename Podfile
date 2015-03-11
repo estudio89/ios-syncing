@@ -6,6 +6,7 @@ target 'Syncing' do
 end
 
 target 'Syncing Tests' do
+pod 'OCMock'
 pod 'OHHTTPStubs'
 pod 'OCMockito'
 end

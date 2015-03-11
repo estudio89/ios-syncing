@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		65BB033D7F3187A7F0B8E668 /* libPods-Syncing Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36A7816E688B3C797004B85B /* libPods-Syncing Tests.a */; };
+		7B1321C81AAF7CB800EAB1AF /* libPods-Syncing Tests-OCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B1321C71AAF7CB800EAB1AF /* libPods-Syncing Tests-OCMock.a */; };
+		7B1321CA1AAF7CE200EAB1AF /* DataSyncHelperPartialTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1321C91AAF7CE200EAB1AF /* DataSyncHelperPartialTests.m */; };
 		7B1C08EA1AAFA13500111904 /* send-data-response-first.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B1C08E91AAFA13500111904 /* send-data-response-first.json */; };
 		7B1C08EC1AAFA17000111904 /* send-data-response-second.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B1C08EB1AAFA17000111904 /* send-data-response-second.json */; };
 		7B1C08EE1AAFA18400111904 /* send-data-response-third.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B1C08ED1AAFA18400111904 /* send-data-response-third.json */; };
@@ -70,6 +72,8 @@
 /* Begin PBXFileReference section */
 		161FA42493D632D90DCC02EC /* Pods-Syncing Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Syncing Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Syncing Tests/Pods-Syncing Tests.release.xcconfig"; sourceTree = "<group>"; };
 		36A7816E688B3C797004B85B /* libPods-Syncing Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Syncing Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B1321C71AAF7CB800EAB1AF /* libPods-Syncing Tests-OCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OCMock.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OCMock.a"; sourceTree = "<group>"; };
+		7B1321C91AAF7CE200EAB1AF /* DataSyncHelperPartialTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSyncHelperPartialTests.m; sourceTree = "<group>"; };
 		7B1C08E91AAFA13500111904 /* send-data-response-first.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "send-data-response-first.json"; sourceTree = "<group>"; };
 		7B1C08EB1AAFA17000111904 /* send-data-response-second.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "send-data-response-second.json"; sourceTree = "<group>"; };
 		7B1C08ED1AAFA18400111904 /* send-data-response-third.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "send-data-response-third.json"; sourceTree = "<group>"; };
@@ -135,6 +139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B1321C81AAF7CB800EAB1AF /* libPods-Syncing Tests-OCMock.a in Frameworks */,
 				7BD4BADE1AAE3F0600194BFB /* libPods-Syncing Tests-OCHamcrest.a in Frameworks */,
 				7BD4BADF1AAE3F0600194BFB /* libPods-Syncing Tests-OCMockito.a in Frameworks */,
 				7BC4B2CF1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a in Frameworks */,
@@ -158,6 +163,7 @@
 		3F6D19F3020C365660A18031 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7B1321C71AAF7CB800EAB1AF /* libPods-Syncing Tests-OCMock.a */,
 				7BD4BADC1AAE3F0600194BFB /* libPods-Syncing Tests-OCHamcrest.a */,
 				7BD4BADD1AAE3F0600194BFB /* libPods-Syncing Tests-OCMockito.a */,
 				7BC4B2D01AAA3643000F30AE /* libPods-Syncing Tests-OCMock.a */,
@@ -219,6 +225,7 @@
 		7BF770A81AA4A4C2007BCAD6 /* Syncing Tests */ = {
 			isa = PBXGroup;
 			children = (
+				7B1321C91AAF7CE200EAB1AF /* DataSyncHelperPartialTests.m */,
 				7B2E8A4A1AADD7180069DF31 /* DataSyncHelperTests.m */,
 				7B63D8C61AA8CF78005D781A /* ServerCommTests.m */,
 				7B63D8C41AA8CF0C005D781A /* SyncConfigTests.m */,
@@ -407,6 +414,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B1321CA1AAF7CE200EAB1AF /* DataSyncHelperPartialTests.m in Sources */,
 				7B2E8A4B1AADD7180069DF31 /* DataSyncHelperTests.m in Sources */,
 				7B63D8C51AA8CF0C005D781A /* SyncConfigTests.m in Sources */,
 				7B1F594C1AA7B1DD00EDCC38 /* TestSyncManager.m in Sources */,
