@@ -34,6 +34,8 @@
 - (BOOL)sendDataToServer;
 - (BOOL)fullSynchronousSync;
 - (void)postSyncFinishedEvent;
+- (void)postGetFinishedEvent;
+- (void)postSendFinishedEvent;
 
 - (void)setThreadChecker:(ThreadChecker *)threadChecker;
 - (void)setServerComm:(ServerComm *)serverComm;

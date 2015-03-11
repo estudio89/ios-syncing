@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-#import <OCMock/OCMock.h>
 
 #define HC_SHORTHAND
 #import <OCHamcrest/OCHamcrest.h>
@@ -87,7 +86,7 @@
     
     // Formularios
     [given([_syncManagerFormularios getIdentifier]) willReturn:@"formularios"];
-    [given([_syncManagerFormularios saveNewData:[OCMArg any] withDeviceId:[OCMArg any]]) willReturn:[[NSMutableArray alloc] init]];
+    [given([_syncManagerFormularios saveNewData:anything() withDeviceId:anything()]) willReturn:[[NSMutableArray alloc] init]];
     [given([_syncManagerFormularios getModifiedData]) willReturn:[[NSMutableArray alloc] init]];
     [given([_syncManagerFormularios shouldSendSingleObject]) willReturn:@NO];
     [given([_syncManagerFormularios getModifiedFiles]) willReturn:[[NSMutableArray alloc] init]];
@@ -513,6 +512,30 @@
     [given([dataSyncHelper sendDataToServer]) willReturnBool:YES];
     assertThatBool([dataSyncHelper fullSynchronousSync], equalToBool(YES));
     [verifyCount(dataSyncHelper, times(1)) postSyncFinishedEvent];
+}
+
+/**
+ testEvents
+ */
+- (void)testEvents
+{
+    // get finished
+    [_dataSyncHelper postGetFinishedEvent];
+    MKTArgumentCaptor *argument = [[MKTArgumentCaptor alloc] init];
+    [verifyCount(_bus, times(1)) post:[argument capture] withNotificationname:anything()];
+    assertThat([[argument allValues] objectAtIndex:0], instanceOf([GetFinishedEvent class]));
+    
+    // send finished
+    [_dataSyncHelper postSendFinishedEvent];
+    argument = [[MKTArgumentCaptor alloc] init];
+    [verifyCount(_bus, times(2)) post:[argument capture] withNotificationname:anything()];
+    assertThat([[argument allValues] objectAtIndex:0], instanceOf([SendFinishedEvent class]));
+    
+    // sync finished
+    [_dataSyncHelper postSyncFinishedEvent];
+    argument = [[MKTArgumentCaptor alloc] init];
+    [verifyCount(_bus, times(3)) post:[argument capture] withNotificationname:anything()];
+    assertThat([[argument allValues] objectAtIndex:0], instanceOf([SyncFinishedEvent class]));
 }
 
 @end

@@ -36,7 +36,6 @@
 		7BB7A1441AAE12C900E0330F /* send-data-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BB7A1431AAE12C900E0330F /* send-data-response.json */; };
 		7BB7A1461AAE12DE00E0330F /* get-data-for-model-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BB7A1451AAE12DE00E0330F /* get-data-for-model-response.json */; };
 		7BC4B2CF1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC4B2CE1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a */; };
-		7BC4B2D11AAA3643000F30AE /* libPods-Syncing Tests-OCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC4B2D01AAA3643000F30AE /* libPods-Syncing Tests-OCMock.a */; };
 		7BD4BADB1AAE19EE00194BFB /* get-data-request.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BD4BADA1AAE19EE00194BFB /* get-data-request.json */; };
 		7BD4BADE1AAE3F0600194BFB /* libPods-Syncing Tests-OCHamcrest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD4BADC1AAE3F0600194BFB /* libPods-Syncing Tests-OCHamcrest.a */; };
 		7BD4BADF1AAE3F0600194BFB /* libPods-Syncing Tests-OCMockito.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD4BADD1AAE3F0600194BFB /* libPods-Syncing Tests-OCMockito.a */; };
@@ -138,7 +137,6 @@
 			files = (
 				7BD4BADE1AAE3F0600194BFB /* libPods-Syncing Tests-OCHamcrest.a in Frameworks */,
 				7BD4BADF1AAE3F0600194BFB /* libPods-Syncing Tests-OCMockito.a in Frameworks */,
-				7BC4B2D11AAA3643000F30AE /* libPods-Syncing Tests-OCMock.a in Frameworks */,
 				7BC4B2CF1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a in Frameworks */,
 				7BF770AD1AA4A4C2007BCAD6 /* libSyncing.a in Frameworks */,
 				65BB033D7F3187A7F0B8E668 /* libPods-Syncing Tests.a in Frameworks */,
