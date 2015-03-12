@@ -174,24 +174,24 @@
  */
 - (void)testFullSynchronousSync
 {
-    DataSyncHelper *dataSyncHelper = OCMPartialMock(_dataSyncHelper);
+    id dataSyncHelper = OCMPartialMock(_dataSyncHelper);
     
     // get data ok, send data fail
     OCMStub([dataSyncHelper getDataFromServer]).andReturn(YES);
     OCMStub([dataSyncHelper sendDataToServer]).andReturn(NO);
     XCTAssertEqual([dataSyncHelper fullSynchronousSync], NO);
-    [verifyCount(dataSyncHelper, never()) postSyncFinishedEvent];
+    [[dataSyncHelper reject] postSyncFinishedEvent];
     
     // get data fail, send data ok
-    [given([dataSyncHelper getDataFromServer]) willReturnBool:NO];
-    [given([dataSyncHelper sendDataToServer]) willReturnBool:YES];
-    assertThatBool([dataSyncHelper fullSynchronousSync], equalToBool(NO));
-    OCMVerify([dataSyncHelper postSyncFinishedEvent]);
+    OCMStub([dataSyncHelper getDataFromServer]).andReturn(NO);
+    OCMStub([dataSyncHelper sendDataToServer]).andReturn(YES);
+    XCTAssertEqual([dataSyncHelper fullSynchronousSync], NO);
+    [[dataSyncHelper reject] postSyncFinishedEvent];
     
     // get data ok, send data ok
-    [given([dataSyncHelper getDataFromServer]) willReturnBool:YES];
-    [given([dataSyncHelper sendDataToServer]) willReturnBool:YES];
-    assertThatBool([dataSyncHelper fullSynchronousSync], equalToBool(YES));
+    OCMStub([dataSyncHelper getDataFromServer]).andReturn(YES);
+    OCMStub([dataSyncHelper sendDataToServer]).andReturn(YES);
+    XCTAssertEqual([dataSyncHelper fullSynchronousSync], YES);
     OCMVerify([dataSyncHelper postSyncFinishedEvent]);
 }
 
