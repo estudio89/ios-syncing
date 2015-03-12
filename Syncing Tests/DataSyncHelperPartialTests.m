@@ -170,9 +170,9 @@
 }
 
 /**
- testFullSynchronousSync
+ testFullSynchronousSync1
  */
-- (void)testFullSynchronousSync
+- (void)testFullSynchronousSync1
 {
     id dataSyncHelper = OCMPartialMock(_dataSyncHelper);
     
@@ -181,12 +181,28 @@
     OCMStub([dataSyncHelper sendDataToServer]).andReturn(NO);
     XCTAssertEqual([dataSyncHelper fullSynchronousSync], NO);
     [[dataSyncHelper reject] postSyncFinishedEvent];
+}
+
+/**
+ testFullSynchronousSync2
+ */
+- (void)testFullSynchronousSync2
+{
+    id dataSyncHelper = OCMPartialMock(_dataSyncHelper);
     
     // get data fail, send data ok
     OCMStub([dataSyncHelper getDataFromServer]).andReturn(NO);
     OCMStub([dataSyncHelper sendDataToServer]).andReturn(YES);
     XCTAssertEqual([dataSyncHelper fullSynchronousSync], NO);
     [[dataSyncHelper reject] postSyncFinishedEvent];
+}
+
+/**
+ testFullSynchronousSync3
+ */
+- (void)testFullSynchronousSync3
+{
+    id dataSyncHelper = OCMPartialMock(_dataSyncHelper);
     
     // get data ok, send data ok
     OCMStub([dataSyncHelper getDataFromServer]).andReturn(YES);
