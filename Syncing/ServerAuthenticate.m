@@ -7,6 +7,16 @@
 //
 
 #import "ServerAuthenticate.h"
+#import "CustomException.h"
+
+@implementation WrongCredentialsEvent
+@end
+
+@implementation BlockedLoginEvent
+@end
+
+@implementation ConnectionErrorEvent
+@end
 
 //===================================|SuccessfulLoginEvent|===================================
 
@@ -131,7 +141,7 @@
         return nil;
     }
     
-    BOOL verified = [[response valueForKey:@""] boolValue];
+    BOOL verified = [[response valueForKey:@"verified"] boolValue];
     NSString *authToken = nil;
     
     if (verified)

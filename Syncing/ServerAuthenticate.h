@@ -10,7 +10,6 @@
 #import "ServerComm.h"
 #import "SyncConfig.h"
 #import "AsyncBus.h"
-#import "CustomException.h"
 
 @interface ServerAuthenticate : NSObject
 
@@ -20,9 +19,6 @@
 - (NSString *)syncAuthentication:(NSString *)username withPasswd:(NSString *)password;
 - (void)asyncAuthentication:(NSString *)username withPasswd:(NSString *)password;
 
-@end
-
-@interface AuthenticationAsyncTask : NSObject
 @end
 
 @interface WrongCredentialsEvent : NSObject

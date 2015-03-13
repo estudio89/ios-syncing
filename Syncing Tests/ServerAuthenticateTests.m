@@ -67,6 +67,16 @@
 {
     NSDictionary *jsonResponse = @{@"verified":@"true", @"token":@"testToken"};
     [given([_serverComm post:[_syncConfig getGetDataUrl] withData:anything()]) willReturn:jsonResponse];
+    
+    NSString *authToken = [_serverAuthenticate syncAuthentication:@"userT" withPasswd:@"passwdT"];
+    
+    MKTArgumentCaptor *argument = [[MKTArgumentCaptor alloc] init];
+    [verify(_bus) post:[argument capture] withNotificationname:[argument capture]];
+    SuccessfulLoginEvent *sLoginEvent = [[argument allValues] objectAtIndex:0];
+    assertThat([sLoginEvent getUsername], is(@"userT"));
+    assertThat([sLoginEvent getAuthToken], is(@"testToken"));
+    assertThat([[argument allValues] objectAtIndex:1], is(@"SuccessfulLoginEvent"));
+    assertThat(authToken, is(@"testToken"));
 }
 
 /**
@@ -76,6 +86,48 @@
 {
     NSDictionary *jsonResponse = @{@"verified":@"false"};
     [given([_serverComm post:[_syncConfig getGetDataUrl] withData:anything()]) willReturn:jsonResponse];
+    
+    NSString *authToken = [_serverAuthenticate syncAuthentication:@"userT" withPasswd:@"passwdT"];
+    
+    MKTArgumentCaptor *argument = [[MKTArgumentCaptor alloc] init];
+    [verify(_bus) post:[argument capture] withNotificationname:[argument capture]];
+    assertThat([[argument allValues] objectAtIndex:0], instanceOf([WrongCredentialsEvent class]));
+    assertThat([[argument allValues] objectAtIndex:1], is(@"WrongCredentialsEvent"));
+    XCTAssertNil(authToken);
+}
+
+/**
+ * testSyncAuthenticationError403
+ */
+- (void)testSyncAuthenticationError403
+{
+    Http403Exception *e = [Http403Exception exceptionWithName:@"testSyncAuthenticationError403" reason:@"Test" userInfo:nil];
+    [given([_serverComm post:[_syncConfig getGetDataUrl] withData:anything()]) willThrow:e];
+    
+    NSString *authToken = [_serverAuthenticate syncAuthentication:@"userT" withPasswd:@"passwdT"];
+    
+    MKTArgumentCaptor *argument = [[MKTArgumentCaptor alloc] init];
+    [verify(_bus) post:[argument capture] withNotificationname:[argument capture]];
+    assertThat([[argument allValues] objectAtIndex:0], instanceOf([BlockedLoginEvent class]));
+    assertThat([[argument allValues] objectAtIndex:1], is(@"BlockedLoginEvent"));
+    XCTAssertNil(authToken);
+}
+
+/**
+ * testSyncAuthenticationException
+ */
+- (void)testSyncAuthenticationException
+{
+    NSException *e = [NSException exceptionWithName:@"testSyncAuthenticationException" reason:@"Test" userInfo:nil];
+    [given([_serverComm post:[_syncConfig getGetDataUrl] withData:anything()]) willThrow:e];
+    
+    NSString *authToken = [_serverAuthenticate syncAuthentication:@"userT" withPasswd:@"passwdT"];
+    
+    MKTArgumentCaptor *argument = [[MKTArgumentCaptor alloc] init];
+    [verify(_bus) post:[argument capture] withNotificationname:[argument capture]];
+    assertThat([[argument allValues] objectAtIndex:0], instanceOf([ConnectionErrorEvent class]));
+    assertThat([[argument allValues] objectAtIndex:1], is(@"ConnectionErrorEvent"));
+    XCTAssertNil(authToken);
 }
 
 @end
