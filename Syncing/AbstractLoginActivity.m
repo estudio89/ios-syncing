@@ -7,12 +7,15 @@
 //
 
 #import "AbstractLoginActivity.h"
+#import "SyncConfig.h"
 
 @interface AbstractLoginActivity ()
 
 @end
 
 @implementation AbstractLoginActivity
+
+@synthesize delegate;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -25,23 +28,19 @@
 }
 
 /**
- * isForeground
- *
- * @return
- */
-- (BOOL)isForeground
-{
-    return NO;
-}
-
-/**
  * submitLogin
  *
  * @param
  */
 - (void)submitLogin:(NSString *)username withPasswd:(NSString *)password
 {
-    
+    if (![self verifyCredentials:username withPasswd:password])
+    {
+        [delegate onIncompleteCredentials];
+        return;
+    }
+    ServerAuthenticate *serverAuthenticate = [[ServerAuthenticate alloc] init];
+    [serverAuthenticate asyncAuthentication:username withPasswd:password];
 }
 
 /**
@@ -52,7 +51,7 @@
  */
 - (BOOL)verifyCredentials:(NSString *)username withPasswd:(NSString *)password
 {
-    return NO;
+    return !([username length] <= 0 || [password length] <= 0);
 }
 
 /**
@@ -62,16 +61,9 @@
  */
 - (void)onSuccessfulLogin:(SuccessfulLoginEvent *)event
 {
-    
-}
-
-/**
- * onSuccessfulLogin
- *
- */
-- (void)onBacPressed
-{
-    
+    SyncConfig *syncConfig = [[SyncConfig alloc] init];
+    [syncConfig setAuthToken:[event getAuthToken]];
+    [syncConfig setUsername:[event getUsername]];
 }
 
 @end

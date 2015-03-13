@@ -40,6 +40,7 @@
 		7BC4B2CF1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC4B2CE1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a */; };
 		7BD43C4F1AB1C65C00C58368 /* AbstractLoginActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD43C4E1AB1C65C00C58368 /* AbstractLoginActivity.m */; };
 		7BD43C521AB20E8200C58368 /* ServerAuthenticate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD43C511AB20E8200C58368 /* ServerAuthenticate.m */; };
+		7BD43C561AB25BE800C58368 /* ServerAuthenticateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD43C551AB25BE800C58368 /* ServerAuthenticateTests.m */; };
 		7BD4BADB1AAE19EE00194BFB /* get-data-request.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BD4BADA1AAE19EE00194BFB /* get-data-request.json */; };
 		7BD4BADE1AAE3F0600194BFB /* libPods-Syncing Tests-OCHamcrest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD4BADC1AAE3F0600194BFB /* libPods-Syncing Tests-OCHamcrest.a */; };
 		7BD4BADF1AAE3F0600194BFB /* libPods-Syncing Tests-OCMockito.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD4BADD1AAE3F0600194BFB /* libPods-Syncing Tests-OCMockito.a */; };
@@ -122,6 +123,7 @@
 		7BD43C4E1AB1C65C00C58368 /* AbstractLoginActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractLoginActivity.m; sourceTree = "<group>"; };
 		7BD43C501AB20E8200C58368 /* ServerAuthenticate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerAuthenticate.h; sourceTree = "<group>"; };
 		7BD43C511AB20E8200C58368 /* ServerAuthenticate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerAuthenticate.m; sourceTree = "<group>"; };
+		7BD43C551AB25BE800C58368 /* ServerAuthenticateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerAuthenticateTests.m; sourceTree = "<group>"; };
 		7BD4BADA1AAE19EE00194BFB /* get-data-request.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "get-data-request.json"; sourceTree = "<group>"; };
 		7BD4BADC1AAE3F0600194BFB /* libPods-Syncing Tests-OCHamcrest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OCHamcrest.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OCHamcrest.a"; sourceTree = "<group>"; };
 		7BD4BADD1AAE3F0600194BFB /* libPods-Syncing Tests-OCMockito.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OCMockito.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OCMockito.a"; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 		7BF770A81AA4A4C2007BCAD6 /* Syncing Tests */ = {
 			isa = PBXGroup;
 			children = (
+				7BD43C551AB25BE800C58368 /* ServerAuthenticateTests.m */,
 				7B1321C91AAF7CE200EAB1AF /* DataSyncHelperPartialTests.m */,
 				7B2E8A4A1AADD7180069DF31 /* DataSyncHelperTests.m */,
 				7B63D8C61AA8CF78005D781A /* ServerCommTests.m */,
@@ -431,6 +434,7 @@
 				7B63D8C51AA8CF0C005D781A /* SyncConfigTests.m in Sources */,
 				7B1F594C1AA7B1DD00EDCC38 /* TestSyncManager.m in Sources */,
 				7B63D8C71AA8CF78005D781A /* ServerCommTests.m in Sources */,
+				7BD43C561AB25BE800C58368 /* ServerAuthenticateTests.m in Sources */,
 				7BF770AC1AA4A4C2007BCAD6 /* Syncing_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

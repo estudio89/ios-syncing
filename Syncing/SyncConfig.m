@@ -16,7 +16,6 @@
 @property (nonatomic, strong, readwrite) NSString *mGetDataUrl;
 @property (nonatomic, strong, readwrite) NSString *mSendDataUrl;
 @property (nonatomic, strong, readwrite) NSString *mAuthenticateUrl;
-@property (nonatomic, strong, readwrite) NSString *accountType;
 @property (nonatomic, strong, readwrite) NSString *loginActivity;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *mModelGetDataUrls;
 
@@ -64,7 +63,6 @@
         _mSendDataUrl = [jsonConfig valueForKey:@"sendDataUrl"];
         _mAuthenticateUrl = [jsonConfig valueForKey:@"authenticateUrl"];
         _loginActivity = [jsonConfig valueForKey:@"loginActivity"];
-        _accountType = [jsonConfig valueForKey:@"accountType"];
         
         id<SyncManager> syncManager;
         Class klass;
@@ -97,14 +95,6 @@
 - (NSString *)getAuthenticateUrl
 {
     return _mAuthenticateUrl;
-}
-
-/**
- getAccountType
- */
-- (NSString *)getAccountType
-{
-    return _accountType;
 }
 
 /**

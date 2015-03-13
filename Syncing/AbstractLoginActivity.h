@@ -18,13 +18,12 @@
 
 @end
 
-
 @interface AbstractLoginActivity : UIViewController
 
-- (BOOL)isForeground;
+@property (nonatomic, weak) id <AbstractLoginActivityProtocol> delegate;
+
 - (void)submitLogin:(NSString *)username withPasswd:(NSString *)password;
 - (BOOL)verifyCredentials:(NSString *)username withPasswd:(NSString *)password;
 - (void)onSuccessfulLogin:(SuccessfulLoginEvent *)event;
-- (void)onBacPressed;
 
 @end

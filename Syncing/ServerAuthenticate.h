@@ -7,10 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ServerComm.h"
+#import "SyncConfig.h"
+#import "AsyncBus.h"
+#import "CustomException.h"
 
 @interface ServerAuthenticate : NSObject
 
+- (instancetype)initWithServerComm:(ServerComm *)serverComm
+                    withSyncCOnfig:(SyncConfig *)syncConfig
+                      withAsyncBus:(AsyncBus *)bus;
 - (NSString *)syncAuthentication:(NSString *)username withPasswd:(NSString *)password;
+- (void)asyncAuthentication:(NSString *)username withPasswd:(NSString *)password;
 
 @end
 
@@ -27,4 +35,10 @@
 @end
 
 @interface SuccessfulLoginEvent : NSObject
+
+- (instancetype)initWithUsername:(NSString *)username
+                   withAuthToken:(NSString *)authToken;
+- (NSString *)getUsername;
+- (NSString *)getAuthToken;
+
 @end

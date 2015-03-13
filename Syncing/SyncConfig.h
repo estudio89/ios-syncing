@@ -13,7 +13,6 @@
 @interface SyncConfig : NSObject
 
 - (NSString *)getAuthenticateUrl;
-- (NSString *)getAccountType;
 - (NSString *)getAuthToken;
 - (NSString *)getTimestamp;
 - (NSString *)getGetDataUrl;
@@ -26,5 +25,7 @@
 - (id<SyncManager>)getSyncManagerByResponseId:(NSString *)responseId;
 - (DatabaseProvider *)getDatabase;
 - (void)setConfigFile:(NSString *)filename;
+- (void)setAuthToken:(NSString *)authToken;
+- (void)setUsername:(NSString *)username;
 
 @end

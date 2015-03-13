@@ -57,9 +57,6 @@
     // AuthenticateUrl
     XCTAssertEqualObjects([syncC getAuthenticateUrl], @"http://api.estudio89.com.br/auth");
     
-    // AccountType
-    XCTAssertEqualObjects([syncC getAccountType], @"br.com.estudio89");
-    
     // SyncManagers
     XCTAssertTrue([syncC.getSyncManagers count] == 1);
     XCTAssertEqualObjects([TestSyncManager class], [[syncC.getSyncManagers objectAtIndex:0] class]);
