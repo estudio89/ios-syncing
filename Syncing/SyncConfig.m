@@ -24,7 +24,7 @@
 @implementation SyncConfig
 
 /**
- init
+ * init
  */
 - (id)init
 {
@@ -39,7 +39,7 @@
 }
 
 /**
- setConfigFile
+ * setConfigFile
  */
 - (void)setConfigFile:(NSString *)filename
 {
@@ -48,7 +48,7 @@
 }
 
 /**
- loadSettings
+ * loadSettings
  */
 - (void)loadSettings
 {
@@ -90,7 +90,7 @@
 }
 
 /**
- getAuthenticateUrl
+ * getAuthenticateUrl
  */
 - (NSString *)getAuthenticateUrl
 {
@@ -98,7 +98,7 @@
 }
 
 /**
- getAuthToken
+ * getAuthToken
  */
 - (NSString *)getAuthToken
 {
@@ -112,7 +112,7 @@
 }
 
 /**
- setAuthToken
+ * setAuthToken
  */
 - (void)setAuthToken:(NSString *)authToken
 {
@@ -121,7 +121,7 @@
 }
 
 /**
- getTimestamp
+ * getTimestamp
  */
 - (NSString *)getTimestamp
 {
@@ -135,7 +135,7 @@
 }
 
 /**
- setTimestamp
+ * setTimestamp
  */
 - (void)setTimestamp:(NSString *)timestamp
 {
@@ -144,7 +144,7 @@
 }
 
 /**
- getUsername
+ * getUsername
  */
 - (NSString *)getUsername
 {
@@ -158,7 +158,7 @@
 }
 
 /**
- setUsername
+ * setUsername
  */
 - (void)setUsername:(NSString *)username
 {
@@ -167,7 +167,7 @@
 }
 
 /**
- eraseSyncPreferences
+ * eraseSyncPreferences
  */
 - (void)eraseSyncPreferences
 {
@@ -176,7 +176,7 @@
 }
 
 /**
- getGetDataUrl
+ * getGetDataUrl
  */
 - (NSString *)getGetDataUrl
 {
@@ -184,7 +184,7 @@
 }
 
 /**
- getGetDataUrlForModel
+ * getGetDataUrlForModel
  */
 - (NSString *)getGetDataUrlForModel:(NSString *)identifier
 {
@@ -199,7 +199,7 @@
 }
 
 /**
- getDeviceId
+ * getDeviceId
  */
 - (NSString *)getDeviceId
 {
@@ -220,7 +220,7 @@
 }
 
 /**
- setDeviceId
+ * setDeviceId
  */
 - (void)setDeviceId:(NSString *)newId
 {
@@ -229,7 +229,7 @@
 }
 
 /**
- getSyncManagers
+ * getSyncManagers
  */
 - (NSArray *)getSyncManagers
 {
@@ -237,7 +237,7 @@
 }
 
 /**
- getSendDataUrl
+ * getSendDataUrl
  */
 - (NSString *)getSendDataUrl
 {
@@ -245,7 +245,7 @@
 }
 
 /**
- getSyncManagerByResponseId
+ * getSyncManagerByResponseId
  */
 - (id<SyncManager>)getSyncManagerByResponseId:(NSString *)responseId
 {
@@ -253,7 +253,7 @@
 }
 
 /**
- getSyncManager
+ * getSyncManager
  */
 - (id<SyncManager>)getSyncManager:(NSString *)identifier
 {
@@ -261,7 +261,7 @@
 }
 
 /**
- getDatabase
+ * getDatabase
  */
 - (DatabaseProvider *)getDatabase
 {

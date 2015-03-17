@@ -12,7 +12,7 @@
 @implementation DatabaseProvider
 
 /**
- saveTransaction
+ * saveTransaction
  */
 - (void)saveTransaction
 {
@@ -20,7 +20,7 @@
 }
 
 /**
- rollbackTransaction
+ * rollbackTransaction
  */
 - (void)rollbackTransaction
 {

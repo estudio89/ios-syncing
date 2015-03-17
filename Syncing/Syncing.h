@@ -7,7 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Syncing/ThreadChecker.h>
+#import <Syncing/SyncManager.h>
+#import <Syncing/ServerComm.h>
+#import <Syncing/AbstractLoginActivity.h>
+#import <Syncing/AsyncBus.h>
+#import <Syncing/SyncConfig.h>
+#import <Syncing/DataSyncHelper.h>
+#import <Syncing/SyncEvent.h>
 
 @interface Syncing : NSObject
 

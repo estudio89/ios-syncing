@@ -17,7 +17,7 @@
 @implementation ThreadChecker
 
 /**
- Init
+ * Init
  */
 - (id)init
 {
@@ -30,8 +30,8 @@
 }
 
 /**
- Generates a new identifier and add it to the threadIds array.
- @return The new threadId.
+ * Generates a new identifier and add it to the threadIds array.
+ * @return The new threadId.
  */
 - (NSString *)setNewThreadId
 {
@@ -43,9 +43,9 @@
 }
 
 /**
- Checks if the threadIds array has the parameter threadId.
- @param threadId The thread identifier.
- @return YES if the threadIds array has the parameter threadId, otherwise NO.
+ * Checks if the threadIds array has the parameter threadId.
+ * @param threadId The thread identifier.
+ * @return YES if the threadIds array has the parameter threadId, otherwise NO.
  */
 - (BOOL)isValidThreadId:(NSString *)threadId
 {
@@ -53,8 +53,8 @@
 }
 
 /**
- Removes a threadId from threadIds array.
- @param threadId The thread identifier.
+ * Removes a threadId from threadIds array.
+ * @param threadId The thread identifier.
  */
 - (void)removeThreadId:(NSString *)threadId
 {
@@ -62,7 +62,7 @@
 }
 
 /**
- Clears the threadIds array.
+ * Clears the threadIds array.
  */
 - (void)clear
 {

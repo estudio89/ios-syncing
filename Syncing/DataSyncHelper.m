@@ -27,7 +27,7 @@
 @implementation DataSyncHelper
 
 /**
- Init with dependency injection.
+ * Init with dependency injection.
  */
 - (instancetype)initWithServer:(ServerComm *)serverComm
                 withThreadChecker:(ThreadChecker *)threadChecker
@@ -50,7 +50,7 @@
 }
 
 /**
- Init
+ * Init
  */
 - (instancetype)initWithContext:(NSManagedObjectContext *)context
 {
@@ -63,7 +63,7 @@
 }
 
 /**
- getDataFromServer
+ * getDataFromServer
  */
 - (BOOL)getDataFromServer
 {
@@ -96,7 +96,7 @@
 }
 
 /***
- getDataFromServer
+ * getDataFromServer
  */
 - (BOOL)getDataFromServer:(NSString *)identifier withParameters:(NSMutableDictionary *)parameters
 {
@@ -126,7 +126,7 @@
 }
 
 /***
- sendDataToServer
+ * sendDataToServer
  */
 - (BOOL)sendDataToServer
 {
@@ -208,7 +208,7 @@
 }
 
 /***
- processGetDataResponse
+ * processGetDataResponse
  */
 - (BOOL)processGetDataResponse:(NSString *)threadId withJsonResponse:(NSDictionary *)jsonResponse withTimestamp:(NSString *)timestamp
 {
@@ -244,7 +244,7 @@
 }
 
 /***
- processSendResponse
+ * processSendResponse
  */
 - (BOOL)processSendResponse:(NSString *)threadId withJsonResponse:(NSDictionary *)jsonResponse
 {
@@ -290,7 +290,7 @@
 }
 
 /**
- fullSynchronousSync
+ * fullSynchronousSync
  */
 - (BOOL)fullSynchronousSync
 {
@@ -329,7 +329,7 @@
 }
 
 /**
- fullAsynchronousSync
+ * fullAsynchronousSync
  */
 - (void)fullAsynchronousSync
 {
@@ -341,7 +341,7 @@
 }
 
 /**
- partialAsynchronousSync
+ * partialAsynchronousSync
  */
 - (void)partialAsynchronousSync:(NSString *)identifier withParameters:(NSDictionary *)parameters
 {
@@ -353,7 +353,7 @@
 }
 
 /**
- hasModifiedData
+ * hasModifiedData
  */
 - (BOOL)hasModifiedData
 {
@@ -368,7 +368,7 @@
 }
 
 /**
- stopSyncThreads
+ * stopSyncThreads
  */
 - (void)stopSyncThreads
 {
@@ -376,7 +376,7 @@
 }
 
 /**
- postSendFinishedEvent
+ * postSendFinishedEvent
  */
 - (void)postSendFinishedEvent
 {
@@ -384,7 +384,7 @@
 }
 
 /**
- postGetFinishedEvent
+ * postGetFinishedEvent
  */
 - (void)postGetFinishedEvent
 {
@@ -392,7 +392,7 @@
 }
 
 /**
- postSyncFinishedEvent
+ * postSyncFinishedEvent
  */
 - (void)postSyncFinishedEvent
 {
@@ -401,7 +401,7 @@
 }
 
 /**
- postBackgroundSyncError
+ * postBackgroundSyncError
  */
 - (void)postBackgroundSyncError:(NSException *)error
 {
@@ -409,7 +409,7 @@
 }
 
 /**
- fullSyncAsyncTask
+ * fullSyncAsyncTask
  */
 -(void)fullSyncAsyncTask
 {
@@ -426,7 +426,7 @@
 }
 
 /**
- partialSyncTask
+ * partialSyncTask
  */
 -(void)partialSyncTask:(NSString *)identifier withParameters:(NSDictionary *)parameters
 {
@@ -467,7 +467,7 @@
 @implementation BackgroundSyncError
 
 /**
- initWithException
+ * initWithException
  */
 - (id)initWithException:(NSException *)exception
 {
@@ -480,7 +480,7 @@
 }
 
 /**
- getError
+ * getError
  */
 - (NSException *)getError
 {

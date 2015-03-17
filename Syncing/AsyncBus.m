@@ -10,11 +10,17 @@
 
 @implementation AsyncBus
 
+/**
+ * post
+ */
 - (void)post:(id)object withNotificationname:(NSString *)notification;
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:notification object:object];
 }
 
+/**
+ * subscribe
+ */
 - (void)subscribe:(id)observer withSelector:(SEL)selector withNotificationname:(NSString *)notification withObject:(id)object
 {
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:selector name:notification object:object];

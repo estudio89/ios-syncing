@@ -11,11 +11,17 @@
 
 @implementation ServerComm
 
+/**
+ * post
+ */
 - (NSDictionary *)post:(NSString *)url withData:(NSDictionary *)data
 {
     return [self post:url withData:data withFiles:nil];
 }
 
+/**
+ * post
+ */
 - (NSDictionary *)post:(NSString *)url withData:(NSDictionary *)data withFiles:(NSArray *)files
 {
     NSError *error = nil;

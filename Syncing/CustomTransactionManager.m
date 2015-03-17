@@ -19,7 +19,7 @@
 @implementation CustomTransactionManager
 
 /**
- init
+ * init
  */
 - (id)init
 {
@@ -32,7 +32,7 @@
 }
 
 /**
- doInTransaction
+ * doInTransaction
  */
 - (void)doInTransaction:(void(^)(void))manipulateInTransaction withSyncConfig:(SyncConfig *)syncConfig
 {
@@ -56,7 +56,7 @@
 }
 
 /**
- wasSuccessful
+ * wasSuccessful
  */
 - (BOOL)wasSuccessful
 {

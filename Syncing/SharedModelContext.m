@@ -19,7 +19,7 @@
 static SharedModelContext *mySharedModelContext;
 
 /**
- sharedModelContext
+ * sharedModelContext
  */
 + (SharedModelContext *)sharedModelContext
 {
@@ -32,7 +32,7 @@ static SharedModelContext *mySharedModelContext;
 }
 
 /**
- setSharedModelContext
+ * setSharedModelContext
  */
 - (void)setSharedModelContext:(NSManagedObjectContext *)context
 {
@@ -40,7 +40,7 @@ static SharedModelContext *mySharedModelContext;
 }
 
 /**
- sharedModelContext
+ * sharedModelContext
  */
 - (NSManagedObjectContext *)getSharedModelContext
 {

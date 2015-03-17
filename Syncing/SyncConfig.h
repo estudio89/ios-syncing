@@ -20,12 +20,13 @@
 - (NSString *)getDeviceId;
 - (NSArray *)getSyncManagers;
 - (NSString *)getSendDataUrl;
-- (void)setTimestamp:(NSString *)timestamp;
 - (id<SyncManager>)getSyncManager:(NSString *)identifier;
 - (id<SyncManager>)getSyncManagerByResponseId:(NSString *)responseId;
 - (DatabaseProvider *)getDatabase;
+- (void)setTimestamp:(NSString *)timestamp;
 - (void)setConfigFile:(NSString *)filename;
 - (void)setAuthToken:(NSString *)authToken;
 - (void)setUsername:(NSString *)username;
+- (void)setDeviceId:(NSString *)newId;
 
 @end
