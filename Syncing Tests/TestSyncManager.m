@@ -69,7 +69,7 @@
 /**
  saveNewData
  */
-- (NSMutableArray *)saveNewData:(NSArray *)jsonObjects withDeviceId:(NSString *)deviceId
+- (NSMutableArray *)saveNewData:(NSArray *)jsonObjects withDeviceId:(NSString *)deviceId withParameters:(NSDictionary *)responseParameters
 {
     return [[NSMutableArray alloc] init];
 }

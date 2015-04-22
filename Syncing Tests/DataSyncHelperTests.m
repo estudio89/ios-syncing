@@ -51,7 +51,7 @@
     
     // Registros
     [given([_syncManagerRegistros getIdentifier]) willReturn:@"registros"];
-    [given([_syncManagerRegistros saveNewData:anything() withDeviceId:anything()]) willReturn:[[NSMutableArray alloc] init]];
+    [given([_syncManagerRegistros saveNewData:anything() withDeviceId:anything() withParameters:anything()]) willReturn:[[NSMutableArray alloc] init]];
     
     NSString *regFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/modified-data-registros.json";
     NSString *jsonStrRegs = [[NSString alloc] initWithContentsOfFile:regFile encoding:NSUTF8StringEncoding error:nil];
@@ -73,7 +73,7 @@
     
     // Empresas
     [given([_syncManagerEmpresas getIdentifier]) willReturn:@"empresas"];
-    [given([_syncManagerEmpresas saveNewData:anything() withDeviceId:anything()]) willReturn:[[NSMutableArray alloc] init]];
+    [given([_syncManagerEmpresas saveNewData:anything() withDeviceId:anything() withParameters:anything()]) willReturn:[[NSMutableArray alloc] init]];
     
     NSString *empFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/modified-data-empresas.json";
     NSString *jsonStrEmps = [[NSString alloc] initWithContentsOfFile:empFile encoding:NSUTF8StringEncoding error:nil];
@@ -88,7 +88,7 @@
     
     // Formularios
     [given([_syncManagerFormularios getIdentifier]) willReturn:@"formularios"];
-    [given([_syncManagerFormularios saveNewData:anything() withDeviceId:anything()]) willReturn:[[NSMutableArray alloc] init]];
+    [given([_syncManagerFormularios saveNewData:anything() withDeviceId:anything() withParameters:anything()]) willReturn:[[NSMutableArray alloc] init]];
     [given([_syncManagerFormularios getModifiedData]) willReturn:[[NSMutableArray alloc] init]];
     [given([_syncManagerFormularios shouldSendSingleObject]) willReturnBool:NO];
     [given([_syncManagerFormularios getModifiedFiles]) willReturn:[[NSMutableArray alloc] init]];
@@ -196,26 +196,41 @@
     json = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
     data = [json dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSArray *registrosArray = [jsonData objectForKey:@"registros"];
-    NSArray *empresasArray = [jsonData objectForKey:@"empresas"];
-    NSArray *formulariosArray = [jsonData objectForKey:@"formularios"];
+    
+    NSMutableDictionary *registrosObj = [jsonData objectForKey:@"registros"];
+    NSArray *registrosArray = [registrosObj objectForKey:@"data"];
+    NSMutableDictionary *registrosParams = [[NSMutableDictionary alloc] initWithDictionary:registrosObj];
+    [registrosParams removeObjectForKey:@"data"];
+    
+    NSMutableDictionary *empresasObj = [jsonData objectForKey:@"empresas"];
+    NSArray *empresasArray = [empresasObj objectForKey:@"data"];
+    NSMutableDictionary *empresasParams = [[NSMutableDictionary alloc] initWithDictionary:empresasObj];
+    [empresasParams removeObjectForKey:@"data"];
+    
+    NSMutableDictionary *formulariosObj = [jsonData objectForKey:@"formularios"];
+    NSArray *formulariosArray = [formulariosObj objectForKey:@"data"];
+    NSMutableDictionary *formulariosParams = [[NSMutableDictionary alloc] initWithDictionary:formulariosObj];
+    [formulariosParams removeObjectForKey:@"data"];
     
     assertThatBool([_customTransactionManager wasSuccessful], equalToBool(YES));
     
     // registros
     argument = [[MKTArgumentCaptor alloc] init];
-    [verify(_syncManagerRegistros) saveNewData:[argument capture] withDeviceId:[argument capture]];
+    [verify(_syncManagerRegistros) saveNewData:[argument capture] withDeviceId:[argument capture] withParameters:[argument capture]];
     assertThat([[argument allValues] objectAtIndex:0], is(registrosArray));
+    assertThat([[argument allValues] objectAtIndex:2], is(registrosParams));
     
     // empresas
     argument = [[MKTArgumentCaptor alloc] init];
-    [verify(_syncManagerEmpresas) saveNewData:[argument capture] withDeviceId:[argument capture]];
+    [verify(_syncManagerEmpresas) saveNewData:[argument capture] withDeviceId:[argument capture] withParameters:[argument capture]];
     assertThat([[argument allValues] objectAtIndex:0], is(empresasArray));
+    assertThat([[argument allValues] objectAtIndex:2], is(empresasParams));
     
     // formularios
     argument = [[MKTArgumentCaptor alloc] init];
-    [verify(_syncManagerFormularios) saveNewData:[argument capture] withDeviceId:[argument capture]];
+    [verify(_syncManagerFormularios) saveNewData:[argument capture] withDeviceId:[argument capture] withParameters:[argument capture]];
     assertThat([[argument allValues] objectAtIndex:0], is(formulariosArray));
+    assertThat([[argument allValues] objectAtIndex:2], is(formulariosParams));
     
     // verificando o post
     [verify(_syncManagerRegistros) postEvent:anything() withBus:anything()];
@@ -273,23 +288,35 @@
     json = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
     data = [json dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSArray *registrosArray = [jsonData objectForKey:@"registros"];
-    NSArray *empresasArray = [jsonData objectForKey:@"empresas"];
+    
+    NSMutableDictionary *registrosObj = [jsonData objectForKey:@"registros"];
+    NSMutableDictionary *empresasObj = [jsonData objectForKey:@"empresas"];
+    
+    NSArray *registrosArray = [registrosObj objectForKey:@"data"];
+    NSArray *empresasArray = [empresasObj objectForKey:@"data"];
+    
+    NSMutableDictionary *registrosParams = [[NSMutableDictionary alloc] initWithDictionary:registrosObj];
+    [registrosParams removeObjectForKey:@"data"];
+    
+    NSMutableDictionary *empresasParams = [[NSMutableDictionary alloc] initWithDictionary:empresasObj];
+    [empresasParams removeObjectForKey:@"data"];
     
     assertThatBool([_customTransactionManager wasSuccessful], equalToBool(YES));
     
     // registros
     argument = [[MKTArgumentCaptor alloc] init];
-    [verify(_syncManagerRegistros) saveNewData:[argument capture] withDeviceId:[argument capture]];
+    [verify(_syncManagerRegistros) saveNewData:[argument capture] withDeviceId:[argument capture] withParameters:[argument capture]];
     assertThat([[argument allValues] objectAtIndex:0], is(registrosArray));
+    assertThat([[argument allValues] objectAtIndex:2], is(registrosParams));
     
     // empresas
     argument = [[MKTArgumentCaptor alloc] init];
-    [verify(_syncManagerEmpresas) saveNewData:[argument capture] withDeviceId:[argument capture]];
+    [verify(_syncManagerEmpresas) saveNewData:[argument capture] withDeviceId:[argument capture] withParameters:[argument capture]];
     assertThat([[argument allValues] objectAtIndex:0], is(empresasArray));
+    assertThat([[argument allValues] objectAtIndex:2], is(empresasParams));
     
     // formularios
-    [verifyCount(_syncManagerFormularios, never()) saveNewData:anything() withDeviceId:anything()];
+    [verifyCount(_syncManagerFormularios, never()) saveNewData:anything() withDeviceId:anything() withParameters:anything()];
     
     // verificando o timestamp
     [verifyCount(_syncConfig, never()) setTimestamp:anything()];
@@ -361,10 +388,15 @@
     [verify(_syncManagerEmpresas) processSendResponse:[argument capture]];
     assertThat([[argument allValues] objectAtIndex:0], is(empresasArray));
     
-    NSArray *newEmpresasArray = [jsonData objectForKey:@"empresas"];
+    NSMutableDictionary *newEmpresasObj = [jsonData objectForKey:@"empresas"];
+    NSArray *newEmpresasArray = [newEmpresasObj objectForKey:@"data"];
+    NSMutableDictionary *newEmpresasParams = [[NSMutableDictionary alloc] initWithDictionary:newEmpresasObj];
+    [newEmpresasParams removeObjectForKey:@"data"];
+    
     argument = [[MKTArgumentCaptor alloc] init];
-    [verify(_syncManagerEmpresas) saveNewData:[argument capture] withDeviceId:[argument capture]];
+    [verify(_syncManagerEmpresas) saveNewData:[argument capture] withDeviceId:[argument capture] withParameters:[argument capture]];
     assertThat([[argument allValues] objectAtIndex:0], is(newEmpresasArray));
+    assertThat([[argument allValues] objectAtIndex:2], is(newEmpresasParams));
     
     // verificando o post
     [verifyCount(_syncManagerRegistros, never()) postEvent:anything() withBus:anything()];
@@ -432,6 +464,7 @@
     json = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
     data = [json dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     NSDictionary *secondRequestJSON = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    
     assertThat([capturedUrls objectAtIndex:1], is(@"http://127.0.0.1:8000/api/send-data/"));
     assertThat([capturedData objectAtIndex:1], is(secondRequestJSON));
     assertThat([capturedFiles objectAtIndex:1], is([_modifiedFiles subarrayWithRange:NSMakeRange(1, [_modifiedFiles count]-1)]));
@@ -451,11 +484,16 @@
     [verifyCount(_syncManagerRegistros, times(2)) processSendResponse:[argument capture]];
     assertThat([[argument allValues] objectAtIndex:0], is([jsonData1 objectForKey:@"registros_id"]));
     assertThat([[argument allValues] objectAtIndex:1], is([jsonData2 objectForKey:@"registros_id"]));
-
+    
+    NSMutableDictionary *empresasObj = [jsonData2 objectForKey:@"empresas"];
+    NSArray *empresasArray = [empresasObj objectForKey:@"data"];
+    NSMutableDictionary *empresasParams = [[NSMutableDictionary alloc] initWithDictionary:empresasObj];
+    [empresasParams removeObjectForKey:@"data"];
+    
     // empresas
     argument = [[MKTArgumentCaptor alloc] init];
     [verify(_syncManagerEmpresas) processSendResponse:[argument capture]];
-    [verifyCount(_syncManagerEmpresas, times(1)) saveNewData:[jsonData2 objectForKey:@"empresas"] withDeviceId:anything()];
+    [verifyCount(_syncManagerEmpresas, times(1)) saveNewData:empresasArray withDeviceId:anything() withParameters:empresasParams];
     
     assertThat([[argument allValues] objectAtIndex:0], is([jsonData3 objectForKey:@"empresas_id"]));
 

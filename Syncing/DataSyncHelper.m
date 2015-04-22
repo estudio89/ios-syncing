@@ -217,15 +217,23 @@
         {
   
             NSString *identifier = [syncManager getIdentifier];
+            NSMutableDictionary *jsonObject = [[jsonResponse objectForKey:identifier] mutableCopy];
             
-            NSArray *jsonArray = [jsonResponse objectForKey:identifier];
-            
-            if (jsonArray != nil)
+            if (jsonObject != nil)
             {
-                NSArray *objects = [syncManager saveNewData:jsonArray withDeviceId:[self.syncConfig getDeviceId]];
+                NSArray *jsonArray = [jsonObject objectForKey:@"data"];
+                
+                if (jsonArray == nil)
+                {
+                    jsonArray = [[NSArray alloc] init];
+                }
+                
+                [jsonObject removeObjectForKey:@"data"];
+                NSArray *objects = [syncManager saveNewData:jsonArray withDeviceId:[self.syncConfig getDeviceId] withParameters:jsonObject];
                 [syncManager postEvent:objects withBus:[self bus]];
             }
         }
+        
         if ([self.threadChecker isValidThreadId:threadId])
         {
             if (timestamp != nil)
@@ -252,7 +260,8 @@
     
     [self.transactionManager doInTransaction:^{
         NSArray *syncResponse;
-        NSArray *newDataResponse;
+        NSMutableDictionary *newDataResponse;
+        NSArray *newData;
         NSArray *iterator = [jsonResponse allKeys];
         
         for (NSString *responseId in iterator)
@@ -268,8 +277,14 @@
                 syncManager = [self.syncConfig getSyncManager:responseId];
                 if (syncManager != nil)
                 {
-                    newDataResponse = [jsonResponse objectForKey:responseId];
-                    NSArray *objects = [syncManager saveNewData:newDataResponse withDeviceId:[self.syncConfig getDeviceId]];
+                    newDataResponse = [[jsonResponse objectForKey:responseId] mutableCopy];
+                    newData = [newDataResponse objectForKey:@"data"];
+                    if (newData == nil)
+                    {
+                        newData = [[NSArray alloc] init];
+                    }
+                    [newDataResponse removeObjectForKey:@"data"];
+                    NSArray *objects = [syncManager saveNewData:newData withDeviceId:[self.syncConfig getDeviceId] withParameters:newDataResponse];
                     [syncManager postEvent:objects withBus:[self bus]];
                 }
             }
@@ -346,7 +361,7 @@
 - (void)partialAsynchronousSync:(NSString *)identifier withParameters:(NSDictionary *)parameters
 {
     NSNumber *flag = [self.partialSyncFlag objectForKey:identifier];
-    if (flag != nil && [flag boolValue])
+    if (flag == nil || ![flag boolValue])
     {
         [self partialSyncTask:identifier withParameters:parameters];
     }

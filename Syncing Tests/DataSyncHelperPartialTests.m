@@ -46,7 +46,7 @@
 
     // Registros
     OCMStub([_syncManagerRegistros getIdentifier]).andReturn(@"registros");
-    OCMStub([_syncManagerRegistros saveNewData:[OCMArg any] withDeviceId:[OCMArg any]]).andReturn([[NSMutableArray alloc] init]);
+    OCMStub([_syncManagerRegistros saveNewData:[OCMArg any] withDeviceId:[OCMArg any] withParameters:[OCMArg any]]).andReturn([[NSMutableArray alloc] init]);
 
     NSString *regFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/modified-data-registros.json";
     NSString *jsonStrRegs = [[NSString alloc] initWithContentsOfFile:regFile encoding:NSUTF8StringEncoding error:nil];
@@ -68,7 +68,7 @@
 
     // Empresas
     OCMStub([_syncManagerEmpresas getIdentifier]).andReturn(@"empresas");
-    OCMStub([_syncManagerEmpresas saveNewData:[OCMArg any] withDeviceId:[OCMArg any]]).andReturn([[NSMutableArray alloc] init]);
+    OCMStub([_syncManagerEmpresas saveNewData:[OCMArg any] withDeviceId:[OCMArg any] withParameters:[OCMArg any]]).andReturn([[NSMutableArray alloc] init]);
 
     NSString *empFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/modified-data-empresas.json";
     NSString *jsonStrEmps = [[NSString alloc] initWithContentsOfFile:empFile encoding:NSUTF8StringEncoding error:nil];
@@ -83,7 +83,7 @@
 
     // Formularios
     OCMStub([_syncManagerFormularios getIdentifier]).andReturn(@"formularios");
-    OCMStub([_syncManagerFormularios saveNewData:[OCMArg any] withDeviceId:[OCMArg any]]).andReturn([[NSMutableArray alloc] init]);
+    OCMStub([_syncManagerFormularios saveNewData:[OCMArg any] withDeviceId:[OCMArg any] withParameters:[OCMArg any]]).andReturn([[NSMutableArray alloc] init]);
     OCMStub([_syncManagerFormularios getModifiedData]).andReturn([[NSMutableArray alloc] init]);
     OCMStub([_syncManagerFormularios shouldSendSingleObject]).andReturn(NO);
     OCMStub([_syncManagerFormularios getModifiedFiles]).andReturn([[NSMutableArray alloc] init]);

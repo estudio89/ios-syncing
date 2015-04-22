@@ -18,7 +18,7 @@
 - (BOOL)hasModifiedData;
 - (NSMutableArray *)getModifiedFiles;
 - (NSMutableArray *)getModifiedFilesForObject:(NSDictionary *)object;
-- (NSMutableArray *)saveNewData:(NSArray *)jsonObjects withDeviceId:(NSString *)deviceId;
+- (NSMutableArray *)saveNewData:(NSArray *)jsonObjects withDeviceId:(NSString *)deviceId withParameters:(NSDictionary *)responseParameters;
 - (void)processSendResponse:(NSArray *)jsonResponse;
 - (NSDictionary *)serializeObject:(NSObject *)object;
 - (id)saveObject:(NSDictionary *)object withDeviceId:(NSString *)deviceId;
