@@ -33,6 +33,8 @@
 - (BOOL)getDataFromServer:(NSString *)identifier withParameters:(NSMutableDictionary *)parameters;
 - (BOOL)sendDataToServer;
 - (BOOL)fullSynchronousSync;
+- (void)fullAsynchronousSync;
+- (void)partialAsynchronousSync:(NSString *)identifier withParameters:(NSDictionary *)parameters;
 - (void)postSyncFinishedEvent;
 - (void)postGetFinishedEvent;
 - (void)postSendFinishedEvent;
