@@ -395,7 +395,7 @@
  */
 - (void)postSendFinishedEvent
 {
-    [self.bus post:[[SendFinishedEvent alloc] init] withNotificationname:@"postSendFinishedEvent"];
+    [self.bus post:[[SendFinishedEvent alloc] init] withNotificationname:@"SendFinishedEvent"];
 }
 
 /**
@@ -403,7 +403,7 @@
  */
 - (void)postGetFinishedEvent
 {
-    [self.bus post:[[GetFinishedEvent alloc] init] withNotificationname:@"postGetFinishedEvent"];
+    [self.bus post:[[GetFinishedEvent alloc] init] withNotificationname:@"GetFinishedEvent"];
 }
 
 /**
@@ -411,7 +411,7 @@
  */
 - (void)postSyncFinishedEvent
 {
-    [self.bus post:[[SyncFinishedEvent alloc] init] withNotificationname:@"postSyncFinishedEvent"];
+    [self.bus post:[[SyncFinishedEvent alloc] init] withNotificationname:@"SyncFinishedEvent"];
     NSLog(@"SyncFinishedEvent");
 }
 
@@ -420,7 +420,7 @@
  */
 - (void)postBackgroundSyncError:(NSException *)error
 {
-    [self.bus post:[[BackgroundSyncError alloc] initWithException:error] withNotificationname:@"postBackgroundSyncError"];
+    [self.bus post:[[BackgroundSyncError alloc] initWithException:error] withNotificationname:@"BackgroundSyncError"];
 }
 
 /**
