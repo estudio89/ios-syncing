@@ -7,6 +7,7 @@
 //
 
 #import "SyncConfig.h"
+#import "SyncingInjection.h"
 
 @interface SyncConfig()
 
@@ -22,6 +23,11 @@
 @end
 
 @implementation SyncConfig
+
++ (SyncConfig *)getInstance
+{
+    return [SyncingInjection get:[SyncConfig class]];
+}
 
 /**
  * init

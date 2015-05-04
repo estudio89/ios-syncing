@@ -67,6 +67,8 @@
 		7BB7A1441AAE12C900E0330F /* send-data-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BB7A1431AAE12C900E0330F /* send-data-response.json */; };
 		7BB7A1461AAE12DE00E0330F /* get-data-for-model-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BB7A1451AAE12DE00E0330F /* get-data-for-model-response.json */; };
 		7BC4B2CF1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC4B2CE1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a */; };
+		7BCCF7521AF826C6007F6B09 /* SyncingInjection.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BCCF7501AF826C6007F6B09 /* SyncingInjection.h */; };
+		7BCCF7531AF826C6007F6B09 /* SyncingInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BCCF7511AF826C6007F6B09 /* SyncingInjection.m */; };
 		7BD43C4F1AB1C65C00C58368 /* AbstractLoginActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD43C4E1AB1C65C00C58368 /* AbstractLoginActivity.m */; };
 		7BD43C521AB20E8200C58368 /* ServerAuthenticate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD43C511AB20E8200C58368 /* ServerAuthenticate.m */; };
 		7BD4BADB1AAE19EE00194BFB /* get-data-request.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BD4BADA1AAE19EE00194BFB /* get-data-request.json */; };
@@ -142,6 +144,8 @@
 		7BC4B2CC1AAA3547000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OHHTTPStubs.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OHHTTPStubs.a"; sourceTree = "<group>"; };
 		7BC4B2CE1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OHHTTPStubs.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OHHTTPStubs.a"; sourceTree = "<group>"; };
 		7BC4B2D01AAA3643000F30AE /* libPods-Syncing Tests-OCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OCMock.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OCMock.a"; sourceTree = "<group>"; };
+		7BCCF7501AF826C6007F6B09 /* SyncingInjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncingInjection.h; sourceTree = "<group>"; };
+		7BCCF7511AF826C6007F6B09 /* SyncingInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncingInjection.m; sourceTree = "<group>"; };
 		7BD43C4D1AB1C65C00C58368 /* AbstractLoginActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractLoginActivity.h; sourceTree = "<group>"; };
 		7BD43C4E1AB1C65C00C58368 /* AbstractLoginActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractLoginActivity.m; sourceTree = "<group>"; };
 		7BD43C501AB20E8200C58368 /* ServerAuthenticate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerAuthenticate.h; sourceTree = "<group>"; };
@@ -252,6 +256,8 @@
 				7BD43C4E1AB1C65C00C58368 /* AbstractLoginActivity.m */,
 				7BD43C501AB20E8200C58368 /* ServerAuthenticate.h */,
 				7BD43C511AB20E8200C58368 /* ServerAuthenticate.m */,
+				7BCCF7501AF826C6007F6B09 /* SyncingInjection.h */,
+				7BCCF7511AF826C6007F6B09 /* SyncingInjection.m */,
 			);
 			path = Syncing;
 			sourceTree = "<group>";
@@ -313,6 +319,7 @@
 				7B42B64F1AB8A8D200F02528 /* ThreadChecker.h in Headers */,
 				7B42B6541AB8A8D200F02528 /* CustomTransactionManager.h in Headers */,
 				7B42B6561AB8A8D200F02528 /* DatabaseProvider.h in Headers */,
+				7BCCF7521AF826C6007F6B09 /* SyncingInjection.h in Headers */,
 				7B42B6571AB8A8D200F02528 /* SharedModelContext.h in Headers */,
 				7B42B6581AB8A8D200F02528 /* CustomException.h in Headers */,
 				7B42B65A1AB8A8D200F02528 /* ServerAuthenticate.h in Headers */,
@@ -491,6 +498,7 @@
 				7BD43C4F1AB1C65C00C58368 /* AbstractLoginActivity.m in Sources */,
 				7BD43C521AB20E8200C58368 /* ServerAuthenticate.m in Sources */,
 				7B3D13931AA0E68B0022525A /* CustomException.m in Sources */,
+				7BCCF7531AF826C6007F6B09 /* SyncingInjection.m in Sources */,
 				7B5F220C1A8D3AC50031E2F2 /* ServerComm.m in Sources */,
 				7BADD13C1A8BDABF0005FC5E /* ThreadChecker.m in Sources */,
 				7B3DDCA71A9DFB9900966A5B /* CustomTransactionManager.m in Sources */,

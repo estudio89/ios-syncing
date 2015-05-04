@@ -22,12 +22,13 @@
 @property (nonatomic, readonly) CustomTransactionManager *transactionManager;
 @property (nonatomic, readonly) AsyncBus *bus;
 
-- (instancetype)initWithContext:(NSManagedObjectContext *)context;
++ (DataSyncHelper *)getInstance;
 - (instancetype)initWithServer:(ServerComm *)serverComm
                 withThreadChecker:(ThreadChecker *)threadChecker
                 withSyncConfig:(SyncConfig *)syncConfig
                 withTransactionManager:(CustomTransactionManager *)transactionManager
-                withBus:(AsyncBus *)bus;
+                withBus:(AsyncBus *)bus
+                withContext:(NSManagedObjectContext *)context;
 
 - (BOOL)getDataFromServer;
 - (BOOL)getDataFromServer:(NSString *)identifier withParameters:(NSMutableDictionary *)parameters;

@@ -10,6 +10,7 @@
 #import "SyncManager.h"
 #import "SharedModelContext.h"
 #import "CustomException.h"
+#import "SyncingInjection.h"
 
 @interface DataSyncHelper()
 
@@ -26,6 +27,11 @@
 
 @implementation DataSyncHelper
 
++ (DataSyncHelper *)getInstance
+{
+    return [SyncingInjection get:[DataSyncHelper class]];
+}
+
 /**
  * Init with dependency injection.
  */
@@ -34,10 +40,12 @@
                 withSyncConfig:(SyncConfig *)syncConfig
                 withTransactionManager:(CustomTransactionManager *)transactionManager
                 withBus:(AsyncBus *)bus
+                withContext:(NSManagedObjectContext *)context
 {
     self = [super init];
     if (self)
     {
+        [[SharedModelContext sharedModelContext] setSharedModelContext:context];
         self.serverComm = serverComm;
         self.threadChecker = threadChecker;
         self.syncConfig = syncConfig;
@@ -47,19 +55,6 @@
         self.partialSyncFlag = [[NSMutableDictionary alloc]init];
     }
     return self;
-}
-
-/**
- * Init
- */
-- (instancetype)initWithContext:(NSManagedObjectContext *)context
-{
-    [[SharedModelContext sharedModelContext] setSharedModelContext:context];
-    return [self initWithServer:[[ServerComm alloc] init]
-                 withThreadChecker:[[ThreadChecker alloc] init]
-                 withSyncConfig:[[SyncConfig alloc] init]
-                 withTransactionManager:[[CustomTransactionManager alloc] init]
-                 withBus:[[AsyncBus alloc] init]];
 }
 
 /**
