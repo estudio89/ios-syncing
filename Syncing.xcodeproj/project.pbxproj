@@ -67,7 +67,7 @@
 		7BB7A1441AAE12C900E0330F /* send-data-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BB7A1431AAE12C900E0330F /* send-data-response.json */; };
 		7BB7A1461AAE12DE00E0330F /* get-data-for-model-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BB7A1451AAE12DE00E0330F /* get-data-for-model-response.json */; };
 		7BC4B2CF1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC4B2CE1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a */; };
-		7BCCF7521AF826C6007F6B09 /* SyncingInjection.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BCCF7501AF826C6007F6B09 /* SyncingInjection.h */; };
+		7BCCF7521AF826C6007F6B09 /* SyncingInjection.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BCCF7501AF826C6007F6B09 /* SyncingInjection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7BCCF7531AF826C6007F6B09 /* SyncingInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BCCF7511AF826C6007F6B09 /* SyncingInjection.m */; };
 		7BD43C4F1AB1C65C00C58368 /* AbstractLoginActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD43C4E1AB1C65C00C58368 /* AbstractLoginActivity.m */; };
 		7BD43C521AB20E8200C58368 /* ServerAuthenticate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD43C511AB20E8200C58368 /* ServerAuthenticate.m */; };
@@ -319,9 +319,9 @@
 				7B42B64F1AB8A8D200F02528 /* ThreadChecker.h in Headers */,
 				7B42B6541AB8A8D200F02528 /* CustomTransactionManager.h in Headers */,
 				7B42B6561AB8A8D200F02528 /* DatabaseProvider.h in Headers */,
-				7BCCF7521AF826C6007F6B09 /* SyncingInjection.h in Headers */,
 				7B42B6571AB8A8D200F02528 /* SharedModelContext.h in Headers */,
 				7B42B6581AB8A8D200F02528 /* CustomException.h in Headers */,
+				7BCCF7521AF826C6007F6B09 /* SyncingInjection.h in Headers */,
 				7B42B65A1AB8A8D200F02528 /* ServerAuthenticate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
