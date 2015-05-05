@@ -153,7 +153,8 @@
                                            withThreadChecker:_threadChecker
                                               withSyncConfig:_syncConfig
                                       withTransactionManager:_customTransactionManager
-                                                     withBus:_bus];
+                                                     withBus:_bus
+                                                 withContext:nil];
 }
 
 - (void)tearDown {

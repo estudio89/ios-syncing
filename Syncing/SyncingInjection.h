@@ -7,9 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
 @interface SyncingInjection : NSObject
 
++ (void)initWithContext:(NSManagedObjectContext *)context
+         withConfigFile:(NSString *)fileName;
++ (void)initWithContext:(NSManagedObjectContext *)context
+         withConfigFile:(NSString *)fileName
+        withInitialSync:(BOOL)initialSync;
++ (void)executeInjectionWithContext:(NSManagedObjectContext *)context;
 + (id)get:(Class)class;
 
 @end

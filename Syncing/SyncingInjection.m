@@ -7,12 +7,66 @@
 //
 
 #import "SyncingInjection.h"
+#import "Syncing.h"
 
 @implementation SyncingInjection
 
+static NSMutableDictionary *objects;
+
++ (void)initWithContext:(NSManagedObjectContext *)context
+         withConfigFile:(NSString *)fileName
+{
+    [self initWithContext:context withConfigFile:fileName withInitialSync:YES];
+}
+
++ (void)initWithContext:(NSManagedObjectContext *)context
+         withConfigFile:(NSString *)fileName
+        withInitialSync:(BOOL)initialSync
+{
+    [self executeInjectionWithContext:context];
+    
+    SyncConfig *syncConfig = [self get:[SyncConfig class]];
+    [syncConfig setConfigFile:fileName];
+    
+    if (initialSync)
+    {
+        [[DataSyncHelper getInstance] fullAsynchronousSync];
+    }
+}
+
++ (void)executeInjectionWithContext:(NSManagedObjectContext *)context;
+{
+    AsyncBus *asyncBus = [[AsyncBus alloc] init];
+    SyncConfig *syncConfig = [[SyncConfig alloc] init];
+    CustomTransactionManager *customTransactionManager = [[CustomTransactionManager alloc] init];
+    ThreadChecker *threadChecker = [[ThreadChecker alloc] init];
+    ServerComm *serverComm = [[ServerComm alloc] init];
+    
+    DataSyncHelper *dataSyncHelper = [[DataSyncHelper alloc] initWithServer:serverComm
+                                                          withThreadChecker:threadChecker
+                                                             withSyncConfig:syncConfig
+                                                     withTransactionManager:customTransactionManager
+                                                                    withBus:asyncBus
+                                                                withContext:context];
+    
+    ServerAuthenticate *serverAuthenticate = [[ServerAuthenticate alloc] initWithServerComm:serverComm
+                                                                             withSyncCOnfig:syncConfig
+                                                                               withAsyncBus:asyncBus];
+    
+    objects = [[NSMutableDictionary alloc] init];
+    [objects setObject:context forKey:NSStringFromClass([context class])];
+    [objects setObject:asyncBus forKey:NSStringFromClass([asyncBus class])];
+    [objects setObject:syncConfig forKey:NSStringFromClass([syncConfig class])];
+    [objects setObject:customTransactionManager forKey:NSStringFromClass([customTransactionManager class])];
+    [objects setObject:threadChecker forKey:NSStringFromClass([threadChecker class])];
+    [objects setObject:serverComm forKey:NSStringFromClass([serverComm class])];
+    [objects setObject:dataSyncHelper forKey:NSStringFromClass([dataSyncHelper class])];
+    [objects setObject:serverAuthenticate forKey:NSStringFromClass([serverAuthenticate class])];
+}
+
 + (id)get:(Class)class
 {
-    return nil;
+    return [objects objectForKey:NSStringFromClass(class)];
 }
 
 @end
