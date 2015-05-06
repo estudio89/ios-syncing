@@ -13,6 +13,7 @@
 
 @interface ServerAuthenticate : NSObject
 
++ (ServerAuthenticate *)getInstance;
 - (instancetype)initWithServerComm:(ServerComm *)serverComm
                     withSyncCOnfig:(SyncConfig *)syncConfig
                       withAsyncBus:(AsyncBus *)bus;

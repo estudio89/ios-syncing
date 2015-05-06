@@ -9,21 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "ServerAuthenticate.h"
 
-@protocol AbstractLoginActivityProtocol <NSObject>
-
-- (void)onIncompleteCredentials;
-- (void)onWrongCredentials:(WrongCredentialsEvent *)event;
-- (void)onBlockedLogin:(BlockedLoginEvent *)event;
-- (void)onConnectionError:(ConnectionErrorEvent *)event;
-
-@end
-
 @interface AbstractLoginActivity : UIViewController
-
-@property (nonatomic, weak) id <AbstractLoginActivityProtocol> delegate;
 
 - (void)submitLogin:(NSString *)username withPasswd:(NSString *)password;
 - (BOOL)verifyCredentials:(NSString *)username withPasswd:(NSString *)password;
+- (void)onIncompleteCredentials;
 - (void)onSuccessfulLogin:(SuccessfulLoginEvent *)event;
+- (void)onWrongCredentials:(WrongCredentialsEvent *)event;
+- (void)onBlockedLogin:(BlockedLoginEvent *)event;
+- (void)onConnectionError:(ConnectionErrorEvent *)event;
 
 @end

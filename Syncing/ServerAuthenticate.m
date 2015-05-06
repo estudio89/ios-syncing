@@ -8,6 +8,7 @@
 
 #import "ServerAuthenticate.h"
 #import "CustomException.h"
+#import "SyncingInjection.h"
 
 @implementation WrongCredentialsEvent
 @end
@@ -77,6 +78,15 @@
 @implementation ServerAuthenticate
 
 /**
+ getInstance
+ @return self A ServerAuthenticate instance.
+ */
++ (ServerAuthenticate *)getInstance
+{
+    return [SyncingInjection get:[ServerAuthenticate class]];
+}
+
+/**
  * initWithServerComm
  * Constructor for dependency injection.
  @param serverComm A ServerComm mock object.
@@ -97,18 +107,6 @@
         _isAuthenticating = NO;
     }
     return self;
-}
-
-/**
- init
- The overridden init method
- @return self A ServerAuthenticate instance.
- */
-- (instancetype)init
-{
-    return [self initWithServerComm:[[ServerComm alloc] init]
-                     withSyncCOnfig:[[SyncConfig alloc] init]
-                       withAsyncBus:[[AsyncBus alloc] init]];
 }
 
 /**

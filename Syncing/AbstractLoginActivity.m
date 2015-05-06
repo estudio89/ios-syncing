@@ -9,13 +9,7 @@
 #import "AbstractLoginActivity.h"
 #import "SyncConfig.h"
 
-@interface AbstractLoginActivity ()
-
-@end
-
 @implementation AbstractLoginActivity
-
-@synthesize delegate;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -27,6 +21,22 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (id)init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        AsyncBus *bus = [[AsyncBus alloc] init];
+        [bus subscribe:self withSelector:@selector(onSuccessfulLogin:) withNotificationname:@"SuccessfulLoginEvent" withObject:nil];
+        [bus subscribe:self withSelector:@selector(onWrongCredentials:) withNotificationname:@"WrongCredentialsEvent" withObject:nil];
+        [bus subscribe:self withSelector:@selector(onBlockedLogin:) withNotificationname:@"BlockedLoginEvent" withObject:nil];
+        [bus subscribe:self withSelector:@selector(onConnectionError:) withNotificationname:@"ConnectionErrorEvent" withObject:nil];
+    }
+    
+    return self;
+}
+
 /**
  * submitLogin
  *
@@ -36,11 +46,11 @@
 {
     if (![self verifyCredentials:username withPasswd:password])
     {
-        [delegate onIncompleteCredentials];
+        [self onIncompleteCredentials];
         return;
     }
-    ServerAuthenticate *serverAuthenticate = [[ServerAuthenticate alloc] init];
-    [serverAuthenticate asyncAuthentication:username withPasswd:password];
+
+    [[ServerAuthenticate getInstance] asyncAuthentication:username withPasswd:password];
 }
 
 /**
@@ -59,11 +69,51 @@
  *
  * @param
  */
+- (void)onIncompleteCredentials
+{
+}
+
+#pragma mark - Events
+
+/**
+ * onSuccessfulLogin
+ *
+ * @param event
+ */
 - (void)onSuccessfulLogin:(SuccessfulLoginEvent *)event
 {
-    SyncConfig *syncConfig = [[SyncConfig alloc] init];
-    [syncConfig setAuthToken:[event getAuthToken]];
-    [syncConfig setUsername:[event getUsername]];
+    [[SyncConfig getInstance] setAuthToken:[event getAuthToken]];
+    [[SyncConfig getInstance] setUsername:[event getUsername]];
+}
+
+/**
+ * onWrongCredentials
+ *
+ * @param event
+ */
+- (void)onWrongCredentials:(WrongCredentialsEvent *)event
+{
+    
+}
+
+/**
+ * onBlockedLogin
+ *
+ * @param event
+ */
+- (void)onBlockedLogin:(BlockedLoginEvent *)event
+{
+    
+}
+
+/**
+ * onConnectionError
+ *
+ * @param event
+ */
+- (void)onConnectionError:(ConnectionErrorEvent *)event
+{
+    
 }
 
 @end
