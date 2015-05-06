@@ -7,12 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "SyncManager.h"
 #import "DatabaseProvider.h"
 
 @interface SyncConfig : NSObject
 
 + (SyncConfig *)getInstance;
++ (void)showLoginIfNeeded:(UIViewController *)initialVC;
++ (BOOL)userIsLoggedIn;
 - (NSString *)getAuthenticateUrl;
 - (NSString *)getAuthToken;
 - (NSString *)getTimestamp;

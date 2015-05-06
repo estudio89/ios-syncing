@@ -17,13 +17,18 @@
 @property (nonatomic, strong, readwrite) NSString *mGetDataUrl;
 @property (nonatomic, strong, readwrite) NSString *mSendDataUrl;
 @property (nonatomic, strong, readwrite) NSString *mAuthenticateUrl;
-@property (nonatomic, strong, readwrite) NSString *loginActivity;
+//@property (nonatomic, strong, readwrite) NSString *loginActivity;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *mModelGetDataUrls;
 
 @end
 
 @implementation SyncConfig
 
+static NSString *loginActivity;
+
+/**
+ * getInstance
+ */
 + (SyncConfig *)getInstance
 {
     return [SyncingInjection get:[SyncConfig class]];
@@ -68,7 +73,7 @@
         _mGetDataUrl = [jsonConfig valueForKey:@"getDataUrl"];
         _mSendDataUrl = [jsonConfig valueForKey:@"sendDataUrl"];
         _mAuthenticateUrl = [jsonConfig valueForKey:@"authenticateUrl"];
-        _loginActivity = [jsonConfig valueForKey:@"loginActivity"];
+        loginActivity = [jsonConfig valueForKey:@"loginActivity"];
         
         id<SyncManager> syncManager;
         Class klass;
@@ -93,6 +98,33 @@
     {
         @throw e;
     }
+}
+
+/**
+ * showLoginIfNeeded
+ */
++ (void)showLoginIfNeeded:(UIViewController *)initialVC
+{
+    if ([self userIsLoggedIn])
+    {
+        UIViewController *loginVC = [initialVC.storyboard instantiateViewControllerWithIdentifier:loginActivity];
+        [initialVC.navigationController pushViewController:loginVC animated:NO];
+    }
+}
+
+/**
+ * userIsLoggedIn
+ */
++ (BOOL)userIsLoggedIn
+{
+    BOOL isLogged = NO;
+    NSString *storedAuthtoken = [[NSUserDefaults standardUserDefaults] stringForKey:@"E89.iOS.Syncing-AuthToken"];
+    if ([storedAuthtoken length] > 0)
+    {
+        isLogged = YES;
+    }
+    
+    return isLogged;
 }
 
 /**
