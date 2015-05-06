@@ -16,6 +16,7 @@
 #import <Syncing/SyncEvent.h>
 #import <Syncing/CustomException.h>
 #import <Syncing/SyncingInjection.h>
+#import <Syncing/ReadOnlyAbstractSyncManager.h>
 
 @interface Syncing : NSObject
 
