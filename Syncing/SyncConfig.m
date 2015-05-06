@@ -105,7 +105,7 @@ static NSString *loginActivity;
  */
 - (void)showLoginIfNeeded:(UIViewController *)initialVC
 {
-    if ([self userIsLoggedIn])
+    if (![self userIsLoggedIn])
     {
         UIViewController *loginVC = [initialVC.storyboard instantiateViewControllerWithIdentifier:loginActivity];
         [initialVC.navigationController pushViewController:loginVC animated:NO];
