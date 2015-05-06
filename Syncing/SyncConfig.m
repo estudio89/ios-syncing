@@ -103,7 +103,7 @@ static NSString *loginActivity;
 /**
  * showLoginIfNeeded
  */
-+ (void)showLoginIfNeeded:(UIViewController *)initialVC
+- (void)showLoginIfNeeded:(UIViewController *)initialVC
 {
     if ([self userIsLoggedIn])
     {
@@ -115,10 +115,10 @@ static NSString *loginActivity;
 /**
  * userIsLoggedIn
  */
-+ (BOOL)userIsLoggedIn
+- (BOOL)userIsLoggedIn
 {
     BOOL isLogged = NO;
-    NSString *storedAuthtoken = [[NSUserDefaults standardUserDefaults] stringForKey:@"E89.iOS.Syncing-AuthToken"];
+    NSString *storedAuthtoken = [self getAuthToken];
     if ([storedAuthtoken length] > 0)
     {
         isLogged = YES;

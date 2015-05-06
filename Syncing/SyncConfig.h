@@ -14,8 +14,8 @@
 @interface SyncConfig : NSObject
 
 + (SyncConfig *)getInstance;
-+ (void)showLoginIfNeeded:(UIViewController *)initialVC;
-+ (BOOL)userIsLoggedIn;
+- (void)showLoginIfNeeded:(UIViewController *)initialVC;
+- (BOOL)userIsLoggedIn;
 - (NSString *)getAuthenticateUrl;
 - (NSString *)getAuthToken;
 - (NSString *)getTimestamp;
