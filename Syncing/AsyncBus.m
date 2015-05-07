@@ -15,7 +15,10 @@
  */
 - (void)post:(id)object withNotificationname:(NSString *)notification;
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:notification object:object];
+    // The notification will be posted on the main thread
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:notification object:object];
+    });
 }
 
 /**
