@@ -21,22 +21,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (id)init
-{
-    self = [super init];
-    
-    if (self)
-    {
-        AsyncBus *bus = [[AsyncBus alloc] init];
-        [bus subscribe:self withSelector:@selector(onSuccessfulLogin:) withNotificationname:@"SuccessfulLoginEvent" withObject:nil];
-        [bus subscribe:self withSelector:@selector(onWrongCredentials:) withNotificationname:@"WrongCredentialsEvent" withObject:nil];
-        [bus subscribe:self withSelector:@selector(onBlockedLogin:) withNotificationname:@"BlockedLoginEvent" withObject:nil];
-        [bus subscribe:self withSelector:@selector(onConnectionError:) withNotificationname:@"ConnectionErrorEvent" withObject:nil];
-    }
-    
-    return self;
-}
-
 /**
  * submitLogin
  *
