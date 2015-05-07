@@ -33,6 +33,7 @@
 - (void)setAuthToken:(NSString *)authToken;
 - (void)setUsername:(NSString *)username;
 - (void)setDeviceId:(NSString *)newId;
+- (void)logout;
 
 @end
 
