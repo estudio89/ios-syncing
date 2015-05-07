@@ -8,16 +8,17 @@
 
 #import "SyncConfig.h"
 #import "SyncingInjection.h"
+#import "DataSyncHelper.h"
 
 @interface SyncConfig()
 
+@property (nonatomic, strong, readwrite) AsyncBus *bus;
 @property (nonatomic, strong, readwrite) NSString *mConfigFile;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *syncManagersByIdentifier;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *syncManagersByResponseIdentifier;
 @property (nonatomic, strong, readwrite) NSString *mGetDataUrl;
 @property (nonatomic, strong, readwrite) NSString *mSendDataUrl;
 @property (nonatomic, strong, readwrite) NSString *mAuthenticateUrl;
-//@property (nonatomic, strong, readwrite) NSString *loginActivity;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *mModelGetDataUrls;
 
 @end
@@ -35,12 +36,13 @@ static NSString *loginActivity;
 }
 
 /**
- * init
+ * initWithBus
  */
-- (id)init
+- (instancetype)initWithBus:(AsyncBus *)bus;
 {
     if (self = [super init])
     {
+        _bus = bus;
         _syncManagersByIdentifier = [[NSMutableDictionary alloc] init];
         _syncManagersByResponseIdentifier = [[NSMutableDictionary alloc] init];
         _mModelGetDataUrls = [[NSMutableDictionary alloc] init];
@@ -110,6 +112,17 @@ static NSString *loginActivity;
         UIViewController *loginVC = [initialVC.storyboard instantiateViewControllerWithIdentifier:loginActivity];
         [initialVC.navigationController pushViewController:loginVC animated:NO];
     }
+}
+
+/**
+ * logout
+ */
+- (void)logout
+{
+    [self eraseSyncPreferences];
+    [[DataSyncHelper getInstance] stopSyncThreads];
+    [_bus post:[[UserLoggedOutEvent alloc] init] withNotificationname:@"UserLoggedOutEvent"];
+    NSLog(@"UserLoggedOutEvent event was posted.");
 }
 
 /**
@@ -305,5 +318,9 @@ static NSString *loginActivity;
 {
     return [[DatabaseProvider alloc] init];
 }
+
+@end
+
+@implementation UserLoggedOutEvent
 
 @end

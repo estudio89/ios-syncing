@@ -37,7 +37,7 @@ static NSMutableDictionary *objects;
 + (void)executeInjectionWithContext:(NSManagedObjectContext *)context;
 {
     AsyncBus *asyncBus = [[AsyncBus alloc] init];
-    SyncConfig *syncConfig = [[SyncConfig alloc] init];
+    SyncConfig *syncConfig = [[SyncConfig alloc] initWithBus:asyncBus];
     CustomTransactionManager *customTransactionManager = [[CustomTransactionManager alloc] init];
     ThreadChecker *threadChecker = [[ThreadChecker alloc] init];
     ServerComm *serverComm = [[ServerComm alloc] init];

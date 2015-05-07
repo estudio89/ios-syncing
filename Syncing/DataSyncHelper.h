@@ -46,6 +46,8 @@
 - (void)setTransactionManager:(CustomTransactionManager *)transactionManager;
 - (void)setBus:(AsyncBus *)bus;
 
+- (void)stopSyncThreads;
+
 @end
 
 @interface SendFinishedEvent : NSObject

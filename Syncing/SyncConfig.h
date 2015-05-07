@@ -14,6 +14,7 @@
 @interface SyncConfig : NSObject
 
 + (SyncConfig *)getInstance;
+- (instancetype)initWithBus:(AsyncBus *)bus;
 - (void)showLoginIfNeeded:(UIViewController *)initialVC;
 - (BOOL)userIsLoggedIn;
 - (NSString *)getAuthenticateUrl;
@@ -32,5 +33,9 @@
 - (void)setAuthToken:(NSString *)authToken;
 - (void)setUsername:(NSString *)username;
 - (void)setDeviceId:(NSString *)newId;
+
+@end
+
+@interface UserLoggedOutEvent : NSObject
 
 @end
