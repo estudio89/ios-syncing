@@ -8,6 +8,7 @@
 
 #import "AbstractLoginActivity.h"
 #import "SyncConfig.h"
+#import "ServerAuthenticate.h"
 
 @implementation AbstractLoginActivity
 
@@ -64,10 +65,11 @@
  *
  * @param event
  */
-- (void)onSuccessfulLogin:(SuccessfulLoginEvent *)event
+- (void)onSuccessfulLogin:(NSNotification *)notification
 {
-    [[SyncConfig getInstance] setAuthToken:[event getAuthToken]];
-    [[SyncConfig getInstance] setUsername:[event getUsername]];
+    SuccessfulLoginEvent *successfullLogin = notification.object;
+    [[SyncConfig getInstance] setAuthToken:[successfullLogin getAuthToken]];
+    [[SyncConfig getInstance] setUsername:[successfullLogin getUsername]];
 }
 
 /**
@@ -75,7 +77,7 @@
  *
  * @param event
  */
-- (void)onWrongCredentials:(WrongCredentialsEvent *)event
+- (void)onWrongCredentials:(NSNotification *)notification
 {
     
 }
@@ -85,7 +87,7 @@
  *
  * @param event
  */
-- (void)onBlockedLogin:(BlockedLoginEvent *)event
+- (void)onBlockedLogin:(NSNotification *)notification
 {
     
 }
@@ -95,7 +97,7 @@
  *
  * @param event
  */
-- (void)onConnectionError:(ConnectionErrorEvent *)event
+- (void)onConnectionError:(NSNotification *)notification
 {
     
 }

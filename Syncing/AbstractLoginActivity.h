@@ -7,16 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ServerAuthenticate.h"
 
 @interface AbstractLoginActivity : UIViewController
 
 - (void)submitLogin:(NSString *)username withPasswd:(NSString *)password;
 - (BOOL)verifyCredentials:(NSString *)username withPasswd:(NSString *)password;
 - (void)onIncompleteCredentials;
-- (void)onSuccessfulLogin:(SuccessfulLoginEvent *)event;
-- (void)onWrongCredentials:(WrongCredentialsEvent *)event;
-- (void)onBlockedLogin:(BlockedLoginEvent *)event;
-- (void)onConnectionError:(ConnectionErrorEvent *)event;
+- (void)onSuccessfulLogin:(NSNotification *)notification;
+- (void)onWrongCredentials:(NSNotification *)notification;
+- (void)onBlockedLogin:(NSNotification *)notification;
+- (void)onConnectionError:(NSNotification *)notification;
 
 @end
