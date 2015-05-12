@@ -40,6 +40,17 @@
     return [[NSMutableArray alloc] init];
 }
 
+- (NSMutableArray *)saveNewData:(NSArray *)jsonObjects withDeviceId:(NSString *)deviceId withParameters:(NSDictionary *)responseParameters
+{
+    NSMutableArray * newObjects = [[NSMutableArray alloc] init];
+    for (NSDictionary *objectJSON in jsonObjects)
+    {
+        [newObjects addObject:[self saveObject:objectJSON withDeviceId:deviceId]];
+    }
+    
+    return newObjects;
+}
+
 - (void)postEvent:(NSArray *)objects withBus:(AsyncBus *)bus
 {
 }

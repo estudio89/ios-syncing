@@ -86,7 +86,7 @@
     {
         @throw([HttpException exceptionWithName:@"Http error" reason:@"The http request returned an error." userInfo:nil]);
     }
-    else if ([error code] == NSURLErrorTimedOut || [error code] == -1001 || [requestResponse statusCode] == 408)
+    else if ([requestResponse statusCode] == 408)
     {
         @throw([Http408Exception exceptionWithName:@"Http request timeout" reason:@"The http request timed out." userInfo:nil]);
     }
@@ -105,7 +105,7 @@
         @throw([Http403Exception exceptionWithName:@"Http request forbiden" reason:@"The server is refusing to respond." userInfo:nil]);
     }
     
-    NSString *requestReply = [[NSString alloc] initWithBytes:[requestHandler bytes] length:[requestHandler length] encoding:NSUTF8StringEncoding];
+    NSString *requestReply = [[NSString alloc] initWithBytes:[requestHandler bytes] length:[requestHandler length] encoding:NSISOLatin1StringEncoding];
     NSData *dataReply = [requestReply dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     NSDictionary *jsonReply = [NSJSONSerialization JSONObjectWithData:dataReply options:kNilOptions error:&error];
     
