@@ -13,5 +13,6 @@
 
 - (void)saveTransaction;
 - (void)rollbackTransaction;
+- (void)flushDatabase;
 
 @end

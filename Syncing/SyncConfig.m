@@ -121,6 +121,8 @@ static NSString *loginActivity;
 {
     [self eraseSyncPreferences];
     [[DataSyncHelper getInstance] stopSyncThreads];
+    DatabaseProvider *dp = [self getDatabase];
+    [dp flushDatabase];
     [_bus post:[[UserLoggedOutEvent alloc] init] withNotificationname:@"UserLoggedOutEvent"];
     NSLog(@"UserLoggedOutEvent event was posted.");
 }

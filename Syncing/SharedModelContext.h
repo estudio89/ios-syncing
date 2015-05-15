@@ -15,5 +15,6 @@
 + (SharedModelContext *)sharedModelContext;
 - (void)setSharedModelContext:(NSManagedObjectContext *)context;
 - (NSManagedObjectContext *)getSharedModelContext;
+- (void)flushDatabase;
 
 @end
