@@ -123,7 +123,7 @@ static NSString *loginActivity;
     [[DataSyncHelper getInstance] stopSyncThreads];
     DatabaseProvider *dp = [self getDatabase];
     [dp flushDatabase];
-    [_bus post:[[UserLoggedOutEvent alloc] init] withNotificationname:@"UserLoggedOutEvent"];
+    [_bus post:[[UserLoggedOutEvent alloc] init] withNotificationName:@"UserLoggedOutEvent"];
     NSLog(@"UserLoggedOutEvent event was posted.");
 }
 

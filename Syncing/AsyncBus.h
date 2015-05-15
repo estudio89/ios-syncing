@@ -10,7 +10,8 @@
 
 @interface AsyncBus : NSObject
 
-- (void)post:(id)object withNotificationname:(NSString *)notification;
-- (void)subscribe:(id)observer withSelector:(SEL)selector withNotificationname:(NSString *)notification withObject:(id)object;
+- (void)post:(id)object withNotificationName:(NSString *)notification;
+- (void)subscribe:(id)observer withSelector:(SEL)selector withNotificationName:(NSString *)notification withObject:(id)object;
+- (void)unsubscribe:(id)observer withNotificationName:(NSString *)notification withObject:(id)object;
 
 @end	

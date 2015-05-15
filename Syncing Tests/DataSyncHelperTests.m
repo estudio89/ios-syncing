@@ -533,19 +533,19 @@
     // get finished
     [_dataSyncHelper postGetFinishedEvent];
     MKTArgumentCaptor *argument = [[MKTArgumentCaptor alloc] init];
-    [verifyCount(_bus, times(1)) post:[argument capture] withNotificationname:anything()];
+    [verifyCount(_bus, times(1)) post:[argument capture] withNotificationName:anything()];
     assertThat([[argument allValues] objectAtIndex:0], instanceOf([GetFinishedEvent class]));
     
     // send finished
     [_dataSyncHelper postSendFinishedEvent];
     argument = [[MKTArgumentCaptor alloc] init];
-    [verifyCount(_bus, times(2)) post:[argument capture] withNotificationname:anything()];
+    [verifyCount(_bus, times(2)) post:[argument capture] withNotificationName:anything()];
     assertThat([[argument allValues] objectAtIndex:1], instanceOf([SendFinishedEvent class]));
     
     // sync finished
     [_dataSyncHelper postSyncFinishedEvent];
     argument = [[MKTArgumentCaptor alloc] init];
-    [verifyCount(_bus, times(3)) post:[argument capture] withNotificationname:anything()];
+    [verifyCount(_bus, times(3)) post:[argument capture] withNotificationName:anything()];
     assertThat([[argument allValues] objectAtIndex:2], instanceOf([SyncFinishedEvent class]));
 }
 

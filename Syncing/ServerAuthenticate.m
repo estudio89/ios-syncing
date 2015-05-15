@@ -129,13 +129,13 @@
     @catch (Http403Exception *e)
     {
         NSLog(@"403 exception.");
-        [_bus post:[[BlockedLoginEvent alloc] init] withNotificationname:@"BlockedLoginEvent"];
+        [_bus post:[[BlockedLoginEvent alloc] init] withNotificationName:@"BlockedLoginEvent"];
         return nil;
     }
     @catch (NSException *e)
     {
         NSLog(@"syncAuthentication error.");
-        [_bus post:[[ConnectionErrorEvent alloc] init] withNotificationname:@"ConnectionErrorEvent"];
+        [_bus post:[[ConnectionErrorEvent alloc] init] withNotificationName:@"ConnectionErrorEvent"];
         return nil;
     }
     
@@ -147,12 +147,12 @@
         authToken = [response valueForKey:@"token"];
         SuccessfulLoginEvent *sLoginEvent = [[SuccessfulLoginEvent alloc] initWithUsername:username
                                                                              withAuthToken:authToken];
-        [_bus post:sLoginEvent withNotificationname:@"SuccessfulLoginEvent"];
+        [_bus post:sLoginEvent withNotificationName:@"SuccessfulLoginEvent"];
         NSLog(@"Login successful.");
     }
     else
     {
-        [_bus post:[[WrongCredentialsEvent alloc] init] withNotificationname:@"WrongCredentialsEvent"];
+        [_bus post:[[WrongCredentialsEvent alloc] init] withNotificationName:@"WrongCredentialsEvent"];
         NSLog(@"Wrong credentials.");
     }
     
