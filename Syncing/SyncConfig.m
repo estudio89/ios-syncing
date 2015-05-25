@@ -114,6 +114,14 @@ static NSString *loginActivity;
     }
 }
 
+- (void)showLoginIfNeeded:(UIViewController *)initialVC withSegueID:(NSString *)segueID
+{
+    if (![self userIsLoggedIn])
+    {
+        [initialVC performSegueWithIdentifier:segueID sender:self];
+    }
+}
+
 /**
  * logout
  */

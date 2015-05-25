@@ -16,6 +16,7 @@
 + (SyncConfig *)getInstance;
 - (instancetype)initWithBus:(AsyncBus *)bus;
 - (void)showLoginIfNeeded:(UIViewController *)initialVC;
+- (void)showLoginIfNeeded:(UIViewController *)initialVC withSegueID:(NSString *)segueID;
 - (BOOL)userIsLoggedIn;
 - (NSString *)getAuthenticateUrl;
 - (NSString *)getAuthToken;
