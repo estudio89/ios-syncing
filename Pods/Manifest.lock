@@ -6,16 +6,19 @@ PODS:
   - OHHTTPStubs (3.1.10):
     - OHHTTPStubs/Core (= 3.1.10)
   - OHHTTPStubs/Core (3.1.10)
+  - Raven (1.0.1)
 
 DEPENDENCIES:
   - OCMock
   - OCMockito
   - OHHTTPStubs
+  - Raven
 
 SPEC CHECKSUMS:
-  OCHamcrest: af1c7c5ea345de69ea6c9c2958f65f3044e5c420
-  OCMock: ecdd510b73ef397f2f97274785c1e87fd147c49f
-  OCMockito: 991936bb775cc4c27f063d38f5e17b9161fbd21c
-  OHHTTPStubs: 2038e929b6abb94881000524c1cb4aba0a1bb4a2
+  OCHamcrest: 6f03ffa81d12feab872638490a44ab0a6d3aca10
+  OCMock: a10ea9f0a6e921651f96f78b6faee95ebc813b92
+  OCMockito: 4981140c9a9ec06c31af40f636e3c0f25f27e6b2
+  OHHTTPStubs: 00152a63400246fcbc4b772a2a547ea34c97cbd6
+  Raven: 0c868f0b221c936ae352095d4af3d418e3db1242
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.37.1

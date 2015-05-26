@@ -79,6 +79,7 @@
 		7BE19A271AA0B92600E169EF /* SharedModelContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE19A261AA0B92600E169EF /* SharedModelContext.m */; };
 		7BF770AC1AA4A4C2007BCAD6 /* Syncing_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF770AB1AA4A4C2007BCAD6 /* Syncing_Tests.m */; };
 		7BF770AD1AA4A4C2007BCAD6 /* libSyncing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BADD11D1A8BD82B0005FC5E /* libSyncing.a */; };
+		97C3760E6309FFF06658366D /* libPods-Syncing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8274EA1BBEBBDAEADFFED2F8 /* libPods-Syncing.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0803E7C53E6B999342251010 /* Pods-Syncing.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Syncing.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Syncing/Pods-Syncing.debug.xcconfig"; sourceTree = "<group>"; };
 		161FA42493D632D90DCC02EC /* Pods-Syncing Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Syncing Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Syncing Tests/Pods-Syncing Tests.release.xcconfig"; sourceTree = "<group>"; };
 		36A7816E688B3C797004B85B /* libPods-Syncing Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Syncing Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B1321C71AAF7CB800EAB1AF /* libPods-Syncing Tests-OCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OCMock.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OCMock.a"; sourceTree = "<group>"; };
@@ -162,6 +164,8 @@
 		7BF770A71AA4A4C2007BCAD6 /* Syncing Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Syncing Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BF770AA1AA4A4C2007BCAD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7BF770AB1AA4A4C2007BCAD6 /* Syncing_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Syncing_Tests.m; sourceTree = "<group>"; };
+		8274EA1BBEBBDAEADFFED2F8 /* libPods-Syncing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Syncing.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CC448A017E8E74B93780CA1 /* Pods-Syncing.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Syncing.release.xcconfig"; path = "Pods/Target Support Files/Pods-Syncing/Pods-Syncing.release.xcconfig"; sourceTree = "<group>"; };
 		B959F1E5B85C392AC8A201F4 /* Pods-Syncing Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Syncing Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Syncing Tests/Pods-Syncing Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -170,6 +174,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97C3760E6309FFF06658366D /* libPods-Syncing.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +199,8 @@
 			children = (
 				B959F1E5B85C392AC8A201F4 /* Pods-Syncing Tests.debug.xcconfig */,
 				161FA42493D632D90DCC02EC /* Pods-Syncing Tests.release.xcconfig */,
+				0803E7C53E6B999342251010 /* Pods-Syncing.debug.xcconfig */,
+				9CC448A017E8E74B93780CA1 /* Pods-Syncing.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -208,6 +215,7 @@
 				7BC4B2CE1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a */,
 				7BC4B2CC1AAA3547000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a */,
 				36A7816E688B3C797004B85B /* libPods-Syncing Tests.a */,
+				8274EA1BBEBBDAEADFFED2F8 /* libPods-Syncing.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -340,10 +348,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7BADD1311A8BD82B0005FC5E /* Build configuration list for PBXNativeTarget "Syncing" */;
 			buildPhases = (
+				0CB2EC0DBDAB937E8D34EF2F /* Check Pods Manifest.lock */,
 				7BADD1191A8BD82B0005FC5E /* Sources */,
 				7BADD11A1A8BD82B0005FC5E /* Frameworks */,
 				7B7A1FB31AB899BC0089A9FC /* Headers */,
 				7B7A1FB51AB89A4F0089A9FC /* ShellScript */,
+				4D2C9D73674FB35D8CFA15C1 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -439,6 +449,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0CB2EC0DBDAB937E8D34EF2F /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		37E3067EC98B957C13511C78 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -452,6 +477,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Syncing Tests/Pods-Syncing Tests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4D2C9D73674FB35D8CFA15C1 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Syncing/Pods-Syncing-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7B7A1FB51AB89A4F0089A9FC /* ShellScript */ = {
@@ -645,6 +685,7 @@
 		};
 		7BADD1321A8BD82B0005FC5E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0803E7C53E6B999342251010 /* Pods-Syncing.debug.xcconfig */;
 			buildSettings = {
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -656,6 +697,7 @@
 		};
 		7BADD1331A8BD82B0005FC5E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9CC448A017E8E74B93780CA1 /* Pods-Syncing.release.xcconfig */;
 			buildSettings = {
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";

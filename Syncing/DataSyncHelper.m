@@ -11,6 +11,7 @@
 #import "SharedModelContext.h"
 #import "CustomException.h"
 #import "SyncingInjection.h"
+#import <Raven/RavenClient.h>
 
 @interface DataSyncHelper()
 
@@ -71,12 +72,30 @@
         return NO;
     }
     
-    NSDictionary *data = @{@"token":token,
-                           @"timestamp":[self.syncConfig getTimestamp]};
+    NSDictionary *data = nil;
+    @try
+    {
+        data = @{@"token":token,
+                 @"timestamp":[self.syncConfig getTimestamp]};
+    }
+    @catch (CustomException *exception)
+    {
+        @throw exception;
+    }
+    
     
     NSDictionary *jsonResponse = [self.serverComm post:[self.syncConfig getGetDataUrl] withData:data];
+    NSString *timestamp = nil;
     
-    NSString *timestamp = [jsonResponse valueForKey:@"timestamp"];
+    @try
+    {
+        timestamp = [jsonResponse valueForKey:@"timestamp"];
+        
+    }
+    @catch (CustomException *exception)
+    {
+        @throw exception;
+    }
     
     if ([self processGetDataResponse:threadId withJsonResponse:jsonResponse withTimestamp:timestamp])
     {
@@ -104,9 +123,25 @@
         return NO;
     }
     
-    [parameters setObject:token forKey:@"token"];
+    @try
+    {
+        [parameters setObject:token forKey:@"token"];
+    }
+    @catch (CustomException *exception)
+    {
+        @throw exception;
+    }
     
-    NSDictionary *jsonResponse = [self.serverComm post:[self.syncConfig getGetDataUrlForModel:identifier] withData:parameters];
+    NSDictionary *jsonResponse = nil;
+    
+    @try
+    {
+        jsonResponse = [self.serverComm post:[self.syncConfig getGetDataUrlForModel:identifier] withData:parameters];
+    }
+    @catch (CustomException *exception)
+    {
+        @throw exception;
+    }
     
     if ([self processGetDataResponse:threadId withJsonResponse:jsonResponse withTimestamp:nil])
     {
@@ -300,9 +335,9 @@
 }
 
 /**
- * fullSynchronousSync
+ * internalfullSynchronousSync
  */
-- (BOOL)fullSynchronousSync
+- (BOOL)internalfullSynchronousSync
 {
     if ([self isRunningSync])
     {
@@ -322,6 +357,10 @@
             completed = [self sendDataToServer];
         }
     }
+    @catch (CustomException *e)
+    {
+        @throw e;
+    }
     @finally
     {
         self.isRunningSync = NO;
@@ -336,6 +375,27 @@
     {
         return NO;
     }
+}
+
+/**
+ * fullSynchronousSync
+ */
+- (BOOL)fullSynchronousSync
+{
+    @try
+    {
+        return [self internalfullSynchronousSync];
+    }
+    @catch (CustomException *e)
+    {
+        @throw e;
+    }
+    @catch (NSException *e)
+    {
+        [self sendCaughtException:e];
+    }
+
+    return NO;
 }
 
 /**
@@ -455,6 +515,11 @@
             [self.partialSyncFlag setObject:[NSNumber numberWithBool:NO] forKey:identifier];
         });
     });
+}
+
+- (void)sendCaughtException:(NSException *)exception
+{
+    [[RavenClient sharedClient] captureException:exception method:__FUNCTION__ file:__FILE__ line:__LINE__ sendNow:YES];
 }
 
 @end

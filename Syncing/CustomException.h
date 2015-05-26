@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CustomException : NSObject
+@interface CustomException : NSException
 @end
 
-@interface InvalidThreadIdException : NSException
+@interface InvalidThreadIdException : CustomException
 @end
 
-@interface HttpException : NSException
+@interface HttpException : CustomException
 @end
 
 @interface Http403Exception : HttpException

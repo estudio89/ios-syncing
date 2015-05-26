@@ -2,7 +2,7 @@
 # platform :ios, '6.0'
 
 target 'Syncing' do
-
+pod 'Raven'
 end
 
 target 'Syncing Tests' do

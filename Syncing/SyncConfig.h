@@ -20,6 +20,7 @@
 - (BOOL)userIsLoggedIn;
 - (NSString *)getAuthenticateUrl;
 - (NSString *)getAuthToken;
+- (NSString *)getUsername;
 - (NSString *)getTimestamp;
 - (NSString *)getGetDataUrl;
 - (NSString *)getGetDataUrlForModel:(NSString *)identifier;
