@@ -76,6 +76,7 @@
 		7BD4BADB1AAE19EE00194BFB /* get-data-request.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BD4BADA1AAE19EE00194BFB /* get-data-request.json */; };
 		7BD4BADE1AAE3F0600194BFB /* libPods-Syncing Tests-OCHamcrest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD4BADC1AAE3F0600194BFB /* libPods-Syncing Tests-OCHamcrest.a */; };
 		7BD4BADF1AAE3F0600194BFB /* libPods-Syncing Tests-OCMockito.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD4BADD1AAE3F0600194BFB /* libPods-Syncing Tests-OCMockito.a */; };
+		7BD7E73E1B15E65500FC984C /* libPods-Syncing-Raven.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD7E73D1B15E65500FC984C /* libPods-Syncing-Raven.a */; };
 		7BE19A271AA0B92600E169EF /* SharedModelContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE19A261AA0B92600E169EF /* SharedModelContext.m */; };
 		7BF770AC1AA4A4C2007BCAD6 /* Syncing_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF770AB1AA4A4C2007BCAD6 /* Syncing_Tests.m */; };
 		7BF770AD1AA4A4C2007BCAD6 /* libSyncing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BADD11D1A8BD82B0005FC5E /* libSyncing.a */; };
@@ -159,6 +160,7 @@
 		7BD4BADA1AAE19EE00194BFB /* get-data-request.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "get-data-request.json"; sourceTree = "<group>"; };
 		7BD4BADC1AAE3F0600194BFB /* libPods-Syncing Tests-OCHamcrest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OCHamcrest.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OCHamcrest.a"; sourceTree = "<group>"; };
 		7BD4BADD1AAE3F0600194BFB /* libPods-Syncing Tests-OCMockito.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OCMockito.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OCMockito.a"; sourceTree = "<group>"; };
+		7BD7E73D1B15E65500FC984C /* libPods-Syncing-Raven.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing-Raven.a"; path = "Pods/../build/Debug-iphoneos/libPods-Syncing-Raven.a"; sourceTree = "<group>"; };
 		7BE19A251AA0B92600E169EF /* SharedModelContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedModelContext.h; sourceTree = "<group>"; };
 		7BE19A261AA0B92600E169EF /* SharedModelContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedModelContext.m; sourceTree = "<group>"; };
 		7BF770A71AA4A4C2007BCAD6 /* Syncing Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Syncing Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -174,6 +176,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BD7E73E1B15E65500FC984C /* libPods-Syncing-Raven.a in Frameworks */,
 				97C3760E6309FFF06658366D /* libPods-Syncing.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -208,6 +211,7 @@
 		3F6D19F3020C365660A18031 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7BD7E73D1B15E65500FC984C /* libPods-Syncing-Raven.a */,
 				7B1321C71AAF7CB800EAB1AF /* libPods-Syncing Tests-OCMock.a */,
 				7BD4BADC1AAE3F0600194BFB /* libPods-Syncing Tests-OCHamcrest.a */,
 				7BD4BADD1AAE3F0600194BFB /* libPods-Syncing Tests-OCMockito.a */,
@@ -687,6 +691,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0803E7C53E6B999342251010 /* Pods-Syncing.debug.xcconfig */;
 			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -699,6 +707,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9CC448A017E8E74B93780CA1 /* Pods-Syncing.release.xcconfig */;
 			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
