@@ -47,7 +47,8 @@ static NSMutableDictionary *objects;
     SyncConfig *syncConfig = [[SyncConfig alloc] initWithBus:asyncBus];
     CustomTransactionManager *customTransactionManager = [[CustomTransactionManager alloc] init];
     ThreadChecker *threadChecker = [[ThreadChecker alloc] init];
-    ServerComm *serverComm = [[ServerComm alloc] init];
+    SecurityUtil *securityUtil = [[SecurityUtil alloc] initWithSyncConfig:syncConfig];
+    ServerComm *serverComm = [[ServerComm alloc] initWithSecurityUtil:securityUtil];
     
     DataSyncHelper *dataSyncHelper = [[DataSyncHelper alloc] initWithServer:serverComm
                                                           withThreadChecker:threadChecker
@@ -66,6 +67,7 @@ static NSMutableDictionary *objects;
     [objects setObject:syncConfig forKey:NSStringFromClass([syncConfig class])];
     [objects setObject:customTransactionManager forKey:NSStringFromClass([customTransactionManager class])];
     [objects setObject:threadChecker forKey:NSStringFromClass([threadChecker class])];
+    [objects setObject:securityUtil forKey:NSStringFromClass([securityUtil class])];
     [objects setObject:serverComm forKey:NSStringFromClass([serverComm class])];
     [objects setObject:dataSyncHelper forKey:NSStringFromClass([dataSyncHelper class])];
     [objects setObject:serverAuthenticate forKey:NSStringFromClass([serverAuthenticate class])];

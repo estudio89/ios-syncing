@@ -3,6 +3,7 @@
 
 target 'Syncing' do
 pod 'Raven'
+pod 'RNCryptor'
 end
 
 target 'Syncing Tests' do

@@ -6,6 +6,12 @@
 // project.
 
 
+// RNCryptor
+#define COCOAPODS_POD_AVAILABLE_RNCryptor
+#define COCOAPODS_VERSION_MAJOR_RNCryptor 2
+#define COCOAPODS_VERSION_MINOR_RNCryptor 2
+#define COCOAPODS_VERSION_PATCH_RNCryptor 0
+
 // Raven
 #define COCOAPODS_POD_AVAILABLE_Raven
 #define COCOAPODS_VERSION_MAJOR_Raven 1

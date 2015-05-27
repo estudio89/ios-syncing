@@ -18,6 +18,7 @@
 #import <Syncing/SyncingInjection.h>
 #import <Syncing/ServerAuthenticate.h>
 #import <Syncing/ReadOnlyAbstractSyncManager.h>
+#import <Syncing/SecurityUtil.h>
 
 @interface Syncing : NSObject
 

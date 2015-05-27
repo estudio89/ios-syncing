@@ -20,6 +20,8 @@
 @property (nonatomic, strong, readwrite) NSString *mSendDataUrl;
 @property (nonatomic, strong, readwrite) NSString *mAuthenticateUrl;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *mModelGetDataUrls;
+@property (nonatomic, strong, readwrite) NSString *mEncryptionPassword;
+@property BOOL mEncryptionActive;
 
 @end
 
@@ -76,6 +78,15 @@ static NSString *loginActivity;
         _mSendDataUrl = [jsonConfig valueForKey:@"sendDataUrl"];
         _mAuthenticateUrl = [jsonConfig valueForKey:@"authenticateUrl"];
         loginActivity = [jsonConfig valueForKey:@"loginActivity"];
+        _mEncryptionPassword = [jsonConfig valueForKey:@"encryptionPassword"];
+        if ([[jsonConfig valueForKey:@"encryptionActive"] boolValue])
+        {
+            _mEncryptionActive = YES;
+        }
+        else
+        {
+            _mEncryptionActive = NO;
+        }
         
         id<SyncManager> syncManager;
         Class klass;
@@ -327,6 +338,22 @@ static NSString *loginActivity;
 - (DatabaseProvider *)getDatabase
 {
     return [[DatabaseProvider alloc] init];
+}
+
+/**
+ * getEncryptionPassword
+ */
+- (NSString *)getEncryptionPassword
+{
+    return _mEncryptionPassword;
+}
+
+/**
+ * isEncryptionActive
+ */
+- (BOOL)isEncryptionActive
+{
+    return _mEncryptionActive;
 }
 
 @end

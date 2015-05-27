@@ -7,9 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SecurityUtil.h"
 
 @interface ServerComm : NSObject
 
+- (instancetype)initWithSecurityUtil:(SecurityUtil *)securityUtil;
 - (NSDictionary *)post:(NSString *)url withData:(NSDictionary *)data;
 - (NSDictionary *)post:(NSString *)url withData:(NSDictionary *)data withFiles:(NSArray *)files;
 

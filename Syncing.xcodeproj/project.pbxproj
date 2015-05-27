@@ -76,7 +76,10 @@
 		7BD4BADB1AAE19EE00194BFB /* get-data-request.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BD4BADA1AAE19EE00194BFB /* get-data-request.json */; };
 		7BD4BADE1AAE3F0600194BFB /* libPods-Syncing Tests-OCHamcrest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD4BADC1AAE3F0600194BFB /* libPods-Syncing Tests-OCHamcrest.a */; };
 		7BD4BADF1AAE3F0600194BFB /* libPods-Syncing Tests-OCMockito.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD4BADD1AAE3F0600194BFB /* libPods-Syncing Tests-OCMockito.a */; };
-		7BD7E73E1B15E65500FC984C /* libPods-Syncing-Raven.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD7E73D1B15E65500FC984C /* libPods-Syncing-Raven.a */; };
+		7BD7E7411B15F07D00FC984C /* SecurityUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BD7E73F1B15F07D00FC984C /* SecurityUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7BD7E7421B15F07D00FC984C /* SecurityUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD7E7401B15F07D00FC984C /* SecurityUtil.m */; };
+		7BD7E7441B1613A800FC984C /* libPods-Syncing-Raven.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD7E7431B1613A800FC984C /* libPods-Syncing-Raven.a */; };
+		7BD7E7461B1613AB00FC984C /* libPods-Syncing-RNCryptor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD7E7451B1613AB00FC984C /* libPods-Syncing-RNCryptor.a */; };
 		7BE19A271AA0B92600E169EF /* SharedModelContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE19A261AA0B92600E169EF /* SharedModelContext.m */; };
 		7BF770AC1AA4A4C2007BCAD6 /* Syncing_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF770AB1AA4A4C2007BCAD6 /* Syncing_Tests.m */; };
 		7BF770AD1AA4A4C2007BCAD6 /* libSyncing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BADD11D1A8BD82B0005FC5E /* libSyncing.a */; };
@@ -161,6 +164,10 @@
 		7BD4BADC1AAE3F0600194BFB /* libPods-Syncing Tests-OCHamcrest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OCHamcrest.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OCHamcrest.a"; sourceTree = "<group>"; };
 		7BD4BADD1AAE3F0600194BFB /* libPods-Syncing Tests-OCMockito.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OCMockito.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OCMockito.a"; sourceTree = "<group>"; };
 		7BD7E73D1B15E65500FC984C /* libPods-Syncing-Raven.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing-Raven.a"; path = "Pods/../build/Debug-iphoneos/libPods-Syncing-Raven.a"; sourceTree = "<group>"; };
+		7BD7E73F1B15F07D00FC984C /* SecurityUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityUtil.h; sourceTree = "<group>"; };
+		7BD7E7401B15F07D00FC984C /* SecurityUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityUtil.m; sourceTree = "<group>"; };
+		7BD7E7431B1613A800FC984C /* libPods-Syncing-Raven.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing-Raven.a"; path = "Pods/../build/Debug-iphoneos/libPods-Syncing-Raven.a"; sourceTree = "<group>"; };
+		7BD7E7451B1613AB00FC984C /* libPods-Syncing-RNCryptor.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing-RNCryptor.a"; path = "Pods/../build/Debug-iphoneos/libPods-Syncing-RNCryptor.a"; sourceTree = "<group>"; };
 		7BE19A251AA0B92600E169EF /* SharedModelContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedModelContext.h; sourceTree = "<group>"; };
 		7BE19A261AA0B92600E169EF /* SharedModelContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedModelContext.m; sourceTree = "<group>"; };
 		7BF770A71AA4A4C2007BCAD6 /* Syncing Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Syncing Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -176,7 +183,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7BD7E73E1B15E65500FC984C /* libPods-Syncing-Raven.a in Frameworks */,
+				7BD7E7461B1613AB00FC984C /* libPods-Syncing-RNCryptor.a in Frameworks */,
+				7BD7E7441B1613A800FC984C /* libPods-Syncing-Raven.a in Frameworks */,
 				97C3760E6309FFF06658366D /* libPods-Syncing.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -211,6 +219,8 @@
 		3F6D19F3020C365660A18031 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7BD7E7451B1613AB00FC984C /* libPods-Syncing-RNCryptor.a */,
+				7BD7E7431B1613A800FC984C /* libPods-Syncing-Raven.a */,
 				7BD7E73D1B15E65500FC984C /* libPods-Syncing-Raven.a */,
 				7B1321C71AAF7CB800EAB1AF /* libPods-Syncing Tests-OCMock.a */,
 				7BD4BADC1AAE3F0600194BFB /* libPods-Syncing Tests-OCHamcrest.a */,
@@ -276,6 +286,8 @@
 				7BCCF7511AF826C6007F6B09 /* SyncingInjection.m */,
 				7BBE8F5F1AFA3C8500155AC4 /* ReadOnlyAbstractSyncManager.h */,
 				7BBE8F601AFA3C8500155AC4 /* ReadOnlyAbstractSyncManager.m */,
+				7BD7E73F1B15F07D00FC984C /* SecurityUtil.h */,
+				7BD7E7401B15F07D00FC984C /* SecurityUtil.m */,
 			);
 			path = Syncing;
 			sourceTree = "<group>";
@@ -341,6 +353,7 @@
 				7B42B6581AB8A8D200F02528 /* CustomException.h in Headers */,
 				7BCCF7521AF826C6007F6B09 /* SyncingInjection.h in Headers */,
 				7BBE8F611AFA3C8500155AC4 /* ReadOnlyAbstractSyncManager.h in Headers */,
+				7BD7E7411B15F07D00FC984C /* SecurityUtil.h in Headers */,
 				7B42B65A1AB8A8D200F02528 /* ServerAuthenticate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -549,6 +562,7 @@
 				7BD43C4F1AB1C65C00C58368 /* AbstractLoginActivity.m in Sources */,
 				7BD43C521AB20E8200C58368 /* ServerAuthenticate.m in Sources */,
 				7B3D13931AA0E68B0022525A /* CustomException.m in Sources */,
+				7BD7E7421B15F07D00FC984C /* SecurityUtil.m in Sources */,
 				7BCCF7531AF826C6007F6B09 /* SyncingInjection.m in Sources */,
 				7B5F220C1A8D3AC50031E2F2 /* ServerComm.m in Sources */,
 				7BADD13C1A8BDABF0005FC5E /* ThreadChecker.m in Sources */,

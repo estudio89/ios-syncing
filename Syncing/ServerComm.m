@@ -9,7 +9,26 @@
 #import "ServerComm.h"
 #import "CustomException.h"
 
+@interface ServerComm ()
+
+@property (nonatomic, strong, readwrite) SecurityUtil *securityUtil;
+
+@end
+
 @implementation ServerComm
+
+/**
+ * initWithSecurityUtil
+ */
+- (instancetype)initWithSecurityUtil:(SecurityUtil *)securityUtil
+{
+    self = [super init];
+    if (self)
+    {
+        _securityUtil = securityUtil;
+    }
+    return self;
+}
 
 /**
  * post
@@ -63,7 +82,10 @@
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:NSJSONWritingPrettyPrinted error:&error];
     [postData appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
     [postData appendData:[@"Content-Disposition: form-data; name=\"json\"\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    [postData appendData:jsonData];
+    
+    //encrypt
+    NSData *encryptedData = [_securityUtil encryptMessage:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]];
+    [postData appendData:encryptedData];
     [postData appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
     
     //add the last boudary
@@ -105,7 +127,10 @@
         @throw([Http403Exception exceptionWithName:@"Http request forbiden" reason:@"The server is refusing to respond." userInfo:nil]);
     }
     
-    NSString *requestReply = [[NSString alloc] initWithBytes:[requestHandler bytes] length:[requestHandler length] encoding:NSISOLatin1StringEncoding];
+    //NSString *requestReply = [[NSString alloc] initWithBytes:[requestHandler bytes] length:[requestHandler length] encoding:NSISOLatin1StringEncoding];
+    
+    //decrypt
+    NSString *requestReply = [_securityUtil decryptMessage:requestHandler];
     NSData *dataReply = [requestReply dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     NSDictionary *jsonReply = [NSJSONSerialization JSONObjectWithData:dataReply options:kNilOptions error:&error];
     

@@ -7,12 +7,14 @@ PODS:
     - OHHTTPStubs/Core (= 3.1.10)
   - OHHTTPStubs/Core (3.1.10)
   - Raven (1.0.1)
+  - RNCryptor (2.2)
 
 DEPENDENCIES:
   - OCMock
   - OCMockito
   - OHHTTPStubs
   - Raven
+  - RNCryptor
 
 SPEC CHECKSUMS:
   OCHamcrest: 6f03ffa81d12feab872638490a44ab0a6d3aca10
@@ -20,5 +22,6 @@ SPEC CHECKSUMS:
   OCMockito: 4981140c9a9ec06c31af40f636e3c0f25f27e6b2
   OHHTTPStubs: 00152a63400246fcbc4b772a2a547ea34c97cbd6
   Raven: 0c868f0b221c936ae352095d4af3d418e3db1242
+  RNCryptor: c68678461a2c7474a55db9a6a98834c22d51f535
 
 COCOAPODS: 0.37.1
