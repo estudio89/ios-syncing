@@ -64,20 +64,18 @@
 /**
  * decryptMessage
  */
-- (NSString *)decryptMessage:(NSData *)data
+- (NSString *)decryptMessage:(NSString *)data
 {
-    NSString *message = [[NSString alloc] initWithData:data encoding:NSISOLatin1StringEncoding];
-    
     if ([_syncConfig isEncryptionActive])
     {
         NSError *error;
-        NSData *decryptedData = [RNDecryptor decryptData:data
+        NSData *decryptedData = [RNDecryptor decryptData:[data dataUsingEncoding:NSISOLatin1StringEncoding]
                                             withPassword:[_syncConfig getEncryptionPassword]
                                                    error:&error];
-        message = [decryptedData base64EncodedStringWithOptions:0];
+        data = [[NSString alloc] initWithBytes:[decryptedData bytes] length:[decryptedData length] encoding:NSISOLatin1StringEncoding];
     }
     
-    return message;
+    return data;
 }
 
 @end

@@ -14,6 +14,6 @@
 + (SecurityUtil *)getInstance;
 - (instancetype)initWithSyncConfig:(SyncConfig *)syncConfig;
 - (NSData *)encryptMessage:(NSString *)message;
-- (NSString *)decryptMessage:(NSData *)data;
+- (NSString *)decryptMessage:(NSString *)data;
 
 @end

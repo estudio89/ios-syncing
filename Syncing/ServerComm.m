@@ -127,10 +127,10 @@
         @throw([Http403Exception exceptionWithName:@"Http request forbiden" reason:@"The server is refusing to respond." userInfo:nil]);
     }
     
-    //NSString *requestReply = [[NSString alloc] initWithBytes:[requestHandler bytes] length:[requestHandler length] encoding:NSISOLatin1StringEncoding];
+    NSString *requestReply = [[NSString alloc] initWithBytes:[requestHandler bytes] length:[requestHandler length] encoding:NSISOLatin1StringEncoding];
     
     //decrypt
-    NSString *requestReply = [_securityUtil decryptMessage:requestHandler];
+    requestReply = [_securityUtil decryptMessage:requestReply];
     NSData *dataReply = [requestReply dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     NSDictionary *jsonReply = [NSJSONSerialization JSONObjectWithData:dataReply options:kNilOptions error:&error];
     
