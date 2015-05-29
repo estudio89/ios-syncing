@@ -46,9 +46,8 @@
  */
 - (NSData *)encryptMessage:(NSString *)message
 {
-    NSLog(@"---------%@", message);
     NSData *encryptedData = [message dataUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"------1 is NIL = %@", encryptedData == nil ? @"TRUE" : @"FALSE");
+ 
     if ([_syncConfig isEncryptionActive])
     {
         NSError *error;
@@ -57,9 +56,8 @@
                                     withSettings:kRNCryptorAES256Settings
                                         password:[_syncConfig getEncryptionPassword]
                                            error:&error];
-        NSLog(@"------2");
     }
-    NSLog(@"------3 is NIL = %@", encryptedData == nil ? @"TRUE" : @"FALSE");
+
     return encryptedData;
 }
 
