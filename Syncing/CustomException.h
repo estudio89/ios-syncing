@@ -25,3 +25,9 @@
 
 @interface Http500Exception : HttpException
 @end
+
+@interface Http502Exception : HttpException
+@end
+
+@interface Http503Exception : HttpException
+@end

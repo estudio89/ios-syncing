@@ -25,3 +25,9 @@
 
 @implementation Http500Exception
 @end
+
+@implementation Http502Exception
+@end
+
+@implementation Http503Exception
+@end

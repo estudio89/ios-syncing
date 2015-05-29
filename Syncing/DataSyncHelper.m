@@ -28,9 +28,22 @@
 
 @implementation DataSyncHelper
 
+static int *numberAttempts;
+
+/**
+ * getInstance
+ */
 + (DataSyncHelper *)getInstance
 {
     return [SyncingInjection get:[DataSyncHelper class]];
+}
+
+/**
+ * initialize
+ */
++ (void)initialize
+{
+    numberAttempts = 0;
 }
 
 /**
@@ -384,7 +397,27 @@
 {
     @try
     {
-        return [self internalfullSynchronousSync];
+        numberAttempts += 1;
+        BOOL response = [self internalfullSynchronousSync];
+        numberAttempts = 0;
+        return response;
+    }
+    @catch (Http408Exception *e)
+    @catch (Http502Exception *e)
+    @catch (Http503Exception *e)
+    {
+        // Server is overloaded - exponential backoff
+        if (numberAttempts < 4)
+        {
+            double waitTimeSeconds = round(0.5 * (pow(2, numberAttempts) - 1));
+            [NSThread sleepForTimeInterval:waitTimeSeconds];
+            return [self fullSynchronousSync];
+        }
+        else
+        {
+            numberAttempts = 0;
+            return NO;
+        }
     }
     @catch (CustomException *e)
     {

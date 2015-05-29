@@ -108,17 +108,25 @@
     {
         @throw([HttpException exceptionWithName:@"Http error" reason:@"The http request returned an error." userInfo:nil]);
     }
-    else if ([requestResponse statusCode] == 408)
-    {
-        @throw([Http408Exception exceptionWithName:@"Http request timeout" reason:@"The http request timed out." userInfo:nil]);
-    }
     else if ([requestResponse statusCode] == 403)
     {
         @throw([Http403Exception exceptionWithName:@"Http request forbiden" reason:@"The server is refusing to respond." userInfo:nil]);
     }
+    else if ([requestResponse statusCode] == 408)
+    {
+        @throw([Http408Exception exceptionWithName:@"Http request timeout" reason:@"The http request timed out." userInfo:nil]);
+    }
     else if ([requestResponse statusCode] == 500)
     {
         @throw([Http500Exception exceptionWithName:@"Http internal server error" reason:@"An error occurred on the server." userInfo:nil]);
+    }
+    else if ([requestResponse statusCode] == 502)
+    {
+        @throw([Http502Exception exceptionWithName:@"Http bad gateway" reason:@"The server received an invalid response from the upstream server." userInfo:nil]);
+    }
+    else if ([requestResponse statusCode] == 503)
+    {
+        @throw([Http503Exception exceptionWithName:@"Http service unavailable" reason:@"The server is currently unavailable." userInfo:nil]);
     }
     
     NSString *ct = [requestResponse.allHeaderFields valueForKey:@"Content-Type"];
