@@ -28,7 +28,7 @@
 
 @implementation DataSyncHelper
 
-static int *numberAttempts;
+static int numberAttempts;
 
 /**
  * getInstance
@@ -44,6 +44,8 @@ static int *numberAttempts;
 + (void)initialize
 {
     numberAttempts = 0;
+    // initializing drand48 with a seed
+    srand(arc4random());
 }
 
 /**
@@ -402,21 +404,20 @@ static int *numberAttempts;
         numberAttempts = 0;
         return response;
     }
-    @catch (Http408Exception *e)
-    @catch (Http502Exception *e)
-    @catch (Http503Exception *e)
+    @catch (Http408Exception *e | Http502Exception *e | Http503Exception *e)
     {
         // Server is overloaded - exponential backoff
         if (numberAttempts < 4)
         {
-            double waitTimeSeconds = round(0.5 * (pow(2, numberAttempts) - 1));
+            double waitTimeSeconds = 0.5 * (pow(2, numberAttempts) - 1);
+            waitTimeSeconds += drand48();
             [NSThread sleepForTimeInterval:waitTimeSeconds];
             return [self fullSynchronousSync];
         }
         else
         {
             numberAttempts = 0;
-            return NO;
+            @throw [[Http408Exception alloc] init];
         }
     }
     @catch (CustomException *e)
