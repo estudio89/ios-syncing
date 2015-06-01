@@ -59,6 +59,7 @@
 		7B82A2C31AB3741900636503 /* ServerAuthenticateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B82A2C21AB3741900636503 /* ServerAuthenticateTests.m */; };
 		7BADD13C1A8BDABF0005FC5E /* ThreadChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BADD13B1A8BDABF0005FC5E /* ThreadChecker.m */; };
 		7BAEDBBC1A97B69E0078AEA9 /* DataSyncHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BAEDBBB1A97B69E0078AEA9 /* DataSyncHelper.m */; };
+		7BAF980B1B1CA4BD00FDE4AA /* SecuryUtilTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BAF980A1B1CA4BD00FDE4AA /* SecuryUtilTests.m */; };
 		7BB59D181AAF6D270088A7BA /* send-data-request.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BB59D171AAF6D270088A7BA /* send-data-request.json */; };
 		7BB59EC51AA0ACD700783657 /* DatabaseProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BB59EC41AA0ACD700783657 /* DatabaseProvider.m */; };
 		7BB63C781A9F977C00C0124C /* AsyncBus.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BB63C771A9F977C00C0124C /* AsyncBus.m */; };
@@ -140,6 +141,7 @@
 		7BADD13B1A8BDABF0005FC5E /* ThreadChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadChecker.m; sourceTree = "<group>"; };
 		7BAEDBBA1A97B69E0078AEA9 /* DataSyncHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSyncHelper.h; sourceTree = "<group>"; };
 		7BAEDBBB1A97B69E0078AEA9 /* DataSyncHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSyncHelper.m; sourceTree = "<group>"; };
+		7BAF980A1B1CA4BD00FDE4AA /* SecuryUtilTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecuryUtilTests.m; sourceTree = "<group>"; };
 		7BB59D171AAF6D270088A7BA /* send-data-request.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "send-data-request.json"; sourceTree = "<group>"; };
 		7BB59EC31AA0ACD700783657 /* DatabaseProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseProvider.h; sourceTree = "<group>"; };
 		7BB59EC41AA0ACD700783657 /* DatabaseProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseProvider.m; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 		7BF770A81AA4A4C2007BCAD6 /* Syncing Tests */ = {
 			isa = PBXGroup;
 			children = (
+				7BAF980A1B1CA4BD00FDE4AA /* SecuryUtilTests.m */,
 				7B82A2C21AB3741900636503 /* ServerAuthenticateTests.m */,
 				7B1321C91AAF7CE200EAB1AF /* DataSyncHelperPartialTests.m */,
 				7B2E8A4A1AADD7180069DF31 /* DataSyncHelperTests.m */,
@@ -580,6 +583,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BAF980B1B1CA4BD00FDE4AA /* SecuryUtilTests.m in Sources */,
 				7B82A2C31AB3741900636503 /* ServerAuthenticateTests.m in Sources */,
 				7B1321CA1AAF7CE200EAB1AF /* DataSyncHelperPartialTests.m in Sources */,
 				7B2E8A4B1AADD7180069DF31 /* DataSyncHelperTests.m in Sources */,

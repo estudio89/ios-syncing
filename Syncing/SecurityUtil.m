@@ -10,6 +10,7 @@
 #import "SyncingInjection.h"
 #import <RNCryptor/RNEncryptor.h>
 #import <RNCryptor/RNDecryptor.h>
+#import <RNCryptor/RNCryptor.h>
 
 @interface SecurityUtil ()
 
@@ -18,6 +19,31 @@
 @end
 
 @implementation SecurityUtil
+
+static const RNCryptorSettings kRNCryptorAES256SettingsE89 = {
+    .algorithm = kCCAlgorithmAES128,
+    .blockSize = kCCBlockSizeAES128,
+    .IVSize = kCCBlockSizeAES128,
+    .options = kCCOptionPKCS7Padding,
+    .HMACAlgorithm = kCCHmacAlgSHA256,
+    .HMACLength = CC_SHA256_DIGEST_LENGTH,
+    
+    .keySettings = {
+        .keySize = kCCKeySizeAES256,
+        .saltSize = 8,
+        .PBKDFAlgorithm = kCCPBKDF2,
+        .PRF = kCCPRFHmacAlgSHA1,
+        .rounds = 100
+    },
+    
+    .HMACKeySettings = {
+        .keySize = kCCKeySizeAES256,
+        .saltSize = 8,
+        .PBKDFAlgorithm = kCCPBKDF2,
+        .PRF = kCCPRFHmacAlgSHA1,
+        .rounds = 100
+    }
+};
 
 /**
  * getInstance
@@ -52,8 +78,9 @@
     {
         NSError *error;
         NSData *data = [message dataUsingEncoding:NSISOLatin1StringEncoding];
+
         encryptedData = [RNEncryptor encryptData:data
-                                    withSettings:kRNCryptorAES256Settings
+                                    withSettings:kRNCryptorAES256SettingsE89
                                         password:[_syncConfig getEncryptionPassword]
                                            error:&error];
     }
@@ -70,7 +97,8 @@
     {
         NSError *error;
         NSData *decryptedData = [RNDecryptor decryptData:[data dataUsingEncoding:NSISOLatin1StringEncoding]
-                                            withPassword:[_syncConfig getEncryptionPassword]
+                                            withSettings:kRNCryptorAES256SettingsE89
+                                                password:[_syncConfig getEncryptionPassword]
                                                    error:&error];
         data = [[NSString alloc] initWithBytes:[decryptedData bytes] length:[decryptedData length] encoding:NSISOLatin1StringEncoding];
     }
