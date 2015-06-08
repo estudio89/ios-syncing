@@ -65,10 +65,10 @@
         NSData *imageData = nil;
         NSString *fileName = nil;
         
-        for (NSDictionary *image in files)
+        for (NSString *imageUrl in files)
         {
-            imageData = [image objectForKey:@"image"];
-            fileName = [image valueForKey:@"filename"];
+            imageData = [NSData dataWithContentsOfFile:imageUrl];
+            fileName = [[imageUrl lastPathComponent] stringByDeletingLastPathComponent];
             
             [postData appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
             [postData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", fileName, fileName] dataUsingEncoding:NSUTF8StringEncoding]];
