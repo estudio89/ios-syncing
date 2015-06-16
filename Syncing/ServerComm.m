@@ -106,7 +106,14 @@
     
     if (error)
     {
-        @throw([HttpException exceptionWithName:@"Http error" reason:@"The http request returned an error." userInfo:nil]);
+        if (error.code == NSURLErrorTimedOut)
+        {
+            @throw([TimeoutException exceptionWithName:@"Timeout error" reason:@"The nsurlconnection was timed out." userInfo:nil]);
+        }
+        else
+        {
+            @throw([HttpException exceptionWithName:@"Http error" reason:@"The http request returned an error." userInfo:nil]);
+        }
     }
     else if ([requestResponse statusCode] == 403)
     {

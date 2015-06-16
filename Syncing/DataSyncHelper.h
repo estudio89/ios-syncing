@@ -31,15 +31,20 @@
                 withContext:(NSManagedObjectContext *)context;
 
 - (BOOL)getDataFromServer;
+- (BOOL)getDataFromServer:(NSString *)identifier;
 - (BOOL)getDataFromServer:(NSString *)identifier withParameters:(NSMutableDictionary *)parameters;
-- (BOOL)sendDataToServer;
+- (BOOL)getDataFromServer:(NSString *)identifier withParameters:(NSMutableDictionary *)parameters withSendTimestamp:(BOOL)sendTimestamp;
+- (BOOL)sendDataToServer:(NSString *)identifier;
+
 - (BOOL)fullSynchronousSync;
+- (BOOL)partialSynchronousSync:(NSString *)identifier;
 - (void)fullAsynchronousSync;
+- (void)partialAsynchronousSync:(NSString *)identifier;
 - (void)partialAsynchronousSync:(NSString *)identifier withParameters:(NSDictionary *)parameters;
 - (void)postSyncFinishedEvent;
 - (void)postGetFinishedEvent;
 - (void)postSendFinishedEvent;
-
+- (void)postPartialSyncFinishedEvent;
 - (void)setThreadChecker:(ThreadChecker *)threadChecker;
 - (void)setServerComm:(ServerComm *)serverComm;
 - (void)setSyncConfig:(SyncConfig *)syncConfig;
@@ -57,6 +62,9 @@
 @end
 
 @interface SyncFinishedEvent : NSObject
+@end
+
+@interface PartialSyncFinishedEvent : NSObject
 @end
 
 @interface BackgroundSyncError : NSObject

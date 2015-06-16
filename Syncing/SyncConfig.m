@@ -178,7 +178,9 @@ static NSString *loginActivity;
     NSString *storedAuthtoken = [[NSUserDefaults standardUserDefaults] stringForKey:@"E89.iOS.Syncing-AuthToken"];
     
     if ([storedAuthtoken length] > 0)
+    {
         authtoken = storedAuthtoken;
+    }
     
     return authtoken;
 }
@@ -193,26 +195,56 @@ static NSString *loginActivity;
 }
 
 /**
- * getTimestamp
+ * getTimestamps
  */
-- (NSString *)getTimestamp
+- (NSDictionary *)getTimestamps
 {
-    NSString *timestamp = @"";
-    NSString *storedTimestamp = [[NSUserDefaults standardUserDefaults] stringForKey:@"E89.iOS.Syncing-Timestamp"];
+    NSMutableDictionary *timestampsObject = [[NSMutableDictionary alloc] init];
+    NSDictionary *smTimestamp = nil;
+    NSString *identifier = nil;
     
-    if ([storedTimestamp length] > 0)
-        timestamp = storedTimestamp;
+    for (id<SyncManager> syncManager in [self getSyncManagers])
+    {
+        identifier = [syncManager getIdentifier];
+        smTimestamp = [self getTimestamp:identifier];
+        [timestampsObject setObject:[smTimestamp valueForKey:identifier] forKey:identifier];
+    }
     
-    return timestamp;
+    return timestampsObject;
 }
 
 /**
- * setTimestamp
+ * getTimestamps
  */
-- (void)setTimestamp:(NSString *)timestamp
+- (NSDictionary *)getTimestamp:(NSString *)identifier
 {
-    [[NSUserDefaults standardUserDefaults] setValue:timestamp forKey:@"E89.iOS.Syncing-Timestamp"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    NSString *timestamp = @"";
+    NSString *key = [NSString stringWithFormat:@"E89.iOS.Syncing-Timestamp-%@", identifier];
+    NSString *storedTimestamp = [[NSUserDefaults standardUserDefaults] stringForKey:key];
+    
+    if ([storedTimestamp length] > 0)
+    {
+        timestamp = storedTimestamp;
+    }
+
+    return @{identifier:timestamp};
+}
+
+/**
+ * setTimestamps
+ */
+- (void)setTimestamps:(NSDictionary *)timestamps
+{
+    NSString *timestamp = nil;
+    NSString *timestampKey = nil;
+    
+    for (NSString *identifier in [timestamps allKeys])
+    {
+        timestamp = [timestamps valueForKey:identifier];
+        timestampKey = [NSString stringWithFormat:@"E89.iOS.Syncing-Timestamp-%@", identifier];
+        [[NSUserDefaults standardUserDefaults] setValue:timestamp forKey:timestampKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 }
 
 /**
@@ -354,6 +386,15 @@ static NSString *loginActivity;
 - (BOOL)isEncryptionActive
 {
     return _mEncryptionActive;
+}
+
+/**
+ * isEncryptionActive
+ */
+- (void)requestSync
+{
+    // Should put a sync request in a queue.
+    // When a connection is available (Reachability), the sync must be executed.
 }
 
 @end

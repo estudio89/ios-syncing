@@ -14,6 +14,9 @@
 @implementation InvalidThreadIdException
 @end
 
+@implementation TimeoutException
+@end
+
 @implementation HttpException
 @end
 

@@ -21,7 +21,8 @@
 - (NSString *)getAuthenticateUrl;
 - (NSString *)getAuthToken;
 - (NSString *)getUsername;
-- (NSString *)getTimestamp;
+- (NSDictionary *)getTimestamps;
+- (NSDictionary *)getTimestamp:(NSString *)identifier;
 - (NSString *)getGetDataUrl;
 - (NSString *)getGetDataUrlForModel:(NSString *)identifier;
 - (NSString *)getDeviceId;
@@ -30,7 +31,7 @@
 - (id<SyncManager>)getSyncManager:(NSString *)identifier;
 - (id<SyncManager>)getSyncManagerByResponseId:(NSString *)responseId;
 - (DatabaseProvider *)getDatabase;
-- (void)setTimestamp:(NSString *)timestamp;
+- (void)setTimestamps:(NSDictionary *)timestamps;
 - (void)setConfigFile:(NSString *)filename;
 - (void)setAuthToken:(NSString *)authToken;
 - (void)setUsername:(NSString *)username;
@@ -38,6 +39,7 @@
 - (void)logout;
 - (BOOL)isEncryptionActive;
 - (NSString *)getEncryptionPassword;
+- (void)requestSync;
 
 @end
 

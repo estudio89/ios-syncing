@@ -99,7 +99,7 @@
     _syncConfig = mock([SyncConfig class]);
     _database = mock([DatabaseProvider class]);
     [given([_syncConfig getAuthToken]) willReturn:@"123"];
-    [given([_syncConfig getTimestamp]) willReturn:@"666"];
+    [given([_syncConfig getTimestamps]) willReturn:@"666"];
     [given([_syncConfig getDatabase]) willReturn:(_database)];
     [given([_syncConfig getGetDataUrl]) willReturn:@"http://127.0.0.1:8000/api/get-data/"];
     [given([_syncConfig getSendDataUrl]) willReturn:@"http://127.0.0.1:8000/api/send-data/"];
@@ -217,27 +217,27 @@
     
     // registros
     argument = [[MKTArgumentCaptor alloc] init];
-    [verify(_syncManagerRegistros) saveNewData:[argument capture] withDeviceId:[argument capture] withParameters:[argument capture]];
+    [MKTVerify(_syncManagerRegistros) saveNewData:[argument capture] withDeviceId:[argument capture] withParameters:[argument capture]];
     assertThat([[argument allValues] objectAtIndex:0], is(registrosArray));
     assertThat([[argument allValues] objectAtIndex:2], is(registrosParams));
     
     // empresas
     argument = [[MKTArgumentCaptor alloc] init];
-    [verify(_syncManagerEmpresas) saveNewData:[argument capture] withDeviceId:[argument capture] withParameters:[argument capture]];
+    [MKTVerify(_syncManagerEmpresas) saveNewData:[argument capture] withDeviceId:[argument capture] withParameters:[argument capture]];
     assertThat([[argument allValues] objectAtIndex:0], is(empresasArray));
     assertThat([[argument allValues] objectAtIndex:2], is(empresasParams));
     
     // formularios
     argument = [[MKTArgumentCaptor alloc] init];
-    [verify(_syncManagerFormularios) saveNewData:[argument capture] withDeviceId:[argument capture] withParameters:[argument capture]];
+    [MKTVerify(_syncManagerFormularios) saveNewData:[argument capture] withDeviceId:[argument capture] withParameters:[argument capture]];
     assertThat([[argument allValues] objectAtIndex:0], is(formulariosArray));
     assertThat([[argument allValues] objectAtIndex:2], is(formulariosParams));
     
     // verificando o post
-    [verify(_syncManagerRegistros) postEvent:anything() withBus:anything()];
+    [MKTVerify(_syncManagerRegistros) postEvent:anything() withBus:anything()];
     
     // verificando o timestamp
-    [verify(_syncConfig) setTimestamp:@"777"];
+    [MKTVerify(_syncConfig) setTimestamps:@"777"];
     
     // get data realizado
     assertThatBool(completed, equalToBool(YES));
@@ -258,7 +258,7 @@
     [verifyCount(_database, never()) saveTransaction];
     
     // assegurando que o timestamp nao foi salvo
-    [verifyCount(_syncConfig, never()) setTimestamp:anything()];
+    [MKTVerifyCount(_syncConfig, never()) setTimestamps:anything()];
     
     // get data naor ealizado
     assertThatBool(completed, equalToBool(NO));
@@ -280,7 +280,7 @@
     NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     
     MKTArgumentCaptor *argument = [[MKTArgumentCaptor alloc] init];
-    [verify(_serverComm) post:[argument capture] withData:[argument capture]];
+    [MKTVerify(_serverComm) post:[argument capture] withData:[argument capture]];
     assertThat([[argument allValues] objectAtIndex:0], is(@"http://127.0.0.1:8000/api/get-data/registros/"));
     assertThat([[argument allValues] objectAtIndex:1], equalTo(jsonData));
     
@@ -306,13 +306,13 @@
     
     // registros
     argument = [[MKTArgumentCaptor alloc] init];
-    [verify(_syncManagerRegistros) saveNewData:[argument capture] withDeviceId:[argument capture] withParameters:[argument capture]];
+    [MKTVerify(_syncManagerRegistros) saveNewData:[argument capture] withDeviceId:[argument capture] withParameters:[argument capture]];
     assertThat([[argument allValues] objectAtIndex:0], is(registrosArray));
     assertThat([[argument allValues] objectAtIndex:2], is(registrosParams));
     
     // empresas
     argument = [[MKTArgumentCaptor alloc] init];
-    [verify(_syncManagerEmpresas) saveNewData:[argument capture] withDeviceId:[argument capture] withParameters:[argument capture]];
+    [MKTVerify(_syncManagerEmpresas) saveNewData:[argument capture] withDeviceId:[argument capture] withParameters:[argument capture]];
     assertThat([[argument allValues] objectAtIndex:0], is(empresasArray));
     assertThat([[argument allValues] objectAtIndex:2], is(empresasParams));
     
@@ -320,7 +320,7 @@
     [verifyCount(_syncManagerFormularios, never()) saveNewData:anything() withDeviceId:anything() withParameters:anything()];
     
     // verificando o timestamp
-    [verifyCount(_syncConfig, never()) setTimestamp:anything()];
+    [MKTVerifyCount(_syncConfig, never()) setTimestamps:anything()];
     
     // get data realizado
     assertThatBool(completed, equalToBool(YES));
@@ -344,7 +344,7 @@
     [verifyCount(_database, never()) saveTransaction];
     
     // assegurando que o timestamp nao foi salvo
-    [verifyCount(_syncConfig, never()) setTimestamp:anything()];
+    [MKTVerifyCount(_syncConfig, never()) setTimestamps:anything()];
     
     // get data naor ealizado
     assertThatBool(completed, equalToBool(NO));
@@ -355,7 +355,7 @@
  */
 - (void)testSendDataToServerMultiple
 {
-    BOOL completed = [_dataSyncHelper sendDataToServer];
+    BOOL completed = [_dataSyncHelper sendDataToServer:nil];
     
     // verificando o post
     NSString *jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/send-data-request.json";
@@ -364,7 +364,7 @@
     NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     
     MKTArgumentCaptor *argument = [[MKTArgumentCaptor alloc] init];
-    [verify(_serverComm) post:[argument capture] withData:[argument capture] withFiles:[argument capture]];
+    [MKTVerify(_serverComm) post:[argument capture] withData:[argument capture] withFiles:[argument capture]];
     assertThat([[argument allValues] objectAtIndex:0], is(@"http://127.0.0.1:8000/api/send-data/"));
     assertThat([[argument allValues] objectAtIndex:1], is(jsonData));
     assertThat([[argument allValues] objectAtIndex:2], is(_modifiedFiles));
@@ -381,12 +381,12 @@
     
     // registros
     argument = [[MKTArgumentCaptor alloc] init];
-    [verify(_syncManagerRegistros) processSendResponse:[argument capture]];
+    [MKTVerify(_syncManagerRegistros) processSendResponse:[argument capture]];
     assertThat([[argument allValues] objectAtIndex:0], is(registrosArray));
     
     // empresas
     argument = [[MKTArgumentCaptor alloc] init];
-    [verify(_syncManagerEmpresas) processSendResponse:[argument capture]];
+    [MKTVerify(_syncManagerEmpresas) processSendResponse:[argument capture]];
     assertThat([[argument allValues] objectAtIndex:0], is(empresasArray));
     
     NSMutableDictionary *newEmpresasObj = [jsonData objectForKey:@"empresas"];
@@ -395,16 +395,16 @@
     [newEmpresasParams removeObjectForKey:@"data"];
     
     argument = [[MKTArgumentCaptor alloc] init];
-    [verify(_syncManagerEmpresas) saveNewData:[argument capture] withDeviceId:[argument capture] withParameters:[argument capture]];
+    [MKTVerify(_syncManagerEmpresas) saveNewData:[argument capture] withDeviceId:[argument capture] withParameters:[argument capture]];
     assertThat([[argument allValues] objectAtIndex:0], is(newEmpresasArray));
     assertThat([[argument allValues] objectAtIndex:2], is(newEmpresasParams));
     
     // verificando o post
     [verifyCount(_syncManagerRegistros, never()) postEvent:anything() withBus:anything()];
-    [verify(_syncManagerEmpresas) postEvent:anything() withBus:anything()];
+    [MKTVerify(_syncManagerEmpresas) postEvent:anything() withBus:anything()];
     
     // verificando o timestamp
-    [verify(_syncConfig) setTimestamp:@"777"];
+    [MKTVerify(_syncConfig) setTimestamps:@"777"];
     
     // get data realizado
     assertThatBool(completed, equalToBool(YES));
@@ -437,7 +437,7 @@
     
     // apos enviar todos os dados, o syncManagerRegistros avisa que nao possui mais dados
     [[[[given([_syncManagerRegistros hasModifiedData]) willReturnBool:YES] willReturnBool:YES] willReturnBool:YES] willReturnBool:YES];
-    BOOL completed = [_dataSyncHelper sendDataToServer];
+    BOOL completed = [_dataSyncHelper sendDataToServer:nil];
     
     jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/send-data-request.json";
     json = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
@@ -493,7 +493,7 @@
     
     // empresas
     argument = [[MKTArgumentCaptor alloc] init];
-    [verify(_syncManagerEmpresas) processSendResponse:[argument capture]];
+    [MKTVerify(_syncManagerEmpresas) processSendResponse:[argument capture]];
     [verifyCount(_syncManagerEmpresas, times(1)) saveNewData:empresasArray withDeviceId:anything() withParameters:empresasParams];
     
     assertThat([[argument allValues] objectAtIndex:0], is([jsonData3 objectForKey:@"empresas_id"]));
@@ -513,13 +513,13 @@
 
     _dataSyncHelper.threadChecker = threadChecker;
     
-    BOOL completed = [_dataSyncHelper sendDataToServer];
+    BOOL completed = [_dataSyncHelper sendDataToServer:nil];
     
     // assegurando que o banco de dados nao fez commit
     [verifyCount(_database, never()) saveTransaction];
     
     // assegurando que o timestamp nao foi salvo
-    [verifyCount(_syncConfig, never()) setTimestamp:anything()];
+    [MKTVerifyCount(_syncConfig, never()) setTimestamps:anything()];
     
     // get data naor ealizado
     assertThatBool(completed, equalToBool(NO));

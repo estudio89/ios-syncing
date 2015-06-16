@@ -14,6 +14,9 @@
 @interface InvalidThreadIdException : CustomException
 @end
 
+@interface TimeoutException : CustomException
+@end
+
 @interface HttpException : CustomException
 @end
 

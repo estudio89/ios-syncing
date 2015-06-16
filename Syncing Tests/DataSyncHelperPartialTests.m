@@ -94,7 +94,7 @@
     _syncConfig = OCMClassMock([SyncConfig class]);
     _database = OCMClassMock([DatabaseProvider class]);
     OCMStub([_syncConfig getAuthToken]).andReturn(@"123");
-    OCMStub([_syncConfig getTimestamp]).andReturn(@"666");
+    OCMStub([_syncConfig getTimestamps]).andReturn(@"666");
     OCMStub([_syncConfig getDatabase]).andReturn(_database);
     OCMStub([_syncConfig getGetDataUrl]).andReturn(@"http://127.0.0.1:8000/api/get-data/");
     OCMStub([_syncConfig getSendDataUrl]).andReturn(@"http://127.0.0.1:8000/api/send-data/");
@@ -179,7 +179,7 @@
     
     // get data ok, send data fail
     OCMStub([dataSyncHelper getDataFromServer]).andReturn(YES);
-    OCMStub([dataSyncHelper sendDataToServer]).andReturn(NO);
+    OCMStub([dataSyncHelper sendDataToServer:nil]).andReturn(NO);
     XCTAssertEqual([dataSyncHelper fullSynchronousSync], NO);
     [[dataSyncHelper reject] postSyncFinishedEvent];
 }
@@ -193,7 +193,7 @@
     
     // get data fail, send data ok
     OCMStub([dataSyncHelper getDataFromServer]).andReturn(NO);
-    OCMStub([dataSyncHelper sendDataToServer]).andReturn(YES);
+    OCMStub([dataSyncHelper sendDataToServer:nil]).andReturn(YES);
     XCTAssertEqual([dataSyncHelper fullSynchronousSync], NO);
     [[dataSyncHelper reject] postSyncFinishedEvent];
 }
@@ -207,7 +207,7 @@
     
     // get data ok, send data ok
     OCMStub([dataSyncHelper getDataFromServer]).andReturn(YES);
-    OCMStub([dataSyncHelper sendDataToServer]).andReturn(YES);
+    OCMStub([dataSyncHelper sendDataToServer:nil]).andReturn(YES);
     XCTAssertEqual([dataSyncHelper fullSynchronousSync], YES);
     OCMVerify([dataSyncHelper postSyncFinishedEvent]);
 }

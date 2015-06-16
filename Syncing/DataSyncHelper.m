@@ -78,56 +78,29 @@ static int numberAttempts;
  */
 - (BOOL)getDataFromServer
 {
-    NSString *threadId = [self.threadChecker setNewThreadId];
-    NSString *token = [self.syncConfig getAuthToken];
-    
-    if (token == nil || token.length == 0)
-    {
-        [self.threadChecker removeThreadId:threadId];
-        return NO;
-    }
-    
-    NSDictionary *data = nil;
-    @try
-    {
-        data = @{@"token":token,
-                 @"timestamp":[self.syncConfig getTimestamp]};
-    }
-    @catch (CustomException *exception)
-    {
-        @throw exception;
-    }
-    
-    
-    NSDictionary *jsonResponse = [self.serverComm post:[self.syncConfig getGetDataUrl] withData:data];
-    NSString *timestamp = nil;
-    
-    @try
-    {
-        timestamp = [jsonResponse valueForKey:@"timestamp"];
-        
-    }
-    @catch (CustomException *exception)
-    {
-        @throw exception;
-    }
-    
-    if ([self processGetDataResponse:threadId withJsonResponse:jsonResponse withTimestamp:timestamp])
-    {
-        [self.threadChecker removeThreadId:threadId];
-        return YES;
-    }
-    else
-    {
-        [self.threadChecker removeThreadId:threadId];
-        return NO;
-    }
+    return [self getDataFromServer:nil withParameters:[[NSMutableDictionary alloc] init] withSendTimestamp:YES];
+}
+
+/**
+ * getDataFromServer
+ */
+- (BOOL)getDataFromServer:(NSString *)identifier
+{
+    return [self getDataFromServer:identifier withParameters:[[NSMutableDictionary alloc] init] withSendTimestamp:YES];
+}
+
+/**
+ * getDataFromServer
+ */
+- (BOOL)getDataFromServer:(NSString *)identifier withParameters:(NSMutableDictionary *)parameters
+{
+    return [self getDataFromServer:identifier withParameters:parameters withSendTimestamp:NO];
 }
 
 /***
  * getDataFromServer
  */
-- (BOOL)getDataFromServer:(NSString *)identifier withParameters:(NSMutableDictionary *)parameters
+- (BOOL)getDataFromServer:(NSString *)identifier withParameters:(NSMutableDictionary *)parameters withSendTimestamp:(BOOL)sendTimestamp
 {
     NSString *threadId = [self.threadChecker setNewThreadId];
     NSString *token = [self.syncConfig getAuthToken];
@@ -141,24 +114,47 @@ static int numberAttempts;
     @try
     {
         [parameters setObject:token forKey:@"token"];
+        if (sendTimestamp)
+        {
+            if (identifier != nil)
+            {
+                [parameters setObject:[_syncConfig getTimestamp:identifier] forKey:@"timestamps"];
+            }
+            else
+            {
+                [parameters setObject:[_syncConfig getTimestamps] forKey:@"timestamps"];
+            }
+        }
     }
     @catch (CustomException *exception)
     {
         @throw exception;
     }
     
-    NSDictionary *jsonResponse = nil;
+    NSString *url = nil;
     
     @try
     {
-        jsonResponse = [self.serverComm post:[self.syncConfig getGetDataUrlForModel:identifier] withData:parameters];
+        url = identifier != nil ? [_syncConfig getGetDataUrlForModel:identifier] : [_syncConfig getGetDataUrl];
     }
     @catch (CustomException *exception)
     {
         @throw exception;
     }
     
-    if ([self processGetDataResponse:threadId withJsonResponse:jsonResponse withTimestamp:nil])
+    NSDictionary *jsonResponse = [self.serverComm post:url withData:parameters];
+    NSDictionary *timestamps = nil;
+    
+    @try
+    {
+        timestamps = sendTimestamp ? [jsonResponse objectForKey:@"timestamps"] : nil;
+    }
+    @catch (CustomException *exception)
+    {
+        @throw exception;
+    }
+    
+    if ([self processGetDataResponse:threadId withJsonResponse:jsonResponse withTimestamp:timestamps])
     {
         [self.threadChecker removeThreadId:threadId];
         return YES;
@@ -175,6 +171,14 @@ static int numberAttempts;
  */
 - (BOOL)sendDataToServer
 {
+    return [self sendDataToServer:nil];
+}
+
+/***
+ * sendDataToServer
+ */
+- (BOOL)sendDataToServer:(NSString *)identifier
+{
     NSString *threadId = [self.threadChecker setNewThreadId];
     NSString *token = [self.syncConfig getAuthToken];
     
@@ -185,15 +189,34 @@ static int numberAttempts;
     }
     
     NSMutableDictionary *data = [[NSMutableDictionary alloc] init];
-    [data setObject:token forKey:@"token"];
-    [data setObject:[self.syncConfig getTimestamp] forKey:@"timestamp"];
-    [data setObject:[self.syncConfig getDeviceId] forKey:@"device_id"];
+    @try
+    {
+        [data setObject:token forKey:@"token"];
+        [data setObject:identifier == nil ? [_syncConfig getTimestamps] : [_syncConfig getTimestamp:identifier] forKey:@"timestamps"];
+        [data setObject:[self.syncConfig getDeviceId] forKey:@"device_id"];
+    }
+    @catch (CustomException *exception)
+    {
+        @throw exception;
+    }
+    
     NSUInteger nmbrMetadata = [data count];
     
     NSMutableArray *files = [[NSMutableArray alloc] init];
+    NSArray *syncManagers = nil;
+    
+    if (identifier == nil)
+    {
+        syncManagers = [_syncConfig getSyncManagers];
+    }
+    else
+    {
+        syncManagers = [NSArray arrayWithObject:[_syncConfig getSyncManager:identifier]];
+    }
+    
     NSArray *modifiedData = [[NSArray alloc] init];
     
-    for (id<SyncManager> syncManager in [self.syncConfig getSyncManagers])
+    for (id<SyncManager> syncManager in syncManagers)
     {
         if (![syncManager hasModifiedData])
         {
@@ -204,27 +227,51 @@ static int numberAttempts;
         
         if ([syncManager shouldSendSingleObject])
         {
-            for (NSDictionary *object in modifiedData)
+            @try
             {
-                NSMutableDictionary *partialData = [[data copy] mutableCopy];
-                NSArray *singleItemArray = [NSArray arrayWithObject:object];
-                [partialData setObject:singleItemArray forKey:[syncManager getIdentifier]];
-                NSArray *partialFiles = [syncManager getModifiedFilesForObject:object];
-                NSLog(@"Syncing - Enviando item %@", object);
-                NSDictionary *jsonResponse = [self.serverComm post:[self.syncConfig getSendDataUrl] withData:partialData withFiles:partialFiles];
-                
-                if (![self processSendResponse:threadId withJsonResponse:jsonResponse])
+                NSMutableDictionary *timestamps = [data objectForKey:@"timestamps"];
+                [timestamps removeObjectForKey:[syncManager getIdentifier]];
+                [data setObject:timestamps forKey:@"timestamps"];
+            }
+            @catch (CustomException *exception)
+            {
+                @throw exception;
+            }
+            
+            @try
+            {
+                for (NSDictionary *object in modifiedData)
                 {
-                    return NO;
+                    NSMutableDictionary *partialData = [[data copy] mutableCopy];
+                    NSArray *singleItemArray = [NSArray arrayWithObject:object];
+                    [partialData setObject:singleItemArray forKey:[syncManager getIdentifier]];
+                    [partialData setObject:[_syncConfig getTimestamp:[syncManager getIdentifier]] forKey:@"timestamps"];
+                    NSArray *partialFiles = [syncManager getModifiedFilesForObject:object];
+                    NSLog(@"Syncing - Enviando item %@", object);
+                    NSDictionary *jsonResponse = [self.serverComm post:[self.syncConfig getSendDataUrl] withData:partialData withFiles:partialFiles];
+                    
+                    if (![self processSendResponse:threadId withJsonResponse:jsonResponse])
+                    {
+                        return NO;
+                    }
                 }
-                
-                [data setObject:[self.syncConfig getTimestamp] forKey:@"timestamp"];
+            }
+            @catch (CustomException *exception)
+            {
+                @throw exception;
             }
         }
         else
         {
-            [data setObject:modifiedData forKey:[syncManager getIdentifier]];
-            [files addObjectsFromArray:[syncManager getModifiedFiles]];
+            @try
+            {
+                [data setObject:modifiedData forKey:[syncManager getIdentifier]];
+                [files addObjectsFromArray:[syncManager getModifiedFiles]];
+            }
+            @catch (CustomException *exception)
+            {
+                @throw exception;
+            }
         }
     }
     
@@ -255,7 +302,7 @@ static int numberAttempts;
 /***
  * processGetDataResponse
  */
-- (BOOL)processGetDataResponse:(NSString *)threadId withJsonResponse:(NSDictionary *)jsonResponse withTimestamp:(NSString *)timestamp
+- (BOOL)processGetDataResponse:(NSString *)threadId withJsonResponse:(NSDictionary *)jsonResponse withTimestamp:(NSDictionary *)timestamps
 {
     [self.transactionManager doInTransaction:^{
         for (id<SyncManager> syncManager in [self.syncConfig getSyncManagers])
@@ -281,9 +328,9 @@ static int numberAttempts;
         
         if ([self.threadChecker isValidThreadId:threadId])
         {
-            if (timestamp != nil)
+            if (timestamps != nil)
             {
-                [self.syncConfig setTimestamp:timestamp];
+                [self.syncConfig setTimestamps:timestamps];
             }
             [self postGetFinishedEvent];
         }
@@ -301,7 +348,7 @@ static int numberAttempts;
  */
 - (BOOL)processSendResponse:(NSString *)threadId withJsonResponse:(NSDictionary *)jsonResponse
 {
-    NSString *timestamp = [jsonResponse valueForKey:@"timestamp"];
+    NSDictionary *timestamps = [jsonResponse objectForKey:@"timestamps"];
     
     [self.transactionManager doInTransaction:^{
         NSArray *syncResponse;
@@ -337,7 +384,7 @@ static int numberAttempts;
         
         if ([self.threadChecker isValidThreadId:threadId])
         {
-            [self.syncConfig setTimestamp:timestamp];
+            [self.syncConfig setTimestamps:timestamps];
         }
         else
         {
@@ -350,26 +397,30 @@ static int numberAttempts;
 }
 
 /**
- * internalfullSynchronousSync
+ * internalRunSynchronousSync
  */
-- (BOOL)internalfullSynchronousSync
+- (BOOL)internalRunSynchronousSync:(NSString *)identifier
 {
-    if ([self isRunningSync])
-    {
-        NSLog(@"Sync already running");
-        return NO;
-    }
-    
     NSLog(@"STARTING NEW SYNC");
     BOOL completed = NO;
-    self.isRunningSync = YES;
+    
+    if (identifier != nil)
+    {
+        [_partialSyncFlag setObject:[NSNumber numberWithBool:YES] forKey:identifier];
+    }
+    else
+    {
+        _isRunningSync = YES;
+    }
     
     @try
     {
-        completed = [self getDataFromServer];
+        NSLog(@"GETTING DATA FROM SERVER");
+        completed = [self getDataFromServer:identifier];
+        NSLog(@"GOT DATA FROM SERVER");
         if (completed && [self hasModifiedData])
         {
-            completed = [self sendDataToServer];
+            completed = [self sendDataToServer:identifier];
         }
     }
     @catch (CustomException *e)
@@ -378,12 +429,26 @@ static int numberAttempts;
     }
     @finally
     {
-        self.isRunningSync = NO;
+        if (identifier != nil)
+        {
+            [_partialSyncFlag setObject:[NSNumber numberWithBool:NO] forKey:identifier];
+        }
+        else
+        {
+            _isRunningSync = NO;
+        }
     }
     
     if (completed)
     {
-        [self postSyncFinishedEvent];
+        if (identifier != nil)
+        {
+            [self postPartialSyncFinishedEvent];
+        }
+        else
+        {
+            [self postSyncFinishedEvent];
+        }
         return YES;
     }
     else
@@ -393,14 +458,14 @@ static int numberAttempts;
 }
 
 /**
- * fullSynchronousSync
+ * runSynchronousSync
  */
-- (BOOL)fullSynchronousSync
+- (BOOL)runSynchronousSync:(NSString *)identifier
 {
     @try
     {
         numberAttempts += 1;
-        BOOL response = [self internalfullSynchronousSync];
+        BOOL response = [self internalRunSynchronousSync:identifier];
         numberAttempts = 0;
         return response;
     }
@@ -420,6 +485,11 @@ static int numberAttempts;
             @throw [[Http408Exception alloc] init];
         }
     }
+    @catch (TimeoutException *e)
+    {
+        [self postBackgroundSyncError:e];
+        [_syncConfig requestSync];
+    }
     @catch (CustomException *e)
     {
         @throw e;
@@ -428,8 +498,24 @@ static int numberAttempts;
     {
         [self sendCaughtException:e];
     }
-
+    
     return NO;
+}
+
+/**
+ * fullSynchronousSync
+ */
+- (BOOL)fullSynchronousSync
+{
+    return [self runSynchronousSync:nil];
+}
+
+/**
+ * partialSynchronousSync
+ */
+- (BOOL)partialSynchronousSync:(NSString *)identifier
+{
+    return [self runSynchronousSync:identifier];
 }
 
 /**
@@ -442,6 +528,18 @@ static int numberAttempts;
         NSLog(@"Running new FullSyncAsyncTask");
         [self fullSyncAsyncTask];
     }
+    else
+    {
+        NSLog(@"Sync already running");
+    }
+}
+
+/**
+ * partialAsynchronousSync
+ */
+- (void)partialAsynchronousSync:(NSString *)identifier
+{
+    [self partialAsynchronousSync:identifier withParameters:nil];
 }
 
 /**
@@ -450,9 +548,14 @@ static int numberAttempts;
 - (void)partialAsynchronousSync:(NSString *)identifier withParameters:(NSDictionary *)parameters
 {
     NSNumber *flag = [self.partialSyncFlag objectForKey:identifier];
-    if (flag == nil || ![flag boolValue])
+    if (flag == nil || ![flag boolValue] || (parameters == nil && _isRunningSync))
     {
-        [self partialSyncTask:identifier withParameters:parameters];
+        BOOL sendModified = parameters == nil;
+        [self partialSyncTask:identifier withParameters:parameters withSendModified:sendModified];
+    }
+    else
+    {
+        NSLog(@"Sync already running");
     }
 }
 
@@ -505,6 +608,15 @@ static int numberAttempts;
 }
 
 /**
+ * postPartialSyncFinishedEvent
+ */
+- (void)postPartialSyncFinishedEvent
+{
+    [self.bus post:[[PartialSyncFinishedEvent alloc] init] withNotificationName:@"PartialSyncFinishedEvent"];
+    NSLog(@"PartialSyncFinishedEvent");
+}
+
+/**
  * postBackgroundSyncError
  */
 - (void)postBackgroundSyncError:(NSException *)error
@@ -515,7 +627,7 @@ static int numberAttempts;
 /**
  * fullSyncAsyncTask
  */
--(void)fullSyncAsyncTask
+- (void)fullSyncAsyncTask
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         @try
@@ -525,6 +637,7 @@ static int numberAttempts;
         @catch (HttpException *exception)
         {
             [self postBackgroundSyncError:exception];
+            NSLog(@"Background sync error");
         }
     });
 }
@@ -532,13 +645,20 @@ static int numberAttempts;
 /**
  * partialSyncTask
  */
--(void)partialSyncTask:(NSString *)identifier withParameters:(NSDictionary *)parameters
+- (void)partialSyncTask:(NSString *)identifier withParameters:(NSDictionary *)parameters withSendModified:(BOOL)sendModified
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self.partialSyncFlag setObject:[NSNumber numberWithBool:YES] forKey:identifier];
         @try
         {
-            [self getDataFromServer:identifier withParameters:[parameters mutableCopy]];
+            if (sendModified)
+            {
+                [self partialSynchronousSync:identifier];
+            }
+            else
+            {
+                [self.partialSyncFlag setObject:[NSNumber numberWithBool:YES] forKey:identifier];
+                [self getDataFromServer:identifier withParameters:[parameters mutableCopy]];
+            }
         }
         @catch (HttpException *exception)
         {
@@ -565,6 +685,9 @@ static int numberAttempts;
 @end
 
 @implementation SyncFinishedEvent
+@end
+
+@implementation PartialSyncFinishedEvent
 @end
 
 @interface BackgroundSyncError()
