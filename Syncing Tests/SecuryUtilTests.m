@@ -55,7 +55,7 @@
 - (void)testEncryptionActive
 {
     AsyncBus *bus = [[AsyncBus alloc] init];
-    SyncConfig *syncConfig = [[SyncConfig alloc] initWithBus:bus];
+    SyncConfig *syncConfig = [[SyncConfig alloc] initWithBus:bus withPersistentStoreCoordinator:nil];
     id _mSyncConfig = OCMPartialMock(syncConfig);
     OCMStub([_mSyncConfig isEncryptionActive]).andReturn(YES);
     OCMStub([_mSyncConfig getEncryptionPassword]).andReturn(@"1234");
@@ -79,7 +79,7 @@
 - (void)testEncryptionInactive
 {
     AsyncBus *bus = [[AsyncBus alloc] init];
-    SyncConfig *syncConfig = [[SyncConfig alloc] initWithBus:bus];
+    SyncConfig *syncConfig = [[SyncConfig alloc] initWithBus:bus withPersistentStoreCoordinator:nil];
     id _mSyncConfig = OCMPartialMock(syncConfig);
     OCMStub([_mSyncConfig isEncryptionActive]).andReturn(NO);
     

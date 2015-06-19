@@ -7,30 +7,14 @@
 //
 
 #import "DatabaseProvider.h"
-#import "SharedModelContext.h"
+#import "SyncConfig.h"
 
 @implementation DatabaseProvider
 
 /**
- * saveTransaction
- */
-- (void)saveTransaction
-{
-    [[[SharedModelContext sharedModelContext] getSharedModelContext] save:nil];
-}
-
-/**
- * rollbackTransaction
- */
-- (void)rollbackTransaction
-{
-    [[[SharedModelContext sharedModelContext] getSharedModelContext] rollback];
-}
-
-/**
  * flushDatabase
  */
-- (void)flushDatabase
++ (void)flushDatabase
 {
     NSError *error = nil;
     NSFileManager *fileMgr = [[NSFileManager alloc] init];
@@ -55,7 +39,7 @@
         NSLog(@"flushDatabase error - contentsOfDirectoryAtPath");
     }
     
-    NSManagedObjectContext *context = [[SharedModelContext sharedModelContext] getSharedModelContext];
+    NSManagedObjectContext *context = [[SyncConfig getInstance] getContext];
     NSURL * storeURL = [[context persistentStoreCoordinator] URLForPersistentStore:[[[context persistentStoreCoordinator] persistentStores] lastObject]];
     
     [context reset];

@@ -12,7 +12,6 @@
 #import "CustomTransactionManager.h"
 #import "AsyncBus.h"
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 
 @interface DataSyncHelper : NSObject
 
@@ -27,31 +26,20 @@
                 withThreadChecker:(ThreadChecker *)threadChecker
                 withSyncConfig:(SyncConfig *)syncConfig
                 withTransactionManager:(CustomTransactionManager *)transactionManager
-                withBus:(AsyncBus *)bus
-                withContext:(NSManagedObjectContext *)context;
-
-- (BOOL)getDataFromServer;
-- (BOOL)getDataFromServer:(NSString *)identifier;
-- (BOOL)getDataFromServer:(NSString *)identifier withParameters:(NSMutableDictionary *)parameters;
-- (BOOL)getDataFromServer:(NSString *)identifier withParameters:(NSMutableDictionary *)parameters withSendTimestamp:(BOOL)sendTimestamp;
-- (BOOL)sendDataToServer:(NSString *)identifier;
-
-- (BOOL)fullSynchronousSync;
-- (BOOL)partialSynchronousSync:(NSString *)identifier;
+                withBus:(AsyncBus *)bus;
 - (void)fullAsynchronousSync;
+- (BOOL)fullSynchronousSync;
 - (void)partialAsynchronousSync:(NSString *)identifier;
 - (void)partialAsynchronousSync:(NSString *)identifier withParameters:(NSDictionary *)parameters;
-- (void)postSyncFinishedEvent;
+- (void)stopSyncThreads;
+
+// Exposed for tests
+- (BOOL)getDataFromServer;
+- (BOOL)getDataFromServer:(NSString *)identifier withParameters:(NSMutableDictionary *)parameters;
+- (BOOL)sendDataToServer:(NSString *)identifier;
 - (void)postGetFinishedEvent;
 - (void)postSendFinishedEvent;
-- (void)postPartialSyncFinishedEvent;
-- (void)setThreadChecker:(ThreadChecker *)threadChecker;
-- (void)setServerComm:(ServerComm *)serverComm;
-- (void)setSyncConfig:(SyncConfig *)syncConfig;
-- (void)setTransactionManager:(CustomTransactionManager *)transactionManager;
-- (void)setBus:(AsyncBus *)bus;
-
-- (void)stopSyncThreads;
+- (void)postSyncFinishedEvent;
 
 @end
 

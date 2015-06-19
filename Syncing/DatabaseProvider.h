@@ -7,12 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 
 @interface DatabaseProvider : NSObject
 
-- (void)saveTransaction;
-- (void)rollbackTransaction;
-- (void)flushDatabase;
++ (void)flushDatabase;
 
 @end

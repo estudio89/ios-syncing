@@ -8,7 +8,6 @@
 
 #import "DataSyncHelper.h"
 #import "SyncManager.h"
-#import "SharedModelContext.h"
 #import "CustomException.h"
 #import "SyncingInjection.h"
 #import <Raven/RavenClient.h>
@@ -56,12 +55,10 @@ static int numberAttempts;
                 withSyncConfig:(SyncConfig *)syncConfig
                 withTransactionManager:(CustomTransactionManager *)transactionManager
                 withBus:(AsyncBus *)bus
-                withContext:(NSManagedObjectContext *)context
 {
     self = [super init];
     if (self)
     {
-        [[SharedModelContext sharedModelContext] setSharedModelContext:context];
         self.serverComm = serverComm;
         self.threadChecker = threadChecker;
         self.syncConfig = syncConfig;
@@ -78,7 +75,9 @@ static int numberAttempts;
  */
 - (BOOL)getDataFromServer
 {
-    return [self getDataFromServer:nil withParameters:[[NSMutableDictionary alloc] init] withSendTimestamp:YES];
+    return [self getDataFromServer:nil
+                    withParameters:[[NSMutableDictionary alloc] init]
+                 withSendTimestamp:YES];
 }
 
 /**
@@ -86,7 +85,9 @@ static int numberAttempts;
  */
 - (BOOL)getDataFromServer:(NSString *)identifier
 {
-    return [self getDataFromServer:identifier withParameters:[[NSMutableDictionary alloc] init] withSendTimestamp:YES];
+    return [self getDataFromServer:identifier
+                    withParameters:[[NSMutableDictionary alloc] init]
+                 withSendTimestamp:YES];
 }
 
 /**
@@ -94,13 +95,17 @@ static int numberAttempts;
  */
 - (BOOL)getDataFromServer:(NSString *)identifier withParameters:(NSMutableDictionary *)parameters
 {
-    return [self getDataFromServer:identifier withParameters:parameters withSendTimestamp:NO];
+    return [self getDataFromServer:identifier
+                    withParameters:parameters
+                 withSendTimestamp:NO];
 }
 
 /***
  * getDataFromServer
  */
-- (BOOL)getDataFromServer:(NSString *)identifier withParameters:(NSMutableDictionary *)parameters withSendTimestamp:(BOOL)sendTimestamp
+- (BOOL)getDataFromServer:(NSString *)identifier
+           withParameters:(NSMutableDictionary *)parameters
+        withSendTimestamp:(BOOL)sendTimestamp
 {
     NSString *threadId = [self.threadChecker setNewThreadId];
     NSString *token = [self.syncConfig getAuthToken];
@@ -179,6 +184,7 @@ static int numberAttempts;
  */
 - (BOOL)sendDataToServer:(NSString *)identifier
 {
+    NSManagedObjectContext *context = [self.syncConfig getContext];
     NSString *threadId = [self.threadChecker setNewThreadId];
     NSString *token = [self.syncConfig getAuthToken];
     
@@ -218,12 +224,12 @@ static int numberAttempts;
     
     for (id<SyncManager> syncManager in syncManagers)
     {
-        if (![syncManager hasModifiedData])
+        if (![syncManager hasModifiedDataWithContext:context])
         {
             continue;
         }
         
-        modifiedData = [syncManager getModifiedData];
+        modifiedData = [syncManager getModifiedDataWithContext:context];
         
         if ([syncManager shouldSendSingleObject])
         {
@@ -246,7 +252,7 @@ static int numberAttempts;
                     NSArray *singleItemArray = [NSArray arrayWithObject:object];
                     [partialData setObject:singleItemArray forKey:[syncManager getIdentifier]];
                     [partialData setObject:[_syncConfig getTimestamp:[syncManager getIdentifier]] forKey:@"timestamps"];
-                    NSArray *partialFiles = [syncManager getModifiedFilesForObject:object];
+                    NSArray *partialFiles = [syncManager getModifiedFilesForObject:object withContext:context];
                     NSLog(@"Syncing - Enviando item %@", object);
                     NSDictionary *jsonResponse = [self.serverComm post:[self.syncConfig getSendDataUrl] withData:partialData withFiles:partialFiles];
                     
@@ -266,7 +272,7 @@ static int numberAttempts;
             @try
             {
                 [data setObject:modifiedData forKey:[syncManager getIdentifier]];
-                [files addObjectsFromArray:[syncManager getModifiedFiles]];
+                [files addObjectsFromArray:[syncManager getModifiedFilesWithContext:context]];
             }
             @catch (CustomException *exception)
             {
@@ -304,6 +310,8 @@ static int numberAttempts;
  */
 - (BOOL)processGetDataResponse:(NSString *)threadId withJsonResponse:(NSDictionary *)jsonResponse withTimestamp:(NSDictionary *)timestamps
 {
+    NSManagedObjectContext *context = [self.syncConfig getContext];
+    
     [self.transactionManager doInTransaction:^{
         for (id<SyncManager> syncManager in [self.syncConfig getSyncManagers])
         {
@@ -321,7 +329,7 @@ static int numberAttempts;
                 }
                 
                 [jsonObject removeObjectForKey:@"data"];
-                NSArray *objects = [syncManager saveNewData:jsonArray withDeviceId:[self.syncConfig getDeviceId] withParameters:jsonObject];
+                NSArray *objects = [syncManager saveNewData:jsonArray withDeviceId:[self.syncConfig getDeviceId] withParameters:jsonObject withContext:context];
                 [syncManager postEvent:objects withBus:[self bus]];
             }
         }
@@ -338,7 +346,7 @@ static int numberAttempts;
         {
             @throw([InvalidThreadIdException exceptionWithName:@"InvalidThreadId" reason:@"The thread id is invalid." userInfo:nil]);
         }
-    } withSyncConfig:[self syncConfig]];
+    } withContext:context];
     
     return [self.transactionManager wasSuccessful];
 }
@@ -348,6 +356,7 @@ static int numberAttempts;
  */
 - (BOOL)processSendResponse:(NSString *)threadId withJsonResponse:(NSDictionary *)jsonResponse
 {
+    NSManagedObjectContext *context = [self.syncConfig getContext];
     NSDictionary *timestamps = [jsonResponse objectForKey:@"timestamps"];
     
     [self.transactionManager doInTransaction:^{
@@ -362,7 +371,7 @@ static int numberAttempts;
             if (syncManager != nil)
             {
                 syncResponse = [jsonResponse objectForKey:responseId];
-                [syncManager processSendResponse:syncResponse];
+                [syncManager processSendResponse:syncResponse withContext:context];
             }
             else
             {
@@ -376,7 +385,7 @@ static int numberAttempts;
                         newData = [[NSArray alloc] init];
                     }
                     [newDataResponse removeObjectForKey:@"data"];
-                    NSArray *objects = [syncManager saveNewData:newData withDeviceId:[self.syncConfig getDeviceId] withParameters:newDataResponse];
+                    NSArray *objects = [syncManager saveNewData:newData withDeviceId:[self.syncConfig getDeviceId] withParameters:newDataResponse withContext:context];
                     [syncManager postEvent:objects withBus:[self bus]];
                 }
             }
@@ -391,7 +400,7 @@ static int numberAttempts;
             @throw([InvalidThreadIdException exceptionWithName:@"InvalidThreadId" reason:@"The thread id is invalid." userInfo:nil]);
         }
         
-    } withSyncConfig:[self syncConfig]];
+    } withContext:context];
     
     return [self.transactionManager wasSuccessful];
 }
@@ -477,7 +486,7 @@ static int numberAttempts;
             double waitTimeSeconds = 0.5 * (pow(2, numberAttempts) - 1);
             waitTimeSeconds += drand48();
             [NSThread sleepForTimeInterval:waitTimeSeconds];
-            return [self fullSynchronousSync];
+            return [self runSynchronousSync:identifier];
         }
         else
         {
@@ -548,6 +557,7 @@ static int numberAttempts;
 - (void)partialAsynchronousSync:(NSString *)identifier withParameters:(NSDictionary *)parameters
 {
     NSNumber *flag = [self.partialSyncFlag objectForKey:identifier];
+    
     if (flag == nil || ![flag boolValue] || (parameters == nil && _isRunningSync))
     {
         BOOL sendModified = parameters == nil;
@@ -564,9 +574,11 @@ static int numberAttempts;
  */
 - (BOOL)hasModifiedData
 {
+    NSManagedObjectContext *context = [self.syncConfig getContext];
+    
     for (id<SyncManager> syncManager in [self.syncConfig getSyncManagers])
     {
-        if ([syncManager hasModifiedData])
+        if ([syncManager hasModifiedDataWithContext:context])
         {
             return YES;
         }

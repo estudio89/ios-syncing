@@ -20,32 +20,32 @@
     return NO;
 }
 
-- (NSMutableArray *)getModifiedData
+- (NSMutableArray *)getModifiedDataWithContext:(NSManagedObjectContext *)context
 {
     return [[NSMutableArray alloc] init];
 }
 
-- (BOOL)hasModifiedData
+- (BOOL)hasModifiedDataWithContext:(NSManagedObjectContext *)context
 {
     return NO;
 }
 
-- (NSMutableArray *)getModifiedFiles
+- (NSMutableArray *)getModifiedFilesWithContext:(NSManagedObjectContext *)context
 {
     return [[NSMutableArray alloc] init];
 }
 
-- (NSMutableArray *)getModifiedFilesForObject:(NSDictionary *)object
+- (NSMutableArray *)getModifiedFilesForObject:(NSDictionary *)object withContext:(NSManagedObjectContext *)context
 {
     return [[NSMutableArray alloc] init];
 }
 
-- (NSMutableArray *)saveNewData:(NSArray *)jsonObjects withDeviceId:(NSString *)deviceId withParameters:(NSDictionary *)responseParameters
+- (NSMutableArray *)saveNewData:(NSArray *)jsonObjects withDeviceId:(NSString *)deviceId withParameters:(NSDictionary *)responseParameters withContext:(NSManagedObjectContext *)context
 {
     NSMutableArray * newObjects = [[NSMutableArray alloc] init];
     for (NSDictionary *objectJSON in jsonObjects)
     {
-        [newObjects addObject:[self saveObject:objectJSON withDeviceId:deviceId]];
+        [newObjects addObject:[self saveObject:objectJSON withDeviceId:deviceId withContext:context]];
     }
     
     return newObjects;
@@ -55,7 +55,7 @@
 {
 }
 
-- (void)processSendResponse:(NSArray *)jsonResponse
+- (void)processSendResponse:(NSArray *)jsonResponse withContext:(NSManagedObjectContext *)context
 {
 }
 

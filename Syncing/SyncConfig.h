@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 #import "SyncManager.h"
-#import "DatabaseProvider.h"
 
 @interface SyncConfig : NSObject
 
 + (SyncConfig *)getInstance;
-- (instancetype)initWithBus:(AsyncBus *)bus;
+- (instancetype)initWithBus:(AsyncBus *)bus withPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)persistentStoreCoordinator;
 - (void)showLoginIfNeeded:(UIViewController *)initialVC;
 - (void)showLoginIfNeeded:(UIViewController *)initialVC withSegueID:(NSString *)segueID;
 - (BOOL)userIsLoggedIn;
@@ -30,7 +30,6 @@
 - (NSString *)getSendDataUrl;
 - (id<SyncManager>)getSyncManager:(NSString *)identifier;
 - (id<SyncManager>)getSyncManagerByResponseId:(NSString *)responseId;
-- (DatabaseProvider *)getDatabase;
 - (void)setTimestamps:(NSDictionary *)timestamps;
 - (void)setConfigFile:(NSString *)filename;
 - (void)setAuthToken:(NSString *)authToken;
@@ -40,6 +39,7 @@
 - (BOOL)isEncryptionActive;
 - (NSString *)getEncryptionPassword;
 - (void)requestSync;
+- (NSManagedObjectContext *)getContext;
 
 @end
 

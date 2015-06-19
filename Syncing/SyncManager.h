@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 #import "AsyncBus.h"
 
 @protocol SyncManager <NSObject>
@@ -14,14 +15,14 @@
 - (NSString *)getIdentifier;
 - (NSString *)getResponseIdentifier;
 - (BOOL)shouldSendSingleObject;
-- (NSMutableArray *)getModifiedData;
-- (BOOL)hasModifiedData;
-- (NSMutableArray *)getModifiedFiles;
-- (NSMutableArray *)getModifiedFilesForObject:(NSDictionary *)object;
-- (NSMutableArray *)saveNewData:(NSArray *)jsonObjects withDeviceId:(NSString *)deviceId withParameters:(NSDictionary *)responseParameters;
-- (void)processSendResponse:(NSArray *)jsonResponse;
+- (NSMutableArray *)getModifiedDataWithContext:(NSManagedObjectContext *)context;
+- (BOOL)hasModifiedDataWithContext:(NSManagedObjectContext *)context;
+- (NSMutableArray *)getModifiedFilesWithContext:(NSManagedObjectContext *)context;
+- (NSMutableArray *)getModifiedFilesForObject:(NSDictionary *)object withContext:(NSManagedObjectContext *)context;
+- (NSMutableArray *)saveNewData:(NSArray *)jsonObjects withDeviceId:(NSString *)deviceId withParameters:(NSDictionary *)responseParameters withContext:(NSManagedObjectContext *)context;
+- (void)processSendResponse:(NSArray *)jsonResponse withContext:(NSManagedObjectContext *)context;
 - (NSDictionary *)serializeObject:(NSObject *)object;
-- (id)saveObject:(NSDictionary *)object withDeviceId:(NSString *)deviceId;
+- (id)saveObject:(NSDictionary *)object withDeviceId:(NSString *)deviceId withContext:(NSManagedObjectContext *)context;
 - (void)postEvent:(NSArray *)objects withBus:(AsyncBus *)bus;
 - (NSString *)getNotificationName;
 

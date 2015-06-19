@@ -7,7 +7,6 @@
 //
 
 #import "CustomTransactionManager.h"
-#import "DatabaseProvider.h"
 #import "CustomException.h"
 
 @interface CustomTransactionManager()
@@ -34,23 +33,21 @@
 /**
  * doInTransaction
  */
-- (void)doInTransaction:(void(^)(void))manipulateInTransaction withSyncConfig:(SyncConfig *)syncConfig
+- (void)doInTransaction:(void(^)(void))manipulateInTransaction withContext:(NSManagedObjectContext *)context
 {
-    DatabaseProvider *dbProvider = [syncConfig getDatabase];
-    
     @try
     {
         manipulateInTransaction();
-        [dbProvider saveTransaction];
+        [context save:nil];
         self.isSuccessful = YES;
     }
     @catch (InvalidThreadIdException *exception)
     {
-        [dbProvider rollbackTransaction];
+        [context rollback];
     }
     @catch (NSException *exception)
     {
-        [dbProvider rollbackTransaction];
+        [context rollback];
         @throw exception;
     }
 }

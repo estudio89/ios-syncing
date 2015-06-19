@@ -9,6 +9,7 @@
 #import "SyncConfig.h"
 #import "SyncingInjection.h"
 #import "DataSyncHelper.h"
+#import "DatabaseProvider.h"
 
 @interface SyncConfig()
 
@@ -22,6 +23,7 @@
 @property (nonatomic, strong, readwrite) NSMutableDictionary *mModelGetDataUrls;
 @property (nonatomic, strong, readwrite) NSString *mEncryptionPassword;
 @property BOOL mEncryptionActive;
+@property (nonatomic, strong, readwrite) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 @end
 
@@ -40,11 +42,12 @@ static NSString *loginActivity;
 /**
  * initWithBus
  */
-- (instancetype)initWithBus:(AsyncBus *)bus;
+- (instancetype)initWithBus:(AsyncBus *)bus withPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)persistentStoreCoordinator
 {
     if (self = [super init])
     {
         _bus = bus;
+        _persistentStoreCoordinator = persistentStoreCoordinator;
         _syncManagersByIdentifier = [[NSMutableDictionary alloc] init];
         _syncManagersByResponseIdentifier = [[NSMutableDictionary alloc] init];
         _mModelGetDataUrls = [[NSMutableDictionary alloc] init];
@@ -140,8 +143,7 @@ static NSString *loginActivity;
 {
     [self eraseSyncPreferences];
     [[DataSyncHelper getInstance] stopSyncThreads];
-    DatabaseProvider *dp = [self getDatabase];
-    [dp flushDatabase];
+    [DatabaseProvider flushDatabase];
     [_bus post:[[UserLoggedOutEvent alloc] init] withNotificationName:@"UserLoggedOutEvent"];
     NSLog(@"UserLoggedOutEvent event was posted.");
 }
@@ -365,14 +367,6 @@ static NSString *loginActivity;
 }
 
 /**
- * getDatabase
- */
-- (DatabaseProvider *)getDatabase
-{
-    return [[DatabaseProvider alloc] init];
-}
-
-/**
  * getEncryptionPassword
  */
 - (NSString *)getEncryptionPassword
@@ -395,6 +389,17 @@ static NSString *loginActivity;
 {
     // Should put a sync request in a queue.
     // When a connection is available (Reachability), the sync must be executed.
+}
+
+/**
+ * getContext
+ */
+- (NSManagedObjectContext *)getContext
+{
+    NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] init];
+    [managedObjectContext setPersistentStoreCoordinator:_persistentStoreCoordinator];
+    
+    return managedObjectContext;
 }
 
 @end

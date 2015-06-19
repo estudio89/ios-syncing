@@ -13,17 +13,19 @@
 
 static NSMutableDictionary *objects;
 
-+ (void)initWithContext:(NSManagedObjectContext *)context
-         withConfigFile:(NSString *)fileName
++ (void)initWithPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)persistentStoreCoordinator
+                            withConfigFile:(NSString *)fileName
 {
-    [self initWithContext:context withConfigFile:fileName withInitialSync:YES];
+    [self initWithPersistentStoreCoordinator:persistentStoreCoordinator
+                              withConfigFile:fileName
+                             withInitialSync:YES];
 }
 
-+ (void)initWithContext:(NSManagedObjectContext *)context
-         withConfigFile:(NSString *)fileName
-        withInitialSync:(BOOL)initialSync
++ (void)initWithPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)persistentStoreCoordinator
+                            withConfigFile:(NSString *)fileName
+                           withInitialSync:(BOOL)initialSync
 {
-    [self executeInjectionWithContext:context];
+    [self executeInjectionWithPersistentStoreCoordinator:persistentStoreCoordinator];
     
     SyncConfig *syncConfig = [self get:[SyncConfig class]];
     [syncConfig setConfigFile:fileName];
@@ -34,10 +36,11 @@ static NSMutableDictionary *objects;
     }
 }
 
-+ (void)executeInjectionWithContext:(NSManagedObjectContext *)context;
++ (void)executeInjectionWithPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)persistentStoreCoordinator
 {
     AsyncBus *asyncBus = [[AsyncBus alloc] init];
-    SyncConfig *syncConfig = [[SyncConfig alloc] initWithBus:asyncBus];
+    SyncConfig *syncConfig = [[SyncConfig alloc] initWithBus:asyncBus
+                              withPersistentStoreCoordinator:persistentStoreCoordinator];
     CustomTransactionManager *customTransactionManager = [[CustomTransactionManager alloc] init];
     ThreadChecker *threadChecker = [[ThreadChecker alloc] init];
     SecurityUtil *securityUtil = [[SecurityUtil alloc] initWithSyncConfig:syncConfig];
@@ -47,15 +50,14 @@ static NSMutableDictionary *objects;
                                                           withThreadChecker:threadChecker
                                                              withSyncConfig:syncConfig
                                                      withTransactionManager:customTransactionManager
-                                                                    withBus:asyncBus
-                                                                withContext:context];
+                                                                    withBus:asyncBus];
     
     ServerAuthenticate *serverAuthenticate = [[ServerAuthenticate alloc] initWithServerComm:serverComm
                                                                              withSyncCOnfig:syncConfig
                                                                                withAsyncBus:asyncBus];
     
     objects = [[NSMutableDictionary alloc] init];
-    [objects setObject:context forKey:NSStringFromClass([context class])];
+    [objects setObject:persistentStoreCoordinator forKey:NSStringFromClass([persistentStoreCoordinator class])];
     [objects setObject:asyncBus forKey:NSStringFromClass([asyncBus class])];
     [objects setObject:syncConfig forKey:NSStringFromClass([syncConfig class])];
     [objects setObject:customTransactionManager forKey:NSStringFromClass([customTransactionManager class])];

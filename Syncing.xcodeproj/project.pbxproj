@@ -46,7 +46,6 @@
 		7B42B6541AB8A8D200F02528 /* CustomTransactionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B3DDCA51A9DFB9900966A5B /* CustomTransactionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7B42B6551AB8A8D200F02528 /* AsyncBus.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BB63C761A9F977C00C0124C /* AsyncBus.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7B42B6561AB8A8D200F02528 /* DatabaseProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BB59EC31AA0ACD700783657 /* DatabaseProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7B42B6571AB8A8D200F02528 /* SharedModelContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BE19A251AA0B92600E169EF /* SharedModelContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7B42B6581AB8A8D200F02528 /* CustomException.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B3D13911AA0E68B0022525A /* CustomException.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7B42B6591AB8A8D200F02528 /* AbstractLoginActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BD43C4D1AB1C65C00C58368 /* AbstractLoginActivity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7B42B65A1AB8A8D200F02528 /* ServerAuthenticate.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BD43C501AB20E8200C58368 /* ServerAuthenticate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -81,7 +80,6 @@
 		7BD7E7421B15F07D00FC984C /* SecurityUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD7E7401B15F07D00FC984C /* SecurityUtil.m */; };
 		7BD7E7441B1613A800FC984C /* libPods-Syncing-Raven.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD7E7431B1613A800FC984C /* libPods-Syncing-Raven.a */; };
 		7BD7E7461B1613AB00FC984C /* libPods-Syncing-RNCryptor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD7E7451B1613AB00FC984C /* libPods-Syncing-RNCryptor.a */; };
-		7BE19A271AA0B92600E169EF /* SharedModelContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE19A261AA0B92600E169EF /* SharedModelContext.m */; };
 		7BF770AC1AA4A4C2007BCAD6 /* Syncing_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF770AB1AA4A4C2007BCAD6 /* Syncing_Tests.m */; };
 		7BF770AD1AA4A4C2007BCAD6 /* libSyncing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BADD11D1A8BD82B0005FC5E /* libSyncing.a */; };
 		97C3760E6309FFF06658366D /* libPods-Syncing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8274EA1BBEBBDAEADFFED2F8 /* libPods-Syncing.a */; };
@@ -170,8 +168,6 @@
 		7BD7E7401B15F07D00FC984C /* SecurityUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityUtil.m; sourceTree = "<group>"; };
 		7BD7E7431B1613A800FC984C /* libPods-Syncing-Raven.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing-Raven.a"; path = "Pods/../build/Debug-iphoneos/libPods-Syncing-Raven.a"; sourceTree = "<group>"; };
 		7BD7E7451B1613AB00FC984C /* libPods-Syncing-RNCryptor.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing-RNCryptor.a"; path = "Pods/../build/Debug-iphoneos/libPods-Syncing-RNCryptor.a"; sourceTree = "<group>"; };
-		7BE19A251AA0B92600E169EF /* SharedModelContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedModelContext.h; sourceTree = "<group>"; };
-		7BE19A261AA0B92600E169EF /* SharedModelContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedModelContext.m; sourceTree = "<group>"; };
 		7BF770A71AA4A4C2007BCAD6 /* Syncing Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Syncing Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BF770AA1AA4A4C2007BCAD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7BF770AB1AA4A4C2007BCAD6 /* Syncing_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Syncing_Tests.m; sourceTree = "<group>"; };
@@ -259,37 +255,35 @@
 		7BADD11F1A8BD82B0005FC5E /* Syncing */ = {
 			isa = PBXGroup;
 			children = (
-				7BADD1201A8BD82B0005FC5E /* Syncing.h */,
-				7BADD13A1A8BDABF0005FC5E /* ThreadChecker.h */,
-				7BADD13B1A8BDABF0005FC5E /* ThreadChecker.m */,
-				7B5F22081A8D2FC80031E2F2 /* SyncManager.h */,
-				7B5F22091A8D35880031E2F2 /* SyncEvent.h */,
-				7B5F220A1A8D3AC50031E2F2 /* ServerComm.h */,
-				7B5F220B1A8D3AC50031E2F2 /* ServerComm.m */,
-				7BAEDBBA1A97B69E0078AEA9 /* DataSyncHelper.h */,
-				7BAEDBBB1A97B69E0078AEA9 /* DataSyncHelper.m */,
-				7B27BFBA1A9A7F1000C7548E /* SyncConfig.h */,
-				7B27BFBB1A9A7F1000C7548E /* SyncConfig.m */,
-				7B3DDCA51A9DFB9900966A5B /* CustomTransactionManager.h */,
-				7B3DDCA61A9DFB9900966A5B /* CustomTransactionManager.m */,
-				7BB63C761A9F977C00C0124C /* AsyncBus.h */,
-				7BB63C771A9F977C00C0124C /* AsyncBus.m */,
-				7BB59EC31AA0ACD700783657 /* DatabaseProvider.h */,
-				7BB59EC41AA0ACD700783657 /* DatabaseProvider.m */,
-				7BE19A251AA0B92600E169EF /* SharedModelContext.h */,
-				7BE19A261AA0B92600E169EF /* SharedModelContext.m */,
-				7B3D13911AA0E68B0022525A /* CustomException.h */,
-				7B3D13921AA0E68B0022525A /* CustomException.m */,
 				7BD43C4D1AB1C65C00C58368 /* AbstractLoginActivity.h */,
 				7BD43C4E1AB1C65C00C58368 /* AbstractLoginActivity.m */,
-				7BD43C501AB20E8200C58368 /* ServerAuthenticate.h */,
-				7BD43C511AB20E8200C58368 /* ServerAuthenticate.m */,
-				7BCCF7501AF826C6007F6B09 /* SyncingInjection.h */,
-				7BCCF7511AF826C6007F6B09 /* SyncingInjection.m */,
+				7BB63C761A9F977C00C0124C /* AsyncBus.h */,
+				7BB63C771A9F977C00C0124C /* AsyncBus.m */,
+				7B3D13911AA0E68B0022525A /* CustomException.h */,
+				7B3D13921AA0E68B0022525A /* CustomException.m */,
+				7B3DDCA51A9DFB9900966A5B /* CustomTransactionManager.h */,
+				7B3DDCA61A9DFB9900966A5B /* CustomTransactionManager.m */,
+				7BB59EC31AA0ACD700783657 /* DatabaseProvider.h */,
+				7BB59EC41AA0ACD700783657 /* DatabaseProvider.m */,
+				7BAEDBBA1A97B69E0078AEA9 /* DataSyncHelper.h */,
+				7BAEDBBB1A97B69E0078AEA9 /* DataSyncHelper.m */,
 				7BBE8F5F1AFA3C8500155AC4 /* ReadOnlyAbstractSyncManager.h */,
 				7BBE8F601AFA3C8500155AC4 /* ReadOnlyAbstractSyncManager.m */,
 				7BD7E73F1B15F07D00FC984C /* SecurityUtil.h */,
 				7BD7E7401B15F07D00FC984C /* SecurityUtil.m */,
+				7BD43C501AB20E8200C58368 /* ServerAuthenticate.h */,
+				7BD43C511AB20E8200C58368 /* ServerAuthenticate.m */,
+				7B5F220A1A8D3AC50031E2F2 /* ServerComm.h */,
+				7B5F220B1A8D3AC50031E2F2 /* ServerComm.m */,
+				7B27BFBA1A9A7F1000C7548E /* SyncConfig.h */,
+				7B27BFBB1A9A7F1000C7548E /* SyncConfig.m */,
+				7B5F22091A8D35880031E2F2 /* SyncEvent.h */,
+				7BADD1201A8BD82B0005FC5E /* Syncing.h */,
+				7BCCF7501AF826C6007F6B09 /* SyncingInjection.h */,
+				7BCCF7511AF826C6007F6B09 /* SyncingInjection.m */,
+				7B5F22081A8D2FC80031E2F2 /* SyncManager.h */,
+				7BADD13A1A8BDABF0005FC5E /* ThreadChecker.h */,
+				7BADD13B1A8BDABF0005FC5E /* ThreadChecker.m */,
 			);
 			path = Syncing;
 			sourceTree = "<group>";
@@ -297,14 +291,14 @@
 		7BF770A81AA4A4C2007BCAD6 /* Syncing Tests */ = {
 			isa = PBXGroup;
 			children = (
-				7BAF980A1B1CA4BD00FDE4AA /* SecuryUtilTests.m */,
-				7B82A2C21AB3741900636503 /* ServerAuthenticateTests.m */,
 				7B1321C91AAF7CE200EAB1AF /* DataSyncHelperPartialTests.m */,
 				7B2E8A4A1AADD7180069DF31 /* DataSyncHelperTests.m */,
+				7BAF980A1B1CA4BD00FDE4AA /* SecuryUtilTests.m */,
+				7B82A2C21AB3741900636503 /* ServerAuthenticateTests.m */,
 				7B63D8C61AA8CF78005D781A /* ServerCommTests.m */,
+				7BF770A91AA4A4C2007BCAD6 /* Supporting Files */,
 				7B63D8C41AA8CF0C005D781A /* SyncConfigTests.m */,
 				7BF770AB1AA4A4C2007BCAD6 /* Syncing_Tests.m */,
-				7BF770A91AA4A4C2007BCAD6 /* Supporting Files */,
 				7B1F594A1AA7B1DD00EDCC38 /* TestSyncManager.h */,
 				7B1F594B1AA7B1DD00EDCC38 /* TestSyncManager.m */,
 			);
@@ -352,7 +346,6 @@
 				7B42B64F1AB8A8D200F02528 /* ThreadChecker.h in Headers */,
 				7B42B6541AB8A8D200F02528 /* CustomTransactionManager.h in Headers */,
 				7B42B6561AB8A8D200F02528 /* DatabaseProvider.h in Headers */,
-				7B42B6571AB8A8D200F02528 /* SharedModelContext.h in Headers */,
 				7B42B6581AB8A8D200F02528 /* CustomException.h in Headers */,
 				7BCCF7521AF826C6007F6B09 /* SyncingInjection.h in Headers */,
 				7BBE8F611AFA3C8500155AC4 /* ReadOnlyAbstractSyncManager.h in Headers */,
@@ -572,7 +565,6 @@
 				7BBE8F621AFA3C8500155AC4 /* ReadOnlyAbstractSyncManager.m in Sources */,
 				7B3DDCA71A9DFB9900966A5B /* CustomTransactionManager.m in Sources */,
 				7BB59EC51AA0ACD700783657 /* DatabaseProvider.m in Sources */,
-				7BE19A271AA0B92600E169EF /* SharedModelContext.m in Sources */,
 				7BB63C781A9F977C00C0124C /* AsyncBus.m in Sources */,
 				7B27BFBC1A9A7F1000C7548E /* SyncConfig.m in Sources */,
 				7BAEDBBC1A97B69E0078AEA9 /* DataSyncHelper.m in Sources */,
