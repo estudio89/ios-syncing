@@ -49,7 +49,6 @@
 		7B42B6581AB8A8D200F02528 /* CustomException.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B3D13911AA0E68B0022525A /* CustomException.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7B42B6591AB8A8D200F02528 /* AbstractLoginActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BD43C4D1AB1C65C00C58368 /* AbstractLoginActivity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7B42B65A1AB8A8D200F02528 /* ServerAuthenticate.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BD43C501AB20E8200C58368 /* ServerAuthenticate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7B42B65D1AB8AB4F00F02528 /* SyncEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B5F22091A8D35880031E2F2 /* SyncEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7B5F220C1A8D3AC50031E2F2 /* ServerComm.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5F220B1A8D3AC50031E2F2 /* ServerComm.m */; };
 		7B63D8C51AA8CF0C005D781A /* SyncConfigTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B63D8C41AA8CF0C005D781A /* SyncConfigTests.m */; };
 		7B63D8C71AA8CF78005D781A /* ServerCommTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B63D8C61AA8CF78005D781A /* ServerCommTests.m */; };
@@ -71,6 +70,8 @@
 		7BC4B2CF1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC4B2CE1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a */; };
 		7BCCF7521AF826C6007F6B09 /* SyncingInjection.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BCCF7501AF826C6007F6B09 /* SyncingInjection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7BCCF7531AF826C6007F6B09 /* SyncingInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BCCF7511AF826C6007F6B09 /* SyncingInjection.m */; };
+		7BCFBE2D1B3705A000AC1553 /* SyncEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BCFBE2B1B3705A000AC1553 /* SyncEvent.h */; };
+		7BCFBE2E1B3705A000AC1553 /* SyncEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BCFBE2C1B3705A000AC1553 /* SyncEvent.m */; };
 		7BD43C4F1AB1C65C00C58368 /* AbstractLoginActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD43C4E1AB1C65C00C58368 /* AbstractLoginActivity.m */; };
 		7BD43C521AB20E8200C58368 /* ServerAuthenticate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD43C511AB20E8200C58368 /* ServerAuthenticate.m */; };
 		7BD4BADB1AAE19EE00194BFB /* get-data-request.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BD4BADA1AAE19EE00194BFB /* get-data-request.json */; };
@@ -126,7 +127,6 @@
 		7B3DDCA51A9DFB9900966A5B /* CustomTransactionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTransactionManager.h; sourceTree = "<group>"; };
 		7B3DDCA61A9DFB9900966A5B /* CustomTransactionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTransactionManager.m; sourceTree = "<group>"; };
 		7B5F22081A8D2FC80031E2F2 /* SyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncManager.h; sourceTree = "<group>"; };
-		7B5F22091A8D35880031E2F2 /* SyncEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncEvent.h; sourceTree = "<group>"; };
 		7B5F220A1A8D3AC50031E2F2 /* ServerComm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerComm.h; sourceTree = "<group>"; };
 		7B5F220B1A8D3AC50031E2F2 /* ServerComm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerComm.m; sourceTree = "<group>"; };
 		7B63D8C41AA8CF0C005D781A /* SyncConfigTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncConfigTests.m; sourceTree = "<group>"; };
@@ -156,6 +156,8 @@
 		7BC4B2D01AAA3643000F30AE /* libPods-Syncing Tests-OCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OCMock.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OCMock.a"; sourceTree = "<group>"; };
 		7BCCF7501AF826C6007F6B09 /* SyncingInjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncingInjection.h; sourceTree = "<group>"; };
 		7BCCF7511AF826C6007F6B09 /* SyncingInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncingInjection.m; sourceTree = "<group>"; };
+		7BCFBE2B1B3705A000AC1553 /* SyncEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncEvent.h; sourceTree = "<group>"; };
+		7BCFBE2C1B3705A000AC1553 /* SyncEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncEvent.m; sourceTree = "<group>"; };
 		7BD43C4D1AB1C65C00C58368 /* AbstractLoginActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractLoginActivity.h; sourceTree = "<group>"; };
 		7BD43C4E1AB1C65C00C58368 /* AbstractLoginActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractLoginActivity.m; sourceTree = "<group>"; };
 		7BD43C501AB20E8200C58368 /* ServerAuthenticate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerAuthenticate.h; sourceTree = "<group>"; };
@@ -277,13 +279,14 @@
 				7B5F220B1A8D3AC50031E2F2 /* ServerComm.m */,
 				7B27BFBA1A9A7F1000C7548E /* SyncConfig.h */,
 				7B27BFBB1A9A7F1000C7548E /* SyncConfig.m */,
-				7B5F22091A8D35880031E2F2 /* SyncEvent.h */,
 				7BADD1201A8BD82B0005FC5E /* Syncing.h */,
 				7BCCF7501AF826C6007F6B09 /* SyncingInjection.h */,
 				7BCCF7511AF826C6007F6B09 /* SyncingInjection.m */,
 				7B5F22081A8D2FC80031E2F2 /* SyncManager.h */,
 				7BADD13A1A8BDABF0005FC5E /* ThreadChecker.h */,
 				7BADD13B1A8BDABF0005FC5E /* ThreadChecker.m */,
+				7BCFBE2B1B3705A000AC1553 /* SyncEvent.h */,
+				7BCFBE2C1B3705A000AC1553 /* SyncEvent.m */,
 			);
 			path = Syncing;
 			sourceTree = "<group>";
@@ -335,10 +338,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BCFBE2D1B3705A000AC1553 /* SyncEvent.h in Headers */,
 				7B7A1FB41AB899E30089A9FC /* Syncing.h in Headers */,
 				7B42B6501AB8A8D200F02528 /* SyncManager.h in Headers */,
 				7B42B6511AB8A8D200F02528 /* ServerComm.h in Headers */,
-				7B42B65D1AB8AB4F00F02528 /* SyncEvent.h in Headers */,
 				7B42B6591AB8A8D200F02528 /* AbstractLoginActivity.h in Headers */,
 				7B42B6531AB8A8D200F02528 /* SyncConfig.h in Headers */,
 				7B42B6551AB8A8D200F02528 /* AsyncBus.h in Headers */,
@@ -556,6 +559,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BD43C4F1AB1C65C00C58368 /* AbstractLoginActivity.m in Sources */,
+				7BCFBE2E1B3705A000AC1553 /* SyncEvent.m in Sources */,
 				7BD43C521AB20E8200C58368 /* ServerAuthenticate.m in Sources */,
 				7B3D13931AA0E68B0022525A /* CustomException.m in Sources */,
 				7BD7E7421B15F07D00FC984C /* SecurityUtil.m in Sources */,
