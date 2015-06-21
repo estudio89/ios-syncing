@@ -70,7 +70,7 @@
 		7BC4B2CF1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BC4B2CE1AAA3620000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a */; };
 		7BCCF7521AF826C6007F6B09 /* SyncingInjection.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BCCF7501AF826C6007F6B09 /* SyncingInjection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7BCCF7531AF826C6007F6B09 /* SyncingInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BCCF7511AF826C6007F6B09 /* SyncingInjection.m */; };
-		7BCFBE2D1B3705A000AC1553 /* SyncEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BCFBE2B1B3705A000AC1553 /* SyncEvent.h */; };
+		7BCFBE2D1B3705A000AC1553 /* SyncEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BCFBE2B1B3705A000AC1553 /* SyncEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7BCFBE2E1B3705A000AC1553 /* SyncEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BCFBE2C1B3705A000AC1553 /* SyncEvent.m */; };
 		7BD43C4F1AB1C65C00C58368 /* AbstractLoginActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD43C4E1AB1C65C00C58368 /* AbstractLoginActivity.m */; };
 		7BD43C521AB20E8200C58368 /* ServerAuthenticate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD43C511AB20E8200C58368 /* ServerAuthenticate.m */; };
@@ -338,7 +338,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7BCFBE2D1B3705A000AC1553 /* SyncEvent.h in Headers */,
 				7B7A1FB41AB899E30089A9FC /* Syncing.h in Headers */,
 				7B42B6501AB8A8D200F02528 /* SyncManager.h in Headers */,
 				7B42B6511AB8A8D200F02528 /* ServerComm.h in Headers */,
@@ -353,6 +352,7 @@
 				7BCCF7521AF826C6007F6B09 /* SyncingInjection.h in Headers */,
 				7BBE8F611AFA3C8500155AC4 /* ReadOnlyAbstractSyncManager.h in Headers */,
 				7BD7E7411B15F07D00FC984C /* SecurityUtil.h in Headers */,
+				7BCFBE2D1B3705A000AC1553 /* SyncEvent.h in Headers */,
 				7B42B65A1AB8A8D200F02528 /* ServerAuthenticate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

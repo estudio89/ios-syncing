@@ -31,6 +31,7 @@
 - (BOOL)fullSynchronousSync;
 - (void)partialAsynchronousSync:(NSString *)identifier;
 - (void)partialAsynchronousSync:(NSString *)identifier withParameters:(NSDictionary *)parameters;
+- (BOOL)partialSynchronousSync:(NSString *)identifier;
 - (void)stopSyncThreads;
 
 // Exposed for tests

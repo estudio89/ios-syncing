@@ -46,14 +46,14 @@
 
     // Registros
     OCMStub([_syncManagerRegistros getIdentifier]).andReturn(@"registros");
-    OCMStub([_syncManagerRegistros saveNewData:[OCMArg any] withDeviceId:[OCMArg any] withParameters:[OCMArg any]]).andReturn([[NSMutableArray alloc] init]);
+    OCMStub([_syncManagerRegistros saveNewData:[OCMArg any] withDeviceId:[OCMArg any] withParameters:[OCMArg any] withContext:[OCMArg any]]).andReturn([[NSMutableArray alloc] init]);
 
     NSString *regFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/modified-data-registros.json";
     NSString *jsonStrRegs = [[NSString alloc] initWithContentsOfFile:regFile encoding:NSUTF8StringEncoding error:nil];
     NSData *dataRegs = [jsonStrRegs dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     NSMutableArray *registrosModified = [NSJSONSerialization JSONObjectWithData:dataRegs options:kNilOptions error:nil];
 
-    OCMStub([_syncManagerRegistros getModifiedData]).andReturn(registrosModified);
+    OCMStub([_syncManagerRegistros getModifiedDataWithContext:[OCMArg any]]).andReturn(registrosModified);
     OCMStub([_syncManagerRegistros shouldSendSingleObject]).andReturn(NO);
 
     _modifiedFiles = [[NSMutableArray alloc] init];
@@ -61,41 +61,40 @@
     [_modifiedFiles addObject:@"imagem2.jpg"];
     [_modifiedFiles addObject:@"imagem3.jpg"];
 
-    OCMStub([_syncManagerRegistros getModifiedFiles]).andReturn(_modifiedFiles);
+    OCMStub([_syncManagerRegistros getModifiedFilesWithContext:[OCMArg any]]).andReturn(_modifiedFiles);
     OCMStub([_syncManagerRegistros getResponseIdentifier]).andReturn(@"registros_id");
-    OCMStub([_syncManagerRegistros getModifiedFilesForObject:[OCMArg any]]).andReturn(_modifiedFiles);
-    OCMStub([_syncManagerRegistros hasModifiedData]).andReturn(YES);
+    OCMStub([_syncManagerRegistros getModifiedFilesForObject:[OCMArg any] withContext:[OCMArg any]]).andReturn(_modifiedFiles);
+    OCMStub([_syncManagerRegistros hasModifiedDataWithContext:[OCMArg any]]).andReturn(YES);
 
     // Empresas
     OCMStub([_syncManagerEmpresas getIdentifier]).andReturn(@"empresas");
-    OCMStub([_syncManagerEmpresas saveNewData:[OCMArg any] withDeviceId:[OCMArg any] withParameters:[OCMArg any]]).andReturn([[NSMutableArray alloc] init]);
+    OCMStub([_syncManagerEmpresas saveNewData:[OCMArg any] withDeviceId:[OCMArg any] withParameters:[OCMArg any] withContext:[OCMArg any]]).andReturn([[NSMutableArray alloc] init]);
 
     NSString *empFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/modified-data-empresas.json";
     NSString *jsonStrEmps = [[NSString alloc] initWithContentsOfFile:empFile encoding:NSUTF8StringEncoding error:nil];
     NSData *dataEmps = [jsonStrEmps dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     NSMutableArray *empresasModified = [NSJSONSerialization JSONObjectWithData:dataEmps options:kNilOptions error:nil];
 
-    OCMStub([_syncManagerEmpresas getModifiedData]).andReturn(empresasModified);
+    OCMStub([_syncManagerEmpresas getModifiedDataWithContext:[OCMArg any]]).andReturn(empresasModified);
     OCMStub([_syncManagerEmpresas shouldSendSingleObject]).andReturn(NO);
-    OCMStub([_syncManagerEmpresas getModifiedFiles]).andReturn([[NSMutableArray alloc] init]);
+    OCMStub([_syncManagerEmpresas getModifiedFilesWithContext:[OCMArg any]]).andReturn([[NSMutableArray alloc] init]);
     OCMStub([_syncManagerEmpresas getResponseIdentifier]).andReturn(@"empresas_id");
-    OCMStub([_syncManagerEmpresas hasModifiedData]).andReturn(YES);
+    OCMStub([_syncManagerEmpresas hasModifiedDataWithContext:[OCMArg any]]).andReturn(YES);
 
     // Formularios
     OCMStub([_syncManagerFormularios getIdentifier]).andReturn(@"formularios");
-    OCMStub([_syncManagerFormularios saveNewData:[OCMArg any] withDeviceId:[OCMArg any] withParameters:[OCMArg any]]).andReturn([[NSMutableArray alloc] init]);
-    OCMStub([_syncManagerFormularios getModifiedData]).andReturn([[NSMutableArray alloc] init]);
+    OCMStub([_syncManagerFormularios saveNewData:[OCMArg any] withDeviceId:[OCMArg any] withParameters:[OCMArg any] withContext:[OCMArg any]]).andReturn([[NSMutableArray alloc] init]);
+    OCMStub([_syncManagerFormularios getModifiedDataWithContext:[OCMArg any]]).andReturn([[NSMutableArray alloc] init]);
     OCMStub([_syncManagerFormularios shouldSendSingleObject]).andReturn(NO);
-    OCMStub([_syncManagerFormularios getModifiedFiles]).andReturn([[NSMutableArray alloc] init]);
+    OCMStub([_syncManagerFormularios getModifiedFilesWithContext:[OCMArg any]]).andReturn([[NSMutableArray alloc] init]);
     OCMStub([_syncManagerFormularios getResponseIdentifier]).andReturn(@"formularios_id");
-    OCMStub([_syncManagerFormularios hasModifiedData]).andReturn(NO);
+    OCMStub([_syncManagerFormularios hasModifiedDataWithContext:[OCMArg any]]).andReturn(NO);
      
     // SyncConfig
     _syncConfig = OCMClassMock([SyncConfig class]);
     _database = OCMClassMock([DatabaseProvider class]);
     OCMStub([_syncConfig getAuthToken]).andReturn(@"123");
     OCMStub([_syncConfig getTimestamps]).andReturn(@"666");
-    OCMStub([_syncConfig getDatabase]).andReturn(_database);
     OCMStub([_syncConfig getGetDataUrl]).andReturn(@"http://127.0.0.1:8000/api/get-data/");
     OCMStub([_syncConfig getSendDataUrl]).andReturn(@"http://127.0.0.1:8000/api/send-data/");
     OCMStub([_syncConfig getDeviceId]).andReturn(@"asdasda");
@@ -148,8 +147,7 @@
                                            withThreadChecker:_threadChecker
                                               withSyncConfig:_syncConfig
                                       withTransactionManager:_customTransactionManager
-                                                     withBus:_bus
-                                                 withContext:nil];
+                                                     withBus:_bus];
 
 }
 
