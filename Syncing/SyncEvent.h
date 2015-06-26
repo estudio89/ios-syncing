@@ -13,6 +13,7 @@
 
 @property NSArray *objectsIDs;
 - (instancetype)initWithObjects:(NSArray *)objects;
-- (NSArray *)getObjectsWithContext:(NSManagedObjectContext *)context;
+- (NSArray *)getDeletedObjectsWithContext:(NSManagedObjectContext *)context;
+- (NSArray *)getUpdatedObjectsWithContext:(NSManagedObjectContext *)context;
 
 @end

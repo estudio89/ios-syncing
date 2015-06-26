@@ -30,7 +30,17 @@
     return self;
 }
 
-- (NSArray *)getObjectsWithContext:(NSManagedObjectContext *)context
+- (NSArray *)getDeletedObjectsWithContext:(NSManagedObjectContext *)context
+{
+    return [self getObjectsWithContext:context withRefresh:NO];
+}
+
+- (NSArray *)getUpdatedObjectsWithContext:(NSManagedObjectContext *)context
+{
+    return [self getObjectsWithContext:context withRefresh:YES];
+}
+
+- (NSArray *)getObjectsWithContext:(NSManagedObjectContext *)context withRefresh:(BOOL)refresh
 {
     // Instantiate a NSManagedObject for every objectID in objectsIDs array.
     NSMutableArray *objects = [[NSMutableArray alloc] init];
@@ -39,10 +49,19 @@
     for (NSManagedObjectID *objectID in _objectsIDs)
     {
         object = [context existingObjectWithID:objectID error:nil];
-        [objects addObject:object];
+        if (object != nil)
+        {
+            if (refresh)
+            {
+                [context refreshObject:object mergeChanges:NO];
+            }
+            
+            [objects addObject:object];
+        }
     }
     
     return objects;
+    
 }
 
 @end

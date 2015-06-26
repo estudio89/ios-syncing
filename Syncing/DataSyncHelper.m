@@ -311,6 +311,7 @@ static int numberAttempts;
 - (BOOL)processGetDataResponse:(NSString *)threadId withJsonResponse:(NSDictionary *)jsonResponse withTimestamp:(NSDictionary *)timestamps
 {
     NSManagedObjectContext *context = [self.syncConfig getContext];
+    NSMutableDictionary *savedObjectsDictionary = [[NSMutableDictionary alloc] init];
     
     [self.transactionManager doInTransaction:^{
         for (id<SyncManager> syncManager in [self.syncConfig getSyncManagers])
@@ -330,7 +331,7 @@ static int numberAttempts;
                 
                 [jsonObject removeObjectForKey:@"data"];
                 NSArray *objects = [syncManager saveNewData:jsonArray withDeviceId:[self.syncConfig getDeviceId] withParameters:jsonObject withContext:context];
-                [syncManager postEvent:objects withBus:[self bus]];
+                [savedObjectsDictionary setObject:objects forKey:[syncManager getIdentifier]];
             }
         }
         
@@ -348,6 +349,11 @@ static int numberAttempts;
         }
     } withContext:context];
     
+    if ([self.transactionManager wasSuccessful])
+    {
+        [self postSyncManagerEvents:savedObjectsDictionary];
+    }
+    
     return [self.transactionManager wasSuccessful];
 }
 
@@ -358,6 +364,7 @@ static int numberAttempts;
 {
     NSManagedObjectContext *context = [self.syncConfig getContext];
     NSDictionary *timestamps = [jsonResponse objectForKey:@"timestamps"];
+    NSMutableDictionary *savedObjectsDictionary = [[NSMutableDictionary alloc] init];
     
     [self.transactionManager doInTransaction:^{
         NSArray *syncResponse;
@@ -386,7 +393,7 @@ static int numberAttempts;
                     }
                     [newDataResponse removeObjectForKey:@"data"];
                     NSArray *objects = [syncManager saveNewData:newData withDeviceId:[self.syncConfig getDeviceId] withParameters:newDataResponse withContext:context];
-                    [syncManager postEvent:objects withBus:[self bus]];
+                    [savedObjectsDictionary setObject:objects forKey:[syncManager getIdentifier]];
                 }
             }
         }
@@ -401,6 +408,11 @@ static int numberAttempts;
         }
         
     } withContext:context];
+    
+    if ([self.transactionManager wasSuccessful])
+    {
+        [self postSyncManagerEvents:savedObjectsDictionary];
+    }
     
     return [self.transactionManager wasSuccessful];
 }
@@ -634,6 +646,15 @@ static int numberAttempts;
 - (void)postBackgroundSyncError:(NSException *)error
 {
     [self.bus post:[[BackgroundSyncError alloc] initWithException:error] withNotificationName:@"BackgroundSyncError"];
+}
+
+- (void)postSyncManagerEvents:(NSDictionary *)savedObjectsDictionary
+{
+    for (NSString *identifier in [savedObjectsDictionary allKeys])
+    {
+        id<SyncManager>syncManager = [_syncConfig getSyncManager:identifier];
+        [syncManager postEvent:[savedObjectsDictionary objectForKey:identifier] withBus:[self bus]];
+    }
 }
 
 /**
