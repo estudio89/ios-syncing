@@ -70,16 +70,14 @@ static const RNCryptorSettings kRNCryptorAES256SettingsE89 = {
 /**
  * encryptMessage
  */
-- (NSData *)encryptMessage:(NSString *)message
+- (NSData *)encryptMessage:(NSData *)message
 {
-    NSData *encryptedData = [message dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *encryptedData = message;
  
     if ([_syncConfig isEncryptionActive])
     {
         NSError *error;
-        NSData *data = [message dataUsingEncoding:NSISOLatin1StringEncoding];
-
-        encryptedData = [RNEncryptor encryptData:data
+        encryptedData = [RNEncryptor encryptData:message
                                     withSettings:kRNCryptorAES256SettingsE89
                                         password:[_syncConfig getEncryptionPassword]
                                            error:&error];
@@ -91,19 +89,20 @@ static const RNCryptorSettings kRNCryptorAES256SettingsE89 = {
 /**
  * decryptMessage
  */
-- (NSString *)decryptMessage:(NSString *)data
+- (NSData *)decryptMessage:(NSData *)message
 {
+    NSData *decryptedData = message;
+    
     if ([_syncConfig isEncryptionActive])
     {
         NSError *error;
-        NSData *decryptedData = [RNDecryptor decryptData:[data dataUsingEncoding:NSISOLatin1StringEncoding]
-                                            withSettings:kRNCryptorAES256SettingsE89
-                                                password:[_syncConfig getEncryptionPassword]
-                                                   error:&error];
-        data = [[NSString alloc] initWithBytes:[decryptedData bytes] length:[decryptedData length] encoding:NSISOLatin1StringEncoding];
+        decryptedData = [RNDecryptor decryptData:message
+                                    withSettings:kRNCryptorAES256SettingsE89
+                                        password:[_syncConfig getEncryptionPassword]
+                                           error:&error];
     }
     
-    return data;
+    return decryptedData;
 }
 
 @end

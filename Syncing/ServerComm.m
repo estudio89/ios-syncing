@@ -84,7 +84,7 @@
     [postData appendData:[@"Content-Disposition: form-data; name=\"json\"\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
     
     //encrypt
-    NSData *encryptedData = [_securityUtil encryptMessage:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]];
+    NSData *encryptedData = [_securityUtil encryptMessage:jsonData];
     [postData appendData:encryptedData];
     [postData appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
     
@@ -137,16 +137,13 @@
     }
     
     NSString *ct = [requestResponse.allHeaderFields valueForKey:@"Content-Type"];
-    if ([ct rangeOfString:@"application/json"].location == NSNotFound)
+    if ([ct rangeOfString:@"application/octet-stream"].location == NSNotFound)
     {
         @throw([Http403Exception exceptionWithName:@"Http request forbiden" reason:@"The server is refusing to respond." userInfo:nil]);
     }
     
-    NSString *requestReply = [[NSString alloc] initWithBytes:[requestHandler bytes] length:[requestHandler length] encoding:NSISOLatin1StringEncoding];
-    
     //decrypt
-    requestReply = [_securityUtil decryptMessage:requestReply];
-    NSData *dataReply = [requestReply dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSData *dataReply = [_securityUtil decryptMessage:requestHandler];
     NSDictionary *jsonReply = [NSJSONSerialization JSONObjectWithData:dataReply options:kNilOptions error:&error];
     
     return jsonReply;
