@@ -81,6 +81,16 @@
 		7BD7E7421B15F07D00FC984C /* SecurityUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD7E7401B15F07D00FC984C /* SecurityUtil.m */; };
 		7BD7E7441B1613A800FC984C /* libPods-Syncing-Raven.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD7E7431B1613A800FC984C /* libPods-Syncing-Raven.a */; };
 		7BD7E7461B1613AB00FC984C /* libPods-Syncing-RNCryptor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD7E7451B1613AB00FC984C /* libPods-Syncing-RNCryptor.a */; };
+		7BE466161B4C052E00B63C6A /* JSONSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BE466141B4C052E00B63C6A /* JSONSerializer.h */; };
+		7BE466171B4C052E00B63C6A /* JSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE466151B4C052E00B63C6A /* JSONSerializer.m */; };
+		7BE4661B1B4C059400B63C6A /* FieldSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BE466191B4C059400B63C6A /* FieldSerializer.h */; };
+		7BE4661C1B4C059400B63C6A /* FieldSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE4661A1B4C059400B63C6A /* FieldSerializer.m */; };
+		7BE4661F1B4C198800B63C6A /* DateSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BE4661D1B4C198800B63C6A /* DateSerializer.h */; };
+		7BE466201B4C198800B63C6A /* DateSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE4661E1B4C198800B63C6A /* DateSerializer.m */; };
+		7BE466271B4C568200B63C6A /* AbstractSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BE466251B4C568200B63C6A /* AbstractSyncManager.h */; };
+		7BE466281B4C568200B63C6A /* AbstractSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE466261B4C568200B63C6A /* AbstractSyncManager.m */; };
+		7BE4662B1B4C6A6E00B63C6A /* SerializationUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BE466291B4C6A6E00B63C6A /* SerializationUtil.h */; };
+		7BE4662C1B4C6A6E00B63C6A /* SerializationUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE4662A1B4C6A6E00B63C6A /* SerializationUtil.m */; };
 		7BF770AC1AA4A4C2007BCAD6 /* Syncing_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF770AB1AA4A4C2007BCAD6 /* Syncing_Tests.m */; };
 		7BF770AD1AA4A4C2007BCAD6 /* libSyncing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BADD11D1A8BD82B0005FC5E /* libSyncing.a */; };
 		97C3760E6309FFF06658366D /* libPods-Syncing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8274EA1BBEBBDAEADFFED2F8 /* libPods-Syncing.a */; };
@@ -170,6 +180,16 @@
 		7BD7E7401B15F07D00FC984C /* SecurityUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityUtil.m; sourceTree = "<group>"; };
 		7BD7E7431B1613A800FC984C /* libPods-Syncing-Raven.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing-Raven.a"; path = "Pods/../build/Debug-iphoneos/libPods-Syncing-Raven.a"; sourceTree = "<group>"; };
 		7BD7E7451B1613AB00FC984C /* libPods-Syncing-RNCryptor.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing-RNCryptor.a"; path = "Pods/../build/Debug-iphoneos/libPods-Syncing-RNCryptor.a"; sourceTree = "<group>"; };
+		7BE466141B4C052E00B63C6A /* JSONSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONSerializer.h; sourceTree = "<group>"; };
+		7BE466151B4C052E00B63C6A /* JSONSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONSerializer.m; sourceTree = "<group>"; };
+		7BE466191B4C059400B63C6A /* FieldSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FieldSerializer.h; sourceTree = "<group>"; };
+		7BE4661A1B4C059400B63C6A /* FieldSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FieldSerializer.m; sourceTree = "<group>"; };
+		7BE4661D1B4C198800B63C6A /* DateSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateSerializer.h; sourceTree = "<group>"; };
+		7BE4661E1B4C198800B63C6A /* DateSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateSerializer.m; sourceTree = "<group>"; };
+		7BE466251B4C568200B63C6A /* AbstractSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractSyncManager.h; sourceTree = "<group>"; };
+		7BE466261B4C568200B63C6A /* AbstractSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractSyncManager.m; sourceTree = "<group>"; };
+		7BE466291B4C6A6E00B63C6A /* SerializationUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerializationUtil.h; sourceTree = "<group>"; };
+		7BE4662A1B4C6A6E00B63C6A /* SerializationUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SerializationUtil.m; sourceTree = "<group>"; };
 		7BF770A71AA4A4C2007BCAD6 /* Syncing Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Syncing Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BF770AA1AA4A4C2007BCAD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7BF770AB1AA4A4C2007BCAD6 /* Syncing_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Syncing_Tests.m; sourceTree = "<group>"; };
@@ -259,6 +279,8 @@
 			children = (
 				7BD43C4D1AB1C65C00C58368 /* AbstractLoginActivity.h */,
 				7BD43C4E1AB1C65C00C58368 /* AbstractLoginActivity.m */,
+				7BE466251B4C568200B63C6A /* AbstractSyncManager.h */,
+				7BE466261B4C568200B63C6A /* AbstractSyncManager.m */,
 				7BB63C761A9F977C00C0124C /* AsyncBus.h */,
 				7BB63C771A9F977C00C0124C /* AsyncBus.m */,
 				7B3D13911AA0E68B0022525A /* CustomException.h */,
@@ -279,16 +301,32 @@
 				7B5F220B1A8D3AC50031E2F2 /* ServerComm.m */,
 				7B27BFBA1A9A7F1000C7548E /* SyncConfig.h */,
 				7B27BFBB1A9A7F1000C7548E /* SyncConfig.m */,
+				7BCFBE2B1B3705A000AC1553 /* SyncEvent.h */,
+				7BCFBE2C1B3705A000AC1553 /* SyncEvent.m */,
 				7BADD1201A8BD82B0005FC5E /* Syncing.h */,
 				7BCCF7501AF826C6007F6B09 /* SyncingInjection.h */,
 				7BCCF7511AF826C6007F6B09 /* SyncingInjection.m */,
 				7B5F22081A8D2FC80031E2F2 /* SyncManager.h */,
 				7BADD13A1A8BDABF0005FC5E /* ThreadChecker.h */,
 				7BADD13B1A8BDABF0005FC5E /* ThreadChecker.m */,
-				7BCFBE2B1B3705A000AC1553 /* SyncEvent.h */,
-				7BCFBE2C1B3705A000AC1553 /* SyncEvent.m */,
+				7BE466181B4C058600B63C6A /* Serialization */,
 			);
 			path = Syncing;
+			sourceTree = "<group>";
+		};
+		7BE466181B4C058600B63C6A /* Serialization */ = {
+			isa = PBXGroup;
+			children = (
+				7BE466141B4C052E00B63C6A /* JSONSerializer.h */,
+				7BE466151B4C052E00B63C6A /* JSONSerializer.m */,
+				7BE466191B4C059400B63C6A /* FieldSerializer.h */,
+				7BE4661A1B4C059400B63C6A /* FieldSerializer.m */,
+				7BE4661D1B4C198800B63C6A /* DateSerializer.h */,
+				7BE4661E1B4C198800B63C6A /* DateSerializer.m */,
+				7BE466291B4C6A6E00B63C6A /* SerializationUtil.h */,
+				7BE4662A1B4C6A6E00B63C6A /* SerializationUtil.m */,
+			);
+			name = Serialization;
 			sourceTree = "<group>";
 		};
 		7BF770A81AA4A4C2007BCAD6 /* Syncing Tests */ = {
@@ -338,17 +376,22 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BE4662B1B4C6A6E00B63C6A /* SerializationUtil.h in Headers */,
 				7B7A1FB41AB899E30089A9FC /* Syncing.h in Headers */,
 				7B42B6501AB8A8D200F02528 /* SyncManager.h in Headers */,
 				7B42B6511AB8A8D200F02528 /* ServerComm.h in Headers */,
+				7BE4661F1B4C198800B63C6A /* DateSerializer.h in Headers */,
 				7B42B6591AB8A8D200F02528 /* AbstractLoginActivity.h in Headers */,
 				7B42B6531AB8A8D200F02528 /* SyncConfig.h in Headers */,
+				7BE4661B1B4C059400B63C6A /* FieldSerializer.h in Headers */,
+				7BE466271B4C568200B63C6A /* AbstractSyncManager.h in Headers */,
 				7B42B6551AB8A8D200F02528 /* AsyncBus.h in Headers */,
 				7B42B6521AB8A8D200F02528 /* DataSyncHelper.h in Headers */,
 				7B42B64F1AB8A8D200F02528 /* ThreadChecker.h in Headers */,
 				7B42B6541AB8A8D200F02528 /* CustomTransactionManager.h in Headers */,
 				7B42B6561AB8A8D200F02528 /* DatabaseProvider.h in Headers */,
 				7B42B6581AB8A8D200F02528 /* CustomException.h in Headers */,
+				7BE466161B4C052E00B63C6A /* JSONSerializer.h in Headers */,
 				7BCCF7521AF826C6007F6B09 /* SyncingInjection.h in Headers */,
 				7BBE8F611AFA3C8500155AC4 /* ReadOnlyAbstractSyncManager.h in Headers */,
 				7BD7E7411B15F07D00FC984C /* SecurityUtil.h in Headers */,
@@ -563,14 +606,19 @@
 				7BD43C521AB20E8200C58368 /* ServerAuthenticate.m in Sources */,
 				7B3D13931AA0E68B0022525A /* CustomException.m in Sources */,
 				7BD7E7421B15F07D00FC984C /* SecurityUtil.m in Sources */,
+				7BE4662C1B4C6A6E00B63C6A /* SerializationUtil.m in Sources */,
 				7BCCF7531AF826C6007F6B09 /* SyncingInjection.m in Sources */,
 				7B5F220C1A8D3AC50031E2F2 /* ServerComm.m in Sources */,
 				7BADD13C1A8BDABF0005FC5E /* ThreadChecker.m in Sources */,
 				7BBE8F621AFA3C8500155AC4 /* ReadOnlyAbstractSyncManager.m in Sources */,
 				7B3DDCA71A9DFB9900966A5B /* CustomTransactionManager.m in Sources */,
+				7BE4661C1B4C059400B63C6A /* FieldSerializer.m in Sources */,
 				7BB59EC51AA0ACD700783657 /* DatabaseProvider.m in Sources */,
 				7BB63C781A9F977C00C0124C /* AsyncBus.m in Sources */,
+				7BE466171B4C052E00B63C6A /* JSONSerializer.m in Sources */,
 				7B27BFBC1A9A7F1000C7548E /* SyncConfig.m in Sources */,
+				7BE466201B4C198800B63C6A /* DateSerializer.m in Sources */,
+				7BE466281B4C568200B63C6A /* AbstractSyncManager.m in Sources */,
 				7BAEDBBC1A97B69E0078AEA9 /* DataSyncHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

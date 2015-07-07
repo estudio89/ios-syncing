@@ -1,4 +1,5 @@
 PODS:
+  - ISO8601 (0.3.0)
   - OCHamcrest (4.1.1)
   - OCMock (3.1.2)
   - OCMockito (1.4.0):
@@ -10,6 +11,7 @@ PODS:
   - RNCryptor (2.2)
 
 DEPENDENCIES:
+  - ISO8601
   - OCMock
   - OCMockito
   - OHHTTPStubs
@@ -17,6 +19,7 @@ DEPENDENCIES:
   - RNCryptor
 
 SPEC CHECKSUMS:
+  ISO8601: 8d8a22d5edf0554a1cf75bac028c76c1dc0ffaef
   OCHamcrest: 6f03ffa81d12feab872638490a44ab0a6d3aca10
   OCMock: a10ea9f0a6e921651f96f78b6faee95ebc813b92
   OCMockito: 4981140c9a9ec06c31af40f636e3c0f25f27e6b2

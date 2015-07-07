@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SyncManager.h"
+#import "AbstractSyncManager.h"
 
-@interface ReadOnlyAbstractSyncManager : NSObject<SyncManager>
+@interface ReadOnlyAbstractSyncManager : AbstractSyncManager
 
 @end
