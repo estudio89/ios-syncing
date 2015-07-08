@@ -7,6 +7,7 @@
 //
 
 #import "SerializationUtil.h"
+#import <ISO8601/ISO8601.h>
 
 @implementation SerializationUtil
 
@@ -20,6 +21,16 @@
     }
     
     return name;
+}
+
++ (NSDate *)parseServerDate:(NSString *)strDate
+{
+    return [NSDate dateWithISO8601String:strDate];
+}
+
++ (NSString *)formatServerDate:(NSDate *)date
+{
+    return [date ISO8601String];
 }
 
 @end

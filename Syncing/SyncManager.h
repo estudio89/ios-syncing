@@ -21,7 +21,7 @@
 - (NSMutableArray *)getModifiedFilesForObject:(NSDictionary *)object withContext:(NSManagedObjectContext *)context;
 - (NSMutableArray *)saveNewData:(NSArray *)jsonObjects withDeviceId:(NSString *)deviceId withParameters:(NSDictionary *)responseParameters withContext:(NSManagedObjectContext *)context;
 - (void)processSendResponse:(NSArray *)jsonResponse withContext:(NSManagedObjectContext *)context;
-- (NSDictionary *)serializeObject:(NSObject *)object;
+- (NSDictionary *)serializeObject:(NSObject *)object withContext:(NSManagedObjectContext *)context;
 - (id)saveObject:(NSDictionary *)object withDeviceId:(NSString *)deviceId withContext:(NSManagedObjectContext *)context;
 - (void)postEvent:(NSArray *)objects withBus:(AsyncBus *)bus;
 - (NSString *)getNotificationName;

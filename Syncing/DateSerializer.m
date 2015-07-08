@@ -7,7 +7,7 @@
 //
 
 #import "DateSerializer.h"
-#import <ISO8601/ISO8601.h>
+#import "SerializationUtil.h"
 
 @implementation DateSerializer
 
@@ -31,7 +31,7 @@
         return nil;
     }
     
-    return [date ISO8601String];
+    return [SerializationUtil formatServerDate:date];
 }
 
 - (NSDate *)parse:(NSObject *)value
@@ -41,7 +41,7 @@
         return [NSDate date];
     }
     
-    return [NSDate dateWithISO8601String:(NSString *)value];
+    return [SerializationUtil parseServerDate:(NSString *)value];
 }
 
 @end
