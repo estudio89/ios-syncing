@@ -7,16 +7,17 @@
 //
 
 #import "AbstractSyncManager.h"
-#import "ReadOnlyAbstractSyncManager.h"
 #import "SerializationUtil.h"
 #import <Raven/RavenClient.h>
 #import "JSONSerializer.h"
 
 @interface AbstractSyncManager ()
 
-@property (strong, nonatomic) NSDictionary *annotation;
-@property (strong, nonatomic) NSDictionary *attributesAnnotation;
-@property (strong, nonatomic) NSDictionary *nestedManagersAnnotation;
+//@property (strong, nonatomic) NSDictionary *annotation;
+//@property (strong, nonatomic) NSDictionary *attributesAnnotation;
+//@property (strong, nonatomic) NSDictionary *nestedManagersAnnotation;
+
+//@property (strong, nonatomic) Annotations *annotations;
 @property (strong, nonatomic) NSMutableDictionary *parentAttributes;
 @property (strong, nonatomic) NSMutableDictionary *childrenAttributes;
 @property BOOL shouldPaginate;
@@ -28,39 +29,32 @@
 @end
 
 @implementation AbstractSyncManager
-
+/*
 - (instancetype)init
 {
     self = [super init];
     
     if (self)
     {
-        _annotation = [self getAnnotationDictionary];
-        _attributesAnnotation = [_annotation objectForKey:@"fields"];
+        _annotations = [self getAnnotations];
         _parentAttributes = [[NSMutableDictionary alloc] init];
         _childrenAttributes = [[NSMutableDictionary alloc] init];
         
-        if ([_annotation valueForKey:@"paginateBy"])
-        {
-            _shouldPaginate = YES;
-        }
-        else
-        {
-            _shouldPaginate = NO;
-        }
+        _shouldPaginate = [_annotations shouldPaginate];
         
         if (_shouldPaginate && [self isKindOfClass:[ReadOnlyAbstractSyncManager class]])
         {
             [NSException raise:NSInvalidArgumentException format:@"ReadOnlyAbstractSyncManager classes cannot paginate. Remove the 'paginateBy' key from your annotation dictionary."];
         }
         
-        _entityName = [_annotation valueForKey:@"entityName"];
-        [self verifyFields];
+        _entityName = [_annotations entityName];
         
         if (_entityName == nil)
         {
             [NSException raise:NSInvalidArgumentException format:@"The 'entityName' value was not found in annotation dictionary."];
         }
+        
+        [self verifyFields];
     }
     
     return self;
@@ -68,27 +62,19 @@
 
 - (void)verifyFields
 {
-    //FIXME
     NSEntityDescription *superClassEntity = [NSEntityDescription entityForName:_entityName
-                                                        inManagedObjectContext:_context];
+                                                        inManagedObjectContext:[_annotations context]];
     NSDictionary *attributes = [superClassEntity attributesByName];
-    _nestedManagersAnnotation = [_annotation objectForKey:@"nestedManagers"];
     
     NSString *paginateField = @"";
     if (_shouldPaginate)
     {
-        NSDictionary *pagination = [_annotation valueForKey:@"paginate"];
-        paginateField = [pagination valueForKey:@"byField"];
-        _paginationIdentifier = [pagination valueForKey:@"extraIdentifier"];
+        paginateField = [_annotations.paginate byField];
+        _paginationIdentifier = [_annotations.paginate extraIdentifier];
     }
-    
-    
-    NSDictionary *attributeAnnotation = nil;
     
     for (NSAttributeDescription *attribute in [attributes allValues])
     {
-        attributeAnnotation = [_attributesAnnotation objectForKey:attribute.name];
-        
         if (_shouldPaginate && [attribute attributeType] == NSDateAttributeType)
         {
             if ([paginateField isEqualToString:@""] || [paginateField isEqualToString:attribute.name])
@@ -308,13 +294,17 @@
         }
     }
     
-    for (NSString *childAttName in [_childrenAttributes allKeys])
+    for (NSString *childAttName in [_nestedManagersAnnotation allKeys])
     {
-        NSDictionary *childrenAnnotation = [_childrenAttributes objectForKey:childAttName];
+        NSDictionary *childrenAnnotation = [_nestedManagersAnnotation objectForKey:childAttName];
         
         if ([[childrenAnnotation objectForKey:@"writable"] boolValue])
         {
-            
+            NSString *accessorMethod = [childrenAnnotation valueForKey:@"accessorMethod"];
+            if (![accessorMethod isEqualToString:@""])
+            {
+                
+            }
         }
     }
     
@@ -361,5 +351,5 @@
     
     return [oldestArray objectAtIndex:0];
 }
-
+*/
 @end

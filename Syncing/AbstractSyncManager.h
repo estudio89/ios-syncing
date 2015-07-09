@@ -12,6 +12,6 @@
 @interface AbstractSyncManager : NSObject<SyncManager>
 
 - (instancetype)initWithAnnotation:(NSDictionary *)annotation;
-- (NSDictionary *)getAnnotationDictionary;
+//- (Annotations *)getAnnotations;
 
 @end
