@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SyncManager.h"
+#import <Syncing.h>
 
 @interface AbstractSyncManager : NSObject<SyncManager>
 
 - (instancetype)initWithAnnotation:(NSDictionary *)annotation;
-//- (Annotations *)getAnnotations;
+- (Annotations *)getAnnotations;
 
 @end

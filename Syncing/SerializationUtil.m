@@ -11,13 +11,13 @@
 
 @implementation SerializationUtil
 
-+ (NSString *)getAttributeName:(NSAttributeDescription *)attribute withAnnotation:(NSDictionary *)annotation
++ (NSString *)getAttributeName:(NSAttributeDescription *)attribute withAnnotation:(JSON *)annotation
 {
     NSString *name = attribute.name;
     
-    if (annotation != nil && [annotation valueForKey:@"name"] && ![[annotation valueForKey:@"name"] isEqualToString:@""])
+    if (annotation.name != nil && ![annotation.name isEqualToString:@""])
     {
-        name = [annotation valueForKey:@"name"];
+        name = annotation.name;
     }
     
     return name;

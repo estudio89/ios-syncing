@@ -71,6 +71,28 @@
     }
 }
 
+- (JSON *)annotationForAttribute:(NSString *)attribute
+{
+    return [_jsonAnnotations objectForKey:attribute];
+}
+
+- (NestedManager *)nestedManagerForAttribute:(NSString *)attribute
+{
+    return [_nestedManagers objectForKey:attribute];
+}
+
+- (BOOL)hasNestedManagerForAttribute:(NSString *)attribute
+{
+    BOOL hasNestedManager = NO;
+    
+    if ([_nestedManagers objectForKey:attribute] != nil)
+    {
+        hasNestedManager = YES;
+    }
+    
+    return hasNestedManager;
+}
+
 - (BOOL)shouldPaginate
 {
     return _paginate != nil;

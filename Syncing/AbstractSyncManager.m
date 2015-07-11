@@ -13,11 +13,7 @@
 
 @interface AbstractSyncManager ()
 
-//@property (strong, nonatomic) NSDictionary *annotation;
-//@property (strong, nonatomic) NSDictionary *attributesAnnotation;
-//@property (strong, nonatomic) NSDictionary *nestedManagersAnnotation;
-
-//@property (strong, nonatomic) Annotations *annotations;
+@property (strong, nonatomic) Annotations *annotations;
 @property (strong, nonatomic) NSMutableDictionary *parentAttributes;
 @property (strong, nonatomic) NSMutableDictionary *childrenAttributes;
 @property BOOL shouldPaginate;
@@ -29,7 +25,7 @@
 @end
 
 @implementation AbstractSyncManager
-/*
+
 - (instancetype)init
 {
     self = [super init];
@@ -73,34 +69,31 @@
         _paginationIdentifier = [_annotations.paginate extraIdentifier];
     }
     
+    JSON *attAnnotation = nil;
     for (NSAttributeDescription *attribute in [attributes allValues])
     {
-        if (_shouldPaginate && [attribute attributeType] == NSDateAttributeType)
+        attAnnotation = [_annotations annotationForAttribute:attribute.name];
+        
+        NSAttributeType type = [attribute attributeType];
+        if (_shouldPaginate && type == NSDateAttributeType)
         {
             if ([paginateField isEqualToString:@""] || [paginateField isEqualToString:attribute.name])
             {
                 _dateAttribute = attribute;
             }
         }
-        //FIXME
-        else if (![[attributeAnnotation objectForKey:@"ignore"] boolValue])
+        else if (!attAnnotation.ignore)//FIXME
         {
             NSString *parentAttributeName = [SerializationUtil getAttributeName:attribute
-                                                                 withAnnotation:attributeAnnotation];
+                                                                 withAnnotation:attAnnotation];
             [_parentAttributes setObject:attribute forKey:parentAttributeName];
         }
-        else if (_nestedManagersAnnotation && [_nestedManagersAnnotation objectForKey:attribute.name])
+        else if ([_annotations hasNestedManagerForAttribute:attribute.name])
         {
-            NSDictionary *nestedManager = [_nestedManagersAnnotation objectForKey:attribute.name];
-            [_childrenAttributes setObject:[self getNestedSyncManager:[nestedManager valueForKey:@"manager"]]
-                                    forKey:attribute.name];
+            NestedManager *nestedManager = [_annotations nestedManagerForAttribute:attribute.name];
+            [_childrenAttributes setObject:nestedManager.manager forKey:attribute.name];
         }
     }
-}
-
-- (id<SyncManager>)getNestedSyncManager:(NSString *)className
-{
-    return [[NSClassFromString(className) alloc] init];
 }
 
 - (NSDate *)getDateForObject:(NSManagedObject *)object
@@ -351,5 +344,5 @@
     
     return [oldestArray objectAtIndex:0];
 }
-*/
+
 @end

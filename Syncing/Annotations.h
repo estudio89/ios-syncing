@@ -49,6 +49,9 @@
 @property (strong, readonly) NSManagedObjectContext *context;
 
 - (instancetype)initWithAnnotation:(NSDictionary *)annotation withContext:(NSManagedObjectContext *)context;
+- (JSON *)annotationForAttribute:(NSString *)attribute;
+- (NestedManager *)nestedManagerForAttribute:(NSString *)attribute;
+- (BOOL)hasNestedManagerForAttribute:(NSString *)attribute;
 - (BOOL)shouldPaginate;
 
 @end
