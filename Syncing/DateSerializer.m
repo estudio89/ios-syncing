@@ -14,7 +14,7 @@
 - (instancetype)initWithAttribute:(NSAttributeDescription *)attribute
                        withObject:(NSManagedObject *)object
                          withJSON:(NSDictionary *)jsonObject
-                   withAnnotation:(NSDictionary *)annotation;
+                   withAnnotation:(JSON *)annotation;
 {
     self = [super initWithAttribute:attribute
                          withObject:object

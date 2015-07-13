@@ -11,9 +11,9 @@
 
 @implementation SerializationUtil
 
-+ (NSString *)getAttributeName:(NSAttributeDescription *)attribute withAnnotation:(JSON *)annotation
++ (NSString *)getAttributeName:(NSString *)attribute withAnnotation:(JSON *)annotation
 {
-    NSString *name = attribute.name;
+    NSString *name = attribute;
     
     if (annotation.name != nil && ![annotation.name isEqualToString:@""])
     {

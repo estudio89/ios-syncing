@@ -8,13 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "Annotations.h"
 
 @interface FieldSerializer : NSObject
 
 - (instancetype)initWithAttribute:(NSAttributeDescription *)attribute
                        withObject:(NSManagedObject *)object
                          withJSON:(NSDictionary *)jsonObject
-                   withAnnotation:(NSDictionary *)annotation;
+                   withAnnotation:(JSON *)annotation;
 - (NSString *)getAttributename;
 - (BOOL)isIgnored;
 - (BOOL)isWritable;

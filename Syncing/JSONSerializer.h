@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "FieldSerializer.h"
+#import "Annotations.h"
 
 @interface JSONSerializer : NSObject
 
-- (instancetype)initWithModelClass:(Class)modelClass withAnnotation:(NSDictionary *)annotation withContext:(NSManagedObjectContext *)context;
+- (instancetype)initWithModelClass:(Class)modelClass withAnnotations:(Annotations *)annotations withContext:(NSManagedObjectContext *)context;
 - (NSArray *)toJSON:(NSManagedObject *)object withJSON:(NSDictionary *)jsonObject;
 - (NSArray *)updateFromJSON:(NSDictionary *)jsonObject withObject:(NSManagedObject *)object;
 - (FieldSerializer *)getFieldSerializer:(NSAttributeDescription *)attribute withObject:(NSManagedObject *)object withJSON:(NSDictionary *)jsonObject;

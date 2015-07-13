@@ -13,21 +13,21 @@
 @interface JSONSerializer ()
 
 @property (strong, nonatomic) Class modelClass;
-@property (strong, nonatomic) NSDictionary *annotation;
+@property (strong, nonatomic) Annotations *annotations;
 @property (strong, nonatomic) NSManagedObjectContext *context;
 
 @end
 
 @implementation JSONSerializer
 
-- (instancetype)initWithModelClass:(Class)modelClass withAnnotation:(NSDictionary *)annotation withContext:(NSManagedObjectContext *)context
+- (instancetype)initWithModelClass:(Class)modelClass withAnnotations:(Annotations *)annotations withContext:(NSManagedObjectContext *)context
 {
     self = [super init];
     
     if (self)
     {
         _modelClass = modelClass;
-        _annotation = annotation;
+        _annotations = annotations;
         _context = context;
     }
     
@@ -104,7 +104,7 @@
 
 - (FieldSerializer *)getFieldSerializer:(NSAttributeDescription *)attribute withObject:(NSManagedObject *)object withJSON:(NSDictionary *)jsonObject
 {
-    NSDictionary *fieldAnnotation = [_annotation objectForKey:attribute.name];
+    JSON *fieldAnnotation = [_annotations annotationForAttribute:attribute.name];
     
     if ([attribute attributeType] == NSDateAttributeType)
     {

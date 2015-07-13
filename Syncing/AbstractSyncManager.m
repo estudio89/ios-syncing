@@ -10,6 +10,7 @@
 #import "SerializationUtil.h"
 #import <Raven/RavenClient.h>
 #import "JSONSerializer.h"
+#import "SyncModelSerializer.h"
 
 @interface AbstractSyncManager ()
 
@@ -73,25 +74,25 @@
     for (NSAttributeDescription *attribute in [attributes allValues])
     {
         attAnnotation = [_annotations annotationForAttribute:attribute.name];
+        Class type = NSClassFromString(attribute.attributeValueClassName);
         
-        NSAttributeType type = [attribute attributeType];
-        if (_shouldPaginate && type == NSDateAttributeType)
+        if (_shouldPaginate && type == [NSDate class])
         {
             if ([paginateField isEqualToString:@""] || [paginateField isEqualToString:attribute.name])
             {
                 _dateAttribute = attribute;
             }
         }
-        else if (!attAnnotation.ignore)//FIXME
+        else if ([type isSubclassOfClass:[SyncEntity class]] && !attAnnotation.ignore)
         {
-            NSString *parentAttributeName = [SerializationUtil getAttributeName:attribute
+            NSString *parentAttributeName = [SerializationUtil getAttributeName:attribute.name
                                                                  withAnnotation:attAnnotation];
             [_parentAttributes setObject:attribute forKey:parentAttributeName];
         }
         else if ([_annotations hasNestedManagerForAttribute:attribute.name])
         {
             NestedManager *nestedManager = [_annotations nestedManagerForAttribute:attribute.name];
-            [_childrenAttributes setObject:nestedManager.manager forKey:attribute.name];
+            [_childrenAttributes setObject:nestedManager forKey:attribute.name];
         }
     }
 }
@@ -208,8 +209,8 @@
         {
             if (_shouldPaginate && isSyncing && _dateAttribute != nil && _oldestInCache != nil)
             {
-                NSDictionary *attributeAnnotation = [_attributesAnnotation objectForKey:_dateAttribute];
-                NSString *jsonAttribute = [SerializationUtil getAttributeName:_dateAttribute withAnnotation:attributeAnnotation];
+                JSON *attAnnotation = [_annotations annotationForAttribute:_dateAttribute.name];
+                NSString *jsonAttribute = [SerializationUtil getAttributeName:_dateAttribute.name withAnnotation:attAnnotation];
                 NSString *strDate = [objectJSON valueForKey:jsonAttribute];
                 NSDate *pubDate = [SerializationUtil parseServerDate:strDate];
                 
@@ -274,7 +275,7 @@
 {
     NSMutableDictionary *jsonObject = [[NSMutableDictionary alloc] init];
     JSONSerializer *serializer = [[JSONSerializer alloc] initWithModelClass:NSClassFromString(_entityName)
-                                                             withAnnotation:_attributesAnnotation
+                                                            withAnnotations:_annotations
                                                                 withContext:context];
     
     [serializer toJSON:(NSManagedObject *)object withJSON:[[NSDictionary alloc] init]];
@@ -287,38 +288,139 @@
         }
     }
     
-    for (NSString *childAttName in [_nestedManagersAnnotation allKeys])
+
+    for (NSString *childAttName in [_childrenAttributes allKeys])
     {
-        NSDictionary *childrenAnnotation = [_nestedManagersAnnotation objectForKey:childAttName];
+        NestedManager *annotation = [_childrenAttributes objectForKey:childAttName];
         
-        if ([[childrenAnnotation objectForKey:@"writable"] boolValue])
+        if (annotation.writable)
         {
-            NSString *accessorMethod = [childrenAnnotation valueForKey:@"accessorMethod"];
-            if (![accessorMethod isEqualToString:@""])
+            JSON *jsonAttribute = [_annotations annotationForAttribute:childAttName];
+            NSString *attributeName = [SerializationUtil getAttributeName:childAttName withAnnotation:jsonAttribute];
+            id<SyncManager> childSyncManager = annotation.manager;
+            
+            NSSet *children = nil;
+            if (annotation.accessorMethod != nil)
             {
-                
+                children = [self performSelector:annotation.accessorMethod];
+            }
+            else
+            {
+                children = [object valueForKey:childAttName];
+            }
+            
+            NSMutableArray *serializedChildren = [[NSMutableArray alloc] init];
+            for (SyncEntity *child in children)
+            {
+                [serializedChildren addObject:[childSyncManager serializeObject:child withContext:context]];
+            }
+            
+            @try
+            {
+                [jsonObject setObject:serializedChildren forKey:attributeName];
+            }
+            @catch (NSException *e)
+            {
+                [[RavenClient sharedClient] captureException:e method:__FUNCTION__ file:__FILE__ line:__LINE__ sendNow:YES];
             }
         }
     }
     
-    Message *message = (Message *)object;
-    Conversation *conversation = message.conversation;
-    NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
+    return jsonObject;
+}
+
+- (id)saveObject:(NSDictionary *)object withDeviceId:(NSString *)deviceId withContext:(NSManagedObjectContext *)context
+{
+    NSNumber *idServer = [object valueForKey:@"id"];
+    NSString *idClient = [object valueForKey:@"idClient"];
+    NSString *itemDeviceId = [object valueForKey:@"deviceId"];
     
-    @try
+    SyncEntity *newItem = [self findItem:idServer
+                            withIdClient:idClient
+                            withDeviceId:deviceId
+                        withItemDeviceId:itemDeviceId
+                              withObject:object];
+    BOOL checkIsNew = NO;
+    if (newItem == nil)
     {
-        [jsonDict setObject:[message.objectID.URIRepresentation absoluteString] forKey:@"idClient"];
-        [jsonDict setObject:conversation.idServer forKey:@"conversation_id"];
-        [jsonDict setObject:message.content forKey:@"content"];
-        [jsonDict setObject:[TimeUtil formatServerDate:message.date] forKey:@"date"];
-        [jsonDict setObject:message.isAnonymous forKey:@"isAnonymous"];
-    }
-    @catch (NSException *e)
-    {
-        [CrashReportUtil reportException:e withMethod:__FUNCTION__ withFile:__FILE__ atLine:__LINE__ sendNow:YES];
+        newItem = [NSEntityDescription insertNewObjectForEntityForName:_entityName inManagedObjectContext:context];
+        checkIsNew = YES;
     }
     
-    return jsonDict;
+    SyncModelSerializer *serializer = [[SyncModelSerializer alloc] initWithModelClass:NSClassFromString(_entityName)
+                                                                      withAnnotations:_annotations
+                                                                          withContext:context];
+    [serializer updateFromJSON:object withObject:newItem];
+    
+    if (checkIsNew)
+    {
+        if (_dateAttribute != nil)
+        {
+            NSDate *newItemDate = [self getDateForObject:newItem];
+            NSDate *oldestDate = [self getDateForObject:_oldestInCache];
+            if (_oldestInCache == nil || [newItemDate compare:oldestDate] == NSOrderedDescending)
+            {
+                newItem.isNew = [NSNumber numberWithBool:YES];
+            }
+        }
+        else
+        {
+            newItem.isNew = [NSNumber numberWithBool:YES];
+        }
+    }
+
+    if ([_parentAttributes count] > 0)
+    {
+        for (NSString *parentAttributeName in [_parentAttributes allKeys])
+        {
+            NSAttributeDescription *parentAttribute = [_parentAttributes objectForKey:parentAttributeName];
+            NSString *parentId = [object valueForKey:parentAttributeName];
+            
+            SyncEntity *parent = [self findParent:parentAttribute.attributeValueClassName withParentId:parentId];
+            if (parent == nil && [parentId isEqual:@"nil"])
+            {
+                NSString *reason = [NSString stringWithFormat:@"An item of class %@ with id server %@ was not found for item of class %@ with id_server %@", parentAttribute.attributeValueClassName, parentId, _entityName, newItem.idServer];
+                @throw [NSException exceptionWithName:@"AbstractSyncManagerException"
+                                               reason:reason
+                                             userInfo:nil];
+            }
+            
+            [newItem setValue:parent forKey:parentAttributeName];
+        }
+    }
+    
+    [context save:nil];
+    
+    if ([_childrenAttributes count] > 0)
+    {
+        for (NSString *childrenAttributeName in [_childrenAttributes allKeys])
+        {
+            JSON *jsonAttribute = [_annotations annotationForAttribute:childrenAttributeName];
+            NSString *jsonName = [SerializationUtil getAttributeName:childrenAttributeName withAnnotation:jsonAttribute];
+            NSArray *children = [object objectForKey:jsonName];
+            
+            NestedManager *annotation = [_childrenAttributes objectForKey:childrenAttributeName];
+            id<SyncManager> nestedSyncManager = annotation.manager;
+            NSDictionary *childParams = nil;
+            
+            if (![annotation.paginationParams isEqualToString:@""])
+            {
+                childParams = [object objectForKey:annotation.paginationParams];
+            }
+            else
+            {
+                childParams = [[NSDictionary alloc] init];
+            }
+            
+            if (annotation.discardOnSave && newItem.objectID != nil)
+            {
+                
+            }
+        }
+        
+    }
+    
+    return newItem;
 }
 
 - (void)saveBooleanPref:(NSString *)key withValue:(BOOL)value
@@ -343,6 +445,114 @@
     }
     
     return [oldestArray objectAtIndex:0];
+}
+
+- (SyncEntity *)findItem:(NSNumber *)idServer
+            withIdClient:(NSString *)idClient
+            withDeviceId:(NSString *)deviceId
+        withItemDeviceId:(NSString *)itemDeviceId
+{
+    return [self findItem:idServer
+             withIdClient:idClient
+             withDeviceId:deviceId
+         withItemDeviceId:itemDeviceId
+       withIgnoreDeviceId:NO
+               withObject:nil];
+    
+}
+
+- (SyncEntity *)findItem:(NSNumber *)idServer
+            withIdClient:(NSString *)idClient
+            withDeviceId:(NSString *)deviceId
+        withItemDeviceId:(NSString *)itemDeviceId
+      withIgnoreDeviceId:(BOOL)ignoreDeviceId
+{
+    return [self findItem:idServer
+             withIdClient:idClient
+             withDeviceId:deviceId
+         withItemDeviceId:itemDeviceId
+       withIgnoreDeviceId:NO
+               withObject:nil];
+}
+
+- (SyncEntity *)findItem:(NSNumber *)idServer
+            withIdClient:(NSString *)idClient
+            withDeviceId:(NSString *)deviceId
+        withItemDeviceId:(NSString *)itemDeviceId
+              withObject:(NSDictionary *)object
+{
+    return [self findItem:idServer
+             withIdClient:idClient
+             withDeviceId:deviceId
+         withItemDeviceId:itemDeviceId
+       withIgnoreDeviceId:NO
+               withObject:object];
+}
+
+- (SyncEntity *)findItem:(NSNumber *)idServer
+            withIdClient:(NSString *)idClient
+            withDeviceId:(NSString *)deviceId
+        withItemDeviceId:(NSString *)itemDeviceId
+      withIgnoreDeviceId:(BOOL)ignoreDeviceId
+              withObject:(NSDictionary *)object
+{
+    NSArray *objectList = nil;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:_entityName];
+
+    if ((ignoreDeviceId || [deviceId isEqualToString:itemDeviceId]) && idClient != nil)
+    {
+        NSURL *objUrl = [NSURL URLWithString:idClient];
+        NSManagedObjectID *objectID = [[context persistentStoreCoordinator] managedObjectIDForURIRepresentation:objUrl];
+        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"idServer==%@ OR objectID==%@", idServer, objectID]];
+    }
+    else
+    {
+        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"idServer==%@", idServer]];
+    }
+    
+    objectList = [context executeFetchRequest:fetchRequest error:nil];
+    
+    if ([objectList count] > 0)
+    {
+        return [objectList objectAtIndex:0];
+    }
+    else
+    {
+        return nil;
+    }
+}
+
+- (SyncEntity *)findParent:(NSString *)parentEntity withParentId:(NSString *)parentId
+{
+    if (parentId == nil || [parentId isEqualToString:@"nil"])
+    {
+        return nil;
+    }
+    
+    NSArray *objectList = nil;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:parentEntity];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"idServer==%@", parentId]];
+    
+    objectList = [context executeFetchRequest:fetchRequest error:nil];
+    
+    if ([objectList count] > 0)
+    {
+        return [objectList objectAtIndex:0];
+    }
+    else
+    {
+        return nil;
+    }
+}
+
+- (NSString *)stringOrNil:(NSDictionary *)object withKey:(NSString *)key
+{
+    return [object objectForKey:key] != nil && ![[object valueForKey:key] isEqualToString:@"nil"] ? [object valueForKey:key] : nil;
+}
+
+- (void)deleteAllChildren
+{
+    
 }
 
 @end

@@ -14,7 +14,7 @@
 @property (strong, nonatomic) NSAttributeDescription *attribute;
 @property (strong, nonatomic) NSManagedObject *object;
 @property (strong, nonatomic) NSMutableDictionary *jsonObject;
-@property (strong, nonatomic) NSDictionary *annotation;
+@property (strong, nonatomic) JSON *annotation;
 
 @end
 
@@ -23,7 +23,7 @@
 - (instancetype)initWithAttribute:(NSAttributeDescription *)attribute
                        withObject:(NSManagedObject *)object
                          withJSON:(NSDictionary *)jsonObject
-                   withAnnotation:(NSDictionary *)annotation
+                   withAnnotation:(JSON *)annotation
 {
     self = [super init];
     
@@ -40,44 +40,23 @@
 
 - (NSString *)getAttributename
 {
-    return [SerializationUtil getAttributeName:_attribute
+    return [SerializationUtil getAttributeName:_attribute.name
                                 withAnnotation:_annotation];
 }
 
 - (BOOL)isIgnored
 {
-    BOOL ignore = NO;
-    
-    if ([_annotation objectForKey:@"ignore"] && ![[_annotation objectForKey:@"ignore"] isKindOfClass:[NSNull class]])
-    {
-        ignore = [[_annotation objectForKey:@"ignore"] boolValue];
-    }
-    
-    return ignore;
+    return _annotation.ignore;
 }
 
 - (BOOL)isWritable
 {
-    BOOL writable = NO;
-    
-    if ([_annotation objectForKey:@"writable"] && ![[_annotation objectForKey:@"writable"] isKindOfClass:[NSNull class]])
-    {
-        writable = [[_annotation objectForKey:@"writable"] boolValue];
-    }
-    
-    return writable;
+    return _annotation.writable;
 }
 
 - (BOOL)isReadable
 {
-    BOOL readable = NO;
-    
-    if ([_annotation objectForKey:@"readable"] && ![[_annotation objectForKey:@"readable"] isKindOfClass:[NSNull class]])
-    {
-        readable = [[_annotation objectForKey:@"readable"] boolValue];
-    }
-    
-    return readable;
+    return _annotation.readable;
 }
 
 - (BOOL)updateJSON
@@ -90,12 +69,9 @@
     NSString *name = [self getAttributename];
     NSObject *value = [_object valueForKey:name];
     
-    NSString *ignoreIf = [_annotation valueForKey:@"ignoreIf"];
-    NSString *noValue = [_annotation valueForKey:@"noValue"];
-    
-    if (_annotation != nil && ![ignoreIf isEqualToString:noValue])
+    if (_annotation.ignoreIf != nil)
     {
-        if ([[value description] isEqualToString:ignoreIf])
+        if ([[value description] isEqualToString:_annotation.ignoreIf])
         {
             return NO;
         }

@@ -12,7 +12,7 @@
 
 @interface SerializationUtil : NSObject
 
-+ (NSString *)getAttributeName:(NSAttributeDescription *)attribute withAnnotation:(JSON *)annotation;
++ (NSString *)getAttributeName:(NSString *)attribute withAnnotation:(JSON *)annotation;
 + (NSDate *)parseServerDate:(NSString *)strDate;
 + (NSString *)formatServerDate:(NSDate *)date;
 

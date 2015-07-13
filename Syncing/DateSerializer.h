@@ -7,13 +7,14 @@
 //
 
 #import "FieldSerializer.h"
+#import "Annotations.h"
 
 @interface DateSerializer : FieldSerializer
 
 - (instancetype)initWithAttribute:(NSAttributeDescription *)attribute
                        withObject:(NSManagedObject *)object
                          withJSON:(NSDictionary *)jsonObject
-                   withAnnotation:(NSDictionary *)annotation;
+                   withAnnotation:(JSON *)annotation;
 - (NSString *)format:(NSDate *)date;
 - (NSDate *)parse:(NSObject *)value;
 

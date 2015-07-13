@@ -81,6 +81,8 @@
 		7BD7E7421B15F07D00FC984C /* SecurityUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD7E7401B15F07D00FC984C /* SecurityUtil.m */; };
 		7BD7E7441B1613A800FC984C /* libPods-Syncing-Raven.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD7E7431B1613A800FC984C /* libPods-Syncing-Raven.a */; };
 		7BD7E7461B1613AB00FC984C /* libPods-Syncing-RNCryptor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD7E7451B1613AB00FC984C /* libPods-Syncing-RNCryptor.a */; };
+		7BDA73E21B543418003B00BA /* SyncModelSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BDA73E01B543418003B00BA /* SyncModelSerializer.h */; };
+		7BDA73E31B543419003B00BA /* SyncModelSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BDA73E11B543418003B00BA /* SyncModelSerializer.m */; };
 		7BE466161B4C052E00B63C6A /* JSONSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BE466141B4C052E00B63C6A /* JSONSerializer.h */; };
 		7BE466171B4C052E00B63C6A /* JSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE466151B4C052E00B63C6A /* JSONSerializer.m */; };
 		7BE4661B1B4C059400B63C6A /* FieldSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BE466191B4C059400B63C6A /* FieldSerializer.h */; };
@@ -184,6 +186,8 @@
 		7BD7E7401B15F07D00FC984C /* SecurityUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityUtil.m; sourceTree = "<group>"; };
 		7BD7E7431B1613A800FC984C /* libPods-Syncing-Raven.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing-Raven.a"; path = "Pods/../build/Debug-iphoneos/libPods-Syncing-Raven.a"; sourceTree = "<group>"; };
 		7BD7E7451B1613AB00FC984C /* libPods-Syncing-RNCryptor.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing-RNCryptor.a"; path = "Pods/../build/Debug-iphoneos/libPods-Syncing-RNCryptor.a"; sourceTree = "<group>"; };
+		7BDA73E01B543418003B00BA /* SyncModelSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncModelSerializer.h; sourceTree = "<group>"; };
+		7BDA73E11B543418003B00BA /* SyncModelSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncModelSerializer.m; sourceTree = "<group>"; };
 		7BE466141B4C052E00B63C6A /* JSONSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONSerializer.h; sourceTree = "<group>"; };
 		7BE466151B4C052E00B63C6A /* JSONSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONSerializer.m; sourceTree = "<group>"; };
 		7BE466191B4C059400B63C6A /* FieldSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FieldSerializer.h; sourceTree = "<group>"; };
@@ -327,6 +331,7 @@
 		7BE466181B4C058600B63C6A /* Serialization */ = {
 			isa = PBXGroup;
 			children = (
+				7BE488441B4ED81E00985165 /* Annotations */,
 				7BE466141B4C052E00B63C6A /* JSONSerializer.h */,
 				7BE466151B4C052E00B63C6A /* JSONSerializer.m */,
 				7BE466191B4C059400B63C6A /* FieldSerializer.h */,
@@ -335,7 +340,8 @@
 				7BE4661E1B4C198800B63C6A /* DateSerializer.m */,
 				7BE466291B4C6A6E00B63C6A /* SerializationUtil.h */,
 				7BE4662A1B4C6A6E00B63C6A /* SerializationUtil.m */,
-				7BE488441B4ED81E00985165 /* Annotations */,
+				7BDA73E01B543418003B00BA /* SyncModelSerializer.h */,
+				7BDA73E11B543418003B00BA /* SyncModelSerializer.m */,
 			);
 			name = Serialization;
 			sourceTree = "<group>";
@@ -399,6 +405,7 @@
 				7BE4662B1B4C6A6E00B63C6A /* SerializationUtil.h in Headers */,
 				7B7A1FB41AB899E30089A9FC /* Syncing.h in Headers */,
 				7B42B6501AB8A8D200F02528 /* SyncManager.h in Headers */,
+				7BDA73E21B543418003B00BA /* SyncModelSerializer.h in Headers */,
 				7B42B6511AB8A8D200F02528 /* ServerComm.h in Headers */,
 				7BE4661F1B4C198800B63C6A /* DateSerializer.h in Headers */,
 				7B42B6591AB8A8D200F02528 /* AbstractLoginActivity.h in Headers */,
@@ -633,6 +640,7 @@
 				7BCCF7531AF826C6007F6B09 /* SyncingInjection.m in Sources */,
 				7B5F220C1A8D3AC50031E2F2 /* ServerComm.m in Sources */,
 				7BADD13C1A8BDABF0005FC5E /* ThreadChecker.m in Sources */,
+				7BDA73E31B543419003B00BA /* SyncModelSerializer.m in Sources */,
 				7BBE8F621AFA3C8500155AC4 /* ReadOnlyAbstractSyncManager.m in Sources */,
 				7BE488431B4ED81900985165 /* Annotations.m in Sources */,
 				7B3DDCA71A9DFB9900966A5B /* CustomTransactionManager.m in Sources */,
