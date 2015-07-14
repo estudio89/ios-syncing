@@ -7,8 +7,53 @@
 //
 
 #import "TestSyncManager.h"
+#import "Annotations.h"
+#import "TestManagedObjectContext.h"
 
 @implementation TestSyncManager
+
+/**
+ getAnnotations
+ */
+- (Annotations *)getAnnotations
+{
+    // fields
+    NSDictionary *pubDate = [[NSDictionary alloc] init];
+    NSDictionary *name = [[NSDictionary alloc] init];
+    NSDictionary *parent = @{@"name":@"parent_id"};
+    NSDictionary *children = @{@"name":@"children_objs"};
+    NSDictionary *otherChildren = @{@"name":@"other_children_objs"};
+    NSDictionary *fields = @{@"pubDate":pubDate,
+                             @"name":name,
+                             @"parent":parent,
+                             @"children":children,
+                             @"otherChildren":otherChildren};
+    // nested managers
+    NSDictionary *childrenNestedManager = @{@"entityName":@"ChildSyncEntity",
+                                            @"manager":@"ChildSyncManager",
+                                            @"paginationParams":@"children_pagination"};
+    NSDictionary *otherChildrenNestedManager = @{@"entityName":@"OtherChildSyncEntity",
+                                                 @"manager":@"OtherChildSyncManager",
+                                                 @"writable":@YES,
+                                                 @"discardOnSave":@YES};
+    NSDictionary *nestedManagers = @{@"children":childrenNestedManager,
+                                     @"otherChildren":otherChildrenNestedManager};
+    
+    // paginate
+    NSDictionary *paginate = @{@"byField":@"pubDate",
+                               @"extraIdentifier":@"paginationIdentifier"};
+    
+    // annotation
+    NSDictionary *annotationDict = @{@"fields":fields,
+                                     @"entityName":@"TestSyncEntity",
+                                     @"paginate":paginate,
+                                     @"nestedManagers":nestedManagers};
+    
+    Annotations *annotations = [[Annotations alloc] initWithAnnotation:annotationDict
+                                                           withContext:[TestManagedObjectContext context]];
+    
+    return annotations;
+}
 
 /**
  getIdentifier
@@ -35,22 +80,6 @@
 }
 
 /**
- getModifiedData
- */
-- (NSMutableArray *)getModifiedData
-{
-    return [[NSMutableArray alloc] init];
-}
-
-/**
- hasModifiedData
- */
-- (BOOL)hasModifiedData
-{
-    return NO;
-}
-
-/**
  getModifiedFiles
  */
 - (NSMutableArray *)getModifiedFiles
@@ -64,37 +93,6 @@
 - (NSMutableArray *)getModifiedFilesForObject:(NSDictionary *)object
 {
     return [[NSMutableArray alloc] init];
-}
-
-/**
- saveNewData
- */
-- (NSMutableArray *)saveNewData:(NSArray *)jsonObjects withDeviceId:(NSString *)deviceId withParameters:(NSDictionary *)responseParameters
-{
-    return [[NSMutableArray alloc] init];
-}
-
-/**
- processSendResponse
- */
-- (void)processSendResponse:(NSArray *)jsonResponse
-{
-}
-
-/**
- serializeObject
- */
--(NSDictionary *)serializeObject:(NSObject *)object
-{
-    return [[NSDictionary alloc] init];
-}
-
-/**
- saveObject
- */
-- (id)saveObject:(NSDictionary *)object withDeviceId:(NSString *)deviceId
-{
-    return [[NSObject alloc] init];
 }
 
 /**

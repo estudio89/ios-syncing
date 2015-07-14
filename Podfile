@@ -11,5 +11,6 @@ target 'Syncing Tests' do
 pod 'OCMock'
 pod 'OHHTTPStubs'
 pod 'OCMockito'
+pod "MagicalRecord"
 end
 

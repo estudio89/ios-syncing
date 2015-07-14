@@ -11,15 +11,18 @@
 #import <Raven/RavenClient.h>
 #import "JSONSerializer.h"
 #import "SyncModelSerializer.h"
+#import "SyncEntity.h"
+#import "Annotations.h"
+#import "ReadOnlyAbstractSyncManager.h"
 
 @interface AbstractSyncManager ()
 
-@property (strong, nonatomic) Annotations *annotations;
-@property (strong, nonatomic) NSMutableDictionary *parentAttributes;
-@property (strong, nonatomic) NSMutableDictionary *childrenAttributes;
+@property (strong, nonatomic, readwrite) Annotations *annotations;
+@property (strong, nonatomic, readwrite) NSMutableDictionary *parentAttributes;
+@property (strong, nonatomic, readwrite) NSMutableDictionary *childrenAttributes;
 @property BOOL shouldPaginate;
 @property (strong, nonatomic) NSString *entityName;
-@property (strong, nonatomic) NSAttributeDescription *dateAttribute;
+@property (strong, nonatomic, readwrite) NSAttributeDescription *dateAttribute;
 @property (strong, nonatomic) NSString *paginationIdentifier;
 @property (strong, nonatomic) NSManagedObject *oldestInCache;
 
@@ -186,16 +189,8 @@
         BOOL deleteCache = [[responseParameters objectForKey:@"deleteCache"] boolValue];
         if (deleteCache)
         {
-            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:_entityName];
-            [fetchRequest setIncludesPropertyValues:NO];
-            deletedObjects = [context executeFetchRequest:fetchRequest error:nil];
-            
-            for (NSManagedObject *obj in deletedObjects)
-            {
-                [context deleteObject:obj];
-            }
-            [context save:nil];
-            
+            deletedObjects = [self deleteAllWithContext:context];
+
             [self saveBooleanPref:[NSString stringWithFormat:@"more%@", [self getPaginationIdentifier:responseParameters]] withValue:YES];
         }
     }
@@ -415,8 +410,10 @@
             
             if (annotation.discardOnSave && newItem.objectID != nil)
             {
-                //FIXME
-                [self deleteAllChildren];
+                [self deleteAllChildrenFromEntity:annotation.entityName
+                              withParentAttribute:annotation.attributeName
+                                     withParentId:newItem.objectID
+                                      withContext:context];
             }
             
             NSArray *newChildren = [nestedSyncManager saveNewData:children
@@ -572,9 +569,37 @@
     return [object objectForKey:key] != nil && ![[object valueForKey:key] isEqualToString:@"nil"] ? [object valueForKey:key] : nil;
 }
 
-- (void)deleteAllChildren
+- (NSArray *)deleteAllWithContext:(NSManagedObjectContext *)context
 {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:_entityName];
+    [fetchRequest setIncludesPropertyValues:NO];
+    NSArray *deletedObjects = [context executeFetchRequest:fetchRequest error:nil];
     
+    for (NSManagedObject *obj in deletedObjects)
+    {
+        [context deleteObject:obj];
+    }
+    [context save:nil];
+    
+    return deletedObjects;
+}
+
+- (void)deleteAllChildrenFromEntity:(NSString *)entity
+                withParentAttribute:(NSString *)parent
+                       withParentId:(NSManagedObjectID *)parentId
+                        withContext:(NSManagedObjectContext *)context
+{
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity];
+    [fetchRequest setIncludesPropertyValues:NO];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%@.objectID==%@", parent, parentId]];
+    
+    NSArray *deletedObjects = [context executeFetchRequest:fetchRequest error:nil];
+    
+    for (NSManagedObject *obj in deletedObjects)
+    {
+        [context deleteObject:obj];
+    }
+    [context save:nil];
 }
 
 - (BOOL)moreOnServerWithContext

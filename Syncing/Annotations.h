@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Syncing.h"
+#import "SyncManager.h"
 
 @interface Paginate : NSObject
 
@@ -32,13 +32,15 @@
 
 @interface NestedManager : NSObject
 
+@property (strong, readonly) NSString *entityName;
+@property (strong, readonly) NSString *attributeName;
 @property (strong, readonly) id<SyncManager> manager;
 @property BOOL writable;
 @property SEL accessorMethod;
 @property BOOL discardOnSave;
 @property (strong, readonly) NSString *paginationParams;
 
-- (instancetype)initWithAnnotation:(NSDictionary *)annotation;
+- (instancetype)initWithAnnotation:(NSDictionary *)annotation withAttributeName:(NSString *)attributeName;
 
 @end
 

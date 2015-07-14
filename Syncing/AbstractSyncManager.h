@@ -7,12 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Syncing.h"
-#import "Annotations.h"
+#import "SyncManager.h"
+
+@class Annotations;
 
 @interface AbstractSyncManager : NSObject<SyncManager>
 
-- (instancetype)initWithAnnotation:(NSDictionary *)annotation;
+@property (strong, nonatomic, readonly) Annotations *annotations;
+@property (strong, nonatomic, readonly) NSAttributeDescription *dateAttribute;
+@property (strong, nonatomic, readonly) NSMutableDictionary *parentAttributes;
+@property (strong, nonatomic, readonly) NSMutableDictionary *childrenAttributes;
 - (Annotations *)getAnnotations;
 
 @end

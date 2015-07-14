@@ -211,7 +211,7 @@
     NSMutableDictionary *formulariosParams = [[NSMutableDictionary alloc] initWithDictionary:formulariosObj];
     [formulariosParams removeObjectForKey:@"data"];
     
-    assertThatBool([_customTransactionManager wasSuccessful], equalToBool(YES));
+    assertThatBool([_customTransactionManager wasSuccessful], isTrue());
     
     // registros
     argument = [[MKTArgumentCaptor alloc] init];
@@ -238,7 +238,7 @@
     [MKTVerify(_syncConfig) setTimestamps:@"777"];
     
     // get data realizado
-    assertThatBool(completed, equalToBool(YES));
+    assertThatBool(completed, isTrue());
 }
 
 /**
@@ -259,7 +259,7 @@
     [MKTVerifyCount(_syncConfig, never()) setTimestamps:anything()];
     
     // get data naor ealizado
-    assertThatBool(completed, equalToBool(NO));
+    assertThatBool(completed, isFalse());
 }
 
 /**
@@ -300,7 +300,7 @@
     NSMutableDictionary *empresasParams = [[NSMutableDictionary alloc] initWithDictionary:empresasObj];
     [empresasParams removeObjectForKey:@"data"];
     
-    assertThatBool([_customTransactionManager wasSuccessful], equalToBool(YES));
+    assertThatBool([_customTransactionManager wasSuccessful], isTrue());
     
     // registros
     argument = [[MKTArgumentCaptor alloc] init];
@@ -321,7 +321,7 @@
     [MKTVerifyCount(_syncConfig, never()) setTimestamps:anything()];
     
     // get data realizado
-    assertThatBool(completed, equalToBool(YES));
+    assertThatBool(completed, isTrue());
 }
 
 /**
@@ -345,7 +345,7 @@
     [MKTVerifyCount(_syncConfig, never()) setTimestamps:anything()];
     
     // get data naor ealizado
-    assertThatBool(completed, equalToBool(NO));
+    assertThatBool(completed, isFalse());
 }
 
 /**
@@ -375,7 +375,7 @@
     NSArray *registrosArray = [jsonData objectForKey:@"registros_id"];
     NSArray *empresasArray = [jsonData objectForKey:@"empresas_id"];
     
-    assertThatBool([_customTransactionManager wasSuccessful], equalToBool(YES));
+    assertThatBool([_customTransactionManager wasSuccessful], isTrue());
     
     // registros
     argument = [[MKTArgumentCaptor alloc] init];
@@ -405,7 +405,7 @@
     [MKTVerify(_syncConfig) setTimestamps:@"777"];
     
     // get data realizado
-    assertThatBool(completed, equalToBool(YES));
+    assertThatBool(completed, isTrue());
 }
 
 /**
@@ -497,7 +497,7 @@
     assertThat([[argument allValues] objectAtIndex:0], is([jsonData3 objectForKey:@"empresas_id"]));
 
     // envio realizado
-    assertThatBool(completed, equalToBool(YES));
+    assertThatBool(completed, isTrue());
 }
 
 /**
@@ -520,7 +520,7 @@
     [MKTVerifyCount(_syncConfig, never()) setTimestamps:anything()];
     
     // get data naor ealizado
-    assertThatBool(completed, equalToBool(NO));
+    assertThatBool(completed, isFalse());
 }
 
 /**

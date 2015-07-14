@@ -66,7 +66,8 @@
     NSDictionary *nestedManagers = [_Annotation objectForKey:@"nestedManagers"];
     for (NSString *field in [nestedManagers allKeys])
     {
-        NestedManager *nestedManager = [[NestedManager alloc] initWithAnnotation:[nestedManagers objectForKey:field]];
+        NestedManager *nestedManager = [[NestedManager alloc] initWithAnnotation:[nestedManagers objectForKey:field]
+                                                               withAttributeName:field];
         [_nestedManagers setObject:nestedManager forKey:field];
     }
 }
@@ -193,6 +194,8 @@
 
 @interface NestedManager ()
 
+@property (strong, readwrite) NSString *entityName;
+@property (strong, readwrite) NSString *attributeName;
 @property (strong, readwrite) id<SyncManager> manager;
 @property (strong, readwrite) NSString *paginationParams;
 
@@ -200,12 +203,18 @@
 
 @implementation NestedManager
 
-- (instancetype)initWithAnnotation:(NSDictionary *)annotation
+- (instancetype)initWithAnnotation:(NSDictionary *)annotation withAttributeName:(NSString *)attributeName
 {
     self = [super init];
     
     if (self)
     {
+        // entityName
+        _entityName = [annotation valueForKey:@"entityName"];
+        
+        // attributeName
+        _attributeName = attributeName;
+        
         // manager
         Class klass = NSClassFromString([annotation valueForKey:@"manager"]);
         _manager = [[klass alloc] init];

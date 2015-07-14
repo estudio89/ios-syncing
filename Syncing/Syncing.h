@@ -17,9 +17,10 @@
 #import <Syncing/CustomException.h>
 #import <Syncing/SyncingInjection.h>
 #import <Syncing/ServerAuthenticate.h>
-#import <Syncing/ReadOnlyAbstractSyncManager.h>
 #import <Syncing/SecurityUtil.h>
+#import <Syncing/AbstractSyncManager.h>
 #import <Syncing/SyncEntity.h>
+#import <Syncing/ReadOnlyAbstractSyncManager.h>
 
 @interface Syncing : NSObject
 
