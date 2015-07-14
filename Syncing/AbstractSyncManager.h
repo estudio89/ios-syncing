@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Syncing.h>
+#import "Syncing.h"
+#import "Annotations.h"
 
 @interface AbstractSyncManager : NSObject<SyncManager>
 

@@ -650,8 +650,8 @@
 				7BE466171B4C052E00B63C6A /* JSONSerializer.m in Sources */,
 				7B27BFBC1A9A7F1000C7548E /* SyncConfig.m in Sources */,
 				7BE466201B4C198800B63C6A /* DateSerializer.m in Sources */,
-				7BE466281B4C568200B63C6A /* AbstractSyncManager.m in Sources */,
 				7BAEDBBC1A97B69E0078AEA9 /* DataSyncHelper.m in Sources */,
+				7BE466281B4C568200B63C6A /* AbstractSyncManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

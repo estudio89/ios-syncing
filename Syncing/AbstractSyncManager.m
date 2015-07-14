@@ -339,7 +339,8 @@
                             withIdClient:idClient
                             withDeviceId:deviceId
                         withItemDeviceId:itemDeviceId
-                              withObject:object];
+                              withObject:object
+                             withContext:context];
     BOOL checkIsNew = NO;
     if (newItem == nil)
     {
@@ -376,7 +377,7 @@
             NSAttributeDescription *parentAttribute = [_parentAttributes objectForKey:parentAttributeName];
             NSString *parentId = [object valueForKey:parentAttributeName];
             
-            SyncEntity *parent = [self findParent:parentAttribute.attributeValueClassName withParentId:parentId];
+            SyncEntity *parent = [self findParent:parentAttribute.attributeValueClassName withParentId:parentId withContext:context];
             if (parent == nil && [parentId isEqual:@"nil"])
             {
                 NSString *reason = [NSString stringWithFormat:@"An item of class %@ with id server %@ was not found for item of class %@ with id_server %@", parentAttribute.attributeValueClassName, parentId, _entityName, newItem.idServer];
@@ -414,8 +415,16 @@
             
             if (annotation.discardOnSave && newItem.objectID != nil)
             {
-                
+                //FIXME
+                [self deleteAllChildren];
             }
+            
+            NSArray *newChildren = [nestedSyncManager saveNewData:children
+                                                     withDeviceId:deviceId
+                                                   withParameters:childParams
+                                                      withContext:context];
+            
+            [nestedSyncManager postEvent:newChildren withBus:[[AsyncBus alloc] init]];
         }
         
     }
@@ -425,8 +434,14 @@
 
 - (void)saveBooleanPref:(NSString *)key withValue:(BOOL)value
 {
-    [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:value] forKey:key];
+    NSString *prefKey = [NSString stringWithFormat:@"%@.%@", _entityName, key];
+    [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:value] forKey:prefKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (BOOL)booleanPref:(NSString *)key
+{
+    return [[[NSUserDefaults standardUserDefaults] valueForKey:key] boolValue];
 }
 
 - (NSManagedObject *)getOldestFromContext:(NSManagedObjectContext *)context
@@ -451,13 +466,15 @@
             withIdClient:(NSString *)idClient
             withDeviceId:(NSString *)deviceId
         withItemDeviceId:(NSString *)itemDeviceId
+             withContext:(NSManagedObjectContext *)context
 {
     return [self findItem:idServer
              withIdClient:idClient
              withDeviceId:deviceId
          withItemDeviceId:itemDeviceId
        withIgnoreDeviceId:NO
-               withObject:nil];
+               withObject:nil
+              withContext:context];
     
 }
 
@@ -466,13 +483,15 @@
             withDeviceId:(NSString *)deviceId
         withItemDeviceId:(NSString *)itemDeviceId
       withIgnoreDeviceId:(BOOL)ignoreDeviceId
+             withContext:(NSManagedObjectContext *)context
 {
     return [self findItem:idServer
              withIdClient:idClient
              withDeviceId:deviceId
          withItemDeviceId:itemDeviceId
        withIgnoreDeviceId:NO
-               withObject:nil];
+               withObject:nil
+              withContext:context];
 }
 
 - (SyncEntity *)findItem:(NSNumber *)idServer
@@ -480,13 +499,15 @@
             withDeviceId:(NSString *)deviceId
         withItemDeviceId:(NSString *)itemDeviceId
               withObject:(NSDictionary *)object
+             withContext:(NSManagedObjectContext *)context
 {
     return [self findItem:idServer
              withIdClient:idClient
              withDeviceId:deviceId
          withItemDeviceId:itemDeviceId
        withIgnoreDeviceId:NO
-               withObject:object];
+               withObject:object
+              withContext:context];
 }
 
 - (SyncEntity *)findItem:(NSNumber *)idServer
@@ -495,6 +516,7 @@
         withItemDeviceId:(NSString *)itemDeviceId
       withIgnoreDeviceId:(BOOL)ignoreDeviceId
               withObject:(NSDictionary *)object
+             withContext:(NSManagedObjectContext *)context
 {
     NSArray *objectList = nil;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:_entityName];
@@ -522,7 +544,7 @@
     }
 }
 
-- (SyncEntity *)findParent:(NSString *)parentEntity withParentId:(NSString *)parentId
+- (SyncEntity *)findParent:(NSString *)parentEntity withParentId:(NSString *)parentId withContext:(NSManagedObjectContext *)context
 {
     if (parentId == nil || [parentId isEqualToString:@"nil"])
     {
@@ -553,6 +575,25 @@
 - (void)deleteAllChildren
 {
     
+}
+
+- (BOOL)moreOnServerWithContext
+{
+    return [self moreOnServerWithPaginationIdentifier:nil];
+}
+
+- (BOOL)moreOnServerWithPaginationIdentifier:(NSString *)paginationIdentifier
+{
+    if (paginationIdentifier == nil || [paginationIdentifier isEqualToString:@""])
+    {
+        paginationIdentifier = @"";
+    }
+    else if (![paginationIdentifier hasPrefix:@"."])
+    {
+        paginationIdentifier = [NSString stringWithFormat:@".%@", paginationIdentifier];
+    }
+    
+    return [self booleanPref:[NSString stringWithFormat:@"%@.more%@", _entityName, paginationIdentifier]];
 }
 
 @end
