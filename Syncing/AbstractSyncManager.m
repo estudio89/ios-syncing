@@ -62,8 +62,8 @@
 
 - (void)verifyFields
 {
-    NSEntityDescription *superClassEntity = [NSEntityDescription entityForName:_entityName
-                                                        inManagedObjectContext:[_annotations context]];
+    NSEntityDescription *superClassEntity = [self entityDescriptionForName:_entityName withContext:[_annotations context]];
+    
     NSDictionary *attributes = [superClassEntity attributesByName];
     
     NSString *paginateField = @"";
@@ -339,7 +339,7 @@
     BOOL checkIsNew = NO;
     if (newItem == nil)
     {
-        newItem = [NSEntityDescription insertNewObjectForEntityForName:_entityName inManagedObjectContext:context];
+        newItem = [self newObjectForEntity:_entityName withContext:context];
         checkIsNew = YES;
     }
     
@@ -385,7 +385,7 @@
         }
     }
     
-    [context save:nil];
+    [self performSaveWithContext:context];
     
     if ([_childrenAttributes count] > 0)
     {
@@ -567,6 +567,23 @@
 - (NSString *)stringOrNil:(NSDictionary *)object withKey:(NSString *)key
 {
     return [object objectForKey:key] != nil && ![[object valueForKey:key] isEqualToString:@"nil"] ? [object valueForKey:key] : nil;
+}
+
+- (id)newObjectForEntity:(NSString *)entityName withContext:(NSManagedObjectContext *)context
+{
+    return [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:context];
+}
+
+- (NSEntityDescription *)entityDescriptionForName:(NSString *)entityName
+                                      withContext:(NSManagedObjectContext *)context
+{
+    return [NSEntityDescription entityForName:entityName
+                       inManagedObjectContext:context];
+}
+
+- (void)performSaveWithContext:(NSManagedObjectContext *)context
+{
+    [context save:nil];
 }
 
 - (NSArray *)deleteAllWithContext:(NSManagedObjectContext *)context
