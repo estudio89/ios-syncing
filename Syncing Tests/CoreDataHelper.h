@@ -1,5 +1,5 @@
 //
-//  ChildSyncEntity.h
+//  CoreDataHelper.h
 //  Syncing
 //
 //  Created by Rodrigo Suhr on 7/15/15.
@@ -8,12 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "SyncEntity.h"
 
-@class TestSyncEntity;
+@interface CoreDataHelper : NSObject
 
-@interface ChildSyncEntity : SyncEntity
-
-@property (nonatomic, retain) TestSyncEntity *testSync;
++ (NSManagedObjectContext *)context;
 
 @end

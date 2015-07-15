@@ -49,10 +49,6 @@
 		7B42B6581AB8A8D200F02528 /* CustomException.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B3D13911AA0E68B0022525A /* CustomException.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7B42B6591AB8A8D200F02528 /* AbstractLoginActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BD43C4D1AB1C65C00C58368 /* AbstractLoginActivity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7B42B65A1AB8A8D200F02528 /* ServerAuthenticate.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BD43C501AB20E8200C58368 /* ServerAuthenticate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7B56983C1B5572A900FEC191 /* TestSyncEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B56983B1B5572A900FEC191 /* TestSyncEntity.m */; };
-		7B5698401B55731300FEC191 /* ParentSyncEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B56983F1B55731300FEC191 /* ParentSyncEntity.m */; };
-		7B5698431B55732700FEC191 /* ChildSyncEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5698421B55732700FEC191 /* ChildSyncEntity.m */; };
-		7B5698461B55733C00FEC191 /* OtherChildSyncEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5698451B55733C00FEC191 /* OtherChildSyncEntity.m */; };
 		7B56984D1B55792A00FEC191 /* ChildSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B56984C1B55792A00FEC191 /* ChildSyncManager.m */; };
 		7B5698501B55795E00FEC191 /* OtherChildSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B56984F1B55795E00FEC191 /* OtherChildSyncManager.m */; };
 		7B5698531B55798C00FEC191 /* TestReadOnlySyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5698521B55798C00FEC191 /* TestReadOnlySyncManager.m */; };
@@ -85,6 +81,12 @@
 		7BD4BADB1AAE19EE00194BFB /* get-data-request.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BD4BADA1AAE19EE00194BFB /* get-data-request.json */; };
 		7BD4BADE1AAE3F0600194BFB /* libPods-Syncing Tests-OCHamcrest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD4BADC1AAE3F0600194BFB /* libPods-Syncing Tests-OCHamcrest.a */; };
 		7BD4BADF1AAE3F0600194BFB /* libPods-Syncing Tests-OCMockito.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD4BADD1AAE3F0600194BFB /* libPods-Syncing Tests-OCMockito.a */; };
+		7BD700591B56FD12006EB19D /* CoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD700581B56FD12006EB19D /* CoreDataHelper.m */; };
+		7BD7005C1B56FF03006EB19D /* SyncModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7BD7005A1B56FF03006EB19D /* SyncModel.xcdatamodeld */; };
+		7BD7005F1B570333006EB19D /* ParentSyncEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD7005E1B570333006EB19D /* ParentSyncEntity.m */; };
+		7BD700621B570333006EB19D /* TestSyncEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD700611B570333006EB19D /* TestSyncEntity.m */; };
+		7BD700651B570333006EB19D /* ChildSyncEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD700641B570333006EB19D /* ChildSyncEntity.m */; };
+		7BD700681B570334006EB19D /* OtherChildSyncEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD700671B570334006EB19D /* OtherChildSyncEntity.m */; };
 		7BD7E7411B15F07D00FC984C /* SecurityUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BD7E73F1B15F07D00FC984C /* SecurityUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7BD7E7421B15F07D00FC984C /* SecurityUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD7E7401B15F07D00FC984C /* SecurityUtil.m */; };
 		7BD7E7441B1613A800FC984C /* libPods-Syncing-Raven.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD7E7431B1613A800FC984C /* libPods-Syncing-Raven.a */; };
@@ -150,14 +152,6 @@
 		7B3D13921AA0E68B0022525A /* CustomException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomException.m; sourceTree = "<group>"; };
 		7B3DDCA51A9DFB9900966A5B /* CustomTransactionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTransactionManager.h; sourceTree = "<group>"; };
 		7B3DDCA61A9DFB9900966A5B /* CustomTransactionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTransactionManager.m; sourceTree = "<group>"; };
-		7B56983A1B5572A900FEC191 /* TestSyncEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSyncEntity.h; sourceTree = "<group>"; };
-		7B56983B1B5572A900FEC191 /* TestSyncEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSyncEntity.m; sourceTree = "<group>"; };
-		7B56983E1B55731300FEC191 /* ParentSyncEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParentSyncEntity.h; sourceTree = "<group>"; };
-		7B56983F1B55731300FEC191 /* ParentSyncEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParentSyncEntity.m; sourceTree = "<group>"; };
-		7B5698411B55732700FEC191 /* ChildSyncEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildSyncEntity.h; sourceTree = "<group>"; };
-		7B5698421B55732700FEC191 /* ChildSyncEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildSyncEntity.m; sourceTree = "<group>"; };
-		7B5698441B55733C00FEC191 /* OtherChildSyncEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherChildSyncEntity.h; sourceTree = "<group>"; };
-		7B5698451B55733C00FEC191 /* OtherChildSyncEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherChildSyncEntity.m; sourceTree = "<group>"; };
 		7B56984B1B55792A00FEC191 /* ChildSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildSyncManager.h; sourceTree = "<group>"; };
 		7B56984C1B55792A00FEC191 /* ChildSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildSyncManager.m; sourceTree = "<group>"; };
 		7B56984E1B55795E00FEC191 /* OtherChildSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherChildSyncManager.h; sourceTree = "<group>"; };
@@ -204,6 +198,17 @@
 		7BD4BADA1AAE19EE00194BFB /* get-data-request.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "get-data-request.json"; sourceTree = "<group>"; };
 		7BD4BADC1AAE3F0600194BFB /* libPods-Syncing Tests-OCHamcrest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OCHamcrest.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OCHamcrest.a"; sourceTree = "<group>"; };
 		7BD4BADD1AAE3F0600194BFB /* libPods-Syncing Tests-OCMockito.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OCMockito.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OCMockito.a"; sourceTree = "<group>"; };
+		7BD700571B56FD12006EB19D /* CoreDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataHelper.h; sourceTree = "<group>"; };
+		7BD700581B56FD12006EB19D /* CoreDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataHelper.m; sourceTree = "<group>"; };
+		7BD7005B1B56FF03006EB19D /* SyncModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SyncModel.xcdatamodel; sourceTree = "<group>"; };
+		7BD7005D1B570333006EB19D /* ParentSyncEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParentSyncEntity.h; sourceTree = "<group>"; };
+		7BD7005E1B570333006EB19D /* ParentSyncEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParentSyncEntity.m; sourceTree = "<group>"; };
+		7BD700601B570333006EB19D /* TestSyncEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSyncEntity.h; sourceTree = "<group>"; };
+		7BD700611B570333006EB19D /* TestSyncEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSyncEntity.m; sourceTree = "<group>"; };
+		7BD700631B570333006EB19D /* ChildSyncEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildSyncEntity.h; sourceTree = "<group>"; };
+		7BD700641B570333006EB19D /* ChildSyncEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildSyncEntity.m; sourceTree = "<group>"; };
+		7BD700661B570334006EB19D /* OtherChildSyncEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherChildSyncEntity.h; sourceTree = "<group>"; };
+		7BD700671B570334006EB19D /* OtherChildSyncEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherChildSyncEntity.m; sourceTree = "<group>"; };
 		7BD7E73D1B15E65500FC984C /* libPods-Syncing-Raven.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing-Raven.a"; path = "Pods/../build/Debug-iphoneos/libPods-Syncing-Raven.a"; sourceTree = "<group>"; };
 		7BD7E73F1B15F07D00FC984C /* SecurityUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityUtil.h; sourceTree = "<group>"; };
 		7BD7E7401B15F07D00FC984C /* SecurityUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityUtil.m; sourceTree = "<group>"; };
@@ -292,14 +297,17 @@
 		7B56983D1B5572AF00FEC191 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				7B56983A1B5572A900FEC191 /* TestSyncEntity.h */,
-				7B56983B1B5572A900FEC191 /* TestSyncEntity.m */,
-				7B56983E1B55731300FEC191 /* ParentSyncEntity.h */,
-				7B56983F1B55731300FEC191 /* ParentSyncEntity.m */,
-				7B5698411B55732700FEC191 /* ChildSyncEntity.h */,
-				7B5698421B55732700FEC191 /* ChildSyncEntity.m */,
-				7B5698441B55733C00FEC191 /* OtherChildSyncEntity.h */,
-				7B5698451B55733C00FEC191 /* OtherChildSyncEntity.m */,
+				7BD700661B570334006EB19D /* OtherChildSyncEntity.h */,
+				7BD700671B570334006EB19D /* OtherChildSyncEntity.m */,
+				7BD700631B570333006EB19D /* ChildSyncEntity.h */,
+				7BD700641B570333006EB19D /* ChildSyncEntity.m */,
+				7BD700601B570333006EB19D /* TestSyncEntity.h */,
+				7BD700611B570333006EB19D /* TestSyncEntity.m */,
+				7BD7005D1B570333006EB19D /* ParentSyncEntity.h */,
+				7BD7005E1B570333006EB19D /* ParentSyncEntity.m */,
+				7BD700571B56FD12006EB19D /* CoreDataHelper.h */,
+				7BD700581B56FD12006EB19D /* CoreDataHelper.m */,
+				7BD7005A1B56FF03006EB19D /* SyncModel.xcdatamodeld */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -714,18 +722,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BAF980B1B1CA4BD00FDE4AA /* SecuryUtilTests.m in Sources */,
+				7BD700651B570333006EB19D /* ChildSyncEntity.m in Sources */,
 				7B82A2C31AB3741900636503 /* ServerAuthenticateTests.m in Sources */,
-				7B5698431B55732700FEC191 /* ChildSyncEntity.m in Sources */,
+				7BD7005F1B570333006EB19D /* ParentSyncEntity.m in Sources */,
 				7B1321CA1AAF7CE200EAB1AF /* DataSyncHelperPartialTests.m in Sources */,
+				7BD7005C1B56FF03006EB19D /* SyncModel.xcdatamodeld in Sources */,
+				7BD700621B570333006EB19D /* TestSyncEntity.m in Sources */,
 				7B2E8A4B1AADD7180069DF31 /* DataSyncHelperTests.m in Sources */,
-				7B5698461B55733C00FEC191 /* OtherChildSyncEntity.m in Sources */,
 				7B56984D1B55792A00FEC191 /* ChildSyncManager.m in Sources */,
-				7B56983C1B5572A900FEC191 /* TestSyncEntity.m in Sources */,
 				7B63D8C51AA8CF0C005D781A /* SyncConfigTests.m in Sources */,
 				7B5698531B55798C00FEC191 /* TestReadOnlySyncManager.m in Sources */,
+				7BD700681B570334006EB19D /* OtherChildSyncEntity.m in Sources */,
+				7BD700591B56FD12006EB19D /* CoreDataHelper.m in Sources */,
 				7B1F594C1AA7B1DD00EDCC38 /* TestSyncManager.m in Sources */,
 				7B5698501B55795E00FEC191 /* OtherChildSyncManager.m in Sources */,
-				7B5698401B55731300FEC191 /* ParentSyncEntity.m in Sources */,
 				7B63D8C71AA8CF78005D781A /* ServerCommTests.m in Sources */,
 				7BF770AC1AA4A4C2007BCAD6 /* Syncing_Tests.m in Sources */,
 				7B5698581B557D2300FEC191 /* SyncManagerTests.m in Sources */,
@@ -967,6 +977,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		7BD7005A1B56FF03006EB19D /* SyncModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7BD7005B1B56FF03006EB19D /* SyncModel.xcdatamodel */,
+			);
+			currentVersion = 7BD7005B1B56FF03006EB19D /* SyncModel.xcdatamodel */;
+			path = SyncModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 7BADD1151A8BD82B0005FC5E /* Project object */;
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="ChildSyncEntity" representedClassName="ChildSyncEntity" parentEntity="SyncEntity" syncable="YES">
+        <relationship name="testSync" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TestSyncEntity" inverseName="children" inverseEntity="TestSyncEntity" syncable="YES"/>
+    </entity>
+    <entity name="OtherChildSyncEntity" representedClassName="OtherChildSyncEntity" parentEntity="SyncEntity" syncable="YES">
+        <attribute name="other" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="testSync" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TestSyncEntity" inverseName="otherChildren" inverseEntity="TestSyncEntity" syncable="YES"/>
+    </entity>
+    <entity name="ParentSyncEntity" representedClassName="ParentSyncEntity" parentEntity="SyncEntity" syncable="YES">
+        <relationship name="testSync" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TestSyncEntity" inverseName="parent" inverseEntity="TestSyncEntity" syncable="YES"/>
+    </entity>
+    <entity name="SyncEntity" representedClassName="SyncEntity" isAbstract="YES" syncable="YES">
+        <attribute name="idServer" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="isNew" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="modified" optional="YES" attributeType="Boolean" syncable="YES"/>
+    </entity>
+    <entity name="TestSyncEntity" representedClassName="TestSyncEntity" parentEntity="SyncEntity" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pubDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="children" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ChildSyncEntity" inverseName="testSync" inverseEntity="ChildSyncEntity" syncable="YES"/>
+        <relationship name="otherChildren" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="OtherChildSyncEntity" inverseName="testSync" inverseEntity="OtherChildSyncEntity" syncable="YES"/>
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ParentSyncEntity" inverseName="testSync" inverseEntity="ParentSyncEntity" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="SyncEntity" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="TestSyncEntity" positionX="-54" positionY="18" width="128" height="120"/>
+        <element name="ParentSyncEntity" positionX="-36" positionY="36" width="128" height="60"/>
+        <element name="ChildSyncEntity" positionX="-18" positionY="54" width="128" height="60"/>
+        <element name="OtherChildSyncEntity" positionX="0" positionY="72" width="128" height="75"/>
+    </elements>
+</model>

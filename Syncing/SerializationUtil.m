@@ -35,40 +35,49 @@
 
 + (NSString *)propertyClassNameFor:(objc_property_t)property
 {
-    return [NSString stringWithFormat:@"%s", getPropertyType(property)];
+    const char *type = property_getAttributes(property);
+    NSString *typeString = [NSString stringWithUTF8String:type];
+    NSArray *attributes = [typeString componentsSeparatedByString:@","];
+    NSString *typeAttribute = [attributes objectAtIndex:0];
+    NSString *className = @"";
+    
+    if ([typeAttribute characterAtIndex:0] == 'T' && [typeAttribute characterAtIndex:1] != '@')
+    {
+        // it's a C primitive type
+        className = [typeAttribute substringWithRange:NSMakeRange(1, [typeAttribute length]-1)];
+    }
+    else if ([typeAttribute characterAtIndex:0] == 'T' && [typeAttribute characterAtIndex:1] == '@' && [typeAttribute length] == 2)
+    {
+        // it's an ObjC id type
+        className = @"id";
+    }
+    else if ([typeAttribute characterAtIndex:0] == 'T' && [typeAttribute characterAtIndex:1] == '@')
+    {
+        // it's another ObjC object type
+        className = [typeAttribute substringWithRange:NSMakeRange(3, [typeAttribute length]-4)];
+    }
+    
+    return className;
 }
 
 + (Class)propertyTypeFor:(objc_property_t)property
 {
-    return NSClassFromString([NSString stringWithFormat:@"%s", getPropertyType(property)]);
+    return NSClassFromString([NSString stringWithFormat:@"%@", [self propertyClassNameFor:property]]);
 }
 
-static const char * getPropertyType(objc_property_t property)
++ (NSArray *)propertyArrayFrom:(Class)type
 {
-    const char *attributes = property_getAttributes(property);
-    char buffer[1 + strlen(attributes)];
-    strcpy(buffer, attributes);
-    char *state = buffer, *attribute;
-    while ((attribute = strsep(&state, ",")) != NULL)
+    NSMutableArray *propertyArray = [[NSMutableArray alloc] init];
+    unsigned int outCount, i;
+    objc_property_t *properties = class_copyPropertyList(type, &outCount);
+    
+    for (i = 0; i < outCount; i++)
     {
-        if (attribute[0] == 'T' && attribute[1] != '@')
-        {
-            // it's a C primitive type
-            return (const char *)[[NSData dataWithBytes:(attribute + 1) length:strlen(attribute) - 1] bytes];
-        }
-        else if (attribute[0] == 'T' && attribute[1] == '@' && strlen(attribute) == 2)
-        {
-            // it's an ObjC id type
-            return "id";
-        }
-        else if (attribute[0] == 'T' && attribute[1] == '@')
-        {
-            // it's another ObjC object type
-            return (const char *)[[NSData dataWithBytes:(attribute + 3) length:strlen(attribute) - 4] bytes];
-        }
+        objc_property_t property = properties[i];
+        [propertyArray addObject:CFBridgingRelease(property)];
     }
     
-    return "";
+    return propertyArray;
 }
 
 @end

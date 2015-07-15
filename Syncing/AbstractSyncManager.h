@@ -18,5 +18,6 @@
 @property (strong, nonatomic, readonly) NSMutableDictionary *parentAttributes;
 @property (strong, nonatomic, readonly) NSMutableDictionary *childrenAttributes;
 - (Annotations *)getAnnotations;
+- (NSDate *)getDateForObject:(NSManagedObject *)object;
 
 @end

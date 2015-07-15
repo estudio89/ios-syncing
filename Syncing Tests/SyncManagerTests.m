@@ -13,11 +13,13 @@
 #define MOCKITO_SHORTHAND
 #import <OCMockito/OCMockito.h>
 #import "TestSyncManager.h"
-#import <MagicalRecord/MagicalRecord.h>
+#import "TestSyncEntity.h"
+#import "CoreDataHelper.h"
 
 @interface SyncManagerTests : XCTestCase
 
 @property (nonatomic) TestSyncManager *testSyncManager;
+@property (nonatomic) NSManagedObjectContext *context;
 
 @end
 
@@ -25,9 +27,24 @@
 
 - (void)setUp {
     [super setUp];
-    //[MagicalRecord setupCoreDataStackWithInMemoryStore];
+    
+    _context = [CoreDataHelper context];
     
     _testSyncManager = [[TestSyncManager alloc] init];
+    
+    //-----mock
+    //getModifiedDataWithContext
+    //hasModifiedDataWithContext
+    //processSendResponse
+    //getOldestFromContext
+    //findItem
+    //findParent
+    //newObjectForEntity
+    //entityDescriptionForName
+    //performSaveWithContext
+    //deleteAllWithContext
+    //deleteAllChildrenFromEntity
+    
 }
 
 - (void)tearDown {
@@ -54,6 +71,14 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF IN %@", [_testSyncManager.parentAttributes allKeys]];
     assertThatBool([predicate evaluateWithObject:@"parent_id"], isTrue());
     assertThatInt([[_testSyncManager.childrenAttributes allKeys] count], equalToInt(2));
+}
+
+- (void)testGetDate
+{
+    NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"TestSyncEntity" inManagedObjectContext:_context];
+    TestSyncEntity *item = [[TestSyncEntity alloc] initWithEntity:entityDesc insertIntoManagedObjectContext:_context];
+    item.pubDate = [NSDate date];
+    assertThat([_testSyncManager getDateForObject:item], is(item.pubDate));
 }
 
 @end

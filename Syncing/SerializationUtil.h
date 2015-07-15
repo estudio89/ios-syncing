@@ -18,5 +18,6 @@
 + (NSString *)formatServerDate:(NSDate *)date;
 + (NSString *)propertyClassNameFor:(objc_property_t)property;
 + (Class)propertyTypeFor:(objc_property_t)property;
++ (NSArray *)propertyArrayFrom:(Class)type;
 
 @end
