@@ -48,9 +48,8 @@
 
 @property (strong, readonly) Paginate *paginate;
 @property (strong, readonly) NSString *entityName;
-@property (strong, readonly) NSManagedObjectContext *context;
 
-- (instancetype)initWithAnnotation:(NSDictionary *)annotation withContext:(NSManagedObjectContext *)context;
+- (instancetype)initWithAnnotation:(NSDictionary *)annotation;
 - (JSON *)annotationForAttribute:(NSString *)attribute;
 - (NestedManager *)nestedManagerForAttribute:(NSString *)attribute;
 - (BOOL)hasNestedManagerForAttribute:(NSString *)attribute;

@@ -53,7 +53,6 @@
 		7B5698401B55731300FEC191 /* ParentSyncEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B56983F1B55731300FEC191 /* ParentSyncEntity.m */; };
 		7B5698431B55732700FEC191 /* ChildSyncEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5698421B55732700FEC191 /* ChildSyncEntity.m */; };
 		7B5698461B55733C00FEC191 /* OtherChildSyncEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5698451B55733C00FEC191 /* OtherChildSyncEntity.m */; };
-		7B5698491B5577EB00FEC191 /* TestManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5698481B5577EB00FEC191 /* TestManagedObjectContext.m */; };
 		7B56984D1B55792A00FEC191 /* ChildSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B56984C1B55792A00FEC191 /* ChildSyncManager.m */; };
 		7B5698501B55795E00FEC191 /* OtherChildSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B56984F1B55795E00FEC191 /* OtherChildSyncManager.m */; };
 		7B5698531B55798C00FEC191 /* TestReadOnlySyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5698521B55798C00FEC191 /* TestReadOnlySyncManager.m */; };
@@ -159,8 +158,6 @@
 		7B5698421B55732700FEC191 /* ChildSyncEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildSyncEntity.m; sourceTree = "<group>"; };
 		7B5698441B55733C00FEC191 /* OtherChildSyncEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherChildSyncEntity.h; sourceTree = "<group>"; };
 		7B5698451B55733C00FEC191 /* OtherChildSyncEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherChildSyncEntity.m; sourceTree = "<group>"; };
-		7B5698471B5577EB00FEC191 /* TestManagedObjectContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestManagedObjectContext.h; sourceTree = "<group>"; };
-		7B5698481B5577EB00FEC191 /* TestManagedObjectContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestManagedObjectContext.m; sourceTree = "<group>"; };
 		7B56984B1B55792A00FEC191 /* ChildSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildSyncManager.h; sourceTree = "<group>"; };
 		7B56984C1B55792A00FEC191 /* ChildSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildSyncManager.m; sourceTree = "<group>"; };
 		7B56984E1B55795E00FEC191 /* OtherChildSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherChildSyncManager.h; sourceTree = "<group>"; };
@@ -303,8 +300,6 @@
 				7B5698421B55732700FEC191 /* ChildSyncEntity.m */,
 				7B5698441B55733C00FEC191 /* OtherChildSyncEntity.h */,
 				7B5698451B55733C00FEC191 /* OtherChildSyncEntity.m */,
-				7B5698471B5577EB00FEC191 /* TestManagedObjectContext.h */,
-				7B5698481B5577EB00FEC191 /* TestManagedObjectContext.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -718,7 +713,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7B5698491B5577EB00FEC191 /* TestManagedObjectContext.m in Sources */,
 				7BAF980B1B1CA4BD00FDE4AA /* SecuryUtilTests.m in Sources */,
 				7B82A2C31AB3741900636503 /* ServerAuthenticateTests.m in Sources */,
 				7B5698431B55732700FEC191 /* ChildSyncEntity.m in Sources */,

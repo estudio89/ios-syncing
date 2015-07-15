@@ -17,20 +17,18 @@
 @property (strong, readwrite) Paginate *paginate;
 @property (strong, readwrite) NSMutableDictionary *nestedManagers;
 @property (strong, readwrite) NSString *entityName;
-@property (strong, readwrite) NSManagedObjectContext *context;
 
 @end
 
 @implementation Annotations
 
-- (instancetype)initWithAnnotation:(NSDictionary *)annotation withContext:(NSManagedObjectContext *)context
+- (instancetype)initWithAnnotation:(NSDictionary *)annotation
 {
     self = [super init];
     
     if (self)
     {
         _Annotation = annotation;
-        _context = context;
         _jsonAnnotations = [[NSMutableDictionary alloc] init];
         _nestedManagers = [[NSMutableDictionary alloc] init];
         [self instantiateAnnotations];

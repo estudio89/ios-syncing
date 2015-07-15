@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import <objc/runtime.h>
 #import "Annotations.h"
 
 @interface SerializationUtil : NSObject
@@ -15,5 +16,7 @@
 + (NSString *)getAttributeName:(NSString *)attribute withAnnotation:(JSON *)annotation;
 + (NSDate *)parseServerDate:(NSString *)strDate;
 + (NSString *)formatServerDate:(NSDate *)date;
++ (NSString *)propertyClassNameFor:(objc_property_t)property;
++ (Class)propertyTypeFor:(objc_property_t)property;
 
 @end

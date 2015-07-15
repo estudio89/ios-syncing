@@ -8,7 +8,6 @@
 
 #import "TestSyncManager.h"
 #import "Annotations.h"
-#import "TestManagedObjectContext.h"
 
 @implementation TestSyncManager
 
@@ -49,8 +48,7 @@
                                      @"paginate":paginate,
                                      @"nestedManagers":nestedManagers};
     
-    Annotations *annotations = [[Annotations alloc] initWithAnnotation:annotationDict
-                                                           withContext:[TestManagedObjectContext context]];
+    Annotations *annotations = [[Annotations alloc] initWithAnnotation:annotationDict];
     
     return annotations;
 }

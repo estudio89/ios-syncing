@@ -7,6 +7,7 @@
 //
 
 #import "AbstractSyncManager.h"
+#import <objc/runtime.h>
 #import "SerializationUtil.h"
 #import <Raven/RavenClient.h>
 #import "JSONSerializer.h"
@@ -22,7 +23,7 @@
 @property (strong, nonatomic, readwrite) NSMutableDictionary *childrenAttributes;
 @property BOOL shouldPaginate;
 @property (strong, nonatomic) NSString *entityName;
-@property (strong, nonatomic, readwrite) NSAttributeDescription *dateAttribute;
+@property (strong, nonatomic, readwrite) NSString *dateAttribute;
 @property (strong, nonatomic) NSString *paginationIdentifier;
 @property (strong, nonatomic) NSManagedObject *oldestInCache;
 
@@ -62,9 +63,9 @@
 
 - (void)verifyFields
 {
-    NSEntityDescription *superClassEntity = [self entityDescriptionForName:_entityName withContext:[_annotations context]];
-    
-    NSDictionary *attributes = [superClassEntity attributesByName];
+    Class superClass = NSClassFromString(_entityName);
+    unsigned int outCount, i;
+    objc_property_t *properties = class_copyPropertyList([superClass class], &outCount);
     
     NSString *paginateField = @"";
     if (_shouldPaginate)
@@ -74,35 +75,39 @@
     }
     
     JSON *attAnnotation = nil;
-    for (NSAttributeDescription *attribute in [attributes allValues])
+    for (i = 0; i < outCount; i++)
     {
-        attAnnotation = [_annotations annotationForAttribute:attribute.name];
-        Class type = NSClassFromString(attribute.attributeValueClassName);
+        objc_property_t property = properties[i];
+        NSString *attributeName = [NSString stringWithFormat:@"%s", property_getName(property)];
+        
+        attAnnotation = [_annotations annotationForAttribute:attributeName];
+        NSString *typeName = [SerializationUtil propertyClassNameFor:property];
+        Class type = NSClassFromString(typeName);
         
         if (_shouldPaginate && type == [NSDate class])
         {
-            if ([paginateField isEqualToString:@""] || [paginateField isEqualToString:attribute.name])
+            if ([paginateField isEqualToString:@""] || [paginateField isEqualToString:attributeName])
             {
-                _dateAttribute = attribute;
+                _dateAttribute = attributeName;
             }
         }
         else if ([type isSubclassOfClass:[SyncEntity class]] && !attAnnotation.ignore)
         {
-            NSString *parentAttributeName = [SerializationUtil getAttributeName:attribute.name
+            NSString *parentAttributeName = [SerializationUtil getAttributeName:attributeName
                                                                  withAnnotation:attAnnotation];
-            [_parentAttributes setObject:attribute forKey:parentAttributeName];
+            [_parentAttributes setObject:typeName forKey:parentAttributeName];
         }
-        else if ([_annotations hasNestedManagerForAttribute:attribute.name])
+        else if ([_annotations hasNestedManagerForAttribute:attributeName])
         {
-            NestedManager *nestedManager = [_annotations nestedManagerForAttribute:attribute.name];
-            [_childrenAttributes setObject:nestedManager forKey:attribute.name];
+            NestedManager *nestedManager = [_annotations nestedManagerForAttribute:attributeName];
+            [_childrenAttributes setObject:nestedManager forKey:attributeName];
         }
     }
 }
 
 - (NSDate *)getDateForObject:(NSManagedObject *)object
 {
-    return [object valueForKey:_dateAttribute.name];
+    return [object valueForKey:_dateAttribute];
 }
 
 - (id<SyncManager>)getSyncManagerDeleted
@@ -204,8 +209,8 @@
         {
             if (_shouldPaginate && isSyncing && _dateAttribute != nil && _oldestInCache != nil)
             {
-                JSON *attAnnotation = [_annotations annotationForAttribute:_dateAttribute.name];
-                NSString *jsonAttribute = [SerializationUtil getAttributeName:_dateAttribute.name withAnnotation:attAnnotation];
+                JSON *attAnnotation = [_annotations annotationForAttribute:_dateAttribute];
+                NSString *jsonAttribute = [SerializationUtil getAttributeName:_dateAttribute withAnnotation:attAnnotation];
                 NSString *strDate = [objectJSON valueForKey:jsonAttribute];
                 NSDate *pubDate = [SerializationUtil parseServerDate:strDate];
                 
@@ -369,13 +374,13 @@
     {
         for (NSString *parentAttributeName in [_parentAttributes allKeys])
         {
-            NSAttributeDescription *parentAttribute = [_parentAttributes objectForKey:parentAttributeName];
+            NSString *parentAttributeClass = [_parentAttributes objectForKey:parentAttributeName];
             NSString *parentId = [object valueForKey:parentAttributeName];
             
-            SyncEntity *parent = [self findParent:parentAttribute.attributeValueClassName withParentId:parentId withContext:context];
+            SyncEntity *parent = [self findParent:parentAttributeClass withParentId:parentId withContext:context];
             if (parent == nil && [parentId isEqual:@"nil"])
             {
-                NSString *reason = [NSString stringWithFormat:@"An item of class %@ with id server %@ was not found for item of class %@ with id_server %@", parentAttribute.attributeValueClassName, parentId, _entityName, newItem.idServer];
+                NSString *reason = [NSString stringWithFormat:@"An item of class %@ with id server %@ was not found for item of class %@ with id_server %@", parentAttributeClass, parentId, _entityName, newItem.idServer];
                 @throw [NSException exceptionWithName:@"AbstractSyncManagerException"
                                                reason:reason
                                              userInfo:nil];
@@ -445,7 +450,7 @@
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:_entityName];
     
-    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:_dateAttribute.name ascending:YES];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:_dateAttribute ascending:YES];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     [fetchRequest setFetchLimit:1];
     

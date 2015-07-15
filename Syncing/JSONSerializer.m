@@ -9,6 +9,7 @@
 #import "JSONSerializer.h"
 #import "DateSerializer.h"
 #import <objc/runtime.h>
+#include "SerializationUtil.h"
 
 @interface JSONSerializer ()
 
@@ -41,20 +42,23 @@
     
     while (superClass != nil)
     {
-        NSString *superClassName = [NSString stringWithUTF8String:class_getName(superClass)];
-        NSEntityDescription *superClassEntity = [NSEntityDescription entityForName:superClassName
-                                                            inManagedObjectContext:_context];
-        NSDictionary *attributes = [superClassEntity attributesByName];
+        unsigned int outCount, i;
+        objc_property_t *properties = class_copyPropertyList([superClass class], &outCount);
         
-        for (NSAttributeDescription *attribute in [attributes allValues])
+        for (i = 0; i < outCount; i++)
         {
-            FieldSerializer *fieldSerializer = [self getFieldSerializer:attribute
+            objc_property_t property = properties[i];
+            NSString *attributeName = [NSString stringWithFormat:@"%s", property_getName(property)];
+            Class type = [SerializationUtil propertyTypeFor:property];
+            
+            FieldSerializer *fieldSerializer = [self getFieldSerializer:attributeName
+                                                      withAttributeType:type
                                                              withObject:object
                                                                withJSON:jsonObject];
             
             if (fieldSerializer == nil || ![fieldSerializer updateJSON])
             {
-                [unusedAttributes addObject:attribute];
+                [unusedAttributes addObject:attributeName];
             }
         }
         
@@ -75,20 +79,23 @@
     
     while (superClass != nil)
     {
-        NSString *superClassName = [NSString stringWithUTF8String:class_getName(superClass)];
-        NSEntityDescription *superClassEntity = [NSEntityDescription entityForName:superClassName
-                                                            inManagedObjectContext:_context];
-        NSDictionary *attributes = [superClassEntity attributesByName];
+        unsigned int outCount, i;
+        objc_property_t *properties = class_copyPropertyList([superClass class], &outCount);
         
-        for (NSAttributeDescription *attribute in [attributes allValues])
+        for (i = 0; i < outCount; i++)
         {
-            FieldSerializer *fieldSerializer = [self getFieldSerializer:attribute
+            objc_property_t property = properties[i];
+            NSString *attributeName = [NSString stringWithFormat:@"%s", property_getName(property)];
+            Class type = [SerializationUtil propertyTypeFor:property];
+            
+            FieldSerializer *fieldSerializer = [self getFieldSerializer:attributeName
+                                                      withAttributeType:type
                                                              withObject:object
                                                                withJSON:jsonObject];
             
             if (fieldSerializer == nil || ![fieldSerializer updateField])
             {
-                [unusedAttributes addObject:attribute];
+                [unusedAttributes addObject:attributeName];
             }
         }
         
@@ -102,11 +109,11 @@
     return unusedAttributes;
 }
 
-- (FieldSerializer *)getFieldSerializer:(NSAttributeDescription *)attribute withObject:(NSManagedObject *)object withJSON:(NSDictionary *)jsonObject
+- (FieldSerializer *)getFieldSerializer:(NSString *)attribute withAttributeType:(Class)type withObject:(NSManagedObject *)object withJSON:(NSDictionary *)jsonObject
 {
-    JSON *fieldAnnotation = [_annotations annotationForAttribute:attribute.name];
+    JSON *fieldAnnotation = [_annotations annotationForAttribute:attribute];
     
-    if ([attribute attributeType] == NSDateAttributeType)
+    if ([type isMemberOfClass:[NSDate class]])
     {
         return [[DateSerializer alloc] initWithAttribute:attribute
                                               withObject:object

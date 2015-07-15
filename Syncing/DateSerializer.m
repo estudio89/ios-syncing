@@ -11,7 +11,7 @@
 
 @implementation DateSerializer
 
-- (instancetype)initWithAttribute:(NSAttributeDescription *)attribute
+- (instancetype)initWithAttribute:(NSString *)attribute
                        withObject:(NSManagedObject *)object
                          withJSON:(NSDictionary *)jsonObject
                    withAnnotation:(JSON *)annotation;

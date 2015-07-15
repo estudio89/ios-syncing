@@ -8,7 +8,6 @@
 
 #import "ChildSyncManager.h"
 #import "Annotations.h"
-#import "TestManagedObjectContext.h"
 
 @implementation ChildSyncManager
 
@@ -16,8 +15,7 @@
 {
     NSDictionary *annotationDict = @{@"entityName":@"ChildSyncEntity"};
     
-    Annotations *annotations = [[Annotations alloc] initWithAnnotation:annotationDict
-                                                           withContext:[TestManagedObjectContext context]];
+    Annotations *annotations = [[Annotations alloc] initWithAnnotation:annotationDict];
     
     return annotations;
 }

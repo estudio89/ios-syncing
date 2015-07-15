@@ -16,6 +16,6 @@
 - (instancetype)initWithModelClass:(Class)modelClass withAnnotations:(Annotations *)annotations withContext:(NSManagedObjectContext *)context;
 - (NSArray *)toJSON:(NSManagedObject *)object withJSON:(NSDictionary *)jsonObject;
 - (NSArray *)updateFromJSON:(NSDictionary *)jsonObject withObject:(NSManagedObject *)object;
-- (FieldSerializer *)getFieldSerializer:(NSAttributeDescription *)attribute withObject:(NSManagedObject *)object withJSON:(NSDictionary *)jsonObject;
+- (FieldSerializer *)getFieldSerializer:(NSString *)attribute withAttributeType:(Class)type withObject:(NSManagedObject *)object withJSON:(NSDictionary *)jsonObject;
 
 @end

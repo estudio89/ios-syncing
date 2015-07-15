@@ -11,7 +11,7 @@
 
 @interface FieldSerializer ()
 
-@property (strong, nonatomic) NSAttributeDescription *attribute;
+@property (strong, nonatomic) NSString *attribute;
 @property (strong, nonatomic) NSManagedObject *object;
 @property (strong, nonatomic) NSMutableDictionary *jsonObject;
 @property (strong, nonatomic) JSON *annotation;
@@ -20,7 +20,7 @@
 
 @implementation FieldSerializer
 
-- (instancetype)initWithAttribute:(NSAttributeDescription *)attribute
+- (instancetype)initWithAttribute:(NSString *)attribute
                        withObject:(NSManagedObject *)object
                          withJSON:(NSDictionary *)jsonObject
                    withAnnotation:(JSON *)annotation
@@ -40,7 +40,7 @@
 
 - (NSString *)getAttributename
 {
-    return [SerializationUtil getAttributeName:_attribute.name
+    return [SerializationUtil getAttributeName:_attribute
                                 withAnnotation:_annotation];
 }
 
@@ -98,7 +98,7 @@
     }
     @catch (NSException *exception)
     {
-        [NSException raise:NSInvalidArgumentException format:@"Invalid value for field %@. Type should be %lu, but was %@.", value, (unsigned long)[_attribute attributeType], [value class]];
+        [NSException raise:NSInvalidArgumentException format:@"Invalid value for field %@. Type  %@.", value, [value class]];
     }
     
     return YES;

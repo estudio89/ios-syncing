@@ -49,12 +49,7 @@
 
 - (void)testVerifyFields
 {
-//    XCTAssertEqual(_testSyncManager.dateAttribute.name, @"pubDate");
-//    XCTAssertEqual([[_testSyncManager.parentAttributes allKeys] count], 1);
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF IN %@", [_testSyncManager.parentAttributes allKeys]];
-//    XCTAssertTrue([predicate evaluateWithObject:@"parent_id"] == YES);
-//    XCTAssertEqual([[_testSyncManager.childrenAttributes allKeys] count], 2);
-    assertThat(_testSyncManager.dateAttribute.name, is(@"pubDate"));
+    assertThat(_testSyncManager.dateAttribute, is(@"pubDate"));
     assertThatInt([[_testSyncManager.parentAttributes allKeys] count], equalToInt(1));
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF IN %@", [_testSyncManager.parentAttributes allKeys]];
     assertThatBool([predicate evaluateWithObject:@"parent_id"], isTrue());
