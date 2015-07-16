@@ -15,13 +15,12 @@
 
 @property (strong, nonatomic) Class modelClass;
 @property (strong, nonatomic) Annotations *annotations;
-@property (strong, nonatomic) NSManagedObjectContext *context;
 
 @end
 
 @implementation JSONSerializer
 
-- (instancetype)initWithModelClass:(Class)modelClass withAnnotations:(Annotations *)annotations withContext:(NSManagedObjectContext *)context
+- (instancetype)initWithModelClass:(Class)modelClass withAnnotations:(Annotations *)annotations
 {
     self = [super init];
     
@@ -29,7 +28,6 @@
     {
         _modelClass = modelClass;
         _annotations = annotations;
-        _context = context;
     }
     
     return self;

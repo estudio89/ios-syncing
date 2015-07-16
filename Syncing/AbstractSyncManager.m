@@ -275,10 +275,9 @@
 {
     NSMutableDictionary *jsonObject = [[NSMutableDictionary alloc] init];
     JSONSerializer *serializer = [[JSONSerializer alloc] initWithModelClass:NSClassFromString(_entityName)
-                                                            withAnnotations:_annotations
-                                                                withContext:context];
+                                                            withAnnotations:_annotations];
     
-    [serializer toJSON:(NSManagedObject *)object withJSON:[[NSDictionary alloc] init]];
+    [serializer toJSON:(NSManagedObject *)object withJSON:jsonObject];
     
     if ([_parentAttributes count] > 0)
     {
@@ -349,8 +348,7 @@
     }
     
     SyncModelSerializer *serializer = [[SyncModelSerializer alloc] initWithModelClass:NSClassFromString(_entityName)
-                                                                      withAnnotations:_annotations
-                                                                          withContext:context];
+                                                                      withAnnotations:_annotations];
     [serializer updateFromJSON:object withObject:newItem];
     
     if (checkIsNew)

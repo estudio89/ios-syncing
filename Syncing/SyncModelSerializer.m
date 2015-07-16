@@ -10,11 +10,10 @@
 
 @implementation SyncModelSerializer
 
-- (instancetype)initWithModelClass:(Class)modelClass withAnnotations:(Annotations *)annotations withContext:(NSManagedObjectContext *)context
+- (instancetype)initWithModelClass:(Class)modelClass withAnnotations:(Annotations *)annotations
 {
     return [super initWithModelClass:modelClass
-                     withAnnotations:annotations
-                         withContext:context];
+                     withAnnotations:annotations];
 }
 
 - (NSArray *)toJSON:(NSManagedObject *)object withJSON:(NSMutableDictionary *)jsonObject

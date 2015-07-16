@@ -87,6 +87,7 @@
 		7BD700621B570333006EB19D /* TestSyncEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD700611B570333006EB19D /* TestSyncEntity.m */; };
 		7BD700651B570333006EB19D /* ChildSyncEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD700641B570333006EB19D /* ChildSyncEntity.m */; };
 		7BD700681B570334006EB19D /* OtherChildSyncEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD700671B570334006EB19D /* OtherChildSyncEntity.m */; };
+		7BD7006B1B571377006EB19D /* TestDataUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD7006A1B571377006EB19D /* TestDataUtil.m */; };
 		7BD7E7411B15F07D00FC984C /* SecurityUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BD7E73F1B15F07D00FC984C /* SecurityUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7BD7E7421B15F07D00FC984C /* SecurityUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD7E7401B15F07D00FC984C /* SecurityUtil.m */; };
 		7BD7E7441B1613A800FC984C /* libPods-Syncing-Raven.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD7E7431B1613A800FC984C /* libPods-Syncing-Raven.a */; };
@@ -209,6 +210,8 @@
 		7BD700641B570333006EB19D /* ChildSyncEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildSyncEntity.m; sourceTree = "<group>"; };
 		7BD700661B570334006EB19D /* OtherChildSyncEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherChildSyncEntity.h; sourceTree = "<group>"; };
 		7BD700671B570334006EB19D /* OtherChildSyncEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherChildSyncEntity.m; sourceTree = "<group>"; };
+		7BD700691B571377006EB19D /* TestDataUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestDataUtil.h; sourceTree = "<group>"; };
+		7BD7006A1B571377006EB19D /* TestDataUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestDataUtil.m; sourceTree = "<group>"; };
 		7BD7E73D1B15E65500FC984C /* libPods-Syncing-Raven.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing-Raven.a"; path = "Pods/../build/Debug-iphoneos/libPods-Syncing-Raven.a"; sourceTree = "<group>"; };
 		7BD7E73F1B15F07D00FC984C /* SecurityUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityUtil.h; sourceTree = "<group>"; };
 		7BD7E7401B15F07D00FC984C /* SecurityUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityUtil.m; sourceTree = "<group>"; };
@@ -308,6 +311,8 @@
 				7BD700571B56FD12006EB19D /* CoreDataHelper.h */,
 				7BD700581B56FD12006EB19D /* CoreDataHelper.m */,
 				7BD7005A1B56FF03006EB19D /* SyncModel.xcdatamodeld */,
+				7BD700691B571377006EB19D /* TestDataUtil.h */,
+				7BD7006A1B571377006EB19D /* TestDataUtil.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -735,6 +740,7 @@
 				7BD700681B570334006EB19D /* OtherChildSyncEntity.m in Sources */,
 				7BD700591B56FD12006EB19D /* CoreDataHelper.m in Sources */,
 				7B1F594C1AA7B1DD00EDCC38 /* TestSyncManager.m in Sources */,
+				7BD7006B1B571377006EB19D /* TestDataUtil.m in Sources */,
 				7B5698501B55795E00FEC191 /* OtherChildSyncManager.m in Sources */,
 				7B63D8C71AA8CF78005D781A /* ServerCommTests.m in Sources */,
 				7BF770AC1AA4A4C2007BCAD6 /* Syncing_Tests.m in Sources */,

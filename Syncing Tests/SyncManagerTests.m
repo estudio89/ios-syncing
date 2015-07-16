@@ -14,7 +14,11 @@
 #import <OCMockito/OCMockito.h>
 #import "TestSyncManager.h"
 #import "TestSyncEntity.h"
+#include "ParentSyncEntity.h"
+#include "OtherChildSyncEntity.h"
 #import "CoreDataHelper.h"
+#import "JSONSerializer.h"
+#import "TestDataUtil.h"
 
 @interface SyncManagerTests : XCTestCase
 
@@ -76,9 +80,33 @@
 - (void)testGetDate
 {
     NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"TestSyncEntity" inManagedObjectContext:_context];
-    TestSyncEntity *item = [[TestSyncEntity alloc] initWithEntity:entityDesc insertIntoManagedObjectContext:_context];
+    TestSyncEntity *item = [[TestSyncEntity alloc] initWithEntity:entityDesc insertIntoManagedObjectContext:nil];
     item.pubDate = [NSDate date];
     assertThat([_testSyncManager getDateForObject:item], is(item.pubDate));
+}
+
+- (void)testSerializeObject
+{
+    NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"ParentSyncEntity" inManagedObjectContext:_context];
+    ParentSyncEntity *parent = [[ParentSyncEntity alloc] initWithEntity:entityDesc insertIntoManagedObjectContext:nil];
+    parent.idServer = [NSNumber numberWithInt:10];
+    
+    entityDesc = [NSEntityDescription entityForName:@"TestSyncEntity" inManagedObjectContext:_context];
+    TestSyncEntity *item = [[TestSyncEntity alloc] initWithEntity:entityDesc insertIntoManagedObjectContext:nil];
+    item.pubDate = [NSDate date];
+    item.name = @"Rodrigo";
+    item.idServer = [NSNumber numberWithInt:5];
+    item.parent = parent;
+    
+    entityDesc = [NSEntityDescription entityForName:@"OtherChildSyncEntity" inManagedObjectContext:_context];
+    OtherChildSyncEntity *otherChildren = [[OtherChildSyncEntity alloc] initWithEntity:entityDesc insertIntoManagedObjectContext:nil];
+    [item addOtherChildrenObject:otherChildren];
+    
+    [parent addTestSyncObject:item];
+    
+    NSDictionary *jsonObject = [_testSyncManager serializeObject:item withContext:_context];
+    
+    assertThat(jsonObject, is([TestDataUtil annotationsDict]));
 }
 
 @end

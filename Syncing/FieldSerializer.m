@@ -67,7 +67,7 @@
     }
     
     NSString *name = [self getAttributename];
-    NSObject *value = [_object valueForKey:name];
+    NSObject *value = [_object valueForKey:_attribute];
     
     if (_annotation.ignoreIf != nil)
     {
@@ -77,7 +77,7 @@
         }
     }
     
-    [_jsonObject setObject:[_object valueForKey:name] forKey:name];
+    [_jsonObject setObject:value forKey:name];
     
     return YES;
 }

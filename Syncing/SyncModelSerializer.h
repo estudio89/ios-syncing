@@ -11,7 +11,7 @@
 
 @interface SyncModelSerializer : JSONSerializer
 
-- (instancetype)initWithModelClass:(Class)modelClass withAnnotations:(Annotations *)annotations withContext:(NSManagedObjectContext *)context;
+- (instancetype)initWithModelClass:(Class)modelClass withAnnotations:(Annotations *)annotations;
 - (NSArray *)toJSON:(NSManagedObject *)object withJSON:(NSMutableDictionary *)jsonObject;
 
 @end

@@ -13,7 +13,7 @@
 
 @interface JSONSerializer : NSObject
 
-- (instancetype)initWithModelClass:(Class)modelClass withAnnotations:(Annotations *)annotations withContext:(NSManagedObjectContext *)context;
+- (instancetype)initWithModelClass:(Class)modelClass withAnnotations:(Annotations *)annotations;
 - (NSArray *)toJSON:(NSManagedObject *)object withJSON:(NSDictionary *)jsonObject;
 - (NSArray *)updateFromJSON:(NSDictionary *)jsonObject withObject:(NSManagedObject *)object;
 - (FieldSerializer *)getFieldSerializer:(NSString *)attribute withAttributeType:(Class)type withObject:(NSManagedObject *)object withJSON:(NSDictionary *)jsonObject;
