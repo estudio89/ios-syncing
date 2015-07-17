@@ -13,7 +13,11 @@
 
 - (Annotations *)getAnnotationsWithAbstractAttributes:(NSDictionary *)abstractAttributes
 {
-    NSDictionary *annotationDict = @{@"entityName":@"ChildSyncEntity"};
+    NSMutableDictionary *fields = [[NSMutableDictionary alloc] initWithDictionary:abstractAttributes];
+    [fields setObject:[[NSDictionary alloc] init] forKey:@"testSync"];
+    
+    NSDictionary *annotationDict = @{@"entityName":@"ChildSyncEntity",
+                                     @"fields":fields};
     
     Annotations *annotations = [[Annotations alloc] initWithAnnotation:annotationDict];
     
