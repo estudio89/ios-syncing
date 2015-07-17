@@ -25,7 +25,6 @@
 @property (strong, nonatomic) NSString *entityName;
 @property (strong, nonatomic, readwrite) NSString *dateAttribute;
 @property (strong, nonatomic) NSString *paginationIdentifier;
-@property (strong, nonatomic) NSManagedObject *oldestInCache;
 
 @end
 
@@ -425,7 +424,7 @@
                 childParams = [[NSDictionary alloc] init];
             }
             
-            if (annotation.discardOnSave && newItem.objectID != nil)
+            if (annotation.discardOnSave && !checkIsNew)
             {
                 [self deleteAllChildrenFromEntity:annotation.entityName
                               withParentAttribute:annotation.attributeName

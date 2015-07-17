@@ -116,7 +116,7 @@
     
     @try
     {
-        [_object setValue:[self parseValue:value] forKey:name];
+        [_object setValue:[self parseValue:value] forKey:_attribute];
     }
     @catch (NSException *exception)
     {

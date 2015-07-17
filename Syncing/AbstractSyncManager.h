@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SyncEntity.h"
 #import "SyncManager.h"
 
 @class Annotations;
@@ -17,7 +18,21 @@
 @property (strong, nonatomic, readonly) NSString *dateAttribute;
 @property (strong, nonatomic, readonly) NSMutableDictionary *parentAttributes;
 @property (strong, nonatomic, readonly) NSMutableDictionary *childrenAttributes;
+@property (strong, nonatomic, readwrite) NSManagedObject *oldestInCache;
 - (Annotations *)getAnnotationsWithAbstractAttributes:(NSDictionary *)abstractAttributes;
 - (NSDate *)getDateForObject:(NSManagedObject *)object;
+- (SyncEntity *)findItem:(NSNumber *)idServer
+            withIdClient:(NSString *)idClient
+            withDeviceId:(NSString *)deviceId
+        withItemDeviceId:(NSString *)itemDeviceId
+      withIgnoreDeviceId:(BOOL)ignoreDeviceId
+              withObject:(NSDictionary *)object
+             withContext:(NSManagedObjectContext *)context;
+- (SyncEntity *)findParent:(NSString *)parentEntity withParentId:(NSString *)parentId withContext:(NSManagedObjectContext *)context;
+- (void)performSaveWithContext:(NSManagedObjectContext *)context;
+- (void)deleteAllChildrenFromEntity:(NSString *)entity
+                withParentAttribute:(NSString *)parent
+                       withParentId:(NSManagedObjectID *)parentId
+                        withContext:(NSManagedObjectContext *)context;
 
 @end
