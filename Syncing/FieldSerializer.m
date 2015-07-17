@@ -22,7 +22,7 @@
 
 - (instancetype)initWithAttribute:(NSString *)attribute
                        withObject:(NSManagedObject *)object
-                         withJSON:(NSDictionary *)jsonObject
+                         withJSON:(NSMutableDictionary *)jsonObject
                    withAnnotation:(JSON *)annotation
 {
     self = [super init];
@@ -31,7 +31,7 @@
     {
         _attribute = attribute;
         _object = object;
-        _jsonObject = [jsonObject mutableCopy];
+        _jsonObject = jsonObject;
         _annotation = annotation;
     }
     
@@ -78,7 +78,7 @@
     }
     
     [_jsonObject setObject:value forKey:name];
-    
+    NSLog(@"%@", _jsonObject);
     return YES;
 }
 

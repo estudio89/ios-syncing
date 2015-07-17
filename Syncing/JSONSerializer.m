@@ -10,6 +10,7 @@
 #import "DateSerializer.h"
 #import <objc/runtime.h>
 #include "SerializationUtil.h"
+#include "SyncEntity.h"
 
 @interface JSONSerializer ()
 
@@ -33,7 +34,7 @@
     return self;
 }
 
-- (NSArray *)toJSON:(NSManagedObject *)object withJSON:(NSDictionary *)jsonObject
+- (NSArray *)toJSON:(NSManagedObject *)object withJSON:(NSMutableDictionary *)jsonObject
 {
     Class superClass = _modelClass;
     NSMutableArray *unusedAttributes = [[NSMutableArray alloc] init];
@@ -70,7 +71,7 @@
     return unusedAttributes;
 }
 
-- (NSArray *)updateFromJSON:(NSDictionary *)jsonObject withObject:(NSManagedObject *)object
+- (NSArray *)updateFromJSON:(NSMutableDictionary *)jsonObject withObject:(NSManagedObject *)object
 {
     Class superClass = _modelClass;
     NSMutableArray *unusedAttributes = [[NSMutableArray alloc] init];
@@ -107,23 +108,27 @@
     return unusedAttributes;
 }
 
-- (FieldSerializer *)getFieldSerializer:(NSString *)attribute withAttributeType:(Class)type withObject:(NSManagedObject *)object withJSON:(NSDictionary *)jsonObject
+- (FieldSerializer *)getFieldSerializer:(NSString *)attribute withAttributeType:(Class)type withObject:(NSManagedObject *)object withJSON:(NSMutableDictionary *)jsonObject
 {
     JSON *fieldAnnotation = [_annotations annotationForAttribute:attribute];
     
-    if ([type isMemberOfClass:[NSDate class]])
+    if (type == [NSDate class])
     {
         return [[DateSerializer alloc] initWithAttribute:attribute
                                               withObject:object
                                                 withJSON:jsonObject
                                           withAnnotation:fieldAnnotation];
     }
-    else
+    else if (type != [NSSet class] && ![type isSubclassOfClass:[SyncEntity class]])
     {
         return [[FieldSerializer alloc] initWithAttribute:attribute
                                                withObject:object
                                                  withJSON:jsonObject
                                            withAnnotation:fieldAnnotation];
+    }
+    else
+    {
+        return nil;
     }
 }
 

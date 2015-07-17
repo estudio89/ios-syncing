@@ -10,7 +10,7 @@
 
 @implementation TestReadOnlySyncManager
 
-- (Annotations *)getAnnotations
+- (Annotations *)getAnnotationsWithAbstractAttributes:(NSDictionary *)abstractAttributes
 {
     return nil;
 }

@@ -37,7 +37,14 @@
     
     if (self)
     {
-        _annotations = [self getAnnotations];
+        NSDictionary *idServer = @{@"name":@"id",
+                                   @"ignoreIf":@"0"};
+        NSDictionary *modified = @{@"ignore":@YES};
+        NSDictionary *isNew = @{@"ignore":@YES};
+        NSDictionary *extraAttributes = @{@"idServer":idServer,
+                                          @"modified":modified,
+                                          @"isNew":isNew};
+        _annotations = [self getAnnotationsWithAbstractAttributes:extraAttributes];
         _parentAttributes = [[NSMutableDictionary alloc] init];
         _childrenAttributes = [[NSMutableDictionary alloc] init];
         
@@ -95,7 +102,7 @@
         {
             NSString *parentAttributeName = [SerializationUtil getAttributeName:attributeName
                                                                  withAnnotation:attAnnotation];
-            [_parentAttributes setObject:typeName forKey:parentAttributeName];
+            [_parentAttributes setObject:parentAttributeName forKey:attributeName];
         }
         else if ([_annotations hasNestedManagerForAttribute:attributeName])
         {
@@ -274,19 +281,26 @@
 - (NSDictionary *)serializeObject:(NSObject *)object withContext:(NSManagedObjectContext *)context
 {
     NSMutableDictionary *jsonObject = [[NSMutableDictionary alloc] init];
-    JSONSerializer *serializer = [[JSONSerializer alloc] initWithModelClass:NSClassFromString(_entityName)
-                                                            withAnnotations:_annotations];
     
+    SyncModelSerializer *serializer = [[SyncModelSerializer alloc] initWithModelClass:NSClassFromString(_entityName)
+                                                                      withAnnotations:_annotations];
     [serializer toJSON:(NSManagedObject *)object withJSON:jsonObject];
     
     if ([_parentAttributes count] > 0)
     {
         for (NSString *attributeName in [_parentAttributes allKeys])
         {
-            [jsonObject setValue:[object valueForKey:@"idServer"] forKey:attributeName];
+            SyncEntity *parent = [object valueForKey:attributeName];
+            if (parent != nil)
+            {
+                [jsonObject setValue:parent.idServer forKey:[_parentAttributes valueForKey:attributeName]];
+            }
+            else
+            {
+                [jsonObject setValue:[NSNull null] forKey:[_parentAttributes valueForKey:attributeName]];
+            }
         }
     }
-    
 
     for (NSString *childAttName in [_childrenAttributes allKeys])
     {
@@ -489,7 +503,7 @@
              withIdClient:idClient
              withDeviceId:deviceId
          withItemDeviceId:itemDeviceId
-       withIgnoreDeviceId:NO
+       withIgnoreDeviceId:ignoreDeviceId
                withObject:nil
               withContext:context];
 }

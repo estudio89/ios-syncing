@@ -14,7 +14,7 @@
 
 - (instancetype)initWithAttribute:(NSString *)attribute
                        withObject:(NSManagedObject *)object
-                         withJSON:(NSDictionary *)jsonObject
+                         withJSON:(NSMutableDictionary *)jsonObject
                    withAnnotation:(JSON *)annotation;
 - (NSString *)getAttributename;
 - (BOOL)isIgnored;

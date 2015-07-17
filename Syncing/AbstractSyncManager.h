@@ -17,7 +17,7 @@
 @property (strong, nonatomic, readonly) NSString *dateAttribute;
 @property (strong, nonatomic, readonly) NSMutableDictionary *parentAttributes;
 @property (strong, nonatomic, readonly) NSMutableDictionary *childrenAttributes;
-- (Annotations *)getAnnotations;
+- (Annotations *)getAnnotationsWithAbstractAttributes:(NSDictionary *)abstractAttributes;
 - (NSDate *)getDateForObject:(NSManagedObject *)object;
 
 @end

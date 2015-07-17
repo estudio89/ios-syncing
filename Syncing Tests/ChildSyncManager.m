@@ -11,7 +11,7 @@
 
 @implementation ChildSyncManager
 
-- (Annotations *)getAnnotations
+- (Annotations *)getAnnotationsWithAbstractAttributes:(NSDictionary *)abstractAttributes
 {
     NSDictionary *annotationDict = @{@"entityName":@"ChildSyncEntity"};
     

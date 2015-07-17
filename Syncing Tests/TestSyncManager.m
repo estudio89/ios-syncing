@@ -14,7 +14,7 @@
 /**
  getAnnotations
  */
-- (Annotations *)getAnnotations
+- (Annotations *)getAnnotationsWithAbstractAttributes:(NSDictionary *)abstractAttributes
 {
     // fields
     NSDictionary *pubDate = [[NSDictionary alloc] init];
@@ -22,11 +22,13 @@
     NSDictionary *parent = @{@"name":@"parent_id"};
     NSDictionary *children = @{@"name":@"children_objs"};
     NSDictionary *otherChildren = @{@"name":@"other_children_objs"};
-    NSDictionary *fields = @{@"pubDate":pubDate,
-                             @"name":name,
-                             @"parent":parent,
-                             @"children":children,
-                             @"otherChildren":otherChildren};
+    NSMutableDictionary *fields = [[NSMutableDictionary alloc] initWithDictionary:abstractAttributes];
+    [fields setObject:pubDate forKey:@"pubDate"];
+    [fields setObject:name forKey:@"name"];
+    [fields setObject:parent forKey:@"parent"];
+    [fields setObject:children forKey:@"children"];
+    [fields setObject:otherChildren forKey:@"otherChildren"];
+    
     // nested managers
     NSDictionary *childrenNestedManager = @{@"entityName":@"ChildSyncEntity",
                                             @"manager":@"ChildSyncManager",
