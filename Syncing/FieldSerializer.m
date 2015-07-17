@@ -59,6 +59,28 @@
     return _annotation.readable;
 }
 
+- (NSObject *)parseValue:(NSObject *)value
+{
+    return [self checkNill:value];
+}
+
+- (NSObject *)formatValue:(NSObject *)value
+{
+    return [self checkNill:value];
+}
+
+- (NSObject *)checkNill:(NSObject *)value
+{
+    if (value == nil)
+    {
+        return [NSNull null];
+    }
+    else
+    {
+        return value;
+    }
+}
+
 - (BOOL)updateJSON
 {
     if ([self isIgnored] || ![self isWritable])
@@ -77,8 +99,8 @@
         }
     }
     
-    [_jsonObject setObject:value forKey:name];
-    NSLog(@"%@", _jsonObject);
+    [_jsonObject setObject:[self formatValue:value] forKey:name];
+
     return YES;
 }
 
@@ -94,7 +116,7 @@
     
     @try
     {
-        [_object setValue:value forKey:name];
+        [_object setValue:[self parseValue:value] forKey:name];
     }
     @catch (NSException *exception)
     {

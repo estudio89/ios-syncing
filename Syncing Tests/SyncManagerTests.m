@@ -72,7 +72,7 @@
 {
     assertThat(_testSyncManager.dateAttribute, is(@"pubDate"));
     assertThatInt([[_testSyncManager.parentAttributes allKeys] count], equalToInt(1));
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF IN %@", [_testSyncManager.parentAttributes allKeys]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF IN %@", [_testSyncManager.parentAttributes allValues]];
     assertThatBool([predicate evaluateWithObject:@"parent_id"], isTrue());
     assertThatInt([[_testSyncManager.childrenAttributes allKeys] count], equalToInt(2));
 }
@@ -104,9 +104,19 @@
     
     [parent addTestSyncObject:item];
     
+    NSDictionary *expectedJsonObject = @{@"id":@5,
+                                         @"idClient":[item.objectID.URIRepresentation absoluteString],
+                                         @"name":@"Rodrigo",
+                                         @"other_children_objs":[NSArray arrayWithObject:@{@"idClient":[otherChildren.objectID.URIRepresentation absoluteString], @"other":@"<null>", @"testSync":@"<null>"}],
+                                         @"parent_id":@10,
+                                         @"pubDate":item.pubDate};
+    
     NSDictionary *jsonObject = [_testSyncManager serializeObject:item withContext:_context];
     
-    assertThat(jsonObject, is([TestDataUtil annotationsDict]));
+    NSString *json = [NSString stringWithFormat:@"%@", jsonObject];
+    NSString *expected = [NSString stringWithFormat:@"%@", expectedJsonObject];
+    
+    assertThat(json, is(expected));
 }
 
 @end
