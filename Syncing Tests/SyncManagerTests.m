@@ -134,7 +134,8 @@
     [[spyTestSyncManager reject] deleteAllChildrenFromEntity:[OCMArg any] withParentAttribute:[OCMArg any] withParentId:[OCMArg any] withContext:_context];
 
     // 1) my nested sync manager should return childSyncManager
-    OCMStub([[spyTestSyncManager annotations] nestedManagerForAttribute:[OCMArg any]]).andReturn(_childSyncManager);
+    //OCMStub([[spyTestSyncManager annotations] nestedManagerForAttribute:[OCMArg any]]).andReturn(_childSyncManager);
+    OCMStub([[spyTestSyncManager childrenAttributes] objectForKey:@"children"]).andReturn(_childSyncManager);
     
     // 2) my finditem should return nil
     OCMStub([spyTestSyncManager findItem:[OCMArg any] withIdClient:[OCMArg any] withDeviceId:[OCMArg any] withItemDeviceId:[OCMArg any] withIgnoreDeviceId:[OCMArg any] withObject:[OCMArg any] withContext:[OCMArg any]]).andReturn(nil);
