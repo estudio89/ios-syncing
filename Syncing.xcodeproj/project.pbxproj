@@ -22,6 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		2F87135403314D88B10B7596 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7073F1F8FB157797419D0FCE /* libPods.a */; };
 		65BB033D7F3187A7F0B8E668 /* libPods-Syncing Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36A7816E688B3C797004B85B /* libPods-Syncing Tests.a */; };
 		7B1321C81AAF7CB800EAB1AF /* libPods-Syncing Tests-OCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B1321C71AAF7CB800EAB1AF /* libPods-Syncing Tests-OCMock.a */; };
 		7B1321CA1AAF7CE200EAB1AF /* DataSyncHelperPartialTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1321C91AAF7CE200EAB1AF /* DataSyncHelperPartialTests.m */; };
@@ -110,6 +111,7 @@
 		7BE488481B4F0A2B00985165 /* SyncEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE488461B4F0A2B00985165 /* SyncEntity.m */; };
 		7BE7C5391B5B20C800DBEA57 /* save-new-data-more.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BE7C5381B5B20C800DBEA57 /* save-new-data-more.json */; };
 		7BE7C53B1B5B2EFB00DBEA57 /* send-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BE7C53A1B5B2EFB00DBEA57 /* send-response.json */; };
+		7BEAD0291B5C6945002F49DD /* save-new-data-more2.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BEAD0281B5C6945002F49DD /* save-new-data-more2.json */; };
 		7BF770AC1AA4A4C2007BCAD6 /* Syncing_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF770AB1AA4A4C2007BCAD6 /* Syncing_Tests.m */; };
 		7BF770AD1AA4A4C2007BCAD6 /* libSyncing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BADD11D1A8BD82B0005FC5E /* libSyncing.a */; };
 		97C3760E6309FFF06658366D /* libPods-Syncing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8274EA1BBEBBDAEADFFED2F8 /* libPods-Syncing.a */; };
@@ -136,6 +138,7 @@
 		0803E7C53E6B999342251010 /* Pods-Syncing.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Syncing.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Syncing/Pods-Syncing.debug.xcconfig"; sourceTree = "<group>"; };
 		161FA42493D632D90DCC02EC /* Pods-Syncing Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Syncing Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Syncing Tests/Pods-Syncing Tests.release.xcconfig"; sourceTree = "<group>"; };
 		36A7816E688B3C797004B85B /* libPods-Syncing Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Syncing Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7073F1F8FB157797419D0FCE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B1321C71AAF7CB800EAB1AF /* libPods-Syncing Tests-OCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OCMock.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OCMock.a"; sourceTree = "<group>"; };
 		7B1321C91AAF7CE200EAB1AF /* DataSyncHelperPartialTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSyncHelperPartialTests.m; sourceTree = "<group>"; };
 		7B1C08E91AAFA13500111904 /* send-data-response-first.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "send-data-response-first.json"; sourceTree = "<group>"; };
@@ -237,6 +240,7 @@
 		7BE488461B4F0A2B00985165 /* SyncEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncEntity.m; sourceTree = "<group>"; };
 		7BE7C5381B5B20C800DBEA57 /* save-new-data-more.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "save-new-data-more.json"; sourceTree = "<group>"; };
 		7BE7C53A1B5B2EFB00DBEA57 /* send-response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "send-response.json"; sourceTree = "<group>"; };
+		7BEAD0281B5C6945002F49DD /* save-new-data-more2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "save-new-data-more2.json"; sourceTree = "<group>"; };
 		7BF770A71AA4A4C2007BCAD6 /* Syncing Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Syncing Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BF770AA1AA4A4C2007BCAD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7BF770AB1AA4A4C2007BCAD6 /* Syncing_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Syncing_Tests.m; sourceTree = "<group>"; };
@@ -253,6 +257,7 @@
 				7BD7E7461B1613AB00FC984C /* libPods-Syncing-RNCryptor.a in Frameworks */,
 				7BD7E7441B1613A800FC984C /* libPods-Syncing-Raven.a in Frameworks */,
 				97C3760E6309FFF06658366D /* libPods-Syncing.a in Frameworks */,
+				2F87135403314D88B10B7596 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +302,7 @@
 				7BC4B2CC1AAA3547000F30AE /* libPods-Syncing Tests-OHHTTPStubs.a */,
 				36A7816E688B3C797004B85B /* libPods-Syncing Tests.a */,
 				8274EA1BBEBBDAEADFFED2F8 /* libPods-Syncing.a */,
+				7073F1F8FB157797419D0FCE /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -448,6 +454,7 @@
 			children = (
 				7BE7C53A1B5B2EFB00DBEA57 /* send-response.json */,
 				7BE7C5381B5B20C800DBEA57 /* save-new-data-more.json */,
+				7BEAD0281B5C6945002F49DD /* save-new-data-more2.json */,
 				7B1F59481AA74DC900EDCC38 /* syncing-config.json */,
 				7BF770AA1AA4A4C2007BCAD6 /* Info.plist */,
 				7B2E8A4C1AADDF320069DF31 /* modified-data-registros.json */,
@@ -602,6 +609,7 @@
 				7B1C08EC1AAFA17000111904 /* send-data-response-second.json in Resources */,
 				7B1C08EA1AAFA13500111904 /* send-data-response-first.json in Resources */,
 				7BE7C5391B5B20C800DBEA57 /* save-new-data-more.json in Resources */,
+				7BEAD0291B5C6945002F49DD /* save-new-data-more2.json in Resources */,
 				7B6CD0D91AAF6356009B7ACA /* get-data-for-model-request.json in Resources */,
 				7BB7A1401AADED3E00E0330F /* modified-data-empresas.json in Resources */,
 				7BE7C53B1B5B2EFB00DBEA57 /* send-response.json in Resources */,
@@ -823,6 +831,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
+				);
 				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)/Headers";
 				SDKROOT = iphoneos;
 				STRIP_STYLE = "non-global";
@@ -860,6 +872,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
+				);
 				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)/Headers";
 				SDKROOT = iphoneos;
 				STRIP_STYLE = "non-global";
@@ -924,7 +940,10 @@
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -946,7 +965,10 @@
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

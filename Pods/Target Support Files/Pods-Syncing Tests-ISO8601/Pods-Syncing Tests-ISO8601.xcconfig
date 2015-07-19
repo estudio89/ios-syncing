@@ -1,0 +1,1 @@
+PODS_SYNCING_TESTS_ISO_____OTHER_LDFLAGS = -framework "Foundation"

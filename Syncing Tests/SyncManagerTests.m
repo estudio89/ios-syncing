@@ -21,6 +21,7 @@
 #import "CoreDataHelper.h"
 #import "JSONSerializer.h"
 #import "TestDataUtil.h"
+#import "SerializationUtil.h"
 
 @interface SyncManagerTests : XCTestCase
 
@@ -298,13 +299,13 @@
     OCMStub([spyTestSyncManager saveObject:[OCMArg any] withDeviceId:[OCMArg any] withContext:_context]).andReturn(item);
     OCMStub([spyTestSyncManager getSyncManagerDeleted]).andReturn(spyDeletedSyncManager);
     [[spyTestSyncManager reject] deleteAllWithContext:_context];
-    [[spyTestSyncManager expect] saveObject:[OCMArg any] withDeviceId:[OCMArg any] withContext:_context];
-    [[spyTestSyncManager expect] saveObject:[OCMArg any] withDeviceId:[OCMArg any] withContext:_context];
     [[spyTestSyncManager reject] postEvent:[OCMArg any] withBus:[OCMArg any]];
     
     NSMutableArray *savedbjects = [spyTestSyncManager saveNewData:newObjects withDeviceId:@"" withParameters:parameters withContext:_context];
     
     OCMVerify([spyTestSyncManager saveBooleanPref:@"more.1" withValue:YES]);
+    OCMVerify([spyTestSyncManager saveObject:[OCMArg any] withDeviceId:[OCMArg any] withContext:_context]);
+    OCMVerify([spyTestSyncManager saveObject:[OCMArg any] withDeviceId:[OCMArg any] withContext:_context]);
     assertThatInt([savedbjects count], equalToInt(2));
     
     [spyTestSyncManager verify];
@@ -319,7 +320,7 @@
     TestSyncEntity *oldItem = [[TestSyncEntity alloc] initWithEntity:entityDesc insertIntoManagedObjectContext:_context];
     oldItem.pubDate = [now dateByAddingTimeInterval:-86400.0];
     
-    NSString *jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/save-new-data-more.json";
+    NSString *jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/save-new-data-more2.json";
     NSString *jsonStr = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
     NSData *dataJson = [jsonStr dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     NSArray *newObjects = [NSJSONSerialization JSONObjectWithData:dataJson options:kNilOptions error:nil];
@@ -343,7 +344,7 @@
     OCMVerify([spyTestSyncManager saveObject:[OCMArg any] withDeviceId:[OCMArg any] withContext:_context]);
     OCMVerify([spyTestSyncManager saveObject:[OCMArg any] withDeviceId:[OCMArg any] withContext:_context]);
     assertThatInt([savedbjects count], equalToInt(2));
-    OCMVerify([spyTestSyncManager postEvent:[OCMArg any] withBus:[OCMArg any]]);
+    OCMVerify([spyDeletedSyncManager postEvent:[OCMArg any] withBus:[OCMArg any]]);
 }
 
 - (void)testSaveNewDataSyncOldObject
@@ -351,8 +352,9 @@
     NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"TestSyncEntity" inManagedObjectContext:_context];
     TestSyncEntity *item = [[TestSyncEntity alloc] initWithEntity:entityDesc insertIntoManagedObjectContext:_context];
     
+    NSDate *now = [NSDate date];
     TestSyncEntity *oldItem = [[TestSyncEntity alloc] initWithEntity:entityDesc insertIntoManagedObjectContext:_context];
-    oldItem.pubDate = [NSDate date];
+    oldItem.pubDate = now;
     
     NSString *jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/save-new-data-more.json";
     NSString *jsonStr = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
@@ -362,7 +364,7 @@
     NSDictionary *parameters = @{@"deleteCache":@NO,
                                  @"paginationIdentifier":@1};
     
-    id spyDeletedSyncManager = OCMClassMock([TestSyncManager class]);
+        id spyDeletedSyncManager = OCMClassMock([TestSyncManager class]);
     id spyTestSyncManager = OCMPartialMock(_testSyncManager);
     
     OCMStub([spyTestSyncManager saveBooleanPref:[OCMArg any] withValue:[OCMArg any]]).andDo(nil);
@@ -377,33 +379,31 @@
     [[spyTestSyncManager reject] deleteAllWithContext:_context];
     OCMVerify([spyTestSyncManager saveObject:[OCMArg any] withDeviceId:[OCMArg any] withContext:_context]);
     assertThatInt([savedbjects count], equalToInt(1));
-    [[spyTestSyncManager reject] postEvent:[OCMArg any] withBus:[OCMArg any]];
+    [[spyDeletedSyncManager reject] postEvent:[OCMArg any] withBus:[OCMArg any]];
     
     [spyTestSyncManager verify];
 }
 
 - (void)testProcessSendResponse
 {
-    NSString *jsonFile = @"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/send-response.json";
-    NSString *jsonStr = [[NSString alloc] initWithContentsOfFile:jsonFile encoding:NSUTF8StringEncoding error:nil];
-    NSData *dataJson = [jsonStr dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    NSArray *sendResponse = [NSJSONSerialization JSONObjectWithData:dataJson options:kNilOptions error:nil];
+    NSEntityDescription *entityDesc = [NSEntityDescription entityForName:@"TestSyncEntity" inManagedObjectContext:_context];
+    TestSyncEntity *existingItem = [[TestSyncEntity alloc] initWithEntity:entityDesc insertIntoManagedObjectContext:nil];
+    existingItem.pubDate = [NSDate date];
+    existingItem.name = @"Rodrigo";
+    existingItem.idServer = [NSNumber numberWithInt:2];
     
-    id existingItem = OCMClassMock([TestSyncEntity class]);
+    NSArray *sendResponse = [NSArray arrayWithObject:@{@"id":@2, @"idClient":[existingItem.objectID.URIRepresentation absoluteString]}];
+    
     id spyTestSyncManager = OCMPartialMock(_testSyncManager);
     
-    OCMStub([spyTestSyncManager findItem:[OCMArg any] withIdClient:[OCMArg any] withDeviceId:[OCMArg any] withItemDeviceId:[OCMArg any] withObject:[OCMArg any] withContext:_context]).andReturn(existingItem);
-    OCMStub([existingItem save:nil]).andDo(nil);
+    OCMStub([spyTestSyncManager findItem:[OCMArg any] withIdClient:[OCMArg any] withDeviceId:[OCMArg any] withItemDeviceId:[OCMArg any] withIgnoreDeviceId:[OCMArg any] withContext:_context]).andReturn(existingItem);
     
-    assertThatBool([existingItem modified], isFalse());
-    assertThat([existingItem idServer], is([NSNumber numberWithInt:2]));
+    [spyTestSyncManager processSendResponse:sendResponse withContext:_context];
     
-    OCMVerify([existingItem save:nil]);
-}
-
-- (void)testReadOnlySyncManager
-{
+    assertThat([existingItem valueForKey:@"modified"], is([NSNumber numberWithBool:NO]));
+    assertThat([existingItem valueForKey:@"idServer"], is([NSNumber numberWithInt:2]));
     
+    OCMVerify([_context save:nil]);
 }
 
 @end

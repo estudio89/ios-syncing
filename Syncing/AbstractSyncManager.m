@@ -210,7 +210,8 @@
         BOOL deleteCache = [[responseParameters objectForKey:@"deleteCache"] boolValue];
         if (deleteCache)
         {
-            deletedObjects = [self deleteAllWithContext:context];
+            deletedObjects = [self listAllWithContext:context];
+            [self deleteAllWithContext:context];
 
             [self saveBooleanPref:[NSString stringWithFormat:@"more%@", [self getPaginationIdentifier:responseParameters]] withValue:YES];
         }
@@ -227,7 +228,7 @@
             {
                 JSON *attAnnotation = [_annotations annotationForAttribute:_dateAttribute];
                 NSString *jsonAttribute = [SerializationUtil getAttributeName:_dateAttribute withAnnotation:attAnnotation];
-                NSString *strDate = [objectJSON valueForKey:jsonAttribute];
+                NSString *strDate = [NSString stringWithFormat:@"%@", [objectJSON valueForKey:jsonAttribute]];
                 NSDate *pubDate = [SerializationUtil parseServerDate:strDate];
                 
                 if ([pubDate compare:[self getDateForObject:_oldestInCache]] == NSOrderedAscending)
@@ -258,22 +259,20 @@
 
 - (void)processSendResponse:(NSArray *)jsonResponse withContext:(NSManagedObjectContext *)context
 {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:_entityName];
-    NSArray *objectsArray = nil;
-    
     @try
     {
         for (NSDictionary *obj in jsonResponse)
         {
-            NSURL *objUrl = [NSURL URLWithString:[obj valueForKey:@"idClient"]];
-            NSManagedObjectID *objectID = [[context persistentStoreCoordinator] managedObjectIDForURIRepresentation:objUrl];
-            [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"idServer==%@ OR objectID==%@", [obj valueForKey:@"id"], objectID]];
             
-            objectsArray = [context executeFetchRequest:fetchRequest error:nil];
+            NSManagedObject *object = [self findItem:[obj valueForKey:@"id"]
+                                        withIdClient:[obj valueForKey:@"idClient"]
+                                        withDeviceId:@""
+                                    withItemDeviceId:nil
+                                  withIgnoreDeviceId:YES
+                                         withContext:context];
             
-            if ([objectsArray count] > 0)
+            if (object != nil)
             {
-                NSManagedObject *object = [objectsArray objectAtIndex:0];
                 [object setValue:@(NO) forKey:@"modified"];
                 [object setValue:[obj valueForKey:@"id"] forKey:@"idServer"];
             }
@@ -625,6 +624,14 @@
     [context save:nil];
     
     return deletedObjects;
+}
+
+- (NSArray *)listAllWithContext:(NSManagedObjectContext *)context
+{
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:_entityName];
+    NSArray *allObjects = [context executeFetchRequest:fetchRequest error:nil];
+    
+    return allObjects;
 }
 
 - (void)deleteAllChildrenFromEntity:(NSString *)entity

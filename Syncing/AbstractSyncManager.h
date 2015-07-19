@@ -28,6 +28,12 @@
         withItemDeviceId:(NSString *)itemDeviceId
               withObject:(NSDictionary *)object
              withContext:(NSManagedObjectContext *)context;
+- (SyncEntity *)findItem:(NSNumber *)idServer
+            withIdClient:(NSString *)idClient
+            withDeviceId:(NSString *)deviceId
+        withItemDeviceId:(NSString *)itemDeviceId
+      withIgnoreDeviceId:(BOOL)ignoreDeviceId
+             withContext:(NSManagedObjectContext *)context;
 - (SyncEntity *)findParent:(NSString *)parentEntity withParentId:(NSString *)parentId withContext:(NSManagedObjectContext *)context;
 - (void)performSaveWithContext:(NSManagedObjectContext *)context;
 - (void)deleteAllChildrenFromEntity:(NSString *)entity
