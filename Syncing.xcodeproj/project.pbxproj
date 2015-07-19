@@ -108,6 +108,8 @@
 		7BE488431B4ED81900985165 /* Annotations.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE488411B4ED81900985165 /* Annotations.m */; };
 		7BE488471B4F0A2B00985165 /* SyncEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BE488451B4F0A2B00985165 /* SyncEntity.h */; };
 		7BE488481B4F0A2B00985165 /* SyncEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE488461B4F0A2B00985165 /* SyncEntity.m */; };
+		7BE7C5391B5B20C800DBEA57 /* save-new-data-more.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BE7C5381B5B20C800DBEA57 /* save-new-data-more.json */; };
+		7BE7C53B1B5B2EFB00DBEA57 /* send-response.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BE7C53A1B5B2EFB00DBEA57 /* send-response.json */; };
 		7BF770AC1AA4A4C2007BCAD6 /* Syncing_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF770AB1AA4A4C2007BCAD6 /* Syncing_Tests.m */; };
 		7BF770AD1AA4A4C2007BCAD6 /* libSyncing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BADD11D1A8BD82B0005FC5E /* libSyncing.a */; };
 		97C3760E6309FFF06658366D /* libPods-Syncing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8274EA1BBEBBDAEADFFED2F8 /* libPods-Syncing.a */; };
@@ -233,6 +235,8 @@
 		7BE488411B4ED81900985165 /* Annotations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Annotations.m; sourceTree = "<group>"; };
 		7BE488451B4F0A2B00985165 /* SyncEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncEntity.h; sourceTree = "<group>"; };
 		7BE488461B4F0A2B00985165 /* SyncEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncEntity.m; sourceTree = "<group>"; };
+		7BE7C5381B5B20C800DBEA57 /* save-new-data-more.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "save-new-data-more.json"; sourceTree = "<group>"; };
+		7BE7C53A1B5B2EFB00DBEA57 /* send-response.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "send-response.json"; sourceTree = "<group>"; };
 		7BF770A71AA4A4C2007BCAD6 /* Syncing Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Syncing Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BF770AA1AA4A4C2007BCAD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7BF770AB1AA4A4C2007BCAD6 /* Syncing_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Syncing_Tests.m; sourceTree = "<group>"; };
@@ -442,6 +446,8 @@
 		7BF770A91AA4A4C2007BCAD6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7BE7C53A1B5B2EFB00DBEA57 /* send-response.json */,
+				7BE7C5381B5B20C800DBEA57 /* save-new-data-more.json */,
 				7B1F59481AA74DC900EDCC38 /* syncing-config.json */,
 				7BF770AA1AA4A4C2007BCAD6 /* Info.plist */,
 				7B2E8A4C1AADDF320069DF31 /* modified-data-registros.json */,
@@ -595,8 +601,10 @@
 				7B1C08F41AAFAE2200111904 /* send-data-request-third.json in Resources */,
 				7B1C08EC1AAFA17000111904 /* send-data-response-second.json in Resources */,
 				7B1C08EA1AAFA13500111904 /* send-data-response-first.json in Resources */,
+				7BE7C5391B5B20C800DBEA57 /* save-new-data-more.json in Resources */,
 				7B6CD0D91AAF6356009B7ACA /* get-data-for-model-request.json in Resources */,
 				7BB7A1401AADED3E00E0330F /* modified-data-empresas.json in Resources */,
+				7BE7C53B1B5B2EFB00DBEA57 /* send-response.json in Resources */,
 				7B1C08F21AAFAE0E00111904 /* send-data-request-second.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

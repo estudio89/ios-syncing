@@ -116,6 +116,11 @@
     return [_childrenAttributes objectForKey:attribute];
 }
 
+- (id<SyncManager>)syncManagerForNestedManager:(NestedManager *)nestedManager
+{
+    return nestedManager.manager;
+}
+
 - (NSDate *)getDateForObject:(NSManagedObject *)object
 {
     return [object valueForKey:_dateAttribute];
@@ -314,7 +319,7 @@
         {
             JSON *jsonAttribute = [_annotations annotationForAttribute:childAttName];
             NSString *attributeName = [SerializationUtil getAttributeName:childAttName withAnnotation:jsonAttribute];
-            id<SyncManager> childSyncManager = annotation.manager;
+            id<SyncManager> childSyncManager = [self syncManagerForNestedManager:annotation];
             
             NSSet *children = nil;
             if (annotation.accessorMethod != nil)
@@ -417,7 +422,7 @@
             NSArray *children = [object objectForKey:jsonName];
             
             NestedManager *annotation = [self getNestedManagerForAttribute:childrenAttributeName];
-            id<SyncManager> nestedSyncManager = annotation.manager;
+            id<SyncManager> nestedSyncManager = [self syncManagerForNestedManager:annotation];
             NSDictionary *childParams = nil;
             
             if (![annotation.paginationParams isEqualToString:@""])

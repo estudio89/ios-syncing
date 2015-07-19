@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "SyncEntity.h"
 #import "SyncManager.h"
+#import "Annotations.h"
 
 @class Annotations;
 
@@ -25,7 +26,6 @@
             withIdClient:(NSString *)idClient
             withDeviceId:(NSString *)deviceId
         withItemDeviceId:(NSString *)itemDeviceId
-      withIgnoreDeviceId:(BOOL)ignoreDeviceId
               withObject:(NSDictionary *)object
              withContext:(NSManagedObjectContext *)context;
 - (SyncEntity *)findParent:(NSString *)parentEntity withParentId:(NSString *)parentId withContext:(NSManagedObjectContext *)context;
@@ -34,5 +34,11 @@
                 withParentAttribute:(NSString *)parent
                        withParentId:(NSManagedObjectID *)parentId
                         withContext:(NSManagedObjectContext *)context;
+- (id<SyncManager>)syncManagerForNestedManager:(NestedManager *)nestedManager;
+- (void)saveBooleanPref:(NSString *)key withValue:(BOOL)value;
+- (NSManagedObject *)getOldestFromContext:(NSManagedObjectContext *)context;
+- (id<SyncManager>)getSyncManagerDeleted;
+- (NSMutableArray *)saveNewData:(NSArray *)jsonObjects withDeviceId:(NSString *)deviceId withParameters:(NSDictionary *)responseParameters withContext:(NSManagedObjectContext *)context;
+- (NSArray *)deleteAllWithContext:(NSManagedObjectContext *)context;
 
 @end
