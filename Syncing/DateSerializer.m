@@ -24,24 +24,24 @@
     return self;
 }
 
-- (NSString *)format:(NSDate *)date
+- (NSObject *)formatValue:(NSObject *)value
 {
-    if (date == nil)
+    if (value == nil)
     {
         return nil;
     }
     
-    return [SerializationUtil formatServerDate:date];
+    return [SerializationUtil formatServerDate:(NSDate *)value];
 }
 
-- (NSDate *)parse:(NSObject *)value
+- (NSObject *)parseValue:(NSObject *)value
 {
     if (value == nil)
     {
         return [NSDate date];
     }
     
-    return [SerializationUtil parseServerDate:(NSString *)value];
+    return [SerializationUtil parseServerDate:[NSString stringWithFormat:@"%@", value]];
 }
 
 @end

@@ -15,7 +15,5 @@
                        withObject:(NSManagedObject *)object
                          withJSON:(NSMutableDictionary *)jsonObject
                    withAnnotation:(JSON *)annotation;
-- (NSString *)format:(NSDate *)date;
-- (NSDate *)parse:(NSObject *)value;
 
 @end

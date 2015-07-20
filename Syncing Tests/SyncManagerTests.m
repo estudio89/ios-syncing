@@ -87,7 +87,7 @@
                                          @"name":@"Rodrigo",
                                          @"other_children_objs":[NSArray arrayWithObject:@{@"idClient":[otherChildren.objectID.URIRepresentation absoluteString], @"other":@"<null>", @"testSync":@"<null>"}],
                                          @"parent_id":@10,
-                                         @"pubDate":item.pubDate};
+                                         @"pubDate":[SerializationUtil formatServerDate:item.pubDate]};
     
     NSDictionary *jsonObject = [_testSyncManager serializeObject:item withContext:_context];
     
@@ -141,8 +141,11 @@
     
     TestSyncEntity *item = [spyTestSyncManager saveObject:jsonObject withDeviceId:@"deviceId" withContext:_context];
     
+    NSString *pubDateStr = [NSString stringWithFormat:@"%@", item.pubDate];
+    NSString *nowStr = [NSString stringWithFormat:@"%@", now];
+    
     assertThat(item.idServer, is([NSNumber numberWithInt:5]));
-    assertThat(item.pubDate, is(now));
+    assertThat(pubDateStr, is(nowStr));
     assertThat(item.name, is(@"Rodrigo"));
     assertThat(item.parent, is(parent));
     assertThatBool(item.isNew, isTrue());
@@ -201,8 +204,11 @@
     
     TestSyncEntity *item = [spyTestSyncManager saveObject:jsonObject withDeviceId:@"deviceId" withContext:_context];
     
+    NSString *pubDateStr = [NSString stringWithFormat:@"%@", item.pubDate];
+    NSString *nowStr = [NSString stringWithFormat:@"%@", now];
+    
     assertThat(item.idServer, is([NSNumber numberWithInt:5]));
-    assertThat(item.pubDate, is(now));
+    assertThat(pubDateStr, is(nowStr));
     assertThat(item.name, is(@"Rodrigo"));
     assertThat(item.parent, is(parent));
     assertThatBool(item.isNew, isFalse());
@@ -252,8 +258,11 @@
     
     TestSyncEntity *item = [spyTestSyncManager saveObject:jsonObject withDeviceId:@"deviceId" withContext:_context];
     
+    NSString *pubDateStr = [NSString stringWithFormat:@"%@", item.pubDate];
+    NSString *nowStr = [NSString stringWithFormat:@"%@", now];
+    
     assertThat(item.idServer, is([NSNumber numberWithInt:5]));
-    assertThat(item.pubDate, is(now));
+    assertThat(pubDateStr, is(nowStr));
     assertThat(item.name, is(@"Rodrigo"));
     assertThat(item.parent, is(parent));
     assertThatBool(item.isNew, isFalse());
