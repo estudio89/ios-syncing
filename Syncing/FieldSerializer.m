@@ -114,13 +114,16 @@
     NSString *name = [self getAttributename];
     NSObject *value = [_jsonObject valueForKey:name];
     
-    @try
+    if (![[self parseValue:value] isKindOfClass:[NSNull class]])
     {
-        [_object setValue:[self parseValue:value] forKey:_attribute];
-    }
-    @catch (NSException *exception)
-    {
-        [NSException raise:NSInvalidArgumentException format:@"Invalid value for field %@. Type  %@.", value, [value class]];
+        @try
+        {
+            [_object setValue:[self parseValue:value] forKey:_attribute];
+        }
+        @catch (NSException *exception)
+        {
+            [NSException raise:NSInvalidArgumentException format:@"Invalid value for field %@. Type  %@.", value, [value class]];
+        }
     }
     
     return YES;
