@@ -468,6 +468,11 @@
 
 - (NSManagedObject *)getOldestFromContext:(NSManagedObjectContext *)context
 {
+    if (_dateAttribute == nil)
+    {
+        return nil;
+    }
+    
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:_entityName];
     
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:_dateAttribute ascending:YES];
