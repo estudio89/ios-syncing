@@ -37,24 +37,8 @@
     [super setUp];
     
     _context = [CoreDataHelper context];
-    
     _testSyncManager = [[TestSyncManager alloc] init];
-    //_childSyncManager = mock([ChildSyncManager class]);
     _childSyncManager = OCMClassMock([ChildSyncManager class]);
-    
-    //-----mock
-    //getModifiedDataWithContext
-    //hasModifiedDataWithContext
-    //processSendResponse
-    //getOldestFromContext
-    //findItem
-    //findParent
-    //newObjectForEntity
-    //entityDescriptionForName
-    //performSaveWithContext
-    //deleteAllWithContext
-    //deleteAllChildrenFromEntity
-    
 }
 
 - (void)tearDown {

@@ -652,7 +652,7 @@
     [context save:nil];
 }
 
-- (BOOL)moreOnServerWithContext
+- (BOOL)moreOnServer
 {
     return [self moreOnServerWithPaginationIdentifier:nil];
 }

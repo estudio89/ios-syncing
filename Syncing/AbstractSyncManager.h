@@ -46,5 +46,6 @@
 - (id<SyncManager>)getSyncManagerDeleted;
 - (NSMutableArray *)saveNewData:(NSArray *)jsonObjects withDeviceId:(NSString *)deviceId withParameters:(NSDictionary *)responseParameters withContext:(NSManagedObjectContext *)context;
 - (NSArray *)deleteAllWithContext:(NSManagedObjectContext *)context;
+- (BOOL)moreOnServer;
 
 @end
