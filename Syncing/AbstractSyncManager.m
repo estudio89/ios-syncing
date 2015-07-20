@@ -394,8 +394,8 @@
     {
         for (NSString *parentAttributeName in [_parentAttributes allKeys])
         {
-            NSString *parentAttributeClass = [_parentAttributes objectForKey:parentAttributeName];
-            NSString *parentId = [object valueForKey:parentAttributeName];
+            NSString *parentAttributeClass = [SerializationUtil propertyClassNameFor:parentAttributeName onObject:newItem];
+            NSString *parentId = [[object valueForKey:[_parentAttributes valueForKey:parentAttributeName]] stringValue];
             
             SyncEntity *parent = [self findParent:parentAttributeClass withParentId:parentId withContext:context];
             if (parent == nil && [parentId isEqual:@"nil"])
@@ -548,7 +548,7 @@
     NSArray *objectList = nil;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:_entityName];
 
-    if ((ignoreDeviceId || [deviceId isEqualToString:itemDeviceId]) && idClient != nil)
+    if ((ignoreDeviceId || [deviceId isEqualToString:itemDeviceId]) && idClient != nil && ![idClient isKindOfClass:[NSNull class]])
     {
         NSURL *objUrl = [NSURL URLWithString:idClient];
         NSManagedObjectID *objectID = [[context persistentStoreCoordinator] managedObjectIDForURIRepresentation:objUrl];

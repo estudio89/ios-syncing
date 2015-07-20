@@ -60,24 +60,29 @@
     return className;
 }
 
-+ (Class)propertyTypeFor:(objc_property_t)property
++ (NSString *)propertyClassNameFor:(NSString *)propertyName onObject:(SyncEntity *)object
 {
-    return NSClassFromString([NSString stringWithFormat:@"%@", [self propertyClassNameFor:property]]);
-}
-
-+ (NSArray *)propertyArrayFrom:(Class)type
-{
-    NSMutableArray *propertyArray = [[NSMutableArray alloc] init];
+    Class superClass = NSClassFromString(object.entity.name);
     unsigned int outCount, i;
-    objc_property_t *properties = class_copyPropertyList(type, &outCount);
+    objc_property_t *properties = class_copyPropertyList([superClass class], &outCount);
     
     for (i = 0; i < outCount; i++)
     {
         objc_property_t property = properties[i];
-        [propertyArray addObject:CFBridgingRelease(property)];
+        NSString *attributeName = [NSString stringWithFormat:@"%s", property_getName(property)];
+        
+        if ([attributeName isEqualToString:propertyName])
+        {
+            return [self propertyClassNameFor:property];
+        }
     }
     
-    return propertyArray;
+    return nil;
+}
+
++ (Class)propertyTypeFor:(objc_property_t)property
+{
+    return NSClassFromString([NSString stringWithFormat:@"%@", [self propertyClassNameFor:property]]);
 }
 
 @end

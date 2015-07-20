@@ -23,7 +23,7 @@
 @property (nonatomic, strong, readwrite) NSMutableDictionary *mModelGetDataUrls;
 @property (nonatomic, strong, readwrite) NSString *mEncryptionPassword;
 @property BOOL mEncryptionActive;
-@property (nonatomic, strong, readwrite) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, strong, readwrite) NSManagedObjectContext *context;
 
 @end
 
@@ -42,15 +42,19 @@ static NSString *loginActivity;
 /**
  * initWithBus
  */
-- (instancetype)initWithBus:(AsyncBus *)bus withPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)persistentStoreCoordinator
+- (instancetype)initWithBus:(AsyncBus *)bus withContext:(NSManagedObjectContext *)context
 {
     if (self = [super init])
     {
         _bus = bus;
-        _persistentStoreCoordinator = persistentStoreCoordinator;
+        _context = context;
         _syncManagersByIdentifier = [[NSMutableDictionary alloc] init];
         _syncManagersByResponseIdentifier = [[NSMutableDictionary alloc] init];
         _mModelGetDataUrls = [[NSMutableDictionary alloc] init];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(otherContextDidSave:)
+                                                     name:NSManagedObjectContextDidSaveNotification object:nil];
     }
     
     return self;
@@ -397,9 +401,24 @@ static NSString *loginActivity;
 - (NSManagedObjectContext *)getContext
 {
     NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] init];
-    [managedObjectContext setPersistentStoreCoordinator:_persistentStoreCoordinator];
+    [managedObjectContext setPersistentStoreCoordinator:[_context persistentStoreCoordinator]];
     
     return managedObjectContext;
+}
+
+/**
+ * otherContextDidSave
+ */
+- (void)otherContextDidSave:(NSNotification *)didSaveNotification
+{
+    NSManagedObjectContext *otherContext = (NSManagedObjectContext *)didSaveNotification.object;
+    
+    if (otherContext.persistentStoreCoordinator == _context.persistentStoreCoordinator)
+    {
+        [_context performSelectorOnMainThread:@selector(mergeChangesFromContextDidSaveNotification:)
+                                   withObject:didSaveNotification
+                                waitUntilDone:NO];
+    }
 }
 
 @end

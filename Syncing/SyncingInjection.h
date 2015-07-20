@@ -11,12 +11,12 @@
 
 @interface SyncingInjection : NSObject
 
-+ (void)initWithPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)persistentStoreCoordinator
++ (void)initWithContext:(NSManagedObjectContext *)context
          withConfigFile:(NSString *)fileName;
-+ (void)initWithPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)persistentStoreCoordinator
++ (void)initWithContext:(NSManagedObjectContext *)context
          withConfigFile:(NSString *)fileName
         withInitialSync:(BOOL)initialSync;
-+ (void)executeInjectionWithPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)persistentStoreCoordinator;
++ (void)executeInjectionWithContext:(NSManagedObjectContext *)context;
 + (id)get:(Class)class;
 
 @end

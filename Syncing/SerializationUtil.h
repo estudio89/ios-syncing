@@ -10,6 +10,7 @@
 #import <CoreData/CoreData.h>
 #import <objc/runtime.h>
 #import "Annotations.h"
+#import "SyncEntity.h"
 
 @interface SerializationUtil : NSObject
 
@@ -18,6 +19,6 @@
 + (NSString *)formatServerDate:(NSDate *)date;
 + (NSString *)propertyClassNameFor:(objc_property_t)property;
 + (Class)propertyTypeFor:(objc_property_t)property;
-+ (NSArray *)propertyArrayFrom:(Class)type;
++ (NSString *)propertyClassNameFor:(NSString *)propertyName onObject:(SyncEntity *)object;
 
 @end

@@ -14,7 +14,7 @@
 @interface SyncConfig : NSObject
 
 + (SyncConfig *)getInstance;
-- (instancetype)initWithBus:(AsyncBus *)bus withPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)persistentStoreCoordinator;
+- (instancetype)initWithBus:(AsyncBus *)bus withContext:(NSManagedObjectContext *)context;
 - (void)showLoginIfNeeded:(UIViewController *)initialVC;
 - (void)showLoginIfNeeded:(UIViewController *)initialVC withSegueID:(NSString *)segueID;
 - (BOOL)userIsLoggedIn;
