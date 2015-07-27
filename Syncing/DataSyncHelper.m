@@ -707,6 +707,7 @@ static int numberAttempts;
 - (void)sendCaughtException:(NSException *)exception
 {
     [[RavenClient sharedClient] captureException:exception method:__FUNCTION__ file:__FILE__ line:__LINE__ sendNow:YES];
+    [self postBackgroundSyncError:exception];
 }
 
 @end

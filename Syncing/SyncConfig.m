@@ -24,6 +24,7 @@
 @property (nonatomic, strong, readwrite) NSString *mEncryptionPassword;
 @property BOOL mEncryptionActive;
 @property (nonatomic, strong, readwrite) NSManagedObjectContext *context;
+@property (nonatomic, strong) NSMutableArray *identifiersArray;
 
 @end
 
@@ -102,12 +103,14 @@ static NSString *loginActivity;
         NSString *responseIdentifier = @"";
         
         NSArray *syncManagersJson = [jsonConfig objectForKey:@"syncManagers"];
+        _identifiersArray = [[NSMutableArray alloc] init];
         for (NSDictionary *syncManagerJson in syncManagersJson)
         {
             klass = NSClassFromString([syncManagerJson valueForKey:@"class"]);
             syncManager = [[klass alloc] init];
             getDataUrl = [syncManagerJson valueForKey:@"getDataUrl"];
             identifier = [syncManager getIdentifier];
+            [_identifiersArray addObject:identifier];
             responseIdentifier = [syncManager getResponseIdentifier];
             [self.syncManagersByIdentifier setObject:syncManager forKey:identifier];
             [self.syncManagersByResponseIdentifier setObject:syncManager forKey:responseIdentifier];
@@ -343,7 +346,13 @@ static NSString *loginActivity;
  */
 - (NSArray *)getSyncManagers
 {
-    return [self.syncManagersByIdentifier allValues];
+    NSMutableArray *syncManagers = [[NSMutableArray alloc] init];
+    for (NSString *identifier in _identifiersArray)
+    {
+        [syncManagers addObject:[_syncManagersByIdentifier objectForKey:identifier]];
+    }
+    
+    return syncManagers;
 }
 
 /**
