@@ -577,10 +577,9 @@
         return nil;
     }
     
-    NSString *strParentId = [(NSString *)parentId lowercaseString];
     NSArray *objectList = nil;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:parentEntity];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"idServer==%@", strParentId]];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"idServer==%@", parentId]];
     
     objectList = [context executeFetchRequest:fetchRequest error:nil];
     
