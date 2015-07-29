@@ -28,7 +28,7 @@
 {
     if (value == nil)
     {
-        return nil;
+        return [NSNull null];
     }
     
     return [SerializationUtil formatServerDate:(NSDate *)value];
@@ -36,7 +36,7 @@
 
 - (NSObject *)parseValue:(NSObject *)value
 {
-    if (value == nil)
+    if (value == nil || [value isKindOfClass:[NSNull class]])
     {
         return [NSDate date];
     }

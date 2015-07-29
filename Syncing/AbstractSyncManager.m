@@ -573,7 +573,7 @@
 
 - (SyncEntity *)findParent:(NSString *)parentEntity withParentId:(NSString *)parentId withContext:(NSManagedObjectContext *)context
 {
-    if (parentId == nil || [parentId isEqualToString:@"nil"])
+    if (parentId == nil || [parentId isKindOfClass:[NSNull class]])
     {
         return nil;
     }
@@ -592,11 +592,6 @@
     {
         return nil;
     }
-}
-
-- (NSString *)stringOrNil:(NSDictionary *)object withKey:(NSString *)key
-{
-    return [object objectForKey:key] != nil && ![[object valueForKey:key] isEqualToString:@"nil"] ? [object valueForKey:key] : nil;
 }
 
 - (id)newObjectForEntity:(NSString *)entityName withContext:(NSManagedObjectContext *)context
