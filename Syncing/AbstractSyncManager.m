@@ -9,7 +9,6 @@
 #import "AbstractSyncManager.h"
 #import <objc/runtime.h>
 #import "SerializationUtil.h"
-#import <Raven/RavenClient.h>
 #import "JSONSerializer.h"
 #import "SyncModelSerializer.h"
 #import "SyncEntity.h"
@@ -246,7 +245,7 @@
     }
     @catch (NSException *e)
     {
-        [[RavenClient sharedClient] captureException:e method:__FUNCTION__ file:__FILE__ line:__LINE__ sendNow:YES];
+        [self throwException:e];
     }
     
     if (deletedObjects != nil)
@@ -282,7 +281,7 @@
     }
     @catch (NSException *e)
     {
-        [[RavenClient sharedClient] captureException:e method:__FUNCTION__ file:__FILE__ line:__LINE__ sendNow:YES];
+        [self throwException:e];
     }
 }
 
@@ -342,7 +341,7 @@
             }
             @catch (NSException *e)
             {
-                [[RavenClient sharedClient] captureException:e method:__FUNCTION__ file:__FILE__ line:__LINE__ sendNow:YES];
+                [self throwException:e];
             }
         }
     }
@@ -395,7 +394,7 @@
         for (NSString *parentAttributeName in [_parentAttributes allKeys])
         {
             NSString *parentAttributeClass = [SerializationUtil propertyClassNameFor:parentAttributeName onObject:newItem];
-            NSString *parentId = [[object valueForKey:[_parentAttributes valueForKey:parentAttributeName]] stringValue];
+            NSObject *parentId = [object valueForKey:[_parentAttributes valueForKey:parentAttributeName]];
             
             SyncEntity *parent = [self findParent:parentAttributeClass withParentId:parentId withContext:context];
             if (parent == nil && [parentId isEqual:@"nil"])
@@ -571,16 +570,17 @@
     }
 }
 
-- (SyncEntity *)findParent:(NSString *)parentEntity withParentId:(NSString *)parentId withContext:(NSManagedObjectContext *)context
+- (SyncEntity *)findParent:(NSString *)parentEntity withParentId:(NSObject *)parentId withContext:(NSManagedObjectContext *)context
 {
     if (parentId == nil || [parentId isKindOfClass:[NSNull class]])
     {
         return nil;
     }
     
+    NSString *strParentId = [(NSString *)parentId lowercaseString];
     NSArray *objectList = nil;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:parentEntity];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"idServer==%@", parentId]];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"idServer==%@", strParentId]];
     
     objectList = [context executeFetchRequest:fetchRequest error:nil];
     
@@ -669,6 +669,14 @@
     }
     
     return [self booleanPref:[NSString stringWithFormat:@"%@.more%@", _entityName, paginationIdentifier]];
+}
+
+- (void)throwException:(NSException *)exception
+{
+    NSString *msg = [NSString stringWithFormat:@"%@. While processing SyncManager with identifier %@.", exception.reason, [self getIdentifier]];
+    @throw [NSException exceptionWithName:exception.name
+                                   reason:msg
+                                 userInfo:exception.userInfo];
 }
 
 @end

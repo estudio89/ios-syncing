@@ -104,7 +104,7 @@
 
     id spyTestSyncManager = OCMPartialMock(_testSyncManager);
     // Checking if children objects were not deleted before being saved (they should not be deleted as this is a new item)
-    [[spyTestSyncManager reject] deleteAllChildrenFromEntity:[OCMArg any] withParentAttribute:[OCMArg any] withParentId:[OCMArg any] withContext:_context];
+    [[spyTestSyncManager reject] deleteAllChildrenFromEntity:[OCMArg any] withParentAttribute:[OCMArg any] withParent:[OCMArg any] withContext:_context];
 
     // 1) my nested sync manager should return childSyncManager
     OCMStub([spyTestSyncManager syncManagerForNestedManager:[OCMArg any]]).andReturn(_childSyncManager);
@@ -119,7 +119,7 @@
     OCMStub([spyTestSyncManager performSaveWithContext:[OCMArg any]]).andDo(nil);
     
     // 5) my deleteAllChildren should do nothing
-    OCMStub([spyTestSyncManager deleteAllChildrenFromEntity:[OCMArg any] withParentAttribute:[OCMArg any] withParentId:[OCMArg any] withContext:_context]).andDo(nil);
+    OCMStub([spyTestSyncManager deleteAllChildrenFromEntity:[OCMArg any] withParentAttribute:[OCMArg any] withParent:[OCMArg any] withContext:_context]).andDo(nil);
     
     // 6) my childrenSyncManager savenewdata should return nil
     OCMStub([_childSyncManager saveNewData:[OCMArg any] withDeviceId:[OCMArg any] withParameters:[OCMArg any] withContext:_context]).andReturn(nil);
@@ -187,7 +187,7 @@
     OCMStub([spyTestSyncManager performSaveWithContext:[OCMArg any]]).andDo(nil);
     
     // 5) my deleteAllChildren should do nothing
-    OCMStub([spyTestSyncManager deleteAllChildrenFromEntity:[OCMArg any] withParentAttribute:[OCMArg any] withParentId:[OCMArg any] withContext:_context]).andDo(nil);
+    OCMStub([spyTestSyncManager deleteAllChildrenFromEntity:[OCMArg any] withParentAttribute:[OCMArg any] withParent:[OCMArg any] withContext:_context]).andDo(nil);
     
     // 6) my childrenSyncManager savenewdata should return nil
     OCMStub([_childSyncManager saveNewData:[OCMArg any] withDeviceId:[OCMArg any] withParameters:[OCMArg any] withContext:_context]).andReturn(nil);
@@ -213,7 +213,7 @@
     assertThat(item.parent, is(parent));
     assertThatBool(item.isNew, isFalse());
     
-    OCMVerify([spyTestSyncManager deleteAllChildrenFromEntity:[OCMArg any] withParentAttribute:[OCMArg any] withParentId:[OCMArg any] withContext:_context]);
+    OCMVerify([spyTestSyncManager deleteAllChildrenFromEntity:[OCMArg any] withParentAttribute:[OCMArg any] withParent:[OCMArg any] withContext:_context]);
     OCMVerify(([_childSyncManager saveNewData:[OCMArg any] withDeviceId:[OCMArg any] withParameters:[OCMArg any] withContext:_context]));
     OCMVerify([_childSyncManager postEvent:[OCMArg any] withBus:[OCMArg any]]);
 }

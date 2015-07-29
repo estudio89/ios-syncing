@@ -34,7 +34,7 @@
         withItemDeviceId:(NSString *)itemDeviceId
       withIgnoreDeviceId:(BOOL)ignoreDeviceId
              withContext:(NSManagedObjectContext *)context;
-- (SyncEntity *)findParent:(NSString *)parentEntity withParentId:(NSString *)parentId withContext:(NSManagedObjectContext *)context;
+- (SyncEntity *)findParent:(NSString *)parentEntity withParentId:(NSObject *)parentId withContext:(NSManagedObjectContext *)context;
 - (void)performSaveWithContext:(NSManagedObjectContext *)context;
 - (void)deleteAllChildrenFromEntity:(NSString *)entity
                 withParentAttribute:(NSString *)parentAttribute
