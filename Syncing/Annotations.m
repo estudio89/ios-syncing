@@ -64,8 +64,7 @@
     NSDictionary *nestedManagers = [_Annotation objectForKey:@"nestedManagers"];
     for (NSString *field in [nestedManagers allKeys])
     {
-        NestedManager *nestedManager = [[NestedManager alloc] initWithAnnotation:[nestedManagers objectForKey:field]
-                                                               withAttributeName:field];
+        NestedManager *nestedManager = [[NestedManager alloc] initWithAnnotation:[nestedManagers objectForKey:field]];
         [_nestedManagers setObject:nestedManager forKey:field];
     }
 }
@@ -201,7 +200,7 @@
 
 @implementation NestedManager
 
-- (instancetype)initWithAnnotation:(NSDictionary *)annotation withAttributeName:(NSString *)attributeName
+- (instancetype)initWithAnnotation:(NSDictionary *)annotation
 {
     self = [super init];
     
@@ -211,7 +210,7 @@
         _entityName = [annotation valueForKey:@"entityName"];
         
         // attributeName
-        _attributeName = attributeName;
+        _attributeName = [annotation valueForKey:@"parentAttribute"];
         
         // manager
         Class klass = NSClassFromString([annotation valueForKey:@"manager"]);

@@ -323,7 +323,7 @@
             NSSet *children = nil;
             if (annotation.accessorMethod != nil)
             {
-                children = [self performSelector:annotation.accessorMethod];
+                children = [object performSelector:annotation.accessorMethod];
             }
             else
             {
@@ -437,7 +437,7 @@
             {
                 [self deleteAllChildrenFromEntity:annotation.entityName
                               withParentAttribute:annotation.attributeName
-                                     withParentId:newItem.objectID
+                                       withParent:newItem
                                       withContext:context];
             }
             
@@ -552,7 +552,7 @@
     {
         NSURL *objUrl = [NSURL URLWithString:idClient];
         NSManagedObjectID *objectID = [[context persistentStoreCoordinator] managedObjectIDForURIRepresentation:objUrl];
-        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"idServer==%@ OR objectID==%@", idServer, objectID]];
+        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"idServer==%@ OR SELF==%@", idServer, objectID]];
     }
     else
     {
@@ -640,13 +640,13 @@
 }
 
 - (void)deleteAllChildrenFromEntity:(NSString *)entity
-                withParentAttribute:(NSString *)parent
-                       withParentId:(NSManagedObjectID *)parentId
+                withParentAttribute:(NSString *)parentAttribute
+                         withParent:(NSManagedObject *)parent
                         withContext:(NSManagedObjectContext *)context
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity];
     [fetchRequest setIncludesPropertyValues:NO];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%@.objectID==%@", parent, parentId]];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%@==%@", parentAttribute, parent]];
     
     NSArray *deletedObjects = [context executeFetchRequest:fetchRequest error:nil];
     

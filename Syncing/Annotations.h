@@ -40,7 +40,7 @@
 @property BOOL discardOnSave;
 @property (strong, readonly) NSString *paginationParams;
 
-- (instancetype)initWithAnnotation:(NSDictionary *)annotation withAttributeName:(NSString *)attributeName;
+- (instancetype)initWithAnnotation:(NSDictionary *)annotation;
 
 @end
 

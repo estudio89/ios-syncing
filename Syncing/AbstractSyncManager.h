@@ -37,8 +37,8 @@
 - (SyncEntity *)findParent:(NSString *)parentEntity withParentId:(NSString *)parentId withContext:(NSManagedObjectContext *)context;
 - (void)performSaveWithContext:(NSManagedObjectContext *)context;
 - (void)deleteAllChildrenFromEntity:(NSString *)entity
-                withParentAttribute:(NSString *)parent
-                       withParentId:(NSManagedObjectID *)parentId
+                withParentAttribute:(NSString *)parentAttribute
+                         withParent:(NSManagedObject *)parent
                         withContext:(NSManagedObjectContext *)context;
 - (id<SyncManager>)syncManagerForNestedManager:(NestedManager *)nestedManager;
 - (void)saveBooleanPref:(NSString *)key withValue:(BOOL)value;
