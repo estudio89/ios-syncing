@@ -15,6 +15,7 @@
 @property (nonatomic, retain) NSNumber * isNew;
 
 + (SyncEntity *)getOldestFromEntity:(NSString *)entity withContext:(NSManagedObjectContext *)context;
++ (SyncEntity *)getOldestFromEntity:(NSString *)entity withPredicate:(NSPredicate *)predicate withContext:(NSManagedObjectContext *)context;
 + (NSUInteger)countFromEntity:(NSString *)entity withContext:(NSManagedObjectContext *)context;
 + (NSUInteger)countFromEntity:(NSString *)entity withPredicate:(NSPredicate *)predicate withContext:(NSManagedObjectContext *)context;
 - (BOOL)equals:(NSManagedObject *)object withContext:(NSManagedObjectContext *)context;

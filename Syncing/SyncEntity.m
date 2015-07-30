@@ -16,8 +16,15 @@
 
 + (SyncEntity *)getOldestFromEntity:(NSString *)entity withContext:(NSManagedObjectContext *)context
 {
+    return [SyncEntity getOldestFromEntity:entity withPredicate:nil withContext:context];
+}
+
++ (SyncEntity *)getOldestFromEntity:(NSString *)entity withPredicate:(NSPredicate *)predicate withContext:(NSManagedObjectContext *)context
+{
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity];
-    
+    if (predicate != nil) {
+        [fetchRequest setPredicate:predicate];
+    }
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"pubDate" ascending:YES];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     [fetchRequest setFetchLimit:1];
@@ -30,7 +37,6 @@
     }
     
     return [oldestArray objectAtIndex:0];
-    
 }
 
 + (NSUInteger)countFromEntity:(NSString *)entity withContext:(NSManagedObjectContext *)context
