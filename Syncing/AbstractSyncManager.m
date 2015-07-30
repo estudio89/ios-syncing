@@ -640,7 +640,7 @@
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity];
     [fetchRequest setIncludesPropertyValues:NO];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%@==%@", parentAttribute, parent]];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K==%@", parentAttribute, parent]];
     
     NSArray *deletedObjects = [context executeFetchRequest:fetchRequest error:nil];
     
