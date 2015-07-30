@@ -41,6 +41,15 @@
     return rCount;
 }
 
++ (NSUInteger)countFromEntity:(NSString *)entity withPredicate:(NSPredicate *)predicate withContext:(NSManagedObjectContext *)context
+{
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity];
+    [fetchRequest setPredicate:predicate];
+    NSUInteger rCount = [context countForFetchRequest:fetchRequest error:nil];
+    
+    return rCount;
+}
+
 + (NSInteger)numberOfIsNewFromEntity:(NSString *)entity withContext:(NSManagedObjectContext *)context
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity];

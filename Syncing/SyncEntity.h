@@ -16,6 +16,7 @@
 
 + (SyncEntity *)getOldestFromEntity:(NSString *)entity withContext:(NSManagedObjectContext *)context;
 + (NSUInteger)countFromEntity:(NSString *)entity withContext:(NSManagedObjectContext *)context;
++ (NSUInteger)countFromEntity:(NSString *)entity withPredicate:(NSPredicate *)predicate withContext:(NSManagedObjectContext *)context;
 - (BOOL)equals:(NSManagedObject *)object withContext:(NSManagedObjectContext *)context;
 + (NSInteger)numberOfIsNewFromEntity:(NSString *)entity withContext:(NSManagedObjectContext *)context;
 + (void)makeOldForEntity:(NSString *)entity withContext:(NSManagedObjectContext *)context;
