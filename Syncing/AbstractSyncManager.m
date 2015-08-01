@@ -240,7 +240,9 @@
             }
             
             NSManagedObject *object = [self saveObject:objectJSON withDeviceId:deviceId withContext:context];
-            [newObjects addObject:object];
+            if (object != nil) {
+                [newObjects addObject:object];
+            }
         }
     }
     @catch (NSException *e)
