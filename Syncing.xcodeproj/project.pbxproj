@@ -103,7 +103,7 @@
 		7BE466201B4C198800B63C6A /* DateSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE4661E1B4C198800B63C6A /* DateSerializer.m */; };
 		7BE466271B4C568200B63C6A /* AbstractSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BE466251B4C568200B63C6A /* AbstractSyncManager.h */; };
 		7BE466281B4C568200B63C6A /* AbstractSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE466261B4C568200B63C6A /* AbstractSyncManager.m */; };
-		7BE4662B1B4C6A6E00B63C6A /* SerializationUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BE466291B4C6A6E00B63C6A /* SerializationUtil.h */; };
+		7BE4662B1B4C6A6E00B63C6A /* SerializationUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BE466291B4C6A6E00B63C6A /* SerializationUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7BE4662C1B4C6A6E00B63C6A /* SerializationUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE4662A1B4C6A6E00B63C6A /* SerializationUtil.m */; };
 		7BE488421B4ED81900985165 /* Annotations.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BE488401B4ED81900985165 /* Annotations.h */; };
 		7BE488431B4ED81900985165 /* Annotations.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BE488411B4ED81900985165 /* Annotations.m */; };
@@ -139,6 +139,7 @@
 		161FA42493D632D90DCC02EC /* Pods-Syncing Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Syncing Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Syncing Tests/Pods-Syncing Tests.release.xcconfig"; sourceTree = "<group>"; };
 		36A7816E688B3C797004B85B /* libPods-Syncing Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Syncing Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7073F1F8FB157797419D0FCE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B1291861B6EA6F1001FA3CB /* libPods-Syncing-ISO8601.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing-ISO8601.a"; path = "Pods/../build/Debug-iphoneos/libPods-Syncing-ISO8601.a"; sourceTree = "<group>"; };
 		7B1321C71AAF7CB800EAB1AF /* libPods-Syncing Tests-OCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Syncing Tests-OCMock.a"; path = "Pods/build/Debug-iphoneos/libPods-Syncing Tests-OCMock.a"; sourceTree = "<group>"; };
 		7B1321C91AAF7CE200EAB1AF /* DataSyncHelperPartialTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSyncHelperPartialTests.m; sourceTree = "<group>"; };
 		7B1C08E91AAFA13500111904 /* send-data-response-first.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "send-data-response-first.json"; sourceTree = "<group>"; };
@@ -291,6 +292,7 @@
 		3F6D19F3020C365660A18031 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7B1291861B6EA6F1001FA3CB /* libPods-Syncing-ISO8601.a */,
 				7BD7E7451B1613AB00FC984C /* libPods-Syncing-RNCryptor.a */,
 				7BD7E7431B1613A800FC984C /* libPods-Syncing-Raven.a */,
 				7BD7E73D1B15E65500FC984C /* libPods-Syncing-Raven.a */,
@@ -482,7 +484,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7BE4662B1B4C6A6E00B63C6A /* SerializationUtil.h in Headers */,
 				7B7A1FB41AB899E30089A9FC /* Syncing.h in Headers */,
 				7B42B6501AB8A8D200F02528 /* SyncManager.h in Headers */,
 				7BDA73E21B543418003B00BA /* SyncModelSerializer.h in Headers */,
@@ -498,6 +499,7 @@
 				7B42B64F1AB8A8D200F02528 /* ThreadChecker.h in Headers */,
 				7B42B6541AB8A8D200F02528 /* CustomTransactionManager.h in Headers */,
 				7B42B6561AB8A8D200F02528 /* DatabaseProvider.h in Headers */,
+				7BE4662B1B4C6A6E00B63C6A /* SerializationUtil.h in Headers */,
 				7B42B6581AB8A8D200F02528 /* CustomException.h in Headers */,
 				7BE466161B4C052E00B63C6A /* JSONSerializer.h in Headers */,
 				7BCCF7521AF826C6007F6B09 /* SyncingInjection.h in Headers */,
