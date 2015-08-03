@@ -33,6 +33,7 @@
 - (void)partialAsynchronousSync:(NSString *)identifier withParameters:(NSDictionary *)parameters;
 - (BOOL)partialSynchronousSync:(NSString *)identifier;
 - (void)stopSyncThreads;
+- (BOOL)canRunSyncWithIdentifier:(NSString *)identifier withParameters:(NSDictionary *)params;
 
 // Exposed for tests
 - (BOOL)getDataFromServer;

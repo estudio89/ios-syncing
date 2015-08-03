@@ -544,7 +544,7 @@ static int numberAttempts;
  */
 - (void)fullAsynchronousSync
 {
-    if (![self isRunningSync])
+    if ([self canRunSyncWithIdentifier:nil withParameters:nil])
     {
         NSLog(@"Running new FullSyncAsyncTask");
         [self fullSyncAsyncTask];
@@ -568,9 +568,7 @@ static int numberAttempts;
  */
 - (void)partialAsynchronousSync:(NSString *)identifier withParameters:(NSDictionary *)parameters
 {
-    NSNumber *flag = [self.partialSyncFlag objectForKey:identifier];
-    
-    if (flag == nil || ![flag boolValue] || (parameters == nil && _isRunningSync))
+    if ([self canRunSyncWithIdentifier:identifier withParameters:parameters])
     {
         BOOL sendModified = parameters == nil;
         [self partialSyncTask:identifier withParameters:parameters withSendModified:sendModified];
@@ -579,6 +577,16 @@ static int numberAttempts;
     {
         NSLog(@"Sync already running");
     }
+}
+
+- (BOOL)canRunSyncWithIdentifier:(NSString *)identifier withParameters:(NSDictionary *)params
+{
+    if (identifier == nil && params == nil) {
+        return !_isRunningSync;
+    }
+    
+    NSNumber *flag = [self.partialSyncFlag objectForKey:identifier];
+    return (flag == nil || ![flag boolValue] || (params == nil && _isRunningSync));
 }
 
 /**
