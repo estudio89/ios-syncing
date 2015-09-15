@@ -99,7 +99,26 @@
         }
     }
     
-    [_jsonObject setObject:[self formatValue:value] forKey:name];
+    NSObject *formatted = [self formatValue:value];
+    NSArray *nameTree = [name componentsSeparatedByString:@"."];
+    NSMutableDictionary *curJSONObj = _jsonObject;
+    int idx = 0;
+    
+    for (NSString *part in nameTree) {
+        if (idx == [nameTree count] - 1) {
+            [curJSONObj setObject:formatted forKey:part];
+        } else {
+            if ([curJSONObj objectForKey:part] != nil) {
+                curJSONObj = [curJSONObj objectForKey:part];
+            } else {
+                NSMutableDictionary *aux = [[NSMutableDictionary alloc] init];
+                [curJSONObj setObject:aux forKey:part];
+                curJSONObj = aux;
+            }
+        }
+        
+        idx += 1;
+    }
 
     return YES;
 }
@@ -112,7 +131,19 @@
     }
     
     NSString *name = [self getAttributename];
-    NSObject *value = [_jsonObject valueForKey:name];
+    NSArray *nameTree = [name componentsSeparatedByString:@"."];
+    NSObject *value = [NSNull null];
+    NSMutableDictionary *curJSONObj = _jsonObject;
+    int idx = 0;
+    
+    for (NSString *part in nameTree) {
+        if (idx == [nameTree count] - 1) {
+            value = [curJSONObj valueForKey:part];
+        } else {
+            curJSONObj = [curJSONObj objectForKey:part];
+        }
+        idx += 1;
+    }
     
     if (![[self parseValue:value] isKindOfClass:[NSNull class]])
     {

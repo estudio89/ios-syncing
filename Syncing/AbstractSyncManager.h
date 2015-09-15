@@ -48,5 +48,6 @@
 - (NSArray *)deleteAllWithContext:(NSManagedObjectContext *)context;
 - (BOOL)moreOnServer;
 - (BOOL)moreOnServerWithPaginationIdentifier:(NSString *)paginationIdentifier;
+- (NSDictionary *)serializeObject:(NSObject *)object withContext:(NSManagedObjectContext *)context;
 
 @end
