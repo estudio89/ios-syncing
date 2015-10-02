@@ -19,6 +19,7 @@
 - (void)showLoginIfNeeded:(UIViewController *)initialVC withSegueID:(NSString *)segueID;
 - (BOOL)userIsLoggedIn;
 - (NSString *)getAuthenticateUrl;
+- (NSString *)getCentralAuthenticateUrl;
 - (NSString *)getAuthToken;
 - (NSString *)getUsername;
 - (NSDictionary *)getTimestamps;

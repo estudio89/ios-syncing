@@ -20,6 +20,7 @@
 @property (nonatomic, strong, readwrite) NSString *mGetDataUrl;
 @property (nonatomic, strong, readwrite) NSString *mSendDataUrl;
 @property (nonatomic, strong, readwrite) NSString *mAuthenticateUrl;
+@property (nonatomic, strong, readwrite) NSString *mCentralAuthenticateUrl;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *mModelGetDataUrls;
 @property (nonatomic, strong, readwrite) NSString *mEncryptionPassword;
 @property BOOL mEncryptionActive;
@@ -85,6 +86,7 @@ static NSString *loginActivity;
         _mGetDataUrl = [jsonConfig valueForKey:@"getDataUrl"];
         _mSendDataUrl = [jsonConfig valueForKey:@"sendDataUrl"];
         _mAuthenticateUrl = [jsonConfig valueForKey:@"authenticateUrl"];
+        _mCentralAuthenticateUrl = [jsonConfig valueForKey:@"centralAuthenticateUrl"];
         loginActivity = [jsonConfig valueForKey:@"loginActivity"];
         _mEncryptionPassword = [jsonConfig valueForKey:@"encryptionPassword"];
         if ([[jsonConfig valueForKey:@"encryptionActive"] boolValue])
@@ -176,6 +178,14 @@ static NSString *loginActivity;
 - (NSString *)getAuthenticateUrl
 {
     return _mAuthenticateUrl;
+}
+
+/**
+ * getCentralAuthenticateUrl
+ */
+- (NSString *)getCentralAuthenticateUrl
+{
+    return _mCentralAuthenticateUrl;
 }
 
 /**
