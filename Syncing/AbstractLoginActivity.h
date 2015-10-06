@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DataSyncHelper.h"
 
 @interface AbstractLoginActivity : UIViewController
 
@@ -17,5 +18,6 @@
 - (void)onWrongCredentials:(NSNotification *)notification;
 - (void)onBlockedLogin:(NSNotification *)notification;
 - (void)onConnectionError:(NSNotification *)notification;
+- (void)onSyncError:(NSNotification *)notification;
 
 @end

@@ -37,6 +37,7 @@
 - (void)setUsername:(NSString *)username;
 - (void)setDeviceId:(NSString *)newId;
 - (void)logout;
+- (void)logout:(BOOL)postEvent;
 - (BOOL)isEncryptionActive;
 - (NSString *)getEncryptionPassword;
 - (void)requestSync;

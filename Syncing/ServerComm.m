@@ -8,6 +8,7 @@
 
 #import "ServerComm.h"
 #import "CustomException.h"
+#import "SyncingInjection.h"
 
 @interface ServerComm ()
 
@@ -16,6 +17,14 @@
 @end
 
 @implementation ServerComm
+
+/**
+ * getInstance
+ */
++ (ServerComm *)getInstance
+{
+    return [SyncingInjection get:[ServerComm class]];
+}
 
 /**
  * initWithSecurityUtil

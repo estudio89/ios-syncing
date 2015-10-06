@@ -72,6 +72,11 @@
     [[SyncConfig getInstance] setUsername:[successfullLogin getUsername]];
 }
 
+- (void)onSyncError:(NSNotification *)notification
+{
+    [[SyncConfig getInstance] logout:NO];
+}
+
 /**
  * onWrongCredentials
  *

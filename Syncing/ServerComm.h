@@ -11,6 +11,7 @@
 
 @interface ServerComm : NSObject
 
++ (ServerComm *)getInstance;
 - (instancetype)initWithSecurityUtil:(SecurityUtil *)securityUtil;
 - (NSDictionary *)post:(NSString *)url withData:(NSDictionary *)data;
 - (NSDictionary *)post:(NSString *)url withData:(NSDictionary *)data withFiles:(NSArray *)files;
