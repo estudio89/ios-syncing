@@ -146,6 +146,22 @@ static NSString *loginActivity;
 }
 
 /**
+ * userNeverSynced
+ */
+- (BOOL)userNeverSynced
+{
+    NSDictionary *timestamps = [self getTimestamps];
+    for (NSString *timestamp in [timestamps allValues])
+    {
+        if (![timestamp isEqualToString:@""] && timestamp != nil) {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
+/**
  * logout
  */
 - (void)logout

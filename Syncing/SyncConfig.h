@@ -42,6 +42,7 @@
 - (NSString *)getEncryptionPassword;
 - (void)requestSync;
 - (NSManagedObjectContext *)getContext;
+- (BOOL)userNeverSynced;
 
 @end
 
