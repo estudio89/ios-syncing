@@ -18,5 +18,6 @@
         withInitialSync:(BOOL)initialSync;
 + (void)executeInjectionWithContext:(NSManagedObjectContext *)context;
 + (id)get:(Class)class;
++ (NSString *)library_version;
 
 @end
