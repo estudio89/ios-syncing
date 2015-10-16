@@ -245,6 +245,7 @@
 		7BF770A71AA4A4C2007BCAD6 /* Syncing Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Syncing Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BF770AA1AA4A4C2007BCAD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7BF770AB1AA4A4C2007BCAD6 /* Syncing_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Syncing_Tests.m; sourceTree = "<group>"; };
+		7BFF78591BD13EB900E1BFFC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8274EA1BBEBBDAEADFFED2F8 /* libPods-Syncing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Syncing.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CC448A017E8E74B93780CA1 /* Pods-Syncing.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Syncing.release.xcconfig"; path = "Pods/Target Support Files/Pods-Syncing/Pods-Syncing.release.xcconfig"; sourceTree = "<group>"; };
 		B959F1E5B85C392AC8A201F4 /* Pods-Syncing Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Syncing Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Syncing Tests/Pods-Syncing Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -402,6 +403,7 @@
 				7BE466181B4C058600B63C6A /* Serialization */,
 				7BE488451B4F0A2B00985165 /* SyncEntity.h */,
 				7BE488461B4F0A2B00985165 /* SyncEntity.m */,
+				7BFF78591BD13EB900E1BFFC /* Info.plist */,
 			);
 			path = Syncing;
 			sourceTree = "<group>";
