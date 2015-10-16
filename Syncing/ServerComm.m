@@ -9,6 +9,7 @@
 #import "ServerComm.h"
 #import "CustomException.h"
 #import "SyncingInjection.h"
+#import "GzipUtil.h"
 
 @interface ServerComm ()
 
@@ -64,6 +65,8 @@
     [request setHTTPShouldHandleCookies:NO];
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
+    [request addValue:[SyncingInjection library_version] forHTTPHeaderField:@"X-E89-SYNCING-VERSION"];
+    [request addValue:@"true" forHTTPHeaderField:@"X-SECURITY-GZIP"];
     
     //request data
     NSMutableData *postData = [NSMutableData data];
@@ -93,7 +96,8 @@
     [postData appendData:[@"Content-Disposition: form-data; name=\"json\"\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
     
     //encrypt
-    NSData *encryptedData = [_securityUtil encryptMessage:jsonData];
+    NSData *compressedData = [GzipUtil gzippedData:jsonData];
+    NSData *encryptedData = [_securityUtil encryptMessage:compressedData];
     [postData appendData:encryptedData];
     [postData appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
     
@@ -153,7 +157,8 @@
     
     //decrypt
     NSData *dataReply = [_securityUtil decryptMessage:requestHandler];
-    NSDictionary *jsonReply = [NSJSONSerialization JSONObjectWithData:dataReply options:kNilOptions error:&error];
+    NSData *decompressedData = [GzipUtil gunzippedData:dataReply];
+    NSDictionary *jsonReply = [NSJSONSerialization JSONObjectWithData:decompressedData options:kNilOptions error:&error];
     
     return jsonReply;
 }
