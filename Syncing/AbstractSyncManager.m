@@ -609,7 +609,11 @@
 
 - (void)performSaveWithContext:(NSManagedObjectContext *)context
 {
-    [context save:nil];
+    NSError *error = nil;
+    [context save:&error];
+    if (error) {
+        NSLog(@"Error on performSaveWithContext: %@", error);
+    }
 }
 
 - (NSArray *)deleteAllWithContext:(NSManagedObjectContext *)context
