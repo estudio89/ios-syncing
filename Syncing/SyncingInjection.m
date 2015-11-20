@@ -12,7 +12,7 @@
 @implementation SyncingInjection
 
 static NSMutableDictionary *objects;
-static NSString *LIBRARY_VERSION=@"1.0.8";
+static NSString *LIBRARY_VERSION=@"1.0.9";
 
 + (void)initWithContext:(NSManagedObjectContext *)context
                             withConfigFile:(NSString *)fileName

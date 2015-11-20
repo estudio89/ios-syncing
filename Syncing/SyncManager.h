@@ -25,5 +25,6 @@
 - (id)saveObject:(NSDictionary *)object withDeviceId:(NSString *)deviceId withContext:(NSManagedObjectContext *)context;
 - (void)postEvent:(NSArray *)objects withBus:(AsyncBus *)bus;
 - (NSString *)getNotificationName;
+- (NSUInteger)getDelay;
 
 @end

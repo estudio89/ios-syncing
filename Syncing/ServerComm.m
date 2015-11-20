@@ -67,6 +67,7 @@
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
     [request addValue:[SyncingInjection library_version] forHTTPHeaderField:@"X-E89-SYNCING-VERSION"];
     [request addValue:@"true" forHTTPHeaderField:@"X-SECURITY-GZIP"];
+    [request addValue:@"ios" forHTTPHeaderField:@"X-E89-SYNCING-PLATFORM"];
     
     //request data
     NSMutableData *postData = [NSMutableData data];
