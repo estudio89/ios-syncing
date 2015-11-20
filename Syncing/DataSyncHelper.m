@@ -11,6 +11,9 @@
 #import "CustomException.h"
 #import "SyncingInjection.h"
 #import <Raven/RavenClient.h>
+#include <stdlib.h>
+
+#define ARC4RANDOM_MAX 0x100000000
 
 @interface DataSyncHelper()
 
@@ -534,9 +537,17 @@ static int numberAttempts;
 /**
  * partialSynchronousSync
  */
-- (BOOL)partialSynchronousSync:(NSString *)identifier
+- (BOOL)partialSynchronousSync:(NSString *)identifier withDelay:(BOOL)allowDelay
 {
-    return [self runSynchronousSync:identifier];
+    id<SyncManager> sm = [_syncConfig getSyncManager:identifier];
+    
+    if ([sm getDelay] > 0 && allowDelay) {
+        double delay = ((double)arc4random() / ARC4RANDOM_MAX) * [sm getDelay];
+        [self performSelector:@selector(runSynchronousSync:) withObject:identifier afterDelay:delay];
+        return true;
+    } else {
+        return [self runSynchronousSync:identifier];
+    }
 }
 
 /**
@@ -693,7 +704,7 @@ static int numberAttempts;
         {
             if (sendModified)
             {
-                [self partialSynchronousSync:identifier];
+                [self partialSynchronousSync:identifier withDelay:NO];
             }
             else
             {

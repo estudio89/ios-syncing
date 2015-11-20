@@ -145,6 +145,11 @@
     return nil;
 }
 
+- (NSUInteger)getDelay
+{
+    return 0;
+}
+
 - (NSMutableArray *)getModifiedDataWithContext:(NSManagedObjectContext *)context
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:_entityName];
