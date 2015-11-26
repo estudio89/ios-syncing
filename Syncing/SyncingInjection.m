@@ -52,6 +52,8 @@ static NSString *LIBRARY_VERSION=@"1.0.9";
                                                      withTransactionManager:customTransactionManager
                                                                     withBus:asyncBus];
     
+    [syncConfig setDataSyncHelper:dataSyncHelper];
+    
     ServerAuthenticate *serverAuthenticate = [[ServerAuthenticate alloc] initWithServerComm:serverComm
                                                                              withSyncCOnfig:syncConfig
                                                                                withAsyncBus:asyncBus];

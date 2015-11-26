@@ -25,6 +25,7 @@
 
 @property BOOL isRunningSync;
 @property (strong, readwrite) NSMutableDictionary *partialSyncFlag;
+@property (nonatomic, strong) NSMutableDictionary *eventQueue;
 
 @end
 
@@ -68,7 +69,8 @@ static int numberAttempts;
         self.transactionManager = transactionManager;
         self.bus = bus;
         self.isRunningSync = NO;
-        self.partialSyncFlag = [[NSMutableDictionary alloc]init];
+        self.partialSyncFlag = [[NSMutableDictionary alloc] init];
+        _eventQueue = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -314,12 +316,10 @@ static int numberAttempts;
 - (BOOL)processGetDataResponse:(NSString *)threadId withJsonResponse:(NSDictionary *)jsonResponse withTimestamp:(NSDictionary *)timestamps
 {
     NSManagedObjectContext *context = [self.syncConfig getContext];
-    NSMutableDictionary *savedObjectsDictionary = [[NSMutableDictionary alloc] init];
     
     [self.transactionManager doInTransaction:^{
         for (id<SyncManager> syncManager in [self.syncConfig getSyncManagers])
         {
-  
             NSString *identifier = [syncManager getIdentifier];
             NSMutableDictionary *jsonObject = [[jsonResponse objectForKey:identifier] mutableCopy];
             
@@ -334,7 +334,7 @@ static int numberAttempts;
                 
                 [jsonObject removeObjectForKey:@"data"];
                 NSArray *objects = [syncManager saveNewData:jsonArray withDeviceId:[self.syncConfig getDeviceId] withParameters:jsonObject withContext:context];
-                [savedObjectsDictionary setObject:objects forKey:[syncManager getIdentifier]];
+                [self addToEventQueue:[syncManager getIdentifier] withObjects:objects];
             }
         }
         
@@ -354,7 +354,7 @@ static int numberAttempts;
     
     if ([self.transactionManager wasSuccessful])
     {
-        [self postSyncManagerEvents:savedObjectsDictionary];
+        [self postEventQueue];
     }
     
     return [self.transactionManager wasSuccessful];
@@ -367,7 +367,6 @@ static int numberAttempts;
 {
     NSManagedObjectContext *context = [self.syncConfig getContext];
     NSDictionary *timestamps = [jsonResponse objectForKey:@"timestamps"];
-    NSMutableDictionary *savedObjectsDictionary = [[NSMutableDictionary alloc] init];
     
     [self.transactionManager doInTransaction:^{
         NSArray *syncResponse;
@@ -396,7 +395,7 @@ static int numberAttempts;
                     }
                     [newDataResponse removeObjectForKey:@"data"];
                     NSArray *objects = [syncManager saveNewData:newData withDeviceId:[self.syncConfig getDeviceId] withParameters:newDataResponse withContext:context];
-                    [savedObjectsDictionary setObject:objects forKey:[syncManager getIdentifier]];
+                    [self addToEventQueue:[syncManager getIdentifier] withObjects:objects];
                 }
             }
         }
@@ -414,7 +413,7 @@ static int numberAttempts;
     
     if ([self.transactionManager wasSuccessful])
     {
-        [self postSyncManagerEvents:savedObjectsDictionary];
+        [self postEventQueue];
     }
     
     return [self.transactionManager wasSuccessful];
@@ -597,7 +596,8 @@ static int numberAttempts;
     }
     
     NSNumber *flag = [self.partialSyncFlag objectForKey:identifier];
-    return (flag == nil || ![flag boolValue] || (params == nil && _isRunningSync));
+    
+    return !_isRunningSync && (flag == nil || ![flag boolValue] || params == nil);
 }
 
 /**
@@ -667,13 +667,29 @@ static int numberAttempts;
     [self.bus post:[[BackgroundSyncError alloc] initWithException:error] withNotificationName:@"BackgroundSyncError"];
 }
 
-- (void)postSyncManagerEvents:(NSDictionary *)savedObjectsDictionary
+- (void)addToEventQueue:(NSString *)identifier withObjects:(NSArray *)objects
 {
-    for (NSString *identifier in [savedObjectsDictionary allKeys])
+    if ([_eventQueue objectForKey:identifier])
+    {
+        NSMutableArray *queuedObjects = [_eventQueue objectForKey:identifier];
+        [queuedObjects addObjectsFromArray:objects];
+        [_eventQueue setObject:queuedObjects forKey:identifier];
+    }
+    else
+    {
+        [_eventQueue setObject:objects forKey:identifier];
+    }
+}
+
+- (void)postEventQueue
+{
+    for (NSString *identifier in [_eventQueue allKeys])
     {
         id<SyncManager>syncManager = [_syncConfig getSyncManager:identifier];
-        [syncManager postEvent:[savedObjectsDictionary objectForKey:identifier] withBus:[self bus]];
+        [syncManager postEvent:[_eventQueue objectForKey:identifier] withBus:[self bus]];
     }
+    
+    [_eventQueue removeAllObjects];
 }
 
 /**

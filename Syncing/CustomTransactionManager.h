@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SyncConfig.h"
 
 @interface CustomTransactionManager : NSObject
 

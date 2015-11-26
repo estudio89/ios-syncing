@@ -42,6 +42,7 @@
 - (void)postGetFinishedEvent;
 - (void)postSendFinishedEvent;
 - (void)postSyncFinishedEvent;
+- (void)addToEventQueue:(NSString *)identifier withObjects:(NSArray *)objects;
 
 @end
 

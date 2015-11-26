@@ -14,6 +14,7 @@
 #import "SyncEntity.h"
 #import "Annotations.h"
 #import "ReadOnlyAbstractSyncManager.h"
+#import "DataSyncHelper.h"
 
 @interface AbstractSyncManager ()
 
@@ -108,6 +109,11 @@
             [_childrenAttributes setObject:nestedManager forKey:attributeName];
         }
     }
+}
+
+- (void)setDataSyncHelper:(DataSyncHelper *)dataSyncHelper
+{
+    _dataSyncHelper = dataSyncHelper;
 }
 
 - (NestedManager *)getNestedManagerForAttribute:(NSString *)attribute
@@ -257,7 +263,10 @@
     
     if (deletedObjects != nil)
     {
-        [[self getSyncManagerDeleted] postEvent:deletedObjects withBus:[[AsyncBus alloc] init]];
+        id<SyncManager> deletedSyncManager = [self getSyncManagerDeleted];
+        if (deletedSyncManager) {
+            [_dataSyncHelper addToEventQueue:[deletedSyncManager getIdentifier] withObjects:deletedObjects];
+        }
     }
     
     return newObjects;
@@ -452,7 +461,7 @@
                                                    withParameters:childParams
                                                       withContext:context];
             
-            [nestedSyncManager postEvent:newChildren withBus:[[AsyncBus alloc] init]];
+            [_dataSyncHelper addToEventQueue:[nestedSyncManager getIdentifier] withObjects:newChildren];
         }
         
     }
@@ -617,6 +626,9 @@
     NSError *error = nil;
     [context save:&error];
     if (error) {
+        NSString *errorString = [NSString stringWithFormat:@"Error on performSaveWithContext: %@", error];
+        NSException *ex = [NSException exceptionWithName:@"CoreDataSaveError" reason:errorString userInfo:nil];
+        [self throwException:ex];
         NSLog(@"Error on performSaveWithContext: %@", error);
     }
 }

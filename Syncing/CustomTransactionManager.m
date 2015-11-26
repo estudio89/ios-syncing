@@ -8,6 +8,7 @@
 
 #import "CustomTransactionManager.h"
 #import "CustomException.h"
+#import <CoreData/CoreData.h>
 
 @interface CustomTransactionManager()
 
