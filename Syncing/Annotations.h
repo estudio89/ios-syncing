@@ -24,6 +24,7 @@
 @property BOOL ignore;
 @property BOOL writable;
 @property BOOL readable;
+@property BOOL allowOverwrite;
 @property (strong, readonly) NSString *name;
 
 - (instancetype)initWithAnnotation:(NSDictionary *)annotation;

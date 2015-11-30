@@ -683,13 +683,18 @@ static int numberAttempts;
 
 - (void)postEventQueue
 {
-    for (NSString *identifier in [_eventQueue allKeys])
+    NSArray *eventQueueCopy = [[NSArray alloc] initWithArray:[_eventQueue allKeys] copyItems:YES];
+    
+    for (NSString *identifier in eventQueueCopy)
     {
         id<SyncManager>syncManager = [_syncConfig getSyncManager:identifier];
         [syncManager postEvent:[_eventQueue objectForKey:identifier] withBus:[self bus]];
+        [_eventQueue removeObjectForKey:identifier];
     }
     
-    [_eventQueue removeAllObjects];
+    if (_eventQueue.count > 0) {
+        [self postEventQueue];
+    }
 }
 
 /**
@@ -727,6 +732,10 @@ static int numberAttempts;
                 [self.partialSyncFlag setObject:[NSNumber numberWithBool:YES] forKey:identifier];
                 [self getDataFromServer:identifier withParameters:[parameters mutableCopy]];
             }
+        }
+        @catch (TimeoutException *exception)
+        {
+            [self postBackgroundSyncError:exception];
         }
         @catch (HttpException *exception)
         {

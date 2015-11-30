@@ -22,6 +22,7 @@
 - (BOOL)isReadable;
 - (BOOL)updateJSON;
 - (BOOL)updateField;
+- (BOOL)allowOverwrite;
 - (NSObject *)parseValue:(NSObject *)value;
 - (NSObject *)formatValue:(NSObject *)value;
 
