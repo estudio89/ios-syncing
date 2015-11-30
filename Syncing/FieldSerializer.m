@@ -59,6 +59,20 @@
     return _annotation.readable;
 }
 
+- (BOOL)allowOverwrite
+{
+    if (_annotation == nil) {
+        return YES;
+    } else {
+        SyncEntity *se = (SyncEntity *)_object;
+        if (!_annotation.allowOverwrite) {
+            return ![se.modified boolValue];
+        } else {
+            return _annotation.allowOverwrite;
+        }
+    }
+}
+
 - (NSObject *)parseValue:(NSObject *)value
 {
     return [self checkNill:value];
@@ -125,7 +139,7 @@
 
 - (BOOL)updateField
 {
-    if ([self isIgnored] || ![self isReadable])
+    if ([self isIgnored] || ![self isReadable] || ![self allowOverwrite])
     {
         return NO;
     }

@@ -43,6 +43,7 @@
 - (void)requestSync;
 - (NSManagedObjectContext *)getContext;
 - (BOOL)userNeverSynced;
+- (void)setDataSyncHelper:(DataSyncHelper *)dataSyncHelper;
 
 @end
 

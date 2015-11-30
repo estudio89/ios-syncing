@@ -149,6 +149,13 @@
         } else {
             _name = @"";
         }
+        
+        // allowOverwrite
+        if ([annotation objectForKey:@"allowOverwrite"] != nil) {
+            _allowOverwrite = [[annotation objectForKey:@"allowOverwrite"] boolValue];
+        } else {
+            _allowOverwrite = YES;
+        }
     }
     
     return self;

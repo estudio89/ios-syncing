@@ -8,7 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+//#import "DataSyncHelper.h"
 #import "AsyncBus.h"
+
+@class DataSyncHelper;
 
 @protocol SyncManager <NSObject>
 
@@ -26,5 +29,6 @@
 - (void)postEvent:(NSArray *)objects withBus:(AsyncBus *)bus;
 - (NSString *)getNotificationName;
 - (NSUInteger)getDelay;
+- (void)setDataSyncHelper:(DataSyncHelper *)dataSyncHelper;
 
 @end

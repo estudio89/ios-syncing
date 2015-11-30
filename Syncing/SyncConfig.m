@@ -14,6 +14,7 @@
 @interface SyncConfig()
 
 @property (nonatomic, strong, readwrite) AsyncBus *bus;
+@property (nonatomic, strong) DataSyncHelper *dataSyncHelper;
 @property (nonatomic, strong, readwrite) NSString *mConfigFile;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *syncManagersByIdentifier;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *syncManagersByResponseIdentifier;
@@ -26,6 +27,7 @@
 @property BOOL mEncryptionActive;
 @property (nonatomic, strong, readwrite) NSManagedObjectContext *context;
 @property (nonatomic, strong) NSMutableArray *identifiersArray;
+@property (nonatomic, strong) NSManagedObjectContext *currentContext;
 
 @end
 
@@ -71,6 +73,11 @@ static NSString *loginActivity;
     [self loadSettings];
 }
 
+- (void)setDataSyncHelper:(DataSyncHelper *)dataSyncHelper
+{
+    _dataSyncHelper = dataSyncHelper;
+}
+
 /**
  * loadSettings
  */
@@ -110,6 +117,7 @@ static NSString *loginActivity;
         {
             klass = NSClassFromString([syncManagerJson valueForKey:@"class"]);
             syncManager = [[klass alloc] init];
+            [syncManager setDataSyncHelper:_dataSyncHelper];
             getDataUrl = [syncManagerJson valueForKey:@"getDataUrl"];
             identifier = [syncManager getIdentifier];
             [_identifiersArray addObject:identifier];
@@ -445,6 +453,8 @@ static NSString *loginActivity;
     NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] init];
     [managedObjectContext setPersistentStoreCoordinator:[_context persistentStoreCoordinator]];
     
+    _currentContext = managedObjectContext;
+    
     return managedObjectContext;
 }
 
@@ -455,7 +465,7 @@ static NSString *loginActivity;
 {
     NSManagedObjectContext *otherContext = (NSManagedObjectContext *)didSaveNotification.object;
     
-    if (otherContext.persistentStoreCoordinator == _context.persistentStoreCoordinator)
+    if (otherContext.persistentStoreCoordinator == _context.persistentStoreCoordinator && otherContext != _context)
     {
         [_context performSelectorOnMainThread:@selector(mergeChangesFromContextDidSaveNotification:)
                                    withObject:didSaveNotification
