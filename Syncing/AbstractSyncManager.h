@@ -45,10 +45,11 @@
              withContext:(NSManagedObjectContext *)context;
 - (SyncEntity *)findParent:(NSString *)parentEntity withParentId:(NSObject *)parentId withContext:(NSManagedObjectContext *)context;
 - (void)performSaveWithContext:(NSManagedObjectContext *)context;
-- (void)deleteAllChildrenFromEntity:(NSString *)entity
-                withParentAttribute:(NSString *)parentAttribute
-                         withParent:(NSManagedObject *)parent
-                        withContext:(NSManagedObjectContext *)context;
+- (void)deleteMissingChildrenFromEntity:(NSString *)entity
+                    withParentAttribute:(NSString *)parentAttribute
+                             withParent:(NSManagedObject *)parent
+                            withContext:(NSManagedObjectContext *)context
+                         withNewObjects:(NSArray *)newObjects;
 - (id<SyncManager>)syncManagerForNestedManager:(NestedManager *)nestedManager;
 - (void)saveBooleanPref:(NSString *)key withValue:(BOOL)value;
 - (NSManagedObject *)getOldestFromContext:(NSManagedObjectContext *)context;

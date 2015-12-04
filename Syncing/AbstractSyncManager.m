@@ -293,7 +293,7 @@
             }
         }
         
-        [context save:nil];
+        [self performSaveWithContext:context];
     }
     @catch (NSException *e)
     {
@@ -448,18 +448,19 @@
                 childParams = [[NSDictionary alloc] init];
             }
             
-            if (annotation.discardOnSave && !checkIsNew)
-            {
-                [self deleteAllChildrenFromEntity:annotation.entityName
-                              withParentAttribute:annotation.attributeName
-                                       withParent:newItem
-                                      withContext:context];
-            }
-            
             NSArray *newChildren = [nestedSyncManager saveNewData:children
                                                      withDeviceId:deviceId
                                                    withParameters:childParams
                                                       withContext:context];
+            
+            if (annotation.discardOnSave && !checkIsNew)
+            {
+                [self deleteMissingChildrenFromEntity:annotation.entityName
+                              withParentAttribute:annotation.attributeName
+                                       withParent:newItem
+                                      withContext:context
+                                   withNewObjects:newChildren];
+            }
             
             [_dataSyncHelper addToEventQueue:[nestedSyncManager getIdentifier] withObjects:newChildren];
         }
@@ -643,7 +644,7 @@
     {
         [context deleteObject:obj];
     }
-    [context save:nil];
+    [self performSaveWithContext:context];
     
     return deletedObjects;
 }
@@ -656,14 +657,15 @@
     return allObjects;
 }
 
-- (void)deleteAllChildrenFromEntity:(NSString *)entity
+- (void)deleteMissingChildrenFromEntity:(NSString *)entity
                 withParentAttribute:(NSString *)parentAttribute
                          withParent:(NSManagedObject *)parent
                         withContext:(NSManagedObjectContext *)context
+                     withNewObjects:(NSArray *)newObjects
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity];
     [fetchRequest setIncludesPropertyValues:NO];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K==%@", parentAttribute, parent]];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K==%@ AND NOT (self IN %@)", parentAttribute, parent, newObjects]];
     
     NSArray *deletedObjects = [context executeFetchRequest:fetchRequest error:nil];
     
@@ -671,7 +673,7 @@
     {
         [context deleteObject:obj];
     }
-    [context save:nil];
+    [self performSaveWithContext:context];
 }
 
 - (BOOL)moreOnServer
