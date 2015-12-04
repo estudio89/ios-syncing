@@ -36,19 +36,28 @@
  */
 - (void)doInTransaction:(void(^)(void))manipulateInTransaction withContext:(NSManagedObjectContext *)context
 {
+    NSUndoManager *undoManager = [[NSUndoManager alloc] init];
+    [context setUndoManager:undoManager];
+    
     @try
     {
+        [undoManager beginUndoGrouping];
         manipulateInTransaction();
-        [context save:nil];
+        [self performSaveWithContext:context];
+        [undoManager endUndoGrouping];
         self.isSuccessful = YES;
     }
     @catch (InvalidThreadIdException *exception)
     {
-        [context rollback];
+        [undoManager endUndoGrouping];
+        [undoManager undo];
+        [self performSaveWithContext:context];
     }
     @catch (NSException *exception)
     {
-        [context rollback];
+        [undoManager endUndoGrouping];
+        [undoManager undo];
+        [self performSaveWithContext:context];
         @throw exception;
     }
 }
@@ -59,6 +68,17 @@
 - (BOOL)wasSuccessful
 {
     return self.isSuccessful;
+}
+
+- (void)performSaveWithContext:(NSManagedObjectContext *)context
+{
+    NSError *error = nil;
+    [context save:&error];
+    if (error) {
+        NSString *errorString = [NSString stringWithFormat:@"Error on performSaveWithContext: %@", error];
+        NSException *ex = [NSException exceptionWithName:@"CoreDataSaveError" reason:errorString userInfo:nil];
+        @throw ex;
+    }
 }
 
 @end
