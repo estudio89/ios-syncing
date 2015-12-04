@@ -597,7 +597,7 @@ static int numberAttempts;
     
     NSNumber *flag = [self.partialSyncFlag objectForKey:identifier];
     
-    return !_isRunningSync && (flag == nil || ![flag boolValue] || params == nil);
+    return ((flag == nil || ![flag boolValue]) && !_isRunningSync) || params != nil;
 }
 
 /**
