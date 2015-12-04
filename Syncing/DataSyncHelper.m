@@ -669,15 +669,17 @@ static int numberAttempts;
 
 - (void)addToEventQueue:(NSString *)identifier withObjects:(NSArray *)objects
 {
+    NSMutableArray *mutableObjects = [objects mutableCopy];
+    
     if ([_eventQueue objectForKey:identifier])
     {
         NSMutableArray *queuedObjects = [_eventQueue objectForKey:identifier];
-        [queuedObjects addObjectsFromArray:objects];
+        [queuedObjects addObjectsFromArray:mutableObjects];
         [_eventQueue setObject:queuedObjects forKey:identifier];
     }
     else
     {
-        [_eventQueue setObject:objects forKey:identifier];
+        [_eventQueue setObject:mutableObjects forKey:identifier];
     }
 }
 
