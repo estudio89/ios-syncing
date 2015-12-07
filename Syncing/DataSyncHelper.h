@@ -58,6 +58,9 @@
 @interface PartialSyncFinishedEvent : NSObject
 @end
 
+@interface WillStartSyncEvent : NSObject
+@end
+
 @interface BackgroundSyncError : NSObject
 
 - (id)initWithException:(NSException *)exception;
