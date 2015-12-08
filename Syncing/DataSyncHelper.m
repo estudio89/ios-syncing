@@ -426,6 +426,7 @@ static int numberAttempts;
 {
     NSLog(@"STARTING NEW SYNC");
     BOOL completed = NO;
+    [self postWillStartSyncEvent];
     
     if (identifier != nil)
     {
@@ -651,6 +652,15 @@ static int numberAttempts;
 }
 
 /**
+ * postWillStartSyncEvent
+ */
+- (void)postWillStartSyncEvent
+{
+    [self.bus post:[[WillStartSyncEvent alloc] init] withNotificationName:@"WillStartSyncEvent"];
+    NSLog(@"WillStartSyncEvent");
+}
+
+/**
  * postPartialSyncFinishedEvent
  */
 - (void)postPartialSyncFinishedEvent
@@ -768,6 +778,9 @@ static int numberAttempts;
 @end
 
 @implementation PartialSyncFinishedEvent
+@end
+
+@implementation WillStartSyncEvent
 @end
 
 @interface BackgroundSyncError()
