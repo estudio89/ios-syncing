@@ -482,6 +482,17 @@
     return [[[NSUserDefaults standardUserDefaults] valueForKey:key] boolValue];
 }
 
+- (BOOL)booleanPref:(NSString *)key withDefaultValue:(BOOL)defaultValue
+{
+    NSString *fullKey = [NSString stringWithFormat:@"%@.%@", NSStringFromClass([self class]), key];
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:fullKey] == nil) {
+        return defaultValue;
+    } else {
+        return [self booleanPref:fullKey];
+    }
+}
+
 - (NSManagedObject *)getOldestFromContext:(NSManagedObjectContext *)context
 {
     if (_dateAttribute == nil)

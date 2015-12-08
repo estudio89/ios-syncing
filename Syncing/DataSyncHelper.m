@@ -571,18 +571,25 @@ static int numberAttempts;
  */
 - (void)partialAsynchronousSync:(NSString *)identifier
 {
-    [self partialAsynchronousSync:identifier withParameters:nil];
+    [self partialAsynchronousSync:identifier withParameters:nil withSuccessCallback:nil withFailCallback:nil];
 }
 
 /**
  * partialAsynchronousSync
  */
-- (void)partialAsynchronousSync:(NSString *)identifier withParameters:(NSDictionary *)parameters
+- (void)partialAsynchronousSync:(NSString *)identifier
+                 withParameters:(NSDictionary *)parameters
+            withSuccessCallback:(void(^)(void))successCallback
+               withFailCallback:(void(^)(void))failCallback
 {
     if ([self canRunSyncWithIdentifier:identifier withParameters:parameters])
     {
         BOOL sendModified = parameters == nil;
-        [self partialSyncTask:identifier withParameters:parameters withSendModified:sendModified];
+        [self partialSyncTask:identifier
+               withParameters:parameters
+             withSendModified:sendModified
+          withSuccessCallback:successCallback
+             withFailCallback:failCallback];
     }
     else
     {
@@ -730,19 +737,25 @@ static int numberAttempts;
 /**
  * partialSyncTask
  */
-- (void)partialSyncTask:(NSString *)identifier withParameters:(NSDictionary *)parameters withSendModified:(BOOL)sendModified
+- (void)partialSyncTask:(NSString *)identifier
+         withParameters:(NSDictionary *)parameters
+       withSendModified:(BOOL)sendModified
+    withSuccessCallback:(void(^)(void))successCallback
+       withFailCallback:(void(^)(void))failCallback
 {
+    __block BOOL success = NO;
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         @try
         {
             if (sendModified)
             {
-                [self partialSynchronousSync:identifier withDelay:NO];
+                success = [self partialSynchronousSync:identifier withDelay:NO];
             }
             else
             {
                 [self.partialSyncFlag setObject:[NSNumber numberWithBool:YES] forKey:identifier];
-                [self getDataFromServer:identifier withParameters:[parameters mutableCopy]];
+                success = [self getDataFromServer:identifier withParameters:[parameters mutableCopy]];
             }
         }
         @catch (TimeoutException *exception)
@@ -756,6 +769,14 @@ static int numberAttempts;
         
         dispatch_async( dispatch_get_main_queue(), ^{
             [self.partialSyncFlag setObject:[NSNumber numberWithBool:NO] forKey:identifier];
+            
+            if (successCallback != nil && success) {
+                successCallback();
+            }
+            
+            if (failCallback != nil && !success) {
+                failCallback();
+            }
         });
     });
 }
