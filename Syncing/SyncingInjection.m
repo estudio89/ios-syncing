@@ -44,7 +44,10 @@ static NSString *LIBRARY_VERSION=@"1.0.9";
     CustomTransactionManager *customTransactionManager = [[CustomTransactionManager alloc] init];
     ThreadChecker *threadChecker = [[ThreadChecker alloc] init];
     SecurityUtil *securityUtil = [[SecurityUtil alloc] initWithSyncConfig:syncConfig];
-    ServerComm *serverComm = [[ServerComm alloc] initWithSecurityUtil:securityUtil];
+    
+    NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    appVersion = [appVersion stringByReplacingOccurrencesOfString:@"." withString:@""];
+    ServerComm *serverComm = [[ServerComm alloc] initWithSecurityUtil:securityUtil withAppVersion:appVersion];
     
     DataSyncHelper *dataSyncHelper = [[DataSyncHelper alloc] initWithServer:serverComm
                                                           withThreadChecker:threadChecker

@@ -14,6 +14,7 @@
 @interface ServerComm ()
 
 @property (nonatomic, strong, readwrite) SecurityUtil *securityUtil;
+@property (nonatomic, strong) NSString *appVersion;
 
 @end
 
@@ -30,12 +31,13 @@
 /**
  * initWithSecurityUtil
  */
-- (instancetype)initWithSecurityUtil:(SecurityUtil *)securityUtil
+- (instancetype)initWithSecurityUtil:(SecurityUtil *)securityUtil withAppVersion:(NSString *)appVersion
 {
     self = [super init];
     if (self)
     {
         _securityUtil = securityUtil;
+        _appVersion = appVersion;
     }
     return self;
 }
@@ -68,6 +70,7 @@
     [request addValue:[SyncingInjection library_version] forHTTPHeaderField:@"X-E89-SYNCING-VERSION"];
     [request addValue:@"true" forHTTPHeaderField:@"X-SECURITY-GZIP"];
     [request addValue:@"ios" forHTTPHeaderField:@"X-E89-SYNCING-PLATFORM"];
+    [request addValue:_appVersion forHTTPHeaderField:@"X-APP-VERSION"];
     
     //request data
     NSMutableData *postData = [NSMutableData data];
@@ -126,7 +129,8 @@
         }
         else
         {
-            @throw([HttpException exceptionWithName:@"Http error" reason:@"The http request returned an error." userInfo:nil]);
+            NSString *errorReason = [NSString stringWithFormat:@"The http request returned an error for url %@. Error: %@", url, error.domain];
+            @throw([HttpException exceptionWithName:@"Http error" reason:errorReason userInfo:nil]);
         }
     }
     else if ([requestResponse statusCode] == 403)

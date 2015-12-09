@@ -30,7 +30,10 @@
 - (void)fullAsynchronousSync;
 - (BOOL)fullSynchronousSync;
 - (void)partialAsynchronousSync:(NSString *)identifier;
-- (void)partialAsynchronousSync:(NSString *)identifier withParameters:(NSDictionary *)parameters;
+- (void)partialAsynchronousSync:(NSString *)identifier
+                 withParameters:(NSDictionary *)parameters
+            withSuccessCallback:(void(^)(void))successCallback
+               withFailCallback:(void(^)(void))failCallback;
 - (BOOL)partialSynchronousSync:(NSString *)identifier withDelay:(BOOL)allowDelay;
 - (void)stopSyncThreads;
 - (BOOL)canRunSyncWithIdentifier:(NSString *)identifier withParameters:(NSDictionary *)params;
