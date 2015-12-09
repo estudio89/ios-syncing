@@ -129,7 +129,8 @@
         }
         else
         {
-            @throw([HttpException exceptionWithName:@"Http error" reason:@"The http request returned an error." userInfo:nil]);
+            NSString *errorReason = [NSString stringWithFormat:@"The http request returned an error for url %@. Error: %@", url, error.domain];
+            @throw([HttpException exceptionWithName:@"Http error" reason:errorReason userInfo:nil]);
         }
     }
     else if ([requestResponse statusCode] == 403)
