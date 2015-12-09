@@ -484,7 +484,7 @@
 
 - (BOOL)booleanPref:(NSString *)key withDefaultValue:(BOOL)defaultValue
 {
-    NSString *fullKey = [NSString stringWithFormat:@"%@.%@", NSStringFromClass([self class]), key];
+    NSString *fullKey = [NSString stringWithFormat:@"%@.%@", _entityName, key];
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:fullKey] == nil) {
         return defaultValue;
