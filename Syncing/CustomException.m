@@ -34,3 +34,6 @@
 
 @implementation Http503Exception
 @end
+
+@implementation Http504Exception
+@end
