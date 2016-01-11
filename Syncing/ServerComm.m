@@ -153,6 +153,10 @@
     {
         @throw([Http503Exception exceptionWithName:@"Http service unavailable" reason:@"The server is currently unavailable." userInfo:nil]);
     }
+    else if ([requestResponse statusCode] == 504)
+    {
+        @throw([Http504Exception exceptionWithName:@"Http gateway timeout" reason:@"The server was acting as a gateway or proxy and did not receive a timely response from the upstream server." userInfo:nil]);
+    }
     
     NSString *ct = [requestResponse.allHeaderFields valueForKey:@"Content-Type"];
     if ([ct rangeOfString:@"application/octet-stream"].location == NSNotFound)

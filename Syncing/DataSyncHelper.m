@@ -447,10 +447,6 @@ static int numberAttempts;
             completed = [self sendDataToServer:identifier];
         }
     }
-    @catch (CustomException *e)
-    {
-        @throw e;
-    }
     @finally
     {
         if (identifier != nil)
@@ -493,7 +489,7 @@ static int numberAttempts;
         numberAttempts = 0;
         return response;
     }
-    @catch (Http408Exception *e | Http502Exception *e | Http503Exception *e)
+    @catch (Http408Exception *e | Http502Exception *e | Http503Exception *e | Http504Exception *e)
     {
         // Server is overloaded - exponential backoff
         if (numberAttempts < 4)
@@ -516,7 +512,7 @@ static int numberAttempts;
     }
     @catch (CustomException *e)
     {
-        @throw e;
+        [self sendCaughtException:e];
     }
     @catch (NSException *e)
     {
@@ -572,6 +568,15 @@ static int numberAttempts;
 - (void)partialAsynchronousSync:(NSString *)identifier
 {
     [self partialAsynchronousSync:identifier withParameters:nil withSuccessCallback:nil withFailCallback:nil];
+}
+
+/**
+ * partialAsynchronousSync
+ */
+- (void)partialAsynchronousSync:(NSString *)identifier
+                 withParameters:(NSDictionary *)parameters
+{
+    [self partialAsynchronousSync:identifier withParameters:parameters withSuccessCallback:nil withFailCallback:nil];
 }
 
 /**
