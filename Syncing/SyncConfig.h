@@ -13,6 +13,8 @@
 
 @interface SyncConfig : NSObject
 
+@property (nonatomic, strong) NSManagedObjectContext *context;
+
 + (SyncConfig *)getInstance;
 - (instancetype)initWithBus:(AsyncBus *)bus withContext:(NSManagedObjectContext *)context;
 - (void)showLoginIfNeeded:(UIViewController *)initialVC;
