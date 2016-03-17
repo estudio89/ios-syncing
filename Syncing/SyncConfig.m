@@ -25,7 +25,6 @@
 @property (nonatomic, strong, readwrite) NSMutableDictionary *mModelGetDataUrls;
 @property (nonatomic, strong, readwrite) NSString *mEncryptionPassword;
 @property BOOL mEncryptionActive;
-@property (nonatomic, strong, readwrite) NSManagedObjectContext *context;
 @property (nonatomic, strong) NSMutableArray *identifiersArray;
 @property (nonatomic, strong) NSManagedObjectContext *currentContext;
 
@@ -55,10 +54,6 @@ static NSString *loginActivity;
         _syncManagersByIdentifier = [[NSMutableDictionary alloc] init];
         _syncManagersByResponseIdentifier = [[NSMutableDictionary alloc] init];
         _mModelGetDataUrls = [[NSMutableDictionary alloc] init];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(otherContextDidSave:)
-                                                     name:NSManagedObjectContextDidSaveNotification object:nil];
     }
     
     return self;
@@ -181,7 +176,11 @@ static NSString *loginActivity;
 {
     [self eraseSyncPreferences];
     [[DataSyncHelper getInstance] stopSyncThreads];
-    [DatabaseProvider flushDatabase];
+    NSManagedObjectContext *context = [self getContext];
+    [DatabaseProvider clearAllCoreDataEntitiesWithContext:context];
+    [_context performBlock:^{
+        [_context save:nil];
+    }];
     if (postEvent) {
         [_bus post:[[UserLoggedOutEvent alloc] init] withNotificationName:@"UserLoggedOutEvent"];
         NSLog(@"UserLoggedOutEvent event was posted.");
@@ -450,27 +449,12 @@ static NSString *loginActivity;
  */
 - (NSManagedObjectContext *)getContext
 {
-    NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] init];
-    [managedObjectContext setPersistentStoreCoordinator:[_context persistentStoreCoordinator]];
+    NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
+    [managedObjectContext setParentContext:_context];
     
     _currentContext = managedObjectContext;
     
     return managedObjectContext;
-}
-
-/**
- * otherContextDidSave
- */
-- (void)otherContextDidSave:(NSNotification *)didSaveNotification
-{
-    NSManagedObjectContext *otherContext = (NSManagedObjectContext *)didSaveNotification.object;
-    
-    if (otherContext.persistentStoreCoordinator == _context.persistentStoreCoordinator && otherContext != _context)
-    {
-        [_context performSelectorOnMainThread:@selector(mergeChangesFromContextDidSaveNotification:)
-                                   withObject:didSaveNotification
-                                waitUntilDone:NO];
-    }
 }
 
 @end

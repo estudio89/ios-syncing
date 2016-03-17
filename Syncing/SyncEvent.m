@@ -18,6 +18,17 @@
     {
         // Store the objectID of every NSManagedObject.
         NSMutableArray *objectsIDs = [[NSMutableArray alloc] init];
+        NSManagedObjectContext *context = nil;
+        
+        if ([objects count] > 0) {
+            context = [(NSManagedObject *)[objects objectAtIndex:0] managedObjectContext];
+            NSError *error;
+            [context obtainPermanentIDsForObjects:objects error:&error];
+            if (error) {
+                NSString *exception = [NSString stringWithFormat:@"SyncEvent exception: %@.", error.description];
+                @throw [NSException exceptionWithName:@"" reason:exception userInfo:nil];
+            }
+        }
         
         for (NSManagedObject *object in objects)
         {

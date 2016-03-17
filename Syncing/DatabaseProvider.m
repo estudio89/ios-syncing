@@ -12,43 +12,26 @@
 @implementation DatabaseProvider
 
 /**
- * flushDatabase
+ * clearAllCoreDataEntities
  */
-+ (void)flushDatabase
++ (void)clearAllCoreDataEntitiesWithContext:(NSManagedObjectContext *)context
 {
-    NSError *error = nil;
-    NSFileManager *fileMgr = [[NSFileManager alloc] init];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath = [paths objectAtIndex:0];
-    NSArray *directoryContents = [fileMgr contentsOfDirectoryAtPath:documentsPath error:&error];
+    NSManagedObjectModel *model = [[context persistentStoreCoordinator] managedObjectModel];
+    NSFetchRequest *fetchRequest = nil;
+    NSArray *objects = nil;
+    NSArray *entities = [model.entities valueForKey:@"name"];
     
-    if (error == nil)
-    {
-        for (NSString *path in directoryContents)
-        {
-            NSString *fullPath = [documentsPath stringByAppendingPathComponent:path];
-            BOOL removeSuccess = [fileMgr removeItemAtPath:fullPath error:&error];
-            if (!removeSuccess)
-            {
-                NSLog(@"flushDatabase error - removeItemAtPath");
-            }
+    for (NSString *entity in entities) {
+        fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity];
+        [fetchRequest setIncludesPropertyValues:NO];
+        objects = [context executeFetchRequest:fetchRequest error:nil];
+        
+        for (NSManagedObject *object in objects) {
+            [context deleteObject:object];
         }
     }
-    else
-    {
-        NSLog(@"flushDatabase error - contentsOfDirectoryAtPath");
-    }
     
-    NSManagedObjectContext *context = [[SyncConfig getInstance] getContext];
-    NSURL * storeURL = [[context persistentStoreCoordinator] URLForPersistentStore:[[[context persistentStoreCoordinator] persistentStores] lastObject]];
-    
-    [context reset];
-    
-    if ([[context persistentStoreCoordinator] removePersistentStore:[[[context persistentStoreCoordinator] persistentStores] lastObject] error:&error])
-    {
-        [[NSFileManager defaultManager] removeItemAtURL:storeURL error:&error];
-        [[context persistentStoreCoordinator] addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error];
-    }
+    [context save:nil];
 }
 
 @end

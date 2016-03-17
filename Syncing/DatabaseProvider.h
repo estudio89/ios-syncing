@@ -10,6 +10,6 @@
 
 @interface DatabaseProvider : NSObject
 
-+ (void)flushDatabase;
++ (void)clearAllCoreDataEntitiesWithContext:(NSManagedObjectContext *)context;
 
 @end

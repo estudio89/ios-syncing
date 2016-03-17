@@ -9,6 +9,7 @@
 #import "CustomTransactionManager.h"
 #import "CustomException.h"
 #import <CoreData/CoreData.h>
+#import "SyncConfig.h"
 
 @interface CustomTransactionManager()
 
@@ -36,28 +37,19 @@
  */
 - (void)doInTransaction:(void(^)(void))manipulateInTransaction withContext:(NSManagedObjectContext *)context
 {
-    NSUndoManager *undoManager = [[NSUndoManager alloc] init];
-    [context setUndoManager:undoManager];
-    
     @try
     {
-        [undoManager beginUndoGrouping];
         manipulateInTransaction();
         [self performSaveWithContext:context];
-        [undoManager endUndoGrouping];
         self.isSuccessful = YES;
     }
     @catch (InvalidThreadIdException *exception)
     {
-        [undoManager endUndoGrouping];
-        [undoManager undo];
-        [self performSaveWithContext:context];
+        [context reset];
     }
     @catch (NSException *exception)
     {
-        [undoManager endUndoGrouping];
-        [undoManager undo];
-        [self performSaveWithContext:context];
+        [context reset];
         @throw exception;
     }
 }
@@ -72,13 +64,26 @@
 
 - (void)performSaveWithContext:(NSManagedObjectContext *)context
 {
-    NSError *error = nil;
-    [context save:&error];
-    if (error) {
-        NSString *errorString = [NSString stringWithFormat:@"Error on performSaveWithContext: %@", error];
+    // Saving child managed object context
+    NSError *childError = nil;
+    [context save:&childError];
+    if (childError) {
+        NSString *errorString = [NSString stringWithFormat:@"CustomTransactionManager: error on performSaveWithContext for child MOC: %@.", childError];
         NSException *ex = [NSException exceptionWithName:@"CoreDataSaveError" reason:errorString userInfo:nil];
         @throw ex;
     }
+    
+    // Saving parent managed object context
+    NSManagedObjectContext *mainContext = [[SyncConfig getInstance] context];
+    [mainContext performBlock:^{
+        NSError *parentError = nil;
+        [mainContext save:&parentError];
+        if (parentError) {
+            NSString *errorString = [NSString stringWithFormat:@"CustomTransactionManager: error on performSaveWithContext for parent MOC: %@.", parentError];
+            NSException *ex = [NSException exceptionWithName:@"CoreDataSaveError" reason:errorString userInfo:nil];
+            @throw ex;
+        }
+    }];
 }
 
 @end

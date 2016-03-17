@@ -292,8 +292,6 @@
                 [object setValue:[obj valueForKey:@"id"] forKey:@"idServer"];
             }
         }
-        
-        [self performSaveWithContext:context];
     }
     @catch (NSException *e)
     {
@@ -425,8 +423,6 @@
         }
     }
     
-    [self performSaveWithContext:context];
-    
     if ([_childrenAttributes count] > 0)
     {
         for (NSString *childrenAttributeName in [_childrenAttributes allKeys])
@@ -479,7 +475,8 @@
 
 - (BOOL)booleanPref:(NSString *)key
 {
-    return [[[NSUserDefaults standardUserDefaults] valueForKey:key] boolValue];
+    NSNumber *pref = [[NSUserDefaults standardUserDefaults] valueForKey:key];
+    return [pref boolValue];
 }
 
 - (BOOL)booleanPref:(NSString *)key withDefaultValue:(BOOL)defaultValue
@@ -633,18 +630,6 @@
                        inManagedObjectContext:context];
 }
 
-- (void)performSaveWithContext:(NSManagedObjectContext *)context
-{
-    NSError *error = nil;
-    [context save:&error];
-    if (error) {
-        NSString *errorString = [NSString stringWithFormat:@"Error on performSaveWithContext: %@", error];
-        NSException *ex = [NSException exceptionWithName:@"CoreDataSaveError" reason:errorString userInfo:nil];
-        [self throwException:ex];
-        NSLog(@"Error on performSaveWithContext: %@", error);
-    }
-}
-
 - (NSArray *)deleteAllWithContext:(NSManagedObjectContext *)context
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:_entityName];
@@ -655,7 +640,6 @@
     {
         [context deleteObject:obj];
     }
-    [self performSaveWithContext:context];
     
     return deletedObjects;
 }
@@ -684,7 +668,6 @@
     {
         [context deleteObject:obj];
     }
-    [self performSaveWithContext:context];
 }
 
 - (BOOL)moreOnServer
