@@ -10,6 +10,7 @@
 #import "SyncingInjection.h"
 #import "DataSyncHelper.h"
 #import "DatabaseProvider.h"
+#import "E89ManagedObjectContext.h"
 
 @interface SyncConfig()
 
@@ -449,7 +450,7 @@ static NSString *loginActivity;
  */
 - (NSManagedObjectContext *)getContext
 {
-    NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
+    E89ManagedObjectContext *managedObjectContext = [[E89ManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
     [managedObjectContext setParentContext:_context];
     
     _currentContext = managedObjectContext;

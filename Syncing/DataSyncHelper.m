@@ -430,6 +430,10 @@ static int numberAttempts;
     
     if (identifier != nil)
     {
+        // Impedindo que uma thread parcial rode enquanto uma thread full esteja rodando
+        if (_isRunningSync) {
+            return NO;
+        }
         [_partialSyncFlag setObject:[NSNumber numberWithBool:YES] forKey:identifier];
     }
     else
@@ -439,9 +443,9 @@ static int numberAttempts;
     
     @try
     {
-        NSLog(@"GETTING DATA FROM SERVER");
+        NSLog(@"GETTING DATA FROM SERVER. Identifier: %@", identifier);
         completed = [self getDataFromServer:identifier];
-        NSLog(@"GOT DATA FROM SERVER");
+        NSLog(@"GOT DATA FROM SERVER. Identifier: %@, Completed: %hhdd", identifier, completed);
         if (completed && [self hasModifiedData])
         {
             completed = [self sendDataToServer:identifier];
@@ -554,6 +558,8 @@ static int numberAttempts;
     if ([self canRunSyncWithIdentifier:nil withParameters:nil])
     {
         NSLog(@"Running new FullSyncAsyncTask");
+        // Impedindo que uma thread parcial rode enquanto uma thread full esteja rodando
+        [self stopSyncThreads];
         [self fullSyncAsyncTask];
     }
     else

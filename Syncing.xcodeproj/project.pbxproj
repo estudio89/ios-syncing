@@ -60,8 +60,10 @@
 		7B6CD0D91AAF6356009B7ACA /* get-data-for-model-request.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B6CD0D81AAF6356009B7ACA /* get-data-for-model-request.json */; };
 		7B7A1FB41AB899E30089A9FC /* Syncing.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BADD1201A8BD82B0005FC5E /* Syncing.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7B82A2C31AB3741900636503 /* ServerAuthenticateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B82A2C21AB3741900636503 /* ServerAuthenticateTests.m */; };
+		7B9B87D91CA3359600245557 /* E89ManagedObjectContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B9B87D71CA3359600245557 /* E89ManagedObjectContext.h */; };
+		7B9B87DA1CA3359600245557 /* E89ManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B9B87D81CA3359600245557 /* E89ManagedObjectContext.m */; };
 		7BA93B0F1BD028CD0031F2E0 /* GzipUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BA93B0D1BD028CD0031F2E0 /* GzipUtil.h */; };
-		7BA93B101BD028CD0031F2E0 /* GzipUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BA93B0E1BD028CD0031F2E0 /* GzipUtil.m */; settings = {ASSET_TAGS = (); }; };
+		7BA93B101BD028CD0031F2E0 /* GzipUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BA93B0E1BD028CD0031F2E0 /* GzipUtil.m */; };
 		7BADD13C1A8BDABF0005FC5E /* ThreadChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BADD13B1A8BDABF0005FC5E /* ThreadChecker.m */; };
 		7BAEDBBC1A97B69E0078AEA9 /* DataSyncHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BAEDBBB1A97B69E0078AEA9 /* DataSyncHelper.m */; };
 		7BAF980B1B1CA4BD00FDE4AA /* SecuryUtilTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BAF980A1B1CA4BD00FDE4AA /* SecuryUtilTests.m */; };
@@ -175,6 +177,8 @@
 		7B63D8C61AA8CF78005D781A /* ServerCommTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerCommTests.m; sourceTree = "<group>"; };
 		7B6CD0D81AAF6356009B7ACA /* get-data-for-model-request.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "get-data-for-model-request.json"; sourceTree = "<group>"; };
 		7B82A2C21AB3741900636503 /* ServerAuthenticateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerAuthenticateTests.m; sourceTree = "<group>"; };
+		7B9B87D71CA3359600245557 /* E89ManagedObjectContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = E89ManagedObjectContext.h; sourceTree = "<group>"; };
+		7B9B87D81CA3359600245557 /* E89ManagedObjectContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = E89ManagedObjectContext.m; sourceTree = "<group>"; };
 		7BA93B0D1BD028CD0031F2E0 /* GzipUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GzipUtil.h; sourceTree = "<group>"; };
 		7BA93B0E1BD028CD0031F2E0 /* GzipUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GzipUtil.m; sourceTree = "<group>"; };
 		7BADD11D1A8BD82B0005FC5E /* libSyncing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSyncing.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -405,6 +409,8 @@
 				7B5F220B1A8D3AC50031E2F2 /* ServerComm.m */,
 				7B27BFBA1A9A7F1000C7548E /* SyncConfig.h */,
 				7B27BFBB1A9A7F1000C7548E /* SyncConfig.m */,
+				7B9B87D71CA3359600245557 /* E89ManagedObjectContext.h */,
+				7B9B87D81CA3359600245557 /* E89ManagedObjectContext.m */,
 				7BCFBE2B1B3705A000AC1553 /* SyncEvent.h */,
 				7BCFBE2C1B3705A000AC1553 /* SyncEvent.m */,
 				7BADD1201A8BD82B0005FC5E /* Syncing.h */,
@@ -512,6 +518,7 @@
 				7B42B6551AB8A8D200F02528 /* AsyncBus.h in Headers */,
 				7B42B6521AB8A8D200F02528 /* DataSyncHelper.h in Headers */,
 				7BE488421B4ED81900985165 /* Annotations.h in Headers */,
+				7B9B87D91CA3359600245557 /* E89ManagedObjectContext.h in Headers */,
 				7B42B64F1AB8A8D200F02528 /* ThreadChecker.h in Headers */,
 				7B42B6541AB8A8D200F02528 /* CustomTransactionManager.h in Headers */,
 				7B42B6561AB8A8D200F02528 /* DatabaseProvider.h in Headers */,
@@ -735,6 +742,7 @@
 				7BD43C4F1AB1C65C00C58368 /* AbstractLoginActivity.m in Sources */,
 				7BCFBE2E1B3705A000AC1553 /* SyncEvent.m in Sources */,
 				7BE488481B4F0A2B00985165 /* SyncEntity.m in Sources */,
+				7B9B87DA1CA3359600245557 /* E89ManagedObjectContext.m in Sources */,
 				7BD43C521AB20E8200C58368 /* ServerAuthenticate.m in Sources */,
 				7B3D13931AA0E68B0022525A /* CustomException.m in Sources */,
 				7BA93B101BD028CD0031F2E0 /* GzipUtil.m in Sources */,

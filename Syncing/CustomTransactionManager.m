@@ -8,8 +8,9 @@
 
 #import "CustomTransactionManager.h"
 #import "CustomException.h"
-#import <CoreData/CoreData.h>
+
 #import "SyncConfig.h"
+#import "E89ManagedObjectContext.h"
 
 @interface CustomTransactionManager()
 
@@ -40,7 +41,7 @@
     @try
     {
         manipulateInTransaction();
-        [self performSaveWithContext:context];
+        [self performSaveWithContext:(E89ManagedObjectContext *)context];
         self.isSuccessful = YES;
     }
     @catch (InvalidThreadIdException *exception)
@@ -62,11 +63,11 @@
     return self.isSuccessful;
 }
 
-- (void)performSaveWithContext:(NSManagedObjectContext *)context
+- (void)performSaveWithContext:(E89ManagedObjectContext *)context
 {
     // Saving child managed object context
     NSError *childError = nil;
-    [context save:&childError];
+    [context safeSave:&childError];
     if (childError) {
         NSString *errorString = [NSString stringWithFormat:@"CustomTransactionManager: error on performSaveWithContext for child MOC: %@.", childError];
         NSException *ex = [NSException exceptionWithName:@"CoreDataSaveError" reason:errorString userInfo:nil];
