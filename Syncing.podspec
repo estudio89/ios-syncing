@@ -3,5 +3,5 @@ Pod::Spec.new do |s|
   s.version = '0.0.1'
   s.source_files = 'Syncing/*.{h,m}'
   s.dependency 'Raven'
-  s.dependency 'RNCryptor'
+  s.dependency 'RNCryptor', '~> 2.2'
 end
