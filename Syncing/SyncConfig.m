@@ -27,7 +27,6 @@
 @property (nonatomic, strong, readwrite) NSString *mEncryptionPassword;
 @property BOOL mEncryptionActive;
 @property (nonatomic, strong) NSMutableArray *identifiersArray;
-@property (nonatomic, strong) NSManagedObjectContext *currentContext;
 
 @end
 
@@ -180,7 +179,8 @@ static NSString *loginActivity;
     NSManagedObjectContext *context = [self getContext];
     [DatabaseProvider clearAllCoreDataEntitiesWithContext:context];
     [_context performBlock:^{
-        [_context save:nil];
+        NSError *error = nil;
+        [_context save:&error];
     }];
     if (postEvent) {
         [_bus post:[[UserLoggedOutEvent alloc] init] withNotificationName:@"UserLoggedOutEvent"];
@@ -452,8 +452,6 @@ static NSString *loginActivity;
 {
     E89ManagedObjectContext *managedObjectContext = [[E89ManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
     [managedObjectContext setParentContext:_context];
-    
-    _currentContext = managedObjectContext;
     
     return managedObjectContext;
 }
