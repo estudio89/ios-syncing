@@ -76,15 +76,13 @@
     
     // Saving parent managed object context
     NSManagedObjectContext *mainContext = [[SyncConfig getInstance] context];
-    [mainContext performBlock:^{
-        NSError *parentError = nil;
-        [mainContext save:&parentError];
-        if (parentError) {
-            NSString *errorString = [NSString stringWithFormat:@"CustomTransactionManager: error on performSaveWithContext for parent MOC: %@.", parentError];
-            NSException *ex = [NSException exceptionWithName:@"CoreDataSaveError" reason:errorString userInfo:nil];
-            @throw ex;
-        }
-    }];
+    NSError *parentError = nil;
+    [mainContext save:&parentError];
+    if (parentError) {
+        NSString *errorString = [NSString stringWithFormat:@"CustomTransactionManager: error on performSaveWithContext for parent MOC: %@.", parentError];
+        NSException *ex = [NSException exceptionWithName:@"CoreDataSaveError" reason:errorString userInfo:nil];
+        @throw ex;
+    }
 }
 
 @end
