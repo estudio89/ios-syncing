@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "E89ManagedObjectContext.h"
 
 @interface DatabaseProvider : NSObject
 
-+ (void)clearAllCoreDataEntitiesWithContext:(NSManagedObjectContext *)context;
++ (void)clearAllCoreDataEntitiesWithContext:(E89ManagedObjectContext *)context;
 
 @end

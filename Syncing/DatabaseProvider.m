@@ -14,7 +14,7 @@
 /**
  * clearAllCoreDataEntities
  */
-+ (void)clearAllCoreDataEntitiesWithContext:(NSManagedObjectContext *)context
++ (void)clearAllCoreDataEntitiesWithContext:(E89ManagedObjectContext *)context
 {
     NSManagedObjectModel *model = [[context persistentStoreCoordinator] managedObjectModel];
     NSFetchRequest *fetchRequest = nil;
@@ -31,7 +31,8 @@
         }
     }
     
-    [context save:nil];
+    NSError *error = nil;
+    [context safeSave:&error];
 }
 
 @end
