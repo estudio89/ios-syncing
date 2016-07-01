@@ -46,7 +46,7 @@
 {
     SyncConfig *syncC = [[SyncConfig alloc] init];
     
-    [syncC setConfigFile:@"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/syncing-config.json"];
+    [syncC setConfigFile:@"/Users/rodrigosuhr/Dev/ios-syncing/Syncing\ Tests/syncing-config.json" withBaseUrl:@""];
     
     // GetDataUrl
     XCTAssertEqualObjects([syncC getGetDataUrl], @"http://api.estudio89.com.br/get-data");

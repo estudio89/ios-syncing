@@ -12,9 +12,11 @@
 @interface SyncingInjection : NSObject
 
 + (void)initWithContext:(NSManagedObjectContext *)context
-         withConfigFile:(NSString *)fileName;
+         withConfigFile:(NSString *)fileName
+            withBaseUrl:(NSString *)baseUrl;
 + (void)initWithContext:(NSManagedObjectContext *)context
          withConfigFile:(NSString *)fileName
+            withBaseUrl:(NSString *)baseUrl
         withInitialSync:(BOOL)initialSync;
 + (void)executeInjectionWithContext:(NSManagedObjectContext *)context;
 + (id)get:(Class)class;

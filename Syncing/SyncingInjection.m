@@ -15,21 +15,24 @@ static NSMutableDictionary *objects;
 static NSString *LIBRARY_VERSION=@"1.0.9";
 
 + (void)initWithContext:(NSManagedObjectContext *)context
-                            withConfigFile:(NSString *)fileName
+         withConfigFile:(NSString *)fileName
+            withBaseUrl:(NSString *)baseUrl
 {
     [self initWithContext:context
            withConfigFile:fileName
+              withBaseUrl:baseUrl
           withInitialSync:YES];
 }
 
 + (void)initWithContext:(NSManagedObjectContext *)context
-                            withConfigFile:(NSString *)fileName
-                           withInitialSync:(BOOL)initialSync
+         withConfigFile:(NSString *)fileName
+            withBaseUrl:(NSString *)baseUrl
+        withInitialSync:(BOOL)initialSync
 {
     [self executeInjectionWithContext:context];
     
     SyncConfig *syncConfig = [self get:[SyncConfig class]];
-    [syncConfig setConfigFile:fileName];
+    [syncConfig setConfigFile:fileName withBaseUrl:baseUrl];
     
     if (initialSync)
     {
