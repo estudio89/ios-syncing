@@ -67,6 +67,9 @@ static NSString *AUTHENTICATION_URL_SUFFIX = @"syncing/authenticate/";
 {
     _mConfigFile = filename;
     _baseUrl = baseUrl;
+    if (![baseUrl hasSuffix:@"/"]) {
+        _baseUrl = [NSString stringWithFormat:@"%@/", baseUrl];
+    }
     [self loadSettings];
     [self loadDefaultSyncManagers];
 }
