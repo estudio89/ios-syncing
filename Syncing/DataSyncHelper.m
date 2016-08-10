@@ -509,7 +509,7 @@ static int numberAttempts;
             @throw [[Http408Exception alloc] init];
         }
     }
-    @catch (TimeoutException *e)
+    @catch (TimeoutException *e | Http403Exception *e | ConnectionErrorException *e)
     {
         [self postBackgroundSyncError:e];
         [_syncConfig requestSync];
@@ -769,13 +769,13 @@ static int numberAttempts;
                 success = [self getDataFromServer:identifier withParameters:[parameters mutableCopy]];
             }
         }
-        @catch (TimeoutException *exception)
+        @catch (TimeoutException *exception | ConnectionErrorException *exception | HttpException *exception)
         {
             [self postBackgroundSyncError:exception];
         }
-        @catch (HttpException *exception)
+        @catch (NSException *e)
         {
-            [self postBackgroundSyncError:exception];
+            [self sendCaughtException:e];
         }
         
         dispatch_async( dispatch_get_main_queue(), ^{

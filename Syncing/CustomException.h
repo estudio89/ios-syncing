@@ -17,6 +17,9 @@
 @interface TimeoutException : CustomException
 @end
 
+@interface ConnectionErrorException : CustomException
+@end
+
 @interface HttpException : CustomException
 @end
 

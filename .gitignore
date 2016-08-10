@@ -16,3 +16,93 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+Pods/Headers/Private/SDWebImage/NSData+ImageContentType.h
+Pods/Headers/Private/SDWebImage/SDImageCache.h
+Pods/Headers/Private/SDWebImage/SDWebImageCompat.h
+Pods/Headers/Private/SDWebImage/SDWebImageDecoder.h
+Pods/Headers/Private/SDWebImage/SDWebImageDownloader.h
+Pods/Headers/Private/SDWebImage/SDWebImageDownloaderOperation.h
+Pods/Headers/Private/SDWebImage/SDWebImageManager.h
+Pods/Headers/Private/SDWebImage/SDWebImageOperation.h
+Pods/Headers/Private/SDWebImage/SDWebImagePrefetcher.h
+Pods/Headers/Private/SDWebImage/UIButton+WebCache.h
+Pods/Headers/Private/SDWebImage/UIImage+GIF.h
+Pods/Headers/Private/SDWebImage/UIImage+MultiFormat.h
+Pods/Headers/Private/SDWebImage/UIImageView+HighlightedWebCache.h
+Pods/Headers/Private/SDWebImage/UIImageView+WebCache.h
+Pods/Headers/Private/SDWebImage/UIView+WebCacheOperation.h
+Pods/Headers/Public/SDWebImage/NSData+ImageContentType.h
+Pods/Headers/Public/SDWebImage/SDImageCache.h
+Pods/Headers/Public/SDWebImage/SDWebImageCompat.h
+Pods/Headers/Public/SDWebImage/SDWebImageDecoder.h
+Pods/Headers/Public/SDWebImage/SDWebImageDownloader.h
+Pods/Headers/Public/SDWebImage/SDWebImageDownloaderOperation.h
+Pods/Headers/Public/SDWebImage/SDWebImageManager.h
+Pods/Headers/Public/SDWebImage/SDWebImageOperation.h
+Pods/Headers/Public/SDWebImage/SDWebImagePrefetcher.h
+Pods/Headers/Public/SDWebImage/UIButton+WebCache.h
+Pods/Headers/Public/SDWebImage/UIImage+GIF.h
+Pods/Headers/Public/SDWebImage/UIImage+MultiFormat.h
+Pods/Headers/Public/SDWebImage/UIImageView+HighlightedWebCache.h
+Pods/Headers/Public/SDWebImage/UIImageView+WebCache.h
+Pods/Headers/Public/SDWebImage/UIView+WebCacheOperation.h
+Pods/SDWebImage/LICENSE
+Pods/SDWebImage/README.md
+Pods/SDWebImage/SDWebImage/NSData+ImageContentType.h
+Pods/SDWebImage/SDWebImage/NSData+ImageContentType.m
+Pods/SDWebImage/SDWebImage/SDImageCache.h
+Pods/SDWebImage/SDWebImage/SDImageCache.m
+Pods/SDWebImage/SDWebImage/SDWebImageCompat.h
+Pods/SDWebImage/SDWebImage/SDWebImageCompat.m
+Pods/SDWebImage/SDWebImage/SDWebImageDecoder.h
+Pods/SDWebImage/SDWebImage/SDWebImageDecoder.m
+Pods/SDWebImage/SDWebImage/SDWebImageDownloader.h
+Pods/SDWebImage/SDWebImage/SDWebImageDownloader.m
+Pods/SDWebImage/SDWebImage/SDWebImageDownloaderOperation.h
+Pods/SDWebImage/SDWebImage/SDWebImageDownloaderOperation.m
+Pods/SDWebImage/SDWebImage/SDWebImageManager.h
+Pods/SDWebImage/SDWebImage/SDWebImageManager.m
+Pods/SDWebImage/SDWebImage/SDWebImageOperation.h
+Pods/SDWebImage/SDWebImage/SDWebImagePrefetcher.h
+Pods/SDWebImage/SDWebImage/SDWebImagePrefetcher.m
+Pods/SDWebImage/SDWebImage/UIButton+WebCache.h
+Pods/SDWebImage/SDWebImage/UIButton+WebCache.m
+Pods/SDWebImage/SDWebImage/UIImage+GIF.h
+Pods/SDWebImage/SDWebImage/UIImage+GIF.m
+Pods/SDWebImage/SDWebImage/UIImage+MultiFormat.h
+Pods/SDWebImage/SDWebImage/UIImage+MultiFormat.m
+Pods/SDWebImage/SDWebImage/UIImageView+HighlightedWebCache.h
+Pods/SDWebImage/SDWebImage/UIImageView+HighlightedWebCache.m
+Pods/SDWebImage/SDWebImage/UIImageView+WebCache.h
+Pods/SDWebImage/SDWebImage/UIImageView+WebCache.m
+Pods/SDWebImage/SDWebImage/UIView+WebCacheOperation.h
+Pods/SDWebImage/SDWebImage/UIView+WebCacheOperation.m
+Pods/Target Support Files/ISO8601/ISO8601-dummy.m
+Pods/Target Support Files/ISO8601/ISO8601-prefix.pch
+Pods/Target Support Files/ISO8601/ISO8601.xcconfig
+Pods/Target Support Files/MagicalRecord/MagicalRecord-dummy.m
+Pods/Target Support Files/MagicalRecord/MagicalRecord-prefix.pch
+Pods/Target Support Files/MagicalRecord/MagicalRecord.xcconfig
+Pods/Target Support Files/OCHamcrest/OCHamcrest-dummy.m
+Pods/Target Support Files/OCHamcrest/OCHamcrest-prefix.pch
+Pods/Target Support Files/OCHamcrest/OCHamcrest.xcconfig
+Pods/Target Support Files/OCMock/OCMock-dummy.m
+Pods/Target Support Files/OCMock/OCMock-prefix.pch
+Pods/Target Support Files/OCMock/OCMock.xcconfig
+Pods/Target Support Files/OCMockito/OCMockito-dummy.m
+Pods/Target Support Files/OCMockito/OCMockito-prefix.pch
+Pods/Target Support Files/OCMockito/OCMockito.xcconfig
+Pods/Target Support Files/OHHTTPStubs/OHHTTPStubs-dummy.m
+Pods/Target Support Files/OHHTTPStubs/OHHTTPStubs-prefix.pch
+Pods/Target Support Files/OHHTTPStubs/OHHTTPStubs.xcconfig
+Pods/Target Support Files/Pods-Syncing/Pods-Syncing-frameworks.sh
+Pods/Target Support Files/Pods-Syncing Tests/Pods-Syncing Tests-frameworks.sh
+Pods/Target Support Files/Raven/Raven-dummy.m
+Pods/Target Support Files/Raven/Raven-prefix.pch
+Pods/Target Support Files/Raven/Raven.xcconfig
+Pods/Target Support Files/RNCryptor/RNCryptor-dummy.m
+Pods/Target Support Files/RNCryptor/RNCryptor-prefix.pch
+Pods/Target Support Files/RNCryptor/RNCryptor.xcconfig
+Pods/Target Support Files/SDWebImage/SDWebImage-dummy.m
+Pods/Target Support Files/SDWebImage/SDWebImage-prefix.pch
+Pods/Target Support Files/SDWebImage/SDWebImage.xcconfig

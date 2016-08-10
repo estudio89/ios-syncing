@@ -19,11 +19,10 @@
 @property (nonatomic, strong, readwrite) NSString *mConfigFile;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *syncManagersByIdentifier;
 @property (nonatomic, strong, readwrite) NSMutableDictionary *syncManagersByResponseIdentifier;
+@property (nonatomic, strong, readwrite) NSString *baseUrl;
 @property (nonatomic, strong, readwrite) NSString *mGetDataUrl;
 @property (nonatomic, strong, readwrite) NSString *mSendDataUrl;
 @property (nonatomic, strong, readwrite) NSString *mAuthenticateUrl;
-@property (nonatomic, strong, readwrite) NSString *mCentralAuthenticateUrl;
-@property (nonatomic, strong, readwrite) NSMutableDictionary *mModelGetDataUrls;
 @property (nonatomic, strong, readwrite) NSString *mEncryptionPassword;
 @property BOOL mEncryptionActive;
 @property (nonatomic, strong) NSMutableArray *identifiersArray;
@@ -33,6 +32,9 @@
 @implementation SyncConfig
 
 static NSString *loginActivity;
+static NSString *GET_DATA_URL_SUFFIX = @"syncing/get-data-from-server/";
+static NSString *SEND_DATA_URL_SUFFIX = @"syncing/send-data-to-server/";
+static NSString *AUTHENTICATION_URL_SUFFIX = @"syncing/authenticate/";
 
 /**
  * getInstance
@@ -53,7 +55,6 @@ static NSString *loginActivity;
         _context = context;
         _syncManagersByIdentifier = [[NSMutableDictionary alloc] init];
         _syncManagersByResponseIdentifier = [[NSMutableDictionary alloc] init];
-        _mModelGetDataUrls = [[NSMutableDictionary alloc] init];
     }
     
     return self;
@@ -62,10 +63,15 @@ static NSString *loginActivity;
 /**
  * setConfigFile
  */
-- (void)setConfigFile:(NSString *)filename
+- (void)setConfigFile:(NSString *)filename withBaseUrl:(NSString *)baseUrl
 {
     _mConfigFile = filename;
+    _baseUrl = baseUrl;
+    if (![baseUrl hasSuffix:@"/"]) {
+        _baseUrl = [NSString stringWithFormat:@"%@/", baseUrl];
+    }
     [self loadSettings];
+    [self loadDefaultSyncManagers];
 }
 
 - (void)setDataSyncHelper:(DataSyncHelper *)dataSyncHelper
@@ -85,10 +91,9 @@ static NSString *loginActivity;
         NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         NSDictionary *jsonConfig = [jsonData objectForKey:@"syncing"];
         
-        _mGetDataUrl = [jsonConfig valueForKey:@"getDataUrl"];
-        _mSendDataUrl = [jsonConfig valueForKey:@"sendDataUrl"];
-        _mAuthenticateUrl = [jsonConfig valueForKey:@"authenticateUrl"];
-        _mCentralAuthenticateUrl = [jsonConfig valueForKey:@"centralAuthenticateUrl"];
+        _mGetDataUrl = [NSString stringWithFormat:@"%@%@", _baseUrl, GET_DATA_URL_SUFFIX];
+        _mSendDataUrl = [NSString stringWithFormat:@"%@%@", _baseUrl, SEND_DATA_URL_SUFFIX];
+        _mAuthenticateUrl = [NSString stringWithFormat:@"%@%@", _baseUrl, AUTHENTICATION_URL_SUFFIX];
         loginActivity = [jsonConfig valueForKey:@"loginActivity"];
         _mEncryptionPassword = [jsonConfig valueForKey:@"encryptionPassword"];
         if ([[jsonConfig valueForKey:@"encryptionActive"] boolValue])
@@ -102,7 +107,6 @@ static NSString *loginActivity;
         
         id<SyncManager> syncManager;
         Class klass;
-        NSString *getDataUrl = @"";
         NSString *identifier = @"";
         NSString *responseIdentifier = @"";
         
@@ -113,18 +117,35 @@ static NSString *loginActivity;
             klass = NSClassFromString([syncManagerJson valueForKey:@"class"]);
             syncManager = [[klass alloc] init];
             [syncManager setDataSyncHelper:_dataSyncHelper];
-            getDataUrl = [syncManagerJson valueForKey:@"getDataUrl"];
             identifier = [syncManager getIdentifier];
             [_identifiersArray addObject:identifier];
             responseIdentifier = [syncManager getResponseIdentifier];
             [self.syncManagersByIdentifier setObject:syncManager forKey:identifier];
             [self.syncManagersByResponseIdentifier setObject:syncManager forKey:responseIdentifier];
-            [self.mModelGetDataUrls setObject:getDataUrl forKey:identifier];
         }
     }
     @catch (NSException *e)
     {
         @throw e;
+    }
+}
+
+- (void)loadDefaultSyncManagers {
+    NSArray *syncManagerClasses = @[@"SyncManagerLogout"];
+    id<SyncManager> syncManager;
+    Class klass;
+    NSString *identifier = @"";
+    NSString *responseIdentifier = @"";
+    
+    for (NSString *syncManagerClass in syncManagerClasses) {
+        klass = NSClassFromString(syncManagerClass);
+        syncManager = [[klass alloc] init];
+        [syncManager setDataSyncHelper:_dataSyncHelper];
+        identifier = [syncManager getIdentifier];
+        [_identifiersArray addObject:identifier];
+        responseIdentifier = [syncManager getResponseIdentifier];
+        [self.syncManagersByIdentifier setObject:syncManager forKey:identifier];
+        [self.syncManagersByResponseIdentifier setObject:syncManager forKey:responseIdentifier];
     }
 }
 
@@ -209,14 +230,6 @@ static NSString *loginActivity;
 - (NSString *)getAuthenticateUrl
 {
     return _mAuthenticateUrl;
-}
-
-/**
- * getCentralAuthenticateUrl
- */
-- (NSString *)getCentralAuthenticateUrl
-{
-    return _mCentralAuthenticateUrl;
 }
 
 /**
@@ -342,14 +355,7 @@ static NSString *loginActivity;
  */
 - (NSString *)getGetDataUrlForModel:(NSString *)identifier
 {
-    NSString *url = [self.mModelGetDataUrls valueForKey:identifier];
-    
-    if (url == nil)
-    {
-        @throw([NSException exceptionWithName:@"URL not found" reason:@"URL not found for the identifier." userInfo:nil]);
-    }
-    
-    return url;
+    return [NSString stringWithFormat:@"%@%@/", _mGetDataUrl, identifier];
 }
 
 /**

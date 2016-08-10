@@ -17,6 +17,9 @@
 @implementation TimeoutException
 @end
 
+@implementation ConnectionErrorException
+@end
+
 @implementation HttpException
 @end
 
