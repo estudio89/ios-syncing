@@ -21,7 +21,6 @@
 - (void)showLoginIfNeeded:(UIViewController *)initialVC withSegueID:(NSString *)segueID;
 - (BOOL)userIsLoggedIn;
 - (NSString *)getAuthenticateUrl;
-- (NSString *)getCentralAuthenticateUrl;
 - (NSString *)getAuthToken;
 - (NSString *)getUsername;
 - (NSDictionary *)getTimestamps;
@@ -34,7 +33,7 @@
 - (id<SyncManager>)getSyncManager:(NSString *)identifier;
 - (id<SyncManager>)getSyncManagerByResponseId:(NSString *)responseId;
 - (void)setTimestamps:(NSDictionary *)timestamps;
-- (void)setConfigFile:(NSString *)filename;
+- (void)setConfigFile:(NSString *)filename withBaseUrl:(NSString *)baseUrl;
 - (void)setAuthToken:(NSString *)authToken;
 - (void)setUsername:(NSString *)username;
 - (void)setDeviceId:(NSString *)newId;
