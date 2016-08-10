@@ -127,10 +127,23 @@
         {
             @throw([TimeoutException exceptionWithName:@"Timeout error" reason:@"The nsurlconnection was timed out." userInfo:nil]);
         }
+        else if (error.code == NSURLErrorCannotDecodeRawData ||
+                 error.code == NSURLErrorCannotDecodeContentData ||
+                 error.code == NSURLErrorCannotParseResponse ||
+                 error.code == NSURLErrorServerCertificateHasBadDate ||
+                 error.code == NSURLErrorServerCertificateUntrusted ||
+                 error.code == NSURLErrorServerCertificateHasUnknownRoot ||
+                 error.code == NSURLErrorServerCertificateNotYetValid ||
+                 error.code == NSURLErrorClientCertificateRejected ||
+                 error.code == NSURLErrorClientCertificateRequired)
+        {
+            NSString *errorReason = [NSString stringWithFormat:@"The http request returned an error for url %@. Error: %@", url, error.localizedDescription];
+            @throw([HttpException exceptionWithName:@"Http error" reason:errorReason userInfo:nil]);
+        }
         else
         {
-            NSString *errorReason = [NSString stringWithFormat:@"The http request returned an error for url %@. Error: %@", url, error.domain];
-            @throw([HttpException exceptionWithName:@"Http error" reason:errorReason userInfo:nil]);
+            NSString *errorReason = [NSString stringWithFormat:@"Connection error for url %@. Error: %@", url, error.localizedDescription];
+            @throw([ConnectionErrorException exceptionWithName:@"Connection error" reason:errorReason userInfo:nil]);
         }
     }
     else if ([requestResponse statusCode] == 403)
