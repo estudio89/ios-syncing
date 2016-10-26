@@ -36,14 +36,7 @@
     
     if (self)
     {
-        NSDictionary *idServer = @{@"name":@"id",
-                                   @"ignoreIf":@"0"};
-        NSDictionary *modified = @{@"ignore":@YES};
-        NSDictionary *isNew = @{@"ignore":@YES};
-        NSDictionary *extraAttributes = @{@"idServer":idServer,
-                                          @"modified":modified,
-                                          @"isNew":isNew};
-        _annotations = [self getAnnotationsWithAbstractAttributes:extraAttributes];
+        _annotations = (Annotations *)[self getAnnotations];
         _parentAttributes = [[NSMutableDictionary alloc] init];
         _childrenAttributes = [[NSMutableDictionary alloc] init];
         
@@ -65,6 +58,18 @@
     }
     
     return self;
+}
+
+- (NSObject *)getAnnotations {
+    NSDictionary *idServer = @{@"name":@"id",
+                               @"ignoreIf":@"0"};
+    NSDictionary *modified = @{@"ignore":@YES};
+    NSDictionary *isNew = @{@"ignore":@YES};
+    NSDictionary *extraAttributes = @{@"idServer":idServer,
+                                      @"modified":modified,
+                                      @"isNew":isNew};
+    
+    return extraAttributes;
 }
 
 - (void)verifyFields
