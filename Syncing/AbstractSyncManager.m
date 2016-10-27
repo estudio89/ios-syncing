@@ -36,7 +36,7 @@
     
     if (self)
     {
-        _annotations = (Annotations *)[self getAnnotations];
+        _annotations = [self getAnnotations];
         _parentAttributes = [[NSMutableDictionary alloc] init];
         _childrenAttributes = [[NSMutableDictionary alloc] init];
         
@@ -60,7 +60,7 @@
     return self;
 }
 
-- (NSObject *)getAnnotations {
+- (Annotations *)getAnnotations {
     NSDictionary *idServer = @{@"name":@"id",
                                @"ignoreIf":@"0"};
     NSDictionary *modified = @{@"ignore":@YES};
@@ -69,7 +69,8 @@
                                       @"modified":modified,
                                       @"isNew":isNew};
     
-    return extraAttributes;
+    Annotations *annotations = [[Annotations alloc] initWithAnnotation:extraAttributes];
+    return annotations;
 }
 
 - (void)verifyFields

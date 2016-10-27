@@ -22,7 +22,7 @@
 @property (strong, nonatomic, readwrite) NSManagedObject *oldestInCache;
 @property (strong, nonatomic) DataSyncHelper *dataSyncHelper;
 
-- (NSObject *)getAnnotations;
+- (Annotations *)getAnnotations;
 - (NSDate *)getDateForObject:(NSManagedObject *)object;
 - (SyncEntity *)findItem:(NSNumber *)idServer
             withIdClient:(NSString *)idClient

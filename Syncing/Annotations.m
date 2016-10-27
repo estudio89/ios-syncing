@@ -37,6 +37,20 @@
     return self;
 }
 
+- (void)mergeWith:(NSDictionary *)annotation {
+    NSMutableDictionary *mutableAnnotationDict = [annotation mutableCopy];
+    NSMutableDictionary *fieldsAnnotationDict = [mutableAnnotationDict objectForKey:@"fields"];
+    
+    [fieldsAnnotationDict addEntriesFromDictionary:_Annotation];
+    [mutableAnnotationDict setObject:fieldsAnnotationDict forKey:@"fields"];
+    
+    _Annotation = [mutableAnnotationDict copy];
+    
+    _jsonAnnotations = [[NSMutableDictionary alloc] init];
+    _nestedManagers = [[NSMutableDictionary alloc] init];
+    [self instantiateAnnotations];
+}
+
 - (void)instantiateAnnotations
 {
     // Entity  name instantiation
