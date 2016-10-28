@@ -101,8 +101,13 @@
     
     //encrypt
     NSData *compressedData = [GzipUtil gzippedData:jsonData];
-    NSData *encryptedData = [_securityUtil encryptMessage:compressedData];
-    [postData appendData:encryptedData];
+    if ([url hasPrefix:@"https"]) {
+        [postData appendData:compressedData];
+    } else {
+        NSData *encryptedData = [_securityUtil encryptMessage:compressedData];
+        [postData appendData:encryptedData];
+    }
+    
     [postData appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
     
     //add the last boudary
@@ -178,8 +183,16 @@
     }
     
     //decrypt
-    NSData *dataReply = [_securityUtil decryptMessage:requestHandler];
-    NSData *decompressedData = [GzipUtil gunzippedData:dataReply];
+    NSData *decompressedData = nil;
+    
+    if ([url hasPrefix:@"https"]) {
+        decompressedData = [GzipUtil gunzippedData:requestHandler];
+    } else {
+        NSData *dataReply = [_securityUtil decryptMessage:requestHandler];
+        NSData *decompressedData = [GzipUtil gunzippedData:dataReply];
+        
+    }
+    
     NSDictionary *jsonReply = [NSJSONSerialization JSONObjectWithData:decompressedData options:kNilOptions error:&error];
     
     return jsonReply;
