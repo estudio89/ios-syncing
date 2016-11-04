@@ -51,6 +51,7 @@
 @property (strong, readonly) NSString *entityName;
 
 - (instancetype)initWithAnnotation:(NSDictionary *)annotation;
+- (void)mergeWith:(NSDictionary *)annotation;
 - (JSON *)annotationForAttribute:(NSString *)attribute;
 - (NestedManager *)nestedManagerForAttribute:(NSString *)attribute;
 - (BOOL)hasNestedManagerForAttribute:(NSString *)attribute;
