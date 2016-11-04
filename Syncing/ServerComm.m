@@ -189,7 +189,7 @@
         decompressedData = [GzipUtil gunzippedData:requestHandler];
     } else {
         NSData *dataReply = [_securityUtil decryptMessage:requestHandler];
-        NSData *decompressedData = [GzipUtil gunzippedData:dataReply];
+        decompressedData = [GzipUtil gunzippedData:dataReply];
         
     }
     
