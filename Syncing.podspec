@@ -8,5 +8,5 @@ Pod::Spec.new do |s|
   s.license = 'GPL'
   s.homepage = 'https://github.com/estudio89/ios-syncing'
   s.summary = 'E89 iOS Syncing'
-  s.source = { :git => 'https://github.com/estudio89/ios-syncing' }
+  s.source = { :git => 'https://github.com/estudio89/ios-syncing.git' }
 end
