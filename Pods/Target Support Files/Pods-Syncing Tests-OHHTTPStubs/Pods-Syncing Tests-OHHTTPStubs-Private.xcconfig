@@ -1,6 +1,0 @@
-#include "Pods-Syncing Tests-OHHTTPStubs.xcconfig"
-GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/OHHTTPStubs" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/ISO8601" "${PODS_ROOT}/Headers/Public/MagicalRecord" "${PODS_ROOT}/Headers/Public/MagicalRecord/MagicalRecord" "${PODS_ROOT}/Headers/Public/OCHamcrest" "${PODS_ROOT}/Headers/Public/OCMock" "${PODS_ROOT}/Headers/Public/OCMockito" "${PODS_ROOT}/Headers/Public/OHHTTPStubs" "${PODS_ROOT}/Headers/Public/RNCryptor" "${PODS_ROOT}/Headers/Public/Raven"
-OTHER_LDFLAGS = ${PODS_SYNCING_TESTS_OHHTTPSTUBS_OTHER_LDFLAGS} -ObjC
-PODS_ROOT = ${SRCROOT}
-SKIP_INSTALL = YES
