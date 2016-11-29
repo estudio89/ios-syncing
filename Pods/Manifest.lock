@@ -11,12 +11,13 @@ PODS:
 
 DEPENDENCIES:
   - ISO8601
+  - ISO8601 (~> 0.3.0)
   - MagicalRecord
   - OCMock
   - OCMockito
   - OHHTTPStubs
-  - Raven
-  - RNCryptor
+  - Raven (~> 1.0.1)
+  - RNCryptor (~> 2.2)
 
 SPEC CHECKSUMS:
   ISO8601: 8d8a22d5edf0554a1cf75bac028c76c1dc0ffaef
@@ -28,6 +29,6 @@ SPEC CHECKSUMS:
   Raven: 0c868f0b221c936ae352095d4af3d418e3db1242
   RNCryptor: c68678461a2c7474a55db9a6a98834c22d51f535
 
-PODFILE CHECKSUM: 6042dc826c5eda4f1cf19c1fd0f3d1d1491c6f37
+PODFILE CHECKSUM: 00472afefcb9a267a03132c0eac76b1bd1c599e9
 
 COCOAPODS: 1.2.0.beta.1
