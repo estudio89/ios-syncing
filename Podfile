@@ -2,9 +2,9 @@
 # platform :ios, '6.0'
 
 target 'Syncing' do
-pod 'Raven'
-pod 'RNCryptor'
-pod 'ISO8601'
+pod 'Raven', '~> 1.0.1'
+pod 'RNCryptor', '~> 2.2'
+pod 'ISO8601', '~> 0.3.0'
 end
 
 target 'Syncing Tests' do
