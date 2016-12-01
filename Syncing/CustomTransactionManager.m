@@ -29,7 +29,7 @@
     {
         self.isSuccessful = NO;
     }
-    
+
     return self;
 }
 
@@ -66,17 +66,24 @@
 - (void)performSaveWithContext:(E89ManagedObjectContext *)context
 {
     // Saving child managed object context
-    NSError *childError = nil;
-    [context safeSave:&childError];
-    if (childError) {
-        NSString *errorString = [NSString stringWithFormat:@"CustomTransactionManager: error on performSaveWithContext for child MOC: %@.", childError];
-        NSException *ex = [NSException exceptionWithName:@"CoreDataSaveError" reason:errorString userInfo:nil];
-        @throw ex;
+    // Locking the persistent store coordinator to avoid the exeption NSInvalidArgumentException: *** -_referenceData64 only defined for abstract class.  Define -[NSTemporaryObjectID_default _referenceData64]
+    [context.persistentStoreCoordinator lock];
+    @try {
+        NSError *childError = nil;
+        [context safeSave:&childError];
+        if (childError) {
+            NSString *errorString = [NSString stringWithFormat:@"CustomTransactionManager: error on performSaveWithContext for child MOC: %@.", childError];
+            NSException *ex = [NSException exceptionWithName:@"CoreDataSaveError" reason:errorString userInfo:nil];
+            @throw ex;
+        }
+    } @finally {
+        [context.persistentStoreCoordinator unlock];
     }
     
     // Saving parent managed object context
     NSManagedObjectContext *mainContext = [[SyncConfig getInstance] context];
     NSError *parentError = nil;
+    
     [mainContext save:&parentError];
     if (parentError) {
         NSString *errorString = [NSString stringWithFormat:@"CustomTransactionManager: error on performSaveWithContext for parent MOC: %@.", parentError];
