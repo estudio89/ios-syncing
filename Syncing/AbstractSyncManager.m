@@ -115,6 +115,8 @@
             [_childrenAttributes setObject:nestedManager forKey:attributeName];
         }
     }
+    
+    free(properties);
 }
 
 - (void)setDataSyncHelper:(DataSyncHelper *)dataSyncHelper

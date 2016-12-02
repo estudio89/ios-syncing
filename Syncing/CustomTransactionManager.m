@@ -29,7 +29,7 @@
     {
         self.isSuccessful = NO;
     }
-    
+
     return self;
 }
 
@@ -70,19 +70,22 @@
     [context safeSave:&childError];
     if (childError) {
         NSString *errorString = [NSString stringWithFormat:@"CustomTransactionManager: error on performSaveWithContext for child MOC: %@.", childError];
-        NSException *ex = [NSException exceptionWithName:@"CoreDataSaveError" reason:errorString userInfo:nil];
+        NSException *ex = [NSException exceptionWithName:@"CoreDataSaveError" reason:errorString userInfo:childError.userInfo];
         @throw ex;
     }
+    [context reset];
     
     // Saving parent managed object context
     NSManagedObjectContext *mainContext = [[SyncConfig getInstance] context];
-    NSError *parentError = nil;
-    [mainContext save:&parentError];
-    if (parentError) {
-        NSString *errorString = [NSString stringWithFormat:@"CustomTransactionManager: error on performSaveWithContext for parent MOC: %@.", parentError];
-        NSException *ex = [NSException exceptionWithName:@"CoreDataSaveError" reason:errorString userInfo:nil];
-        @throw ex;
-    }
+    [mainContext performBlockAndWait:^{
+        NSError *parentError = nil;
+        [mainContext save:&parentError];
+        if (parentError) {
+            NSString *errorString = [NSString stringWithFormat:@"CustomTransactionManager: error on performSaveWithContext for parent MOC: %@.", parentError];
+            NSException *ex = [NSException exceptionWithName:@"CoreDataSaveError" reason:errorString userInfo:parentError.userInfo];
+            @throw ex;
+        }
+    }];
 }
 
 @end
