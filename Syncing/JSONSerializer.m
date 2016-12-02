@@ -14,8 +14,8 @@
 
 @interface JSONSerializer ()
 
-@property (strong, nonatomic) Class modelClass;
-@property (strong, nonatomic) Annotations *annotations;
+@property (weak, nonatomic) Class modelClass;
+@property (weak, nonatomic) Annotations *annotations;
 
 @end
 
@@ -61,6 +61,8 @@
             }
         }
         
+        free(properties);
+        
         superClass = class_getSuperclass(superClass);
         if (superClass == [NSManagedObject class])
         {
@@ -97,6 +99,8 @@
                 [unusedAttributes addObject:attributeName];
             }
         }
+        
+        free(properties);
         
         superClass = class_getSuperclass(superClass);
         if (superClass == [NSManagedObject class])

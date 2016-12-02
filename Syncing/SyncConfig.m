@@ -458,7 +458,8 @@ static NSString *AUTHENTICATION_URL_SUFFIX = @"syncing/authenticate/";
 {
     E89ManagedObjectContext *managedObjectContext = [[E89ManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
     [managedObjectContext setParentContext:_context];
-    
+    [managedObjectContext setUndoManager:nil];
+
     return managedObjectContext;
 }
 

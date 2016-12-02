@@ -77,6 +77,8 @@
         }
     }
     
+    free(properties);
+    
     return nil;
 }
 
