@@ -493,34 +493,37 @@ static int numberAttempts;
         numberAttempts = 0;
         return response;
     }
-    @catch (Http408Exception *e | Http502Exception *e | Http503Exception *e | Http504Exception *e)
-    {
-        // Server is overloaded - exponential backoff
-        if (numberAttempts < 4)
-        {
-            double waitTimeSeconds = 0.5 * (pow(2, numberAttempts) - 1);
-            waitTimeSeconds += drand48();
-            [NSThread sleepForTimeInterval:waitTimeSeconds];
-            return [self runSynchronousSync:identifier];
-        }
-        else
-        {
-            numberAttempts = 0;
-            @throw [[Http408Exception alloc] init];
-        }
-    }
-    @catch (TimeoutException *e | Http403Exception *e | ConnectionErrorException *e)
-    {
-        [self postBackgroundSyncError:e];
-        [_syncConfig requestSync];
-    }
-    @catch (CustomException *e)
-    {
-        [self sendCaughtException:e];
-    }
     @catch (NSException *e)
     {
-        [self sendCaughtException:e];
+        NSArray *retryExceptions = @[[Http408Exception class],
+                                     [Http502Exception class],
+                                     [Http503Exception class],
+                                     [Http504Exception class]];
+        
+        NSArray *errorExceptions = @[[TimeoutException class],
+                                     [Http403Exception class],
+                                     [ConnectionErrorException class]];
+        
+        if ([retryExceptions containsObject:[e class]]) {
+            // Server is overloaded - exponential backoff
+            if (numberAttempts < 4)
+            {
+                double waitTimeSeconds = 0.5 * (pow(2, numberAttempts) - 1);
+                waitTimeSeconds += drand48();
+                [NSThread sleepForTimeInterval:waitTimeSeconds];
+                return [self runSynchronousSync:identifier];
+            }
+            else
+            {
+                numberAttempts = 0;
+                @throw([Http408Exception exceptionWithName:@"Http request timeout" reason:@"The http request timed out." userInfo:nil]);
+            }
+        } else if ([errorExceptions containsObject:[e class]]) {
+            [self postBackgroundSyncError:e];
+            [_syncConfig requestSync];
+        } else {
+            [self sendCaughtException:e];
+        }
     }
     
     return NO;
@@ -769,13 +772,17 @@ static int numberAttempts;
                 success = [self getDataFromServer:identifier withParameters:[parameters mutableCopy]];
             }
         }
-        @catch (TimeoutException *exception | ConnectionErrorException *exception | HttpException *exception)
-        {
-            [self postBackgroundSyncError:exception];
-        }
         @catch (NSException *e)
         {
-            [self sendCaughtException:e];
+            NSArray *exceptions = @[[TimeoutException class],
+                                    [ConnectionErrorException class],
+                                    [HttpException class]];
+            
+            if ([exceptions containsObject:[e class]]) {
+                [self postBackgroundSyncError:e];
+            } else {
+                [self sendCaughtException:e];
+            }
         }
         
         dispatch_async( dispatch_get_main_queue(), ^{
