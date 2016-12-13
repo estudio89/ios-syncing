@@ -21,11 +21,21 @@
 
 + (SyncEntity *)getOldestFromEntity:(NSString *)entity withPredicate:(NSPredicate *)predicate withContext:(NSManagedObjectContext *)context
 {
+    return [SyncEntity getOldestFromEntity:entity withPredicate:predicate withKey:@"pubDate" withContext:context];
+}
+
++ (SyncEntity *)getOldestFromEntity:(NSString *)entity withKey:(NSString *)key withContext:(NSManagedObjectContext *)context
+{
+    return [SyncEntity getOldestFromEntity:entity withPredicate:nil withKey:key withContext:context];
+}
+
++ (SyncEntity *)getOldestFromEntity:(NSString *)entity withPredicate:(NSPredicate *)predicate withKey:(NSString *)key withContext:(NSManagedObjectContext *)context
+{
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:entity];
     if (predicate != nil) {
         [fetchRequest setPredicate:predicate];
     }
-    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"pubDate" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:key ascending:YES];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     [fetchRequest setFetchLimit:1];
     
