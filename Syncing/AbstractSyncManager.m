@@ -580,7 +580,7 @@
     NSArray *objectList = nil;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:_entityName];
 
-    if ((ignoreDeviceId || [deviceId isEqualToString:itemDeviceId]) && idClient != nil && ![idClient isKindOfClass:[NSNull class]])
+    if ((ignoreDeviceId || (![itemDeviceId isKindOfClass:[NSNull class]] && [deviceId isEqualToString:itemDeviceId])) && idClient != nil && ![idClient isKindOfClass:[NSNull class]])
     {
         NSURL *objUrl = [NSURL URLWithString:idClient];
         NSManagedObjectID *objectID = [[context persistentStoreCoordinator] managedObjectIDForURIRepresentation:objUrl];
