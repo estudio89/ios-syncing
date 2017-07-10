@@ -13,6 +13,7 @@
 @interface SharedObjectContext : NSObject
     
 + (NSManagedObjectContext *)managedObjectContext;
++ (NSManagedObjectContext *)managedObjectContextWithURLForResource:(NSString *)url;
     
 @end
 

@@ -21,6 +21,7 @@
 #import <Syncing/AbstractSyncManager.h>
 #import <Syncing/SyncEntity.h>
 #import <Syncing/ReadOnlyAbstractSyncManager.h>
+#import <Syncing/SharedObjectContext.h>
 
 @interface Syncing : NSObject
 

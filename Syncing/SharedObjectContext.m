@@ -10,30 +10,36 @@
 
 @interface SharedObjectContext ()
     
-    @property (readonly, strong, nonatomic) NSManagedObjectContext *masterManagedObjectContext;
-    @property (readonly, strong, nonatomic) E89MainManagedObjectContext *mainManagedObjectContext;
-    @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-    @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (readonly, strong, nonatomic) NSManagedObjectContext *masterManagedObjectContext;
+@property (readonly, strong, nonatomic) E89MainManagedObjectContext *mainManagedObjectContext;
+@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
     
-    @end
+@end
 
 @implementation SharedObjectContext
     
-    @synthesize masterManagedObjectContext = _masterManagedObjectContext;
-    @synthesize mainManagedObjectContext = _mainManagedObjectContext;
-    @synthesize managedObjectModel = _managedObjectModel;
-    @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize masterManagedObjectContext = _masterManagedObjectContext;
+@synthesize mainManagedObjectContext = _mainManagedObjectContext;
+@synthesize managedObjectModel = _managedObjectModel;
+@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
     
-    static SharedObjectContext *sharedObjectContextInstance;
+static SharedObjectContext *sharedObjectContextInstance;
+static NSString *urlForResource;
     
-+ (NSManagedObjectContext *)managedObjectContext
-    {
++ (NSManagedObjectContext *)managedObjectContext {
         if (sharedObjectContextInstance == nil) {
             sharedObjectContextInstance = [[SharedObjectContext alloc] init];
         }
         
         return sharedObjectContextInstance.mainManagedObjectContext;
-    }
+}
+
++ (NSManagedObjectContext *)managedObjectContextWithURLForResource:(NSString *)url {
+    urlForResource = url;
+
+    return [SharedObjectContext managedObjectContext];
+}
     
 - (instancetype)init {
     self = [super init];
@@ -69,7 +75,7 @@
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"RHMaisModel" withExtension:@"momd"];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:urlForResource withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
 }
@@ -130,4 +136,4 @@
     }
 }
     
-    @end
+@end
