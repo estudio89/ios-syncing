@@ -55,6 +55,8 @@
 		7B5F220C1A8D3AC50031E2F2 /* ServerComm.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B5F220B1A8D3AC50031E2F2 /* ServerComm.m */; };
 		7B63D8C51AA8CF0C005D781A /* SyncConfigTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B63D8C41AA8CF0C005D781A /* SyncConfigTests.m */; };
 		7B63D8C71AA8CF78005D781A /* ServerCommTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B63D8C61AA8CF78005D781A /* ServerCommTests.m */; };
+		7B6B62A91F13D0E500603C10 /* SharedObjectContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B6B62A71F13D0E500603C10 /* SharedObjectContext.h */; };
+		7B6B62AA1F13D0E500603C10 /* SharedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B6B62A81F13D0E500603C10 /* SharedObjectContext.m */; };
 		7B6CD0D91AAF6356009B7ACA /* get-data-for-model-request.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B6CD0D81AAF6356009B7ACA /* get-data-for-model-request.json */; };
 		7B7A1FB41AB899E30089A9FC /* Syncing.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BADD1201A8BD82B0005FC5E /* Syncing.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7B82A2C31AB3741900636503 /* ServerAuthenticateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B82A2C21AB3741900636503 /* ServerAuthenticateTests.m */; };
@@ -167,6 +169,8 @@
 		7B5F220B1A8D3AC50031E2F2 /* ServerComm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerComm.m; sourceTree = "<group>"; };
 		7B63D8C41AA8CF0C005D781A /* SyncConfigTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncConfigTests.m; sourceTree = "<group>"; };
 		7B63D8C61AA8CF78005D781A /* ServerCommTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerCommTests.m; sourceTree = "<group>"; };
+		7B6B62A71F13D0E500603C10 /* SharedObjectContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedObjectContext.h; sourceTree = "<group>"; };
+		7B6B62A81F13D0E500603C10 /* SharedObjectContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedObjectContext.m; sourceTree = "<group>"; };
 		7B6CD0D81AAF6356009B7ACA /* get-data-for-model-request.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "get-data-for-model-request.json"; sourceTree = "<group>"; };
 		7B82A2C21AB3741900636503 /* ServerAuthenticateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerAuthenticateTests.m; sourceTree = "<group>"; };
 		7B9B87D71CA3359600245557 /* E89ManagedObjectContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = E89ManagedObjectContext.h; sourceTree = "<group>"; };
@@ -408,6 +412,8 @@
 				7BE488451B4F0A2B00985165 /* SyncEntity.h */,
 				7BE488461B4F0A2B00985165 /* SyncEntity.m */,
 				7BFF78591BD13EB900E1BFFC /* Info.plist */,
+				7B6B62A71F13D0E500603C10 /* SharedObjectContext.h */,
+				7B6B62A81F13D0E500603C10 /* SharedObjectContext.m */,
 			);
 			path = Syncing;
 			sourceTree = "<group>";
@@ -514,6 +520,7 @@
 				7BE488471B4F0A2B00985165 /* SyncEntity.h in Headers */,
 				7BBE8F611AFA3C8500155AC4 /* ReadOnlyAbstractSyncManager.h in Headers */,
 				7BD7E7411B15F07D00FC984C /* SecurityUtil.h in Headers */,
+				7B6B62A91F13D0E500603C10 /* SharedObjectContext.h in Headers */,
 				7BCFBE2D1B3705A000AC1553 /* SyncEvent.h in Headers */,
 				7B42B65A1AB8A8D200F02528 /* ServerAuthenticate.h in Headers */,
 			);
@@ -752,6 +759,7 @@
 				7B5F220C1A8D3AC50031E2F2 /* ServerComm.m in Sources */,
 				7BADD13C1A8BDABF0005FC5E /* ThreadChecker.m in Sources */,
 				7BDA73E31B543419003B00BA /* SyncModelSerializer.m in Sources */,
+				7B6B62AA1F13D0E500603C10 /* SharedObjectContext.m in Sources */,
 				7BBE8F621AFA3C8500155AC4 /* ReadOnlyAbstractSyncManager.m in Sources */,
 				7BE488431B4ED81900985165 /* Annotations.m in Sources */,
 				7B3DDCA71A9DFB9900966A5B /* CustomTransactionManager.m in Sources */,
@@ -948,7 +956,10 @@
 			baseConfigurationReference = 041CC91EE76C6155283F8B3E /* Pods-Syncing Tests.debug.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "";
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(SDKROOT)/Developer/Library/Frameworks $(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -960,7 +971,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
-				"LIBRARY_SEARCH_PATHS[arch=*]" = "$(inherited) $(PROJECT_DIR)/Pods/build/Debug-iphoneos";
+				"LIBRARY_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
@@ -975,7 +989,10 @@
 			baseConfigurationReference = 98979C8312D858E26CEED2D2 /* Pods-Syncing Tests.release.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "";
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(SDKROOT)/Developer/Library/Frameworks $(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
 				"HEADER_SEARCH_PATHS[arch=*]" = "";
 				INFOPLIST_FILE = "Syncing Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
