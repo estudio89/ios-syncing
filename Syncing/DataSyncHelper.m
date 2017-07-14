@@ -582,6 +582,14 @@ static int numberAttempts;
 /**
  * partialAsynchronousSync
  */
+- (void)partialAsynchronousSync:(NSString *)identifier withDelay:(BOOL)allowDelay
+{
+    [self partialAsynchronousSync:identifier withParameters:nil withSuccessCallback:nil withFailCallback:nil withDelay:allowDelay];
+}
+
+/**
+ * partialAsynchronousSync
+ */
 - (void)partialAsynchronousSync:(NSString *)identifier
                  withParameters:(NSDictionary *)parameters
 {
@@ -596,6 +604,22 @@ static int numberAttempts;
             withSuccessCallback:(void(^)(void))successCallback
                withFailCallback:(void(^)(void))failCallback
 {
+    [self partialAsynchronousSync:identifier
+                   withParameters:parameters
+              withSuccessCallback:successCallback
+                 withFailCallback:failCallback
+                        withDelay:NO];
+}
+
+/**
+ * partialAsynchronousSync
+ */
+- (void)partialAsynchronousSync:(NSString *)identifier
+                 withParameters:(NSDictionary *)parameters
+            withSuccessCallback:(void(^)(void))successCallback
+               withFailCallback:(void(^)(void))failCallback
+                      withDelay:(BOOL)allowDelay
+{
     if ([self canRunSyncWithIdentifier:identifier withParameters:parameters])
     {
         BOOL sendModified = parameters == nil;
@@ -603,7 +627,8 @@ static int numberAttempts;
                withParameters:parameters
              withSendModified:sendModified
           withSuccessCallback:successCallback
-             withFailCallback:failCallback];
+             withFailCallback:failCallback
+                    withDelay:allowDelay];
     }
     else
     {
@@ -756,6 +781,7 @@ static int numberAttempts;
        withSendModified:(BOOL)sendModified
     withSuccessCallback:(void(^)(void))successCallback
        withFailCallback:(void(^)(void))failCallback
+              withDelay:(BOOL)allowDelay
 {
     __block BOOL success = NO;
     
@@ -764,7 +790,7 @@ static int numberAttempts;
         {
             if (sendModified)
             {
-                success = [self partialSynchronousSync:identifier withDelay:NO];
+                success = [self partialSynchronousSync:identifier withDelay:allowDelay];
             }
             else
             {
