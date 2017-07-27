@@ -286,25 +286,31 @@
     {
         for (NSDictionary *obj in jsonResponse)
         {
-            
-            NSManagedObject *object = [self findItem:[obj valueForKey:@"id"]
-                                        withIdClient:[obj valueForKey:@"idClient"]
-                                        withDeviceId:@""
-                                    withItemDeviceId:nil
-                                  withIgnoreDeviceId:YES
-                                         withContext:context];
-            
-            if (object != nil)
-            {
-                [object setValue:@(NO) forKey:@"modified"];
-                [object setValue:[obj valueForKey:@"id"] forKey:@"idServer"];
-            }
+            [self processResponseForObject:obj withContext:context];
         }
     }
     @catch (NSException *e)
     {
         [self throwException:e];
     }
+}
+
+- (SyncEntity *)processResponseForObject:(NSDictionary *)object withContext:(NSManagedObjectContext *)context
+{
+    SyncEntity *obj = [self findItem:[object valueForKey:@"id"]
+                        withIdClient:[object valueForKey:@"idClient"]
+                        withDeviceId:@""
+                    withItemDeviceId:nil
+                  withIgnoreDeviceId:YES
+                         withContext:context];
+    
+    if (obj != nil)
+    {
+        [obj setValue:@(NO) forKey:@"modified"];
+        [obj setValue:[object valueForKey:@"id"] forKey:@"idServer"];
+    }
+    
+    return obj;
 }
 
 - (NSDictionary *)serializeObject:(NSObject *)object withContext:(NSManagedObjectContext *)context
