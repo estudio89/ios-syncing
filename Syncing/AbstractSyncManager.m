@@ -590,7 +590,12 @@
     {
         NSURL *objUrl = [NSURL URLWithString:idClient];
         NSManagedObjectID *objectID = [[context persistentStoreCoordinator] managedObjectIDForURIRepresentation:objUrl];
-        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"idServer==%@ OR SELF==%@", idServer, objectID]];
+        
+        if ([idServer longLongValue] != 0) {
+            [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"idServer==%@ OR SELF==%@", idServer, objectID]];
+        } else {
+            [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"SELF==%@", objectID]];
+        }
     }
     else
     {
