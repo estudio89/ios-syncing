@@ -60,5 +60,6 @@
 - (BOOL)moreOnServerWithPaginationIdentifier:(NSString *)paginationIdentifier;
 - (NSDictionary *)serializeObject:(NSObject *)object withContext:(NSManagedObjectContext *)context;
 - (BOOL)booleanPref:(NSString *)key withDefaultValue:(BOOL)defaultValue;
+- (id)newObjectForEntity:(NSString *)entityName withContext:(NSManagedObjectContext *)context;
 
 @end
