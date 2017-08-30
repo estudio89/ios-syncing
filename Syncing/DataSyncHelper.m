@@ -546,11 +546,10 @@ static int numberAttempts;
     
     if ([sm getDelay] > 0 && allowDelay) {
         double delay = ((double)arc4random() / ARC4RANDOM_MAX) * [sm getDelay];
-        [self performSelector:@selector(runSynchronousSync:) withObject:identifier afterDelay:delay];
-        return true;
-    } else {
-        return [self runSynchronousSync:identifier];
+        [NSThread sleepForTimeInterval:delay];
     }
+    
+    return [self runSynchronousSync:identifier];
 }
 
 /**
