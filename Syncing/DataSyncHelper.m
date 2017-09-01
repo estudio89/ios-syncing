@@ -424,7 +424,7 @@ static int numberAttempts;
  */
 - (BOOL)internalRunSynchronousSync:(NSString *)identifier
 {
-    NSLog(@"STARTING NEW SYNC");
+    NSLog(@"STARTING NEW SYNC: %@", _partialSyncFlag);
     BOOL completed = NO;
     [self postWillStartSyncEvent];
     
@@ -547,6 +547,9 @@ static int numberAttempts;
     if ([sm getDelay] > 0 && allowDelay) {
         double delay = ((double)arc4random() / ARC4RANDOM_MAX) * [sm getDelay];
         [NSThread sleepForTimeInterval:delay];
+        if (![self canRunSyncWithIdentifier:identifier withParameters:nil]) {
+            return YES;
+        }
     }
     
     return [self runSynchronousSync:identifier];
