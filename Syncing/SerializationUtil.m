@@ -87,4 +87,50 @@
     return NSClassFromString([NSString stringWithFormat:@"%@", [self propertyClassNameFor:property]]);
 }
 
++ (void)setJSONValue:(NSMutableDictionary *)jsonObject withName:(NSString *)name withObject:(NSObject *)value {
+    NSArray *nameTree = [name componentsSeparatedByString:@"."];
+    NSMutableDictionary *curJSONObj = jsonObject;
+    int idx = 0;
+    
+    for (NSString *part in nameTree) {
+        if (idx == [nameTree count] - 1) {
+            [curJSONObj setObject:value forKey:part];
+        } else {
+            if ([curJSONObj objectForKey:part] != nil) {
+                curJSONObj = [curJSONObj objectForKey:part];
+            } else {
+                NSMutableDictionary *aux = [[NSMutableDictionary alloc] init];
+                [curJSONObj setObject:aux forKey:part];
+                curJSONObj = aux;
+            }
+        }
+        
+        idx += 1;
+    }
+}
+
++ (NSObject *)getJSONValue:(NSMutableDictionary *)jsonObject withName:(NSString *)name {
+    NSArray *nameTree = [name componentsSeparatedByString:@"."];
+    NSObject *value = [NSNull null];
+    NSMutableDictionary *curJSONObj = jsonObject;
+    int idx = 0;
+    
+    for (NSString *part in nameTree) {
+        if (idx == [nameTree count] - 1) {
+            value = [curJSONObj valueForKey:part];
+        } else {
+            curJSONObj = [curJSONObj objectForKey:part];
+        }
+        idx += 1;
+    }
+    
+    return value;
+}
+
++ (NSString *)getJSONString:(NSMutableDictionary *)jsonObject withName:(NSString *)name {
+    NSObject *value = [SerializationUtil getJSONValue:jsonObject withName:name];
+    
+    return (NSString *)value;
+}
+
 @end
