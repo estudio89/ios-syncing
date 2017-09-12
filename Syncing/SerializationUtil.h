@@ -20,5 +20,8 @@
 + (NSString *)propertyClassNameFor:(objc_property_t)property;
 + (Class)propertyTypeFor:(objc_property_t)property;
 + (NSString *)propertyClassNameFor:(NSString *)propertyName onObject:(SyncEntity *)object;
++ (void)setJSONValue:(NSMutableDictionary *)jsonObject withName:(NSString *)name withObject:(NSObject *)object;
++ (NSObject *)getJSONValue:(NSMutableDictionary *)jsonObject withName:(NSString *)name;
++ (NSString *)getJSONString:(NSMutableDictionary *)jsonObject withName:(NSString *)name;
 
 @end

@@ -422,7 +422,8 @@
         for (NSString *parentAttributeName in [_parentAttributes allKeys])
         {
             NSString *parentAttributeClass = [SerializationUtil propertyClassNameFor:parentAttributeName onObject:newItem];
-            NSObject *parentId = [object valueForKey:[_parentAttributes valueForKey:parentAttributeName]];
+            NSObject *parentId = [SerializationUtil getJSONString:[object mutableCopy]
+                                                         withName:[_parentAttributes valueForKey:parentAttributeName]];
             
             SyncEntity *parent = [self findParent:parentAttributeClass withParentId:parentId withContext:context];
             if (parent == nil && [parentId isEqual:@"nil"])
