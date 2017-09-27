@@ -8,9 +8,11 @@
 
 #import "SecurityUtil.h"
 #import "SyncingInjection.h"
-#import <RNCryptor/RNEncryptor.h>
-#import <RNCryptor/RNDecryptor.h>
-#import <RNCryptor/RNCryptor.h>
+#import <RNCryptor-objc/RNEncryptor.h>
+#import <RNCryptor-objc/RNDecryptor.h>
+#import <RNCryptor-objc/RNCryptor.h>
+#import <CommonCrypto/CommonCryptor.h>
+#import <CommonCrypto/CommonKeyDerivation.h>
 
 @interface SecurityUtil ()
 

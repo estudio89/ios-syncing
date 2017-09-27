@@ -3,7 +3,7 @@
 
 target 'Syncing' do
 pod 'Raven', '~> 1.0.1'
-pod 'RNCryptor', '~> 2.2'
+pod 'RNCryptor-objc', '~> 3.0.5'
 pod 'ISO8601', '~> 0.3.0'
 end
 

@@ -7,7 +7,7 @@ PODS:
     - OCHamcrest (~> 4.0)
   - OHHTTPStubs (4.0.2)
   - Raven (1.0.1)
-  - RNCryptor (2.2)
+  - RNCryptor-objc (3.0.5)
 
 DEPENDENCIES:
   - ISO8601
@@ -17,7 +17,7 @@ DEPENDENCIES:
   - OCMockito
   - OHHTTPStubs
   - Raven (~> 1.0.1)
-  - RNCryptor (~> 2.2)
+  - RNCryptor-objc (~> 3.0.5)
 
 SPEC CHECKSUMS:
   ISO8601: 8d8a22d5edf0554a1cf75bac028c76c1dc0ffaef
@@ -26,9 +26,9 @@ SPEC CHECKSUMS:
   OCMock: a10ea9f0a6e921651f96f78b6faee95ebc813b92
   OCMockito: 4981140c9a9ec06c31af40f636e3c0f25f27e6b2
   OHHTTPStubs: dbd1957d414659783e07b49c961940b7564c23d9
-  Raven: 0c868f0b221c936ae352095d4af3d418e3db1242
-  RNCryptor: c68678461a2c7474a55db9a6a98834c22d51f535
+  Raven: 5e30d3f0b451b0c9515b599ddddd3e5140dc7bc6
+  RNCryptor-objc: a65b15493de05dda4af0f392c70372b7a5625aab
 
-PODFILE CHECKSUM: 00472afefcb9a267a03132c0eac76b1bd1c599e9
+PODFILE CHECKSUM: 2a601665c6c4475d87a984abe2a769b0b74f5275
 
 COCOAPODS: 1.2.0.beta.1
