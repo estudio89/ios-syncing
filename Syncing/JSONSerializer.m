@@ -123,7 +123,7 @@
                                                 withJSON:jsonObject
                                           withAnnotation:fieldAnnotation];
     }
-    else if (type != [NSSet class] && ![type isSubclassOfClass:[SyncEntity class]])
+    else if (type != [NSSet class] && type != [NSOrderedSet class] && ![type isSubclassOfClass:[SyncEntity class]])
     {
         return [[FieldSerializer alloc] initWithAttribute:attribute
                                                withObject:object
